@@ -1,0 +1,272 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+\addbibresource{bibliography.bib}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\aop}{\mathscr{A}}
+\newcommand{\omegabar}{\bar{\Omega}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\rop}{\mathscr{R}} % short for R operator
+
+
+\begin{document}
+The goal is to solve the following problem. Let $\Omega \subseteq \real^n$ be a
+an exterior polyhedral domain of a compact set i.e. $\real^n \setminus \Omega$ 
+is a compact polyhedron. We then have the following boundary value
+problem: For a fixed $C_0 \in \real$ and closed bounded $k$-chain $\gamma$ 
+find $\omega \in H\Lambda^k(\Omega)$ s.t.
+\begin{align*}
+    d\omega &= 0, \\
+    \delta\omega &= 0, \\
+    \text{tr } \omega &= 0 \text{ and} \\
+    \int_\gamma \omega &= C_0
+\end{align*}
+Because we consider polyhedral domains we assume that $\gamma$ consists of 
+finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
+generator of the simplicial homology group.
+Our goal will be to show existence and uniqueness of solutions. In order to show
+this, we rely on a result about the isomorphism of a simplicial cohomology 
+space $H^k_p(K)$ which will be defined below
+and the $L^p$-cohomology space $H^k_{p,dR}(\omegabar)$ ($dR$ short for de Rham).
+This result was proven in \cite{goldshtein}. In the diploma thesis by Nikolai
+Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
+many additional details can be found. The first part will be to present this 
+result.
+
+\section{Isomorphism of Cohomology}
+We assume that the $\omegabar$ admits a smooth triangulation $\tau: |K|
+\rightarrow \omegabar$ with $|K|$ being the geometric realization of the
+simplicial complex $K$. Because $\omegabar$ is itself a polyhedron we can
+assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$. 
+However, we will use different metrics. We use the Euclidian metric on 
+$\omegabar$ and we use the standard simplicial metric on $|K|$ (cf. 
+\cite[p.191]{goldshtein}). This metric is defined as follows:
+
+Choose some numbering of the vertices $\{ x_1,\, x_2, ... \}$ 
+Take $f: |K| \rightarrow \ell^2$ where $\ell^2$ is the 
+Hilbert space of real-valued square-summable sequences s.t. $f$ is affine on 
+every simplex. This mapping is unique.%%%TBD: Proof uniqueness%%%%
+
+Then we define the metric on $|K|$ as $g_S = f^*g$ where $g$ is the standard
+metric in $\ell^2$. That means for a differential
+
+%%TBD: I know how to define the metric, but I do not know how to define the
+%% differential
+
+
+We have two crucial assumptions.  
+
+\begin{assumption}{Star-boundedness}
+The star of every vertex in the mesh contains at most $N$ simplices.
+\end{assumption}
+This assumption is for example fulfilled if we consider a shape-regular
+triangulation of our domain \cite{???}.
+
+In order to formulate the second assumption we have to note that for our
+triangulation $\tau$ we have that $M = |K|$. Therefore $\tau$ is just the 
+identity in our case. However, we use a different metric on $M$ and $|K|$. 
+On our domain $M$ we use the Euclidian metric. On $|K|$ however, we have to use
+the standard simplicial metric which is defined as follows (cf. 
+\cite[p.191]{goldshtein}). 
+We enumerate the vertices of the triangulation as ${ x_1,\, x_2,\, ... }$.
+Let $f: |K| \rightarrow \ell^2$ be an embedding 
+of the triangulation $|K|$ into $\real^\infty$ s.t. $f(x_i) = e_i$ where $e_i$ 
+are the standard unit vectors of $\real^\infty$ and $f$ is affine on every 
+simplex. Keeping this in mind, we have the following assumption 
+
+\begin{assumption}
+    We have constants $C_1, C_2 > 0$ s.t. for every $x \in M$ we have
+    \begin{align*}
+    \lVert d\tau|_x \rVert < C_1, \; \lVert d\tau^{-1}|_\tau(x) \rVert < C_2
+    \end{align*} 
+    where the operator norm is to be understood w.r.t. the metrics on $|K|$ and
+    $M$.
+\end{assumption}
+{\color{red} TO BE DONE}
+
+
+
+
+
+Take $\tau, \sigma \in K$ s.t. $\tau \leq \sigma$.  We define an extension 
+operator $j^*_{\sigma, \tau}:W^*_\infty \rightarrow W^*_\infty $ which is 
+bounded (cf \cite[p.191]{goldshtein}). 
+\begin{definition}
+    Let 
+    \begin{align*}
+    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in T\}
+    \end{align*}
+    be a collection of differential k-forms. We call $\theta$ S-form of degree
+    k if we have for all for simplices
+    $\mu \leq \sigma$ 
+    \begin{align*}
+    j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
+    \end{align*}
+    We denote with $S^k(K)$ the space of all S-forms of degree k over the chain
+    complex $K$. 
+For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
+\sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
+\end{definition}
+
+Using integration we can define define the homomorphism 
+(see \cite[p.191]{goldshtein})
+\begin{align*}
+I: S_p^k(K) \rightarrow C_p^k(K), \; I(\theta)(\sigma) = 
+\int_\sigma \theta(\sigma) \text{ for } \sigma \in K
+\end{align*}
+which induces an isomorphism on cohomology (see Thm. 1 in \cite{goldshtein}
+and the proof thereof).
+
+We say that $\omega \in W^k_{\infty,loc}(M)$ 
+if $\omega|_A \in W^k_\infty(A) \text{for every} A \subseteq M \text{compact}$.
+Then we define 
+\begin{align*}
+\varphi_\tau: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
+\omega \mapsto \{ \tau|_\sigma^*\omega | \sigma \in K \}.
+\end{align*}
+This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
+way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$. For S-forms of 
+degree k we now define the norm
+\begin{align*}
+\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \sum_{\sigma \in K} 
+\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}.
+\end{align*} 
+$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite. Using the
+isomorphism $\varphi_\tau$ we now define 
+$S^k_p(M) \vcentcolon= (\varphi_\tau)^{-1} S^k_p(K)$.
+
+We then have $S^k_p(M) \subseteq W^k_p(M)$ and the inclusion induces an
+isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein}. 
+
+
+Above, we defined the integral operator $I$ for $S^k_p(K)$ which can be 
+therefore be applied on $S^k_p(M)$ as well. If we fix now a closed finite 
+k-chain $\gamma$. Then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
+$S^k_p(M)$, but is is a-priori not clear how to extend this to $W_p^k(M)$. 
+We know that $\int_\gamma d\eta = 0$ for $\eta \in S^k_p(M)$ because 
+otherwise $I$ would not induce a isomorphism on cohomology. We extend this now
+by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(M)$. 
+We have to check whether this is consistent with the definition above. 
+Let $\nu \in W_p^k(M)$ s.t. $d\nu \in S^k_p(M)$. Let $A \subseteq M$ be a 
+bounded neighborhood of $\gamma$. We can then find 
+$\tilde{\nu}$ s.t.  $\tilde{\nu} \in W_q(A)$ for any $q > 1$ and 
+$d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. We can then apply 
+Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
+$\int_\gamma d\nu = 0$. This shows consistency.
+
+In the second part of \cite{goldshtein} they construct the operators
+$\mathscr{R}$ and $\mathscr{A}$. The precise definition and construction of
+these operators is not relevant for our purposes because we will only use
+the following properties (cf. \cite[Thm.2]{goldshtein}).
+
+\begin{theorem}\label{operators}
+    Assume that the triangulation $\tau$ fulfills the GKS-condition.
+    Then there exist linear mappings $\mathscr{R}: L^k_{1,loc} \rightarrow 
+    L^k_{1,loc}$, $\mathscr{A}: L^k_{1,loc} \rightarrow L^{k-1}_{1,loc}$ 
+    such that
+    \begin{enumerate}
+        \item $\mathscr{R}\omega - \omega = 
+            d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
+            $\omega \in W^k_{1,loc}(M)$
+        \item for any $1 \leq p \leq \infty$, 
+            $\rop(W^k_p(M)) \subseteq S^k_p(M)$.
+    \end{enumerate}
+\end{theorem}
+
+We can now use this operator $\rop$ to define $\int_\gamma \omega$ for closed
+$\omega \in W^k_p(M)$ as
+\begin{align*}
+\int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
+\end{align*}
+This is consistent because if $\omega \in S^k_p(M)$ closed then due to 
+Thm. \ref{operators}
+\begin{align*}
+\int_\gamma \rop\omega = 
+\int_\gamma \omega + d\mathscr{A}\omega + \mathscr{A}d\omega = 
+\int_\gamma \omega.
+\end{align*}
+
+\subsection{Existence of a solution}
+
+Returning now back to the problem, we are now able to proof existence of a 
+solution. Take a closed cochain $F \in C^k_p(K)$ s.t. $F(\gamma) = C_0$ and 
+$F(\partial d) = 0$ for (k-1)-chains $d$. Then we know from ??? that 
+there exists a unique $[\theta] \in \mathscr{H}_p^k(K)$ s.t. 
+$[I]([\theta]) = [F]$. Let us take $\eta \vcentcolon= 
+\varphi_\tau^{-1} \theta$. Then $\int_\gamma \eta = C_0$ holds. If we now take
+the Hodge decomposition
+$L^k_2(M) = \bar{\mathfrak{B^k}} \bigoplus \mathcal{H}^k \bigoplus
+\bar{\mathfrak{B^*_k}}$ and define $\omega$ as the projection of $\eta$ onto the
+harmonic forms $\mathcal{H}^k$. Then we know that $d\omega = 0$, 
+$\delta\omega = 0$ and $\text{tr}\,\omega = 0$. So we only have to show that
+\begin{align*}
+\int_\gamma \omega = C_0.
+\end{align*}
+
+We know from the Hodge decomposition that there exists a sequence
+$(\phi_i)_{i\in \mathbb{N}} \subseteq L^{k-1}_2(M)$ s.t. 
+$\omega = \eta - \lim_{i \rightarrow \infty} d\phi_i$.
+Let now be $R>0$ large enough s.t. $\gamma \subseteq B_R$. Then we know that
+$d W^{k-1}_2(B_R)$ is closed in $L_2^k(B_R)$. Therefore there exists 
+$\phi_R \in  W^{k-1}_2(B_R)$ s.t. 
+$\lim_{i \rightarrow \infty} d\phi_i|_{B_R} = d\phi_R$. So we have
+$\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and 
+\begin{align*}
+\int_\gamma \omega = \int_\gamma \omega|_{B_R} = \int_\gamma \eta|_{B_R} = C_0.
+\end{align*}
+This proves existence.
+
+\subsection{Existence of the solution}
+
+The first step is to show that the cochain chosen in the proof of existence
+is in fact unique if restricted to closed chains.
+
+\begin{proposition}
+    Let $\gamma$ be a $k$-chain s.t. the homology class $[\gamma]$ 
+    is a generator of the homology group. Assume for some $C_0 \in \real$ 
+    there exist cochains $F,G \in C^k_p(K)$ s.t.
+    \begin{align*}
+    F(\gamma) = C_0 \text{ and } F(\partial d) = 0 
+    \text{ for all } (k-1) \text{-chains } d
+    \end{align*}
+    and the same for $G$. Then the restriction of $F$ and $G$ to closed 
+    chains is the same.
+\end{proposition} \label{uniqueness_cochain}
+\begin{proof}
+    Take any closed $k$-chain $c$. Because $\gamma$ is the generator of the 
+    homology group we have $n \in \mathbb{Z}$ s.t. $[c] = [n \, \gamma]$
+    where $[\cdot]$ is the corresponding homology class. That means that we have
+    some $(k-1)$-chain $d$ s.t. $c = n \, \gamma + \partial d$. Using the 
+    properties of $F$ and $G$,
+    \begin{align*}
+        F(c) = F(n \, \gamma + \partial d) = n F(\gamma) = n \, C_0.
+    \end{align*}
+    Because the same computation is valid for $G$ $F(c) = G(c)$ follows.
+\end{proof}
+
+\begin{theorem}
+    Assume that a co-chain as in Prop. \ref{uniqueness_cochain} exists. 
+    Then the solution of the problem is unique.
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+
+
+\end{document}
