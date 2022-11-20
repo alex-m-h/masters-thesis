@@ -231,7 +231,7 @@ $\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and
 \end{align*}
 This proves existence.
 
-\subsection{Existence of the solution}
+\subsection{Existence and uniqueness of solutions}
 
 The first step is to show that the cochain chosen in the proof of existence
 is in fact unique if restricted to closed chains.
@@ -260,11 +260,32 @@ is in fact unique if restricted to closed chains.
 \end{proof}
 
 \begin{theorem}
-    Assume that a co-chain as in Prop. \ref{uniqueness_cochain} exists. 
+    Assume that a co-chain as in Prop. \ref{uniqueness_cochain}  exists. 
+    %%% TBD: reference 
     Then the solution of the problem is unique.
 \end{theorem}
 \begin{proof}
+    Let $\omega, \tilde{\omega}$ both be solutions. 
+    Because $\int_\gamma \omega = \int_\gamma \tilde{\omega}$ and $\omega$ and
+    $\tilde{\omega}$ are closed we have due to Prop. \ref{uniqueness_cochain} %%%TBD
+    that $\int_c \omega = \int_c \tilde{\omega}$ for any closed $k$-chain $c$.
+    So we have for the induced homomorphism $[I]([\rop \omega]) = 
+    [I]([\rop \tilde{\omega}])$ and therefore due to the isomorphism of 
+    cohomology $[\rop \omega] = [\rop \tilde{\omega}]$. Hence,
+    \begin{align*}
+    [\tilde{\omega}] = [\rop \tilde{\omega}] = 
+    [\rop \omega] = [\omega]
+    \end{align*}
+    we get the equality of the cohomology classes. \\
     
+    That is equivalent to the
+    existence of some $(k-1)$-form $\phi \in W^{k-1}_2(\omegabar)$ s.t.
+    $\omega = \tilde{\omega} + d\phi$. Then because $\omega$ and 
+    $\tilde{\omega}$ are harmonic we have 
+    $\omega, \tilde{\omega} \perp dW^{k-1}_2(\omegabar)$ and therefore 
+    \begin{align*}
+    \omega = \tilde{\omega}.
+    \end{align*}
 \end{proof}
 
 
