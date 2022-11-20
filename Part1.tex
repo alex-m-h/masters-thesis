@@ -19,7 +19,7 @@
 \newtheorem{theorem}{Theorem}
 
 \newcommand{\aop}{\mathscr{A}}
-\newcommand{\omegabar}{\bar{\Omega}}
+\newcommand{\omegabar}{\overline{\Omega}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\rop}{\mathscr{R}} % short for R operator
 
@@ -39,17 +39,23 @@ find $\omega \in H\Lambda^k(\Omega)$ s.t.
 Because we consider polyhedral domains we assume that $\gamma$ consists of 
 finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
 generator of the simplicial homology group.
-Our goal will be to show existence and uniqueness of solutions. In order to show
-this, we rely on a result about the isomorphism of a simplicial cohomology 
-space $H^k_p(K)$ which will be defined below
+Our goal will be to show existence and uniqueness of solutions. In order to 
+achieve this, we rely on a result about the isomorphism of a simplicial 
+cohomology space $H^k_p(K)$ which will be defined below
 and the $L^p$-cohomology space $H^k_{p,dR}(\omegabar)$ ($dR$ short for de Rham).
 This result was proven in \cite{goldshtein}. In the diploma thesis by Nikolai
 Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
 many additional details can be found. The first part will be to present this 
-result.
+result. It should be noted that even though the results in the paper are proved
+explicitely for smooth manifolds without boundary the results can be 
+extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and 
+the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
+to our case.
 
 \section{Isomorphism of Cohomology}
-We assume that the $\omegabar$ admits a smooth triangulation $\tau: |K|
+
+\subsection{Assumptions}
+We assume that $\omegabar$ admits a smooth triangulation $\tau: |K|
 \rightarrow \omegabar$ with $|K|$ being the geometric realization of the
 simplicial complex $K$. Because $\omegabar$ is itself a polyhedron we can
 assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$. 
@@ -57,51 +63,89 @@ However, we will use different metrics. We use the Euclidian metric on
 $\omegabar$ and we use the standard simplicial metric on $|K|$ (cf. 
 \cite[p.191]{goldshtein}). This metric is defined as follows:
 
-Choose some numbering of the vertices $\{ x_1,\, x_2, ... \}$ 
-Take $f: |K| \rightarrow \ell^2$ where $\ell^2$ is the 
-Hilbert space of real-valued square-summable sequences s.t. $f$ is affine on 
+Choose some numbering of the vertices $\{ x_1,\, x_2, ... \}$ and
+take $f: |K| \rightarrow \ell^2$ where $\ell^2$ is the 
+Hilbert space of real-valued square-summable sequences s.t. $f(x_i) = e_i$ 
+with $e_i \in \ell^2$ being the standard unit vectors and $f$ is affine on 
 every simplex. This mapping is unique.%%%TBD: Proof uniqueness%%%%
 
-Then we define the metric on $|K|$ as $g_S = f^*g$ where $g$ is the standard
-metric in $\ell^2$. That means for a differential
+Then we define the metric on $|K|$ as the pullback $g_S = f^*g$ 
+where $g$ is the standard metric in $\ell^2$. Let $\langle \cdot , 
+\cdot \rangle$ be the standard scalar product on $\ell^2$. Then for $x \in |K|$ 
+and $\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, \; 
+\sum_{j=1}^n w_j \frac{\partial}{\partial x_j} \in T_x |K|$ we have 
+\begin{align*}
+g_S\left(\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, 
+\sum_{j=1}^n w_j \frac{\partial}{\partial x_j}\right) &= 
+\left\langle \sum_{k=1}^\infty \sum_{i=1}^n v_i 
+\frac{\partial f_k}{\partial x_i} (x)
+\frac{\partial }{\partial y_k}, 
+\sum_{l=1}^\infty \sum_{j,l=1}^n w_j \frac{\partial f_l}{\partial x_j} (x)
+\frac{\partial }{\partial y_l} \right\rangle \\   
+&= \sum_{i,j=1}^n \sum_{k,l=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
+w_j \frac{\partial f_l}{\partial x_j} (x) 
+\left\langle \frac{\partial }{\partial y_k}, \frac{\partial }{\partial y_l} 
+\right\rangle\\
+&= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
+w_j \frac{\partial f_l}{\partial x_j} (x)\\
+&= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i w_j \left( Df(x)^T Df(x) \right)_{ij} \\
+&= v^T Df(x)^T Df(x) w = \left\langle Df(x) v, Df(x) w \right\rangle,
+\end{align*}
+where $D$ denotes the Jacobian.
+%%% TBD: This is only well-defined if x is in the interior of a full simplex.
+%%% Also these matrices is not precise because we are not in finite dimensions
 
-%%TBD: I know how to define the metric, but I do not know how to define the
-%% differential
+We have two crucial assumptions on the triangulation for the result to hold 
+(cf. \cite[p.194]{goldshtein}). We summarize them under 
+\textit{GKS-condition} named after the three authors of the \cite{goldshtein}.
 
-
-We have two crucial assumptions.  
-
-\begin{assumption}{Star-boundedness}
-The star of every vertex in the mesh contains at most $N$ simplices.
+\begin{assumption}[GKS-condition]
+    We will assume the following on the simplicial complex $K$ 
+    and the triangulation $\tau$:
+    \begin{enumerate}
+    \item The star of every vertex in $K$ contains at most $N$ simplices.
+    \item For the differential of $\tau$ we have constants 
+        $C_1, C_2 > 0$ s.t.
+        \begin{align*}
+        \lVert d\tau|_x \rVert < C_1, \; 
+        \lVert d\tau^{-1}|_{\tau(x)} \rVert < C_2,
+        \end{align*}
+        where $d$ denotes the differential in the sense of differential 
+        geometry and the norm is the operator norm w.r.t. the metrics on $|K|$ 
+        and $\omegabar$.
+    \end{enumerate}
 \end{assumption}
-This assumption is for example fulfilled if we consider a shape-regular
-triangulation of our domain \cite{???}.
+The first assumption is equivalent to every vertex being contained in
+at most $N$ simplices, which is fulfilled if we have a shape regular mesh.\par
+%%% TBD: Reference or proof or sth%%%
 
-In order to formulate the second assumption we have to note that for our
-triangulation $\tau$ we have that $M = |K|$. Therefore $\tau$ is just the 
-identity in our case. However, we use a different metric on $M$ and $|K|$. 
-On our domain $M$ we use the Euclidian metric. On $|K|$ however, we have to use
-the standard simplicial metric which is defined as follows (cf. 
-\cite[p.191]{goldshtein}). 
-We enumerate the vertices of the triangulation as ${ x_1,\, x_2,\, ... }$.
-Let $f: |K| \rightarrow \ell^2$ be an embedding 
-of the triangulation $|K|$ into $\real^\infty$ s.t. $f(x_i) = e_i$ where $e_i$ 
-are the standard unit vectors of $\real^\infty$ and $f$ is affine on every 
-simplex. Keeping this in mind, we have the following assumption 
+Since we have $\omegabar = |K|$ as subsets of $\real^n$ $\tau$ is just the 
+identity in our case. So then the second assumption says that for every 
+$x \in |K|$
+\begin{align*}
+\sup\limits_{v \neq 0} \frac{\lVert v \rVert}{\sqrt{g_S|_x(v,v)}} =
+\sup\limits_{v \neq 0} \frac{\lVert v \rVert}{\lVert Df(x)v\rVert} < C_1
+\end{align*}
+and analogously
+\begin{align*}
+    \sup\limits_{v \neq 0} \frac{\lVert Df(x)v\rVert}{\lVert v \rVert} < C_1.
+\end{align*}
+%%% TBD: Give more details and interpretation
 
-\begin{assumption}
-    We have constants $C_1, C_2 > 0$ s.t. for every $x \in M$ we have
-    \begin{align*}
-    \lVert d\tau|_x \rVert < C_1, \; \lVert d\tau^{-1}|_\tau(x) \rVert < C_2
-    \end{align*} 
-    where the operator norm is to be understood w.r.t. the metrics on $|K|$ and
-    $M$.
-\end{assumption}
-{\color{red} TO BE DONE}
+% In order to formulate the second assumption we have to note that for our
+% triangulation $\tau$ we have that $M = |K|$. Therefore $\tau$ is just the 
+% identity in our case. However, we use a different metric on $M$ and $|K|$. 
+% On our domain $M$ we use the Euclidian metric. On $|K|$ however, we have to use
+% the standard simplicial metric which is defined as follows (cf. 
+% \cite[p.191]{goldshtein}). 
+% We enumerate the vertices of the triangulation as ${ x_1,\, x_2,\, ... }$.
+% Let $f: |K| \rightarrow \ell^2$ be an embedding 
+% of the triangulation $|K|$ into $\real^\infty$ s.t. $f(x_i) = e_i$ where $e_i$ 
+% are the standard unit vectors of $\real^\infty$ and $f$ is affine on every 
+% simplex. Keeping this in mind, we have the following assumption 
 
 
-
-
+\subsection{Statement of the Isomorphism}
 
 Take $\tau, \sigma \in K$ s.t. $\tau \leq \sigma$.  We define an extension 
 operator $j^*_{\sigma, \tau}:W^*_\infty \rightarrow W^*_\infty $ which is 
@@ -201,7 +245,8 @@ Thm. \ref{operators}
 \int_\gamma \omega.
 \end{align*}
 
-\subsection{Existence of a solution}
+\section{Existence and uniqueness of solutions}
+\subsection{Existence}
 
 Returning now back to the problem, we are now able to proof existence of a 
 solution. Take a closed cochain $F \in C^k_p(K)$ s.t. $F(\gamma) = C_0$ and 
@@ -231,7 +276,7 @@ $\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and
 \end{align*}
 This proves existence.
 
-\subsection{Existence and uniqueness of solutions}
+\subsection{Uniqueness}
 
 The first step is to show that the cochain chosen in the proof of existence
 is in fact unique if restricted to closed chains.
@@ -276,7 +321,7 @@ is in fact unique if restricted to closed chains.
     [\tilde{\omega}] = [\rop \tilde{\omega}] = 
     [\rop \omega] = [\omega]
     \end{align*}
-    we get the equality of the cohomology classes. \\
+    we get the equality of the cohomology classes. \par
     
     That is equivalent to the
     existence of some $(k-1)$-form $\phi \in W^{k-1}_2(\omegabar)$ s.t.
