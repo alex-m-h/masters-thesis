@@ -13,41 +13,122 @@
 \usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
 \addbibresource{bibliography.bib}
 
-\newtheorem{assumption}{Assumption}
-\newtheorem{definition}{Definition}
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
 \newcommand{\aop}{\mathscr{A}}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
 \newcommand{\omegabar}{\overline{\Omega}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\rop}{\mathscr{R}} % short for R operator
 
 
 \begin{document}
-The goal is to solve the following problem. Let $\Omega \subseteq \real^n$ be a
-an exterior polyhedral domain of a compact set i.e. $\real^n \setminus \Omega$ 
+
+Let $\Omega \subseteq \real^n$ be a Lipschitz domain and $\text{Alt}^k$ 
+the space of alternating $k$-linear maps on $\real^n$. 
+Let $\langle \cdot,\cdot\rangle_{\text{Alt}^k}$ be the standard inner
+product of alterating $k$-linear maps and 
+$\lVert \cdot \rVert _{\text{Alt}^k}$ be the induced norm. Then
+we define the $L^p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
+as (cf. \cite{goldshtein})
+\begin{align*}
+\lVert \omega \rVert _{L^p\Lambda^k(\Omega)}\vcentcolon=
+\left(\int_\Omega \lVert \omega \rVert _{\text{Alt}^k}^p \right)^{1/p}
+\end{align*}
+%%% TBD: Is this independent of coordinates i.e. does this notation make sense?
+and for for $p=\infty$ as
+\begin{align*}
+\esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{{\text{Alt}^k}}.
+\end{align*}
+For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
+with the $L^2$ inner product  
+\begin{align*}
+\langle \omega, \nu \rangle \vcentcolon= \int_\Omega \omega \wedge *\nu.
+\end{align*}
+Then $L^p\Lambda^k(\Omega)$ are the spaces of $k$-forms 
+s.t. the corresponding $L^p$-norm is finite. \par
+
+Our next goal is to extend the exterior derivative $d$ 
+of smooth differential forms in the weak sense (cf. \cite{goldshtein}). 
+This is done analogous to the definition of the usual weak derivative.
+The exterior derivative $d\omega \in L^p\Lambda^{k+1}(\Omega)$ is defined as
+the unique $(k+1)$-form in $L^p\Lambda^{k+1}(\Omega)$ s.t. 
+\begin{align*}
+\int_\Omega d\omega \wedge \phi = (-1)^{k+1}\int_\Omega \omega \wedge d\phi
+\quad \forall \phi \in C_0^\infty \Lambda^{n-k-1}(\Omega).
+\end{align*}
+Just as in the usual Sobolev setting we define the following spaces:
+\begin{align*}
+W^k_p(\Omega) &= \left\{ \omega \in L^p\Lambda^k(\Omega)\, | 
+\, d\omega \in L^p\Lambda^{k+1}(\Omega) \right\}, \\ %%%%%%%%%%%%%%%%%%%%%%
+W^k_{p,loc}(\Omega) &= \left\{ \omega \, k \text{-form} \, | \,
+\omega|_A \in W^k_\infty(A) \text{ for every } A \subseteq M \text{ compact} 
+\right\}.
+\end{align*}
+For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm 
+\begin{align*}
+\lVert \omega \rVert _{W^k_p} &\vcentcolon= 
+\left( \norm{\omega}^p_{L^k_p} + \norm{d\omega}^p_{L^k_p} \right)^{1/p}
+\end{align*}
+and for $p=\infty$
+\begin{align*}
+    \lVert \omega \rVert _{W^k_p} &\vcentcolon= 
+    \max\left\{ \norm{\omega}_{L^k_\infty},\, \norm{d\omega}_{L^k_\infty}
+    \right\}.
+\end{align*}
+    
+
+
+We want to examine the Hilbert space $L^2\Lambda^k(\Omega)$ more closely
+(see \cite[Sec. 6.2.6]{arnold} for more details).  
+%%% TBD: This is only for bounded domains. What changes?
+Because $d:L^2\Lambda^k(\Omega) \rightarrow L^2\Lambda^{k+1}(\Omega)$
+is an unbounded, densely defined operator with domain 
+$C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is 
+equal to the codifferential operator of differential forms. We then define 
+additionally the space $\mathring{W}^k_2(\Omega)$ as the closure of 
+$C_0^\infty(\Omega) \subseteq W^k_2(\Omega)$ w.r.t. the $W^k_2(\Omega)$-norm.
+
+
+
+
+
+
+
+
+
+Now we can formulate our boundary value problem. Let $\Omega \subseteq \real^n$ 
+from now on be a an exterior polyhedral domain of a compact set i.e. 
+$\real^n \setminus \Omega$ 
 is a compact polyhedron. We then have the following boundary value
 problem: For a fixed $C_0 \in \real$ and closed bounded $k$-chain $\gamma$ 
-find $\omega \in H\Lambda^k(\Omega)$ s.t.
+find $\omega \in \mathring{W}^k_2(\Omega)$ s.t.
 \begin{align*}
     d\omega &= 0, \\
-    \delta\omega &= 0, \\
-    \text{tr } \omega &= 0 \text{ and} \\
-    \int_\gamma \omega &= C_0
+    \delta\omega &= 0 \text{ and} \\
+    \int_\gamma \omega &= C_0.
 \end{align*}
 Because we consider polyhedral domains we assume that $\gamma$ consists of 
 finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
-generator of the simplicial homology group.
+generator of the simplicial homology group. The well-definedness of the 
+integral over $\gamma$ will be discussed later.
 Our goal will be to show existence and uniqueness of solutions. In order to 
 achieve this, we rely on a result about the isomorphism of a simplicial 
 cohomology space $H^k_p(K)$ which will be defined below
 and the $L^p$-cohomology space $H^k_{p,dR}(\omegabar)$ ($dR$ short for de Rham).
-This result was proven in \cite{goldshtein}. In the diploma thesis by Nikolai
+This result was proven in \cite{goldshtein}. In the diploma thesis of Nikolai
 Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
-many additional details can be found. The first part will be to present this 
-result. It should be noted that even though the results in the paper are proved
-explicitely for smooth manifolds without boundary the results can be 
+many additional details can be found. The result will be presented in the
+next section. It should be noted that even though the results in 
+\cite{goldshtein} are
+proved explicitely for smooth manifolds without boundary the results can be 
 extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and 
 the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
 to our case.
