@@ -11,8 +11,11 @@
 \usepackage{mathrsfs}
 \usepackage{mathtools}
 
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+\usepackage{biblatex}
 \addbibresource{bibliography.bib}
+% \bibliography{bibliography}
+% \bibliographystyle{ieeetr}
+
 
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
@@ -24,6 +27,7 @@
 \DeclareMathOperator*{\esssup}{ess\,sup}
 
 \newcommand{\aop}{\mathscr{A}}
+\newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 \newcommand{\omegabar}{\overline{\Omega}}
 \newcommand{\real}{\mathbb{R}}
@@ -341,38 +345,82 @@ $[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector
 spaces (see Theorem\,1 in \cite{goldshtein}
 and the proof thereof).
 
-Then we define 
+
+
+
+
+
+
+The next step is to obtain an isomorphism between the cohomology 
+of S-forms $\mathscr{H}_p^k(K)$ and the $L^p$ cohomology 
+$\lpcoho(\omegabar)$. At first, we define 
 \begin{align*}
-\varphi_\tau: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
-\omega \mapsto \{ \tau|_\sigma^*\omega | \sigma \in K \}.
+\varphi: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
+\omega \mapsto \{ \omega|_\sigma \, |\, \sigma \in K \}.
 \end{align*}
 This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
 way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$.  Using the
-isomorphism $\varphi_\tau$ we now define 
-$S^k_p(M) \vcentcolon= (\varphi_\tau)^{-1} S^k_p(K)$.
+isomorphism $\varphi$ we now define 
+$S^k_p(M) \vcentcolon= \varphi^{-1} S^k_p(K)$.
+It can be shown that $S^k_p(M) \subseteq W^k_p(M)$. Let 
+$\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
+The inclusion induces an
+isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
+$[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
 
-We then have $S^k_p(M) \subseteq W^k_p(M)$ and the inclusion induces an
-isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein}. 
+
+In conclusion, we get the following isomorphisms of cohomologies:
+\begin{align*}
+    \lpcoho(\omegabar) \xrightarrow{[\iota]^{-1}} \mathscr{H}_p^k(K) 
+    \xrightarrow{[I]} H^k_p(K).
+\end{align*}
 
 
-Above, we defined the integral operator $I$ for $S^k_p(K)$ which can be 
-therefore be applied on $S^k_p(M)$ as well. If we fix now a closed finite 
-k-chain $\gamma$. Then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
-$S^k_p(M)$, but is is a-priori not clear how to extend this to $W_p^k(M)$. 
-We know that $\int_\gamma d\eta = 0$ for $\eta \in S^k_p(M)$ because 
-otherwise $I$ would not induce a isomorphism on cohomology. We extend this now
+
+
+
+
+
+\section{Existence and uniqueness of solutions}
+\subsection{Well-definedness of the integral constraint}
+
+
+In the problem, we have the additional constraint 
+\begin{align*}
+    \int_\gamma \omega = C_0.
+\end{align*}
+for some $C_0 \in \real$ and a closed bounded $k$-chain $\gamma$. 
+A priori however, we only assume 
+$\omega \in \mathring{W}^k_2(\Omega)$. We have to check if and how this can
+be well defined.
+
+Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can be 
+therefore be applied on $\omega \in S^k_p(M)$ as
+\begin{align*}
+    I(\omega) \vcentcolon= I (\varphi(\omega)).
+\end{align*}
+\noindent If we fix now the closed 
+$k$-chain $\gamma$ then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
+$S^k_p(M)$, but it is a-priori not clear how to extend this to closed forms in
+$W_p^k(M)$. 
+
+
+We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(M)$ because 
+otherwise $I$ would not induce an isomorphism on cohomology. We extend this now
 by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(M)$. 
 We have to check whether this is consistent with the definition above. 
-Let $\nu \in W_p^k(M)$ s.t. $d\nu \in S^k_p(M)$. Let $A \subseteq M$ be a 
+Let be $\nu \in W_p^{k-1}k(M)$ s.t. $d\nu \in S^k_p(M)$. Let $A \subseteq M$ be a 
 bounded neighborhood of $\gamma$. We can then find 
-$\tilde{\nu}$ s.t.  $\tilde{\nu} \in W_q(A)$ for any $q > 1$ and 
-$d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. We can then apply 
+$\tilde{\nu}$ s.t.  $\tilde{\nu} \in W^{k-1}_q(A)$ for any $q > 1$ and 
+$d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. Now it is possible to apply 
 Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
 $\int_\gamma d\nu = 0$. This shows consistency.
 
-In the second part of \cite{goldshtein} they construct the operators
-$\mathscr{R}$ and $\mathscr{A}$. The precise definition and construction of
-these operators is not relevant for our purposes because we will only use
+
+In order to extend the functional $\int_\gamma$ we will use two operators
+$\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second part 
+of \cite{goldshtein}. The precise definition and details of their construction
+are not relevant for our purposes because we will only use
 the following properties (cf. \cite[Thm.2]{goldshtein}).
 
 \begin{theorem}\label{operators}
@@ -389,20 +437,19 @@ the following properties (cf. \cite[Thm.2]{goldshtein}).
     \end{enumerate}
 \end{theorem}
 
-We can now use this operator $\rop$ to define $\int_\gamma \omega$ for closed
+\noindent We can now use this operator $\rop$ to define $\int_\gamma \omega$ for closed
 $\omega \in W^k_p(M)$ as
 \begin{align*}
 \int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
 \end{align*}
 This is consistent because if $\omega \in S^k_p(M)$ closed then due to 
-Thm. \ref{operators}
+Thm.\,\ref{operators}
 \begin{align*}
 \int_\gamma \rop\omega = 
 \int_\gamma \omega + d\mathscr{A}\omega + \mathscr{A}d\omega = 
 \int_\gamma \omega.
 \end{align*}
 
-\section{Existence and uniqueness of solutions}
 \subsection{Existence}
 
 Returning now back to the problem, we are now able to proof existence of a 
@@ -489,7 +536,5 @@ is in fact unique if restricted to closed chains.
     \omega = \tilde{\omega}.
     \end{align*}
 \end{proof}
-
-
-
+\printbibliography
 \end{document}
