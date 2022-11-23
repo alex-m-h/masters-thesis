@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{xcolor}
 \usepackage{csquotes}
+\usepackage{faktor}
 \usepackage{mathrsfs}
 \usepackage{mathtools}
 
@@ -133,14 +134,52 @@ extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and
 the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
 to our case.
 
+
+
+
+
+
+
+
+
+
 \section{Isomorphism of Cohomology}
 
 \subsection{Assumptions}
-We assume that $\omegabar$ admits a smooth triangulation $\tau: |K|
-\rightarrow \omegabar$ with $|K|$ being the geometric realization of the
-simplicial complex $K$. Because $\omegabar$ is itself a polyhedron we can
-assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$. 
-However, we will use different metrics. We use the Euclidian metric on 
+In order to formulate the assumptions necessary for the result from 
+\cite{goldshtein} to work we will define some basic things from 
+simplicial topology theory. More details and references can be found in 
+\cite[Chapter 4.21]{topology_and_geometry}.
+
+\begin{definition}[Affine simplex]
+    Let $x_1$, $x_2$, ..., $x_n$ be affine independent. Then 
+    \begin{align*}
+    [x_1,x_2,...,x_n] \vcentcolon= \text{conv}\,\{x_1,...,x_n\}
+    \end{align*}
+    is called an affine simplex.
+\end{definition}
+
+%%% TBD: Question: In the book this is defined in infinite dimensions. Does this
+%%% lead to any problems?
+
+\begin{definition}[Simplicial complex]
+    A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
+    \begin{enumerate}
+        \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
+        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$ is in $K$.
+    \end{enumerate}
+    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
+    $K$.
+\end{definition}
+For any topological space $X$ a homeomorphism 
+$\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
+
+
+Because $\omegabar$ is itself a polyhedron we can
+assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$ and we can
+simply use the identity as triangulation.
+However, we will use different metrics on $|K|$ and $\omegabar$. 
+We use the Euclidian metric on 
 $\omegabar$ and we use the standard simplicial metric on $|K|$ (cf. 
 \cite[p.191]{goldshtein}). This metric is defined as follows:
 
@@ -156,7 +195,7 @@ where $g$ is the standard metric in $\ell^2$. Let $\langle \cdot ,
 and $\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, \; 
 \sum_{j=1}^n w_j \frac{\partial}{\partial x_j} \in T_x |K|$ we have 
 \begin{align*}
-g_S\left(\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, 
+g_S|_x\left(\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, 
 \sum_{j=1}^n w_j \frac{\partial}{\partial x_j}\right) &= 
 \left\langle \sum_{k=1}^\infty \sum_{i=1}^n v_i 
 \frac{\partial f_k}{\partial x_i} (x)
@@ -200,8 +239,8 @@ The first assumption is equivalent to every vertex being contained in
 at most $N$ simplices, which is fulfilled if we have a shape regular mesh.\par
 %%% TBD: Reference or proof or sth%%%
 
-Since we have $\omegabar = |K|$ as subsets of $\real^n$ $\tau$ is just the 
-identity in our case. So then the second assumption says that for every 
+Because $\tau$ is just the identity in our case 
+the second assumption says that for every 
 $x \in |K|$
 \begin{align*}
 \sup\limits_{v \neq 0} \frac{\lVert v \rVert}{\sqrt{g_S|_x(v,v)}} =
@@ -228,50 +267,87 @@ and analogously
 
 \subsection{Statement of the Isomorphism}
 
-Take $\tau, \sigma \in K$ s.t. $\tau \leq \sigma$.  We define an extension 
-operator $j^*_{\sigma, \tau}:W^*_\infty \rightarrow W^*_\infty $ which is 
-bounded (cf \cite[p.191]{goldshtein}). 
+The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
+mappings between different cohomology spaces. 
+The first isomorphism is induced from a linear mapping
+between from the so called \textit{S-forms} 
+$S_p^k(K)$ to \textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
+be defined next.
+
 \begin{definition}
+    We define the following norm of a $k$-cochain $f$
+    \begin{align*}
+    \norm{f}_{C_p^k(K)} \vcentcolon= 
+    \left( \sum\limits_{c \, k\text{-chain}} |f(c)|^p \right)^{1/p}.
+    \end{align*}
+    and the space of \textit{p-summable k-cochains}
+    \begin{align*}
+    C_p^k(K) \vcentcolon= \{f \, k\text{-cochain} | \,  
+    \norm{f}_{C_p^k(K)} < \infty \}.
+    \end{align*}
+\end{definition}
+Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
+$\tau < \sigma$. It can be shown that the standard embedding 
+$j: \tau \hookrightarrow \sigma$ induces an
+restriction operator 
+$j^*_{\sigma, \tau}:W^*_\infty(\sigma) \rightarrow W^*_\infty(\tau) $ which is 
+bounded (cf \cite[p.191]{goldshtein}). 
+\begin{definition}[S-forms]
     Let 
     \begin{align*}
-    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in T\}
+    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
     \end{align*}
-    be a collection of differential k-forms. We call $\theta$ S-form of degree
-    k if we have for all for simplices
-    $\mu \leq \sigma$ 
+    be a collection of differential $k$-forms. We call $\theta$ S-form of degree
+    $k$ if we have for all for simplices
+    $\mu <\sigma$ 
     \begin{align*}
     j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
     \end{align*}
-    We denote with $S^k(K)$ the space of all S-forms of degree k over the chain
+    We denote with $S^k(K)$ the space of all S-forms of degree $k$ over the chain
     complex $K$. 
-For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
-\sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
+    For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
+    \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
 \end{definition}
+For $\theta \in S^k(K)$ we now define the norm
+\begin{align*}
+\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
+\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
+\end{align*} 
+$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
 
 Using integration we can define define the homomorphism 
 (see \cite[p.191]{goldshtein})
 \begin{align*}
 I: S_p^k(K) \rightarrow C_p^k(K), \; I(\theta)(\sigma) = 
-\int_\sigma \theta(\sigma) \text{ for } \sigma \in K
+\int_\sigma \theta(\sigma) \text{ for } \sigma \in K.
 \end{align*}
-which induces an isomorphism on cohomology (see Thm. 1 in \cite{goldshtein}
+With the exterior derivative $d$ on S-forms as defined above we define 
+\begin{align*}
+    \mathcal{Z}_p^k &\vcentcolon= \{ \theta \in S^k_p(K) | \, d\theta = 0 \} \\
+    \mathcal{B}_p^k &\vcentcolon= dS^k_p(K)
+\end{align*}
+and then the resulting cohomology space
+
+\begin{align*}
+    \mathscr{H}_p^k(K) \vcentcolon= 
+    \faktor{\mathcal{Z}_p^k}{\mathcal{B}_p^k}.
+\end{align*}
+
+We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
+integration mapping
+$I: S_p^k(K) \rightarrow C_p^k(K)$ 
+induces an isomorphism on the cohomologies i.e.
+$[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
+spaces (see Theorem\,1 in \cite{goldshtein}
 and the proof thereof).
 
-We say that $\omega \in W^k_{\infty,loc}(M)$ 
-if $\omega|_A \in W^k_\infty(A) \text{for every} A \subseteq M \text{compact}$.
 Then we define 
 \begin{align*}
 \varphi_\tau: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
 \omega \mapsto \{ \tau|_\sigma^*\omega | \sigma \in K \}.
 \end{align*}
 This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
-way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$. For S-forms of 
-degree k we now define the norm
-\begin{align*}
-\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \sum_{\sigma \in K} 
-\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}.
-\end{align*} 
-$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite. Using the
+way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$.  Using the
 isomorphism $\varphi_\tau$ we now define 
 $S^k_p(M) \vcentcolon= (\varphi_\tau)^{-1} S^k_p(K)$.
 
