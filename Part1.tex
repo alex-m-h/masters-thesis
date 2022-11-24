@@ -48,7 +48,7 @@ as (cf. \cite{goldshtein})
 \left(\int_\Omega \lVert \omega \rVert _{\text{Alt}^k}^p \right)^{1/p}
 \end{align*}
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
-and for for $p=\infty$ as
+and for $p=\infty$ as
 \begin{align*}
 \esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{{\text{Alt}^k}}.
 \end{align*}
@@ -118,15 +118,130 @@ additionally the space $\mathring{W}^k_2(\Omega)$ as the closure of
 $C_0^\infty(\Omega) \subseteq W^k_2(\Omega)$ w.r.t. the $W^k_2(\Omega)$-norm.
 
 
+Before we formulate the boundary value problem that we will study we have to 
+introduce some things from simplicial topology. A quick overview over the
+essential notions that we will use can for example be found in 
+\cite[Chapter 2]{arnold}. A more thorough introduction can be found in 
+\cite[Chapter 4]{topology_and_geometry}. For the sake of brevity, we will 
+follow the more intuitive approach taken by Arnold.
 
 
+\begin{definition}[Affine simplex]
+    Let $x_1$, $x_2$, ..., $x_n$ be affine independent. Then 
+    \begin{align*}
+    [x_1,x_2,...,x_n] \vcentcolon= \text{conv}\,\{x_1,...,x_n\}
+    \end{align*}
+    is called an affine simplex.
+\end{definition}
+\noindent We will assume all simplices to be affine.
+%%% TBD: Question: In the book this is defined in infinite dimensions. Does this
+%%% lead to any problems?
+
+\begin{definition}[Simplicial complex]
+    A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
+    \begin{enumerate}
+        \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
+        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$ is in $K$.
+    \end{enumerate}
+    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
+    $K$.
+\end{definition}
+For any topological space $X$ a homeomorphism 
+$\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
+Let $\{x_1,\, x_2,...\}$ be the vertices in the simplicial complex $K$.
+We fix an ordering of the vertices for every simplex. 
+That means for any $k$ every $k$ simplex $\sigma$ has
+a designated representation in the form of
+\begin{align*}
+    \sigma = [x_{i_0},\, x_{i_1}, ...,x_{i_k}].
+\end{align*} 
+
+\begin{definition}[$k$-chain]
+    Let $K$ be a simplicial complex. A formal linear combination of $k$ 
+    simplices
+    \begin{align*}
+        c = \sum\limits_{\sigma \in K\, k \text{ simplex}} c_\sigma \sigma
+    \end{align*}
+    with $c_\sigma \in \real$ is called \textit{$k$-chain}. The vector space 
+    of all $k$-chains is denoted by ${C}^\text{c}_k$.
+\end{definition}
+
+These spaces of $k$-chains become now a chain complex by introducing the 
+boundary operator $\partial$.
+
+\begin{definition}[Boundary]
+    For any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ we define the boundary
+    \begin{align*}
+        \partial[x_{i_0},\, x_{i_1},...,\, x_{i_k}] \vcentcolon=
+        \sum\limits_{j=0}^k (-1)^j [x_{i_0},\, x_{i_1},...,\, 
+        \hat{x}_{i_j},...,\, x_{i_k}]
+    \end{align*}
+    where $[x_{i_0},\, x_{i_1},...,\, \hat{x}_{i_j},...,\, x_{i_k}]$ is the
+    simplex without vertex $\hat{x}_{i_j}$. We then extend the definition
+    of the boundary operator linearly to $k$-chains 
+    $c = \sum_\sigma c_\sigma \sigma$ by
+    \begin{align*}
+        \partial c \vcentcolon= \sum\limits_\sigma c_\sigma \partial \sigma.
+    \end{align*}.
+\end{definition}
+
+A crucial property of the chain operator is the following.
+
+\begin{proposition}
+    $\partial \circ \partial = 0$.
+\end{proposition}
+\begin{proof}
+    This can be proven by direct computation, analogous to 
+    \cite[Chap.4, Lemma 1.6]{topology_and_geometry}
+\end{proof}
+
+We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
+a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
+$c = \partial d$. Let $Z^k_c \subseteq C^k_c$ be the subspace of $k$-cycles
+and $B^k_c \subseteq C^k_c$ the subspace of $k$-boundaries.
+We can now define the homology spaces of our simplicial complex.
+
+\begin{definition}[Chain homology]
+    The homology spaces $H^k_c$ are the quotient spaces of 
+    cycles and boundaries i.e.
+    \begin{align*}
+        H^k_c\vcentcolon= \faktor{Z^k_c}{B^k_c}.
+    \end{align*}
+\end{definition}
+
+Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing else 
+then the dual space of the space of $k$-chains i.e.
+\begin{align*}
+    C^k(K) \vcentcolon= \text{Hom}(C^k_c;\, \real)
+\end{align*}
+where Hom$(X,Y)$ is the space of all vector space homomorphisms (i.e. linear 
+mappings) from $X$ to $Y$.
+We now introduce an operator between these spaces of cochains.
+\begin{definition}
+    We define the operator $\delta: C^k{K} \rightarrow C^{k+1}(K)$ via
+    \begin{align*}
+        (\delta f) (c) \vcentcolon= f(\partial c).
+    \end{align*}
+    We call a cochain $f \in C^k(K)$ \textit{closed} if $\delta f = 0$ 
+    and we call $f$
+    \textit{exact} if there is a $g \in C^{k+1}(K)$ s.t. $f = \delta g$.
+\end{definition}
+We define the cohomology spaces analogous to homology spaces above.
+\begin{definition}[Cohomology of cochains]
+    Denote the space of closed $k$-cochains as $Z^k(K)$ and $B^k(K)$ the space
+    of exact $k$-cochains. We then define the \textit{cohomology spaces}
+    $H^k(K)$ as
+    \begin{align*}
+        H^k(K) \vcentcolon= \faktor{Z^k(K)}{B^k(K)}.
+    \end{align*}
+\end{definition}
+We will later show that if we consider certain subspaces of cochains so called
+\textit{p-summable} cochains that the $L^p$-cohomology defined above and the
+cohomology spaces of these $p$-summable cochains are isomorphic.
 
 
-
-
-
-
-Now we can formulate our boundary value problem. Let $\Omega \subseteq \real^n$ 
+Now we can finally formulate our boundary value problem. 
+Let $\Omega \subseteq \real^n$ 
 from now on be a an exterior polyhedral domain of a compact set i.e. 
 $\real^n \setminus \Omega$ 
 is a compact polyhedron. We then have the following boundary value
@@ -171,29 +286,6 @@ In order to formulate the assumptions necessary for the result from
 \cite{goldshtein} to work we will define some basic things from 
 simplicial topology theory. More details and references can be found in 
 \cite[Chapter 4.21]{topology_and_geometry}.
-
-\begin{definition}[Affine simplex]
-    Let $x_1$, $x_2$, ..., $x_n$ be affine independent. Then 
-    \begin{align*}
-    [x_1,x_2,...,x_n] \vcentcolon= \text{conv}\,\{x_1,...,x_n\}
-    \end{align*}
-    is called an affine simplex.
-\end{definition}
-
-%%% TBD: Question: In the book this is defined in infinite dimensions. Does this
-%%% lead to any problems?
-
-\begin{definition}[Simplicial complex]
-    A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
-    \begin{enumerate}
-        \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
-        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$ is in $K$.
-    \end{enumerate}
-    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
-    $K$.
-\end{definition}
-For any topological space $X$ a homeomorphism 
-$\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
 
 
 Because $\omegabar$ is itself a polyhedron we can
