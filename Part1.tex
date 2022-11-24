@@ -44,7 +44,7 @@ $\lVert \cdot \rVert _{\text{Alt}^k}$ be the induced norm. Then
 we define the $L^p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
-\lVert \omega \rVert _{L^p\Lambda^k(\Omega)}\vcentcolon=
+\lVert \omega \rVert _{L_p^k(\Omega)}\vcentcolon=
 \left(\int_\Omega \lVert \omega \rVert _{\text{Alt}^k}^p \right)^{1/p}
 \end{align*}
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
@@ -57,7 +57,7 @@ with the $L^2$ inner product
 \begin{align*}
 \langle \omega, \nu \rangle \vcentcolon= \int_\Omega \omega \wedge *\nu.
 \end{align*}
-Then $L^p\Lambda^k(\Omega)$ are the spaces of $k$-forms 
+$Lp^k(\Omega)$ are the spaces of $k$-forms 
 s.t. the corresponding $L^p$-norm is finite. \par
 
 Our next goal is to extend the exterior derivative $d$ 
@@ -84,12 +84,28 @@ For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm
 \end{align*}
 and for $p=\infty$
 \begin{align*}
-    \lVert \omega \rVert _{W^k_p} &\vcentcolon= 
+    \lVert \omega \rVert _{W^k_\infty} &\vcentcolon= 
     \max\left\{ \norm{\omega}_{L^k_\infty},\, \norm{d\omega}_{L^k_\infty}
     \right\}.
 \end{align*}
     
-
+\begin{definition}[$L^p$-cohomology]
+    We define the following subspaces of $W^k_p(\Omega)$, $1\leq p \leq\infty$:
+    \begin{align*}
+        \mathfrak{B}_k &\vcentcolon= dW^{k-1}_p(\Omega) \text{ and} \\
+        \mathfrak{Z}_k &\vcentcolon= \{ \omega \in W^k_p(\Omega)| 
+        \, d\omega = 0\}.
+    \end{align*}
+    We call the $k$-forms in $\mathfrak{B}_k$ exact and the forms in 
+    $\mathfrak{Z}_k$ closed.
+    Then we define the de Rham- or $L^p$-cohomology space $\lpcoho(\Omega)$ as 
+    the quotient space
+    \begin{align*}
+        \lpcoho (\Omega) \vcentcolon= \faktor{\mathfrak{Z}_k}{\mathfrak{B}_k}.
+    \end{align*}
+    %%% TBD: We need dd=0 here
+\end{definition}
+\vspace{0.5cm}
 
 We want to examine the Hilbert space $L^2\Lambda^k(\Omega)$ more closely
 (see \cite[Sec. 6.2.6]{arnold} for more details).  
@@ -100,6 +116,7 @@ $C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is
 equal to the codifferential operator of differential forms. We then define 
 additionally the space $\mathring{W}^k_2(\Omega)$ as the closure of 
 $C_0^\infty(\Omega) \subseteq W^k_2(\Omega)$ w.r.t. the $W^k_2(\Omega)$-norm.
+
 
 
 
