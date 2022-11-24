@@ -390,35 +390,41 @@ In the problem, we have the additional constraint
     \int_\gamma \omega = C_0.
 \end{align*}
 for some $C_0 \in \real$ and a closed bounded $k$-chain $\gamma$. 
-A priori however, we only assume 
-$\omega \in \mathring{W}^k_2(\Omega)$. We have to check if and how this can
+However, we only assume 
+$\omega \in \mathring{W}^k_2(\Omega)$ so we have to check if and how this can
 be well defined.
 
-Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can be 
+Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can 
 therefore be applied on $\omega \in S^k_p(M)$ as
 \begin{align*}
     I(\omega) \vcentcolon= I (\varphi(\omega)).
 \end{align*}
 \noindent If we fix now the closed 
 $k$-chain $\gamma$ then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
-$S^k_p(M)$, but it is a-priori not clear how to extend this to closed forms in
-$W_p^k(M)$. 
+$S^k_p(\omegabar)$, but it is a-priori not clear how to extend this to closed forms in
+$W_p^k(\omegabar)$. 
 
-
-We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(M)$ because 
+We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(\omegabar)$ because 
 otherwise $I$ would not induce an isomorphism on cohomology. We extend this now
-by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(M)$. 
-We have to check whether this is consistent with the definition above. 
-Let be $\nu \in W_p^{k-1}k(M)$ s.t. $d\nu \in S^k_p(M)$. Let $A \subseteq M$ be a 
-bounded neighborhood of $\gamma$. We can then find 
+by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(\omegabar)$. 
+We have to check whether this is consistent with the definition above i.e. we
+have to show that if $d\nu \in S^k_p(M)$ for some 
+$\nu \in W_p^{k-1}k(\omegabar)$ then 
+it must follow from the previous definition of the integral that indeed
+\begin{align*}
+    \int_\gamma d\nu = 0
+\end{align*}
+holds.
+Let $A \subseteq M$ be a bounded neighborhood of $\gamma$. We can then find 
 $\tilde{\nu}$ s.t.  $\tilde{\nu} \in W^{k-1}_q(A)$ for any $q > 1$ and 
 $d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. Now it is possible to apply 
 Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
-$\int_\gamma d\nu = 0$. This shows consistency.
+$\int_\gamma d\nu = 0$ and consequently we have shown consistency.
 
 
-In order to extend the functional $\int_\gamma$ we will use two operators
-$\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second part 
+In order to extend the functional $\int_\gamma$ 
+further we will use two operators
+$\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second section 
 of \cite{goldshtein}. The precise definition and details of their construction
 are not relevant for our purposes because we will only use
 the following properties (cf. \cite[Thm.2]{goldshtein}).
@@ -431,18 +437,19 @@ the following properties (cf. \cite[Thm.2]{goldshtein}).
     \begin{enumerate}
         \item $\mathscr{R}\omega - \omega = 
             d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
-            $\omega \in W^k_{1,loc}(M)$
+            $\omega \in W^k_{1,loc}(\omegabar)$
         \item for any $1 \leq p \leq \infty$, 
-            $\rop(W^k_p(M)) \subseteq S^k_p(M)$.
+            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
     \end{enumerate}
 \end{theorem}
 
-\noindent We can now use this operator $\rop$ to define $\int_\gamma \omega$ for closed
+\noindent We can now use the operator $\rop$ to define $\int_\gamma \omega$ for closed
 $\omega \in W^k_p(M)$ as
 \begin{align*}
 \int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
 \end{align*}
-This is consistent because if $\omega \in S^k_p(M)$ closed then due to 
+This is consistent with the curve integral for S-forms 
+because if $\omega \in S^k_p(M)$ closed then due to 
 Thm.\,\ref{operators}
 \begin{align*}
 \int_\gamma \rop\omega = 
