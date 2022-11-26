@@ -25,6 +25,8 @@
 \newtheorem{definition}{Definition}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\diver}{div}
 
 \newcommand{\aop}{\mathscr{A}}
 \newcommand{\lpcoho}{H^k_{p,dR}}
@@ -35,6 +37,30 @@
 
 
 \begin{document}
+
+Our goal is to study the homogeneous magnetostatic problem on the exterior 
+domain of a triangulated torus. That means 
+that for the unbounded domain  $\Omega \subseteq \real^3$ we have
+$\real^3 \setminus \Omega$ is a triangulated torus. We also need a 
+piecewise straight (i.e. triangulated) closed curve around the torus.
+%%% TBD: Picture
+{\color{red} (TBD: Define the "triangulated torus" more rigorous)}
+
+Let $B$ be a magnetic field on the domain.
+We the have the following boundary value problem:
+
+\begin{align}
+    \curl \, B &= 0, \\ 
+    \diver \, B  &= 0 \text{ in } \Omega \\
+    B \cdot n &= 0 \text{ on } \partial \Omega \text{ and }\\
+    \int_\gamma B \cdot dl = C_0
+\end{align}
+where $n$ is the outward normal vector field on $\partial \Omega$ and 
+$C_0 \in \real$. We want to prove existence and uniqueness of 
+solutions. In order to do so we will need to introduce Sobolev spaces of 
+differential forms and basics from
+simplicial topology.
+
 
 Let $\Omega \subseteq \real^n$ be a Lipschitz domain and $\text{Alt}^k$ 
 the space of alternating $k$-linear maps on $\real^n$. 
@@ -208,6 +234,9 @@ We can now define the homology spaces of our simplicial complex.
         H^k_c\vcentcolon= \faktor{Z^k_c}{B^k_c}.
     \end{align*}
 \end{definition}
+\noindent The homology spaces are independent of the chosen simplicial complex
+\cite{}. %%%TBD: Are you sure?
+
 
 Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing else 
 then the dual space of the space of $k$-chains i.e.
@@ -240,26 +269,24 @@ We will later show that if we consider certain subspaces of cochains so called
 cohomology spaces of these $p$-summable cochains are isomorphic.
 
 
-Now we can finally formulate our boundary value problem. 
-Let $\Omega \subseteq \real^n$ 
-from now on be a an exterior polyhedral domain of a compact set i.e. 
-$\real^n \setminus \Omega$ 
-is a compact polyhedron. We then have the following boundary value
-problem: For a fixed $C_0 \in \real$ and closed bounded $k$-chain $\gamma$ 
-find $\omega \in \mathring{W}^k_2(\Omega)$ s.t.
-\begin{align*}
-    d\omega &= 0, \\
-    \delta\omega &= 0 \text{ and} \\
-    \int_\gamma \omega &= C_0.
-\end{align*}
-Because we consider polyhedral domains we assume that $\gamma$ consists of 
-finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
-generator of the simplicial homology group. The well-definedness of the 
-integral over $\gamma$ will be discussed later.
-Our goal will be to show existence and uniqueness of solutions. In order to 
-achieve this, we rely on a result about the isomorphism of a simplicial 
-cohomology space $H^k_p(K)$ which will be defined below
-and the $L^p$-cohomology space $H^k_{p,dR}(\omegabar)$ ($dR$ short for de Rham).
+% from now on be a an exterior polyhedral domain of a compact set i.e. 
+% $\real^3 \setminus \Omega$ 
+% is a compact polyhedron. We then have the following boundary value
+% problem: For a fixed $C_0 \in \real$ and closed bounded curve $\gamma$ 
+% find $\omega \in \mathring{W}^k_2(\Omega)$ s.t.
+% \begin{align*}
+%     d\omega &= 0, \\
+%     \delta\omega &= 0 \text{ and} \\
+%     \int_\gamma \omega &= C_0.
+% \end{align*}
+% Because we consider polyhedral domains we assume that $\gamma$ consists of 
+% finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
+% generator of the simplicial homology space. The well-definedness of the 
+% integral over $\gamma$ will be discussed later.
+In order to show existence and uniqueness of solutios of the magnetostatic 
+problem we rely on a result about the isomorphism of a simplicial 
+cohomology space $H^k_p(K)$ and the $L^p$-cohomology space 
+$H^k_{p,dR}(\omegabar)$.
 This result was proven in \cite{goldshtein}. In the diploma thesis of Nikolai
 Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
 many additional details can be found. The result will be presented in the
@@ -576,6 +603,9 @@ Thm.\,\ref{operators}
 
 
 \subsection{Existence and uniqueness}
+
+
+
 We start with the following
 \begin{proposition}\label{uniqueness_cochain}
     Let $\gamma$ be a $k$-chain s.t. the homology class $[\gamma]$ 
@@ -593,7 +623,7 @@ We start with the following
 \end{proposition} 
 \begin{proof}
     At first, we construct such a $k$-cochain $F$. Note that we assume
-    $[\gamma]$ to be a generator of the homology group. Using this
+    $[\gamma]$ to be a generator of the homology space. Using this
     we define $\tilde{F}: H^k_p(K) \rightarrow \real$ by setting 
     $\tilde{F}([\gamma]) = C_0$. Let $Z^k_p \subseteq C^k_p(K)$ 
     denote the space of closed $k$-cochains. Then we define the linear map
@@ -602,10 +632,10 @@ We start with the following
     properties.
 
     Next, we show uniqueness on closed chains.
-    Take any closed $k$-chain $c$. Because $\gamma$ is the generator of the 
+    Take any closed $k$-chain $c$. Because $[\gamma]$ is the generator of the 
     homology group we have $\lambda \in \real$ s.t. $[c] = [\lambda \, \gamma]$ 
     %%% TBD: I am not sure if we need \lambda integer or real
-    where $[\cdot]$ is the corresponding homology class. That means that we have
+    . That means that we have
     some $(k-1)$-chain $d$ s.t. $c = \lambda \, \gamma + \partial d$. Using the 
     properties of $F$ and $G$,
     \begin{align*}
@@ -614,6 +644,53 @@ We start with the following
     \end{align*}
     Because the same computation is valid for $G$, $F(c) = G(c)$ follows.
 \end{proof}
+
+
+We will return now to the magnetostatic problem. In order to use the results
+above we will reformulate the problem in the notation of differential forms.
+There are two ways to identify a vector field with a differential form 
+(cf. \cite[Table 6.1 and p.70]{arnold}) either as a 1-form or a 2-form. 
+For a vector field $B$ we define
+\begin{align*}
+    D^1\, B &\vcentcolon= B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3 \text{ and}\\
+    D^2\, B &\vcentcolon= B_2 \, dx_2 \wedge dx_3 - B_2 \, dx_1 \wedge dx_3
+        + B_3 \, dx_1 \wedge dx_2
+\end{align*} 
+as the corresponding 1-form and 2-form. 
+Then the exterior derivative is $d\omega$ corresponds to the divergence,
+the codifferential $\delta$ corresponds to the curl and the normal component
+being zero corresponds to $\omega \in \mathring{W}^2_2(\Omega)$.\cite{}. 
+
+If we then use the association of
+3-forms with scalars we have the corresponding boundary value problem without
+the integral condition for 
+a 2-form $\omega \in \mathring{W}_2^2(\Omega)$:
+
+\begin{align}
+    \delta \omega &= 0, \\ 
+    d\omega  &= 0 \text{ in } \Omega.
+\end{align}
+Next, we have to add the integral condition. We use
+$**=(-1)^{k(n-k)}\tilde{\nu} = \tilde{\nu}$ \cite[p.66]{arnold} for any
+differential form $\tilde{\nu}$.
+and observe
+\begin{align*}
+    *D^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
+        = B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3\\ 
+    &= D^1 \, B.
+\end{align*}
+
+Then we have 
+\begin{align*}
+    \int_\gamma * D^2\, B = \int_\gamma D^1\, B = \int_\gamma B \cdot \text{d}l.
+\end{align*}
+In the last step we used the fact that the integration of a 1-form over a
+curve can is equivalent to the curve integral of the associated vector field
+(cf. \cite[6.2.3]{arnold}). Hence, we can add the integral condition 
+\begin{align*}
+    \int_\gamma *\omega = C_0
+\end{align*}
+and obtain the equivalent problem on differential forms.
 
 
 We are now able to proof existence of a 
@@ -671,6 +748,55 @@ This proves existence.
     \omega = \tilde{\omega}.
     \end{align*}
 \end{proof}
+
+\section{Application: Homogeneous magnetostatic problem on the 
+exterior domain of a torus}
+
+As an application of this general boundary value problem we will have a look
+at the following magnetostatic problem. Let $\Omega$ be the exterior domain of
+a triangulated torus i.e. $\real^3 \setminus \Omega$ is a torus with 
+triangulated surface. Let $B$ be the magnetic field. We then have the following
+boundary value problem:
+%%%TBD: Include a picture
+It is natural to identify the magnetic field $B$ with a 2-form $\omega$.
+Then the exterior derivative is $d\omega$ corresponds to the divergence,
+the codifferential $\delta$ corresponds to the curl and the normal component
+being zero is corresponds to $\omega \in \mathring{W}^2_2(\Omega)$.\cite{}. 
+The curve integral is an integration over a one-dimensional manifold and
+corresponds therefore to the integration of a one-form. Therefore the
+condition \ref{curve_integral_contition} is can be expressed with the hodge 
+star operator $*$ as
+\begin{align*}
+    \int_\gamma *\omega = C_0.
+\end{align*}
+
+
+Now we want to apply our previous results.
+$\Omega$ fulfills all required assumptions for the domain. Because $\gamma$
+goes around the torus once and the homology space $H^1_c$ is one-dimensional
+{\color{red}(TBD: This has to be referenced or proven)}. Therefore because 
+$\gamma$ is not a boundary $[\gamma]$ spans $H^1_c$. Now all assumptions are
+fulfilled and we can apply our result. We will do so on 1-forms and transfer the
+result to 2-forms using the Hodge star operator.
+
+\subsection*{Existence}
+Let 
+$\tilde{\omega} \in \mathring{W}^1_2(\Omega) $ be the unique solution of our 
+general problem \ref{} and define $\omega \vcentcolon= *\tilde{\omega}$. Then
+we use $**=(-1)^{k(n-k)}\tilde{\omega} = \tilde{\omega}$ \cite[p.66]{arnold} 
+to get 
+\begin{align*}
+    d\omega = ** d*\tilde{\omega} = * (-1)^{n(k-1)+1} \delta \tilde{\omega}
+    = 0
+\end{align*}
+and
+\begin{align*}
+    \delta \omega = (-1)^{n(k-1)+1} *d*\omega = (-1)^{n(k-1)+1}* d\tilde{omega}
+    = 0.
+\end{align*}
+
+
+
 %%% TBD: Nowaczyk's thesis is not a master's thesis
 \printbibliography
 \end{document}
