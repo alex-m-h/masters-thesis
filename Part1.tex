@@ -53,7 +53,7 @@ We the have the following boundary value problem:
     \curl \, B &= 0, \\ 
     \diver \, B  &= 0 \text{ in } \Omega \\
     B \cdot n &= 0 \text{ on } \partial \Omega \text{ and }\\
-    \int_\gamma B \cdot dl = C_0
+    \int_\gamma B \cdot dl &= C_0
 \end{align}
 where $n$ is the outward normal vector field on $\partial \Omega$ and 
 $C_0 \in \real$. We want to prove existence and uniqueness of 
@@ -67,7 +67,7 @@ the space of alternating $k$-linear maps on $\real^n$.
 Let $\langle \cdot,\cdot\rangle_{\text{Alt}^k}$ be the standard inner
 product of alterating $k$-linear maps and 
 $\lVert \cdot \rVert _{\text{Alt}^k}$ be the induced norm. Then
-we define the $L^p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
+we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
 \lVert \omega \rVert _{L_p^k(\Omega)}\vcentcolon=
@@ -76,25 +76,28 @@ as (cf. \cite{goldshtein})
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
 and for $p=\infty$ as
 \begin{align*}
-\esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{{\text{Alt}^k}}.
+\esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{\text{Alt}^k}.
 \end{align*}
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
-with the $L^2$ inner product  
+with the $L_2$ inner product  
 \begin{align*}
-\langle \omega, \nu \rangle \vcentcolon= \int_\Omega \omega \wedge *\nu.
+\langle \omega, \nu \rangle \vcentcolon= 
+\int_\Omega \langle \omega, \nu \rangle _{\text{Alt}^k}.
 \end{align*}
-$Lp^k(\Omega)$ are the spaces of $k$-forms 
-s.t. the corresponding $L^p$-norm is finite. \par
+$L_p^k(\Omega)$ are the spaces of $k$-forms 
+s.t. the corresponding $L_p$-norm is finite. \par
 
 Our next goal is to extend the exterior derivative $d$ 
 of smooth differential forms in the weak sense (cf. \cite{goldshtein}). 
 This is done analogous to the definition of the usual weak derivative.
-The exterior derivative $d\omega \in L^p\Lambda^{k+1}(\Omega)$ is defined as
-the unique $(k+1)$-form in $L^p\Lambda^{k+1}(\Omega)$ s.t. 
+The exterior derivative $d\omega \in L^p_{k+1}(\Omega)$ is defined as
+the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t. 
 \begin{align*}
 \int_\Omega d\omega \wedge \phi = (-1)^{k+1}\int_\Omega \omega \wedge d\phi
 \quad \forall \phi \in C_0^\infty \Lambda^{n-k-1}(\Omega).
 \end{align*}
+where $C_0^\infty \Lambda^{n-k-1}(\Omega)$ are the $(n-k-1)$-forms with 
+smooth compactly supported coefficients.
 Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
 W^k_p(\Omega) &= \left\{ \omega \in L^p\Lambda^k(\Omega)\, | 
@@ -133,18 +136,37 @@ and for $p=\infty$
 \end{definition}
 \vspace{0.5cm}
 
-We want to examine the Hilbert space $L^2\Lambda^k(\Omega)$ more closely
+We want to examine the Hilbert space $L^k_2(\Omega)$ more closely
 (see \cite[Sec. 6.2.6]{arnold} for more details).  
 %%% TBD: This is only for bounded domains. What changes?
-Because $d:L^2\Lambda^k(\Omega) \rightarrow L^2\Lambda^{k+1}(\Omega)$
+We denote $H^k(d;\Omega) \vcentcolon= W^k_2(\Omega)$. If the domain is clear
+we will leave it out.
+Because $d:L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$
 is an unbounded, densely defined operator with domain 
 $C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is 
-equal to the codifferential operator of differential forms. We then define 
-additionally the space $\mathring{W}^k_2(\Omega)$ as the closure of 
-$C_0^\infty(\Omega) \subseteq W^k_2(\Omega)$ w.r.t. the $W^k_2(\Omega)$-norm.
+equal to the codifferential operator of differential forms i.e.
+\begin{align*}
+    \delta = (-1)^{(n-k)(k-1)+1} * d *.
+\end{align*}
+Analogous to the
+exterior derivative we define 
+\begin{align*}
+    H^k(\delta;\Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \, 
+    \delta \omega \in L^{k-1}_2 (\Omega) \}. 
+\end{align*}
+Analogous to $H^k(d)$ we write $H^k(\delta)$ if the domain is clear.
+We then define 
+additionally the space $\mathring{H}^k(d;\Omega)$ as the closure of 
+$C_0^\infty \Lambda^k(\Omega) \subseteq H^k(d;\Omega)$ w.r.t. 
+the $H^k(d)$-norm i.e. 
+$\mathring{H}^k(d;\Omega)$ corresponds to $k$-forms in $H^k(d;\Omega)$
+being zero on the boundary. {\color{red} TBD: There are several different 
+ways to characterize zero boundary conditions in the $L^2$ setting. We have
+to choose the one that works best.}
 
 
-Before we formulate the boundary value problem that we will study we have to 
+Before we can reformulate the boundary value problem in the language of 
+differential forms we have to 
 introduce some things from simplicial topology. A quick overview over the
 essential notions that we will use can for example be found in 
 \cite[Chapter 2]{arnold}. A more thorough introduction can be found in 
@@ -203,7 +225,7 @@ boundary operator $\partial$.
         \hat{x}_{i_j},...,\, x_{i_k}]
     \end{align*}
     where $[x_{i_0},\, x_{i_1},...,\, \hat{x}_{i_j},...,\, x_{i_k}]$ is the
-    simplex without vertex $\hat{x}_{i_j}$. We then extend the definition
+    simplex without vertex $x_{i_j}$. We then extend the definition
     of the boundary operator linearly to $k$-chains 
     $c = \sum_\sigma c_\sigma \sigma$ by
     \begin{align*}
@@ -238,8 +260,8 @@ We can now define the homology spaces of our simplicial complex.
 \cite{}. %%%TBD: Are you sure?
 
 
-Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing else 
-then the dual space of the space of $k$-chains i.e.
+Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
+else than the dual space of the space of $k$-chains i.e.
 \begin{align*}
     C^k(K) \vcentcolon= \text{Hom}(C^k_c;\, \real)
 \end{align*}
@@ -283,7 +305,7 @@ cohomology spaces of these $p$-summable cochains are isomorphic.
 % finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
 % generator of the simplicial homology space. The well-definedness of the 
 % integral over $\gamma$ will be discussed later.
-In order to show existence and uniqueness of solutios of the magnetostatic 
+In order to show existence and uniqueness of solutions of the magnetostatic 
 problem we rely on a result about the isomorphism of a simplicial 
 cohomology space $H^k_p(K)$ and the $L^p$-cohomology space 
 $H^k_{p,dR}(\omegabar)$.
@@ -309,13 +331,11 @@ to our case.
 \section{Isomorphism of Cohomology}
 
 \subsection{Assumptions}
-In order to formulate the assumptions necessary for the result from 
-\cite{goldshtein} to work we will define some basic things from 
-simplicial topology theory. More details and references can be found in 
-\cite[Chapter 4.21]{topology_and_geometry}.
-
-
-Because $\omegabar$ is itself a polyhedron we can
+% In order to formulate the assumptions necessary for the result from 
+% \cite{goldshtein} to work we will define some basic things from 
+% simplicial topology theory. More details and references can be found in 
+% \cite[Chapter 4.21]{topology_and_geometry}.
+Because $\omegabar$ from our problem is itself a polyhedron we can
 assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$ and we can
 simply use the identity as triangulation.
 However, we will use different metrics on $|K|$ and $\omegabar$. 
@@ -340,14 +360,14 @@ g_S|_x\left(\sum_{i=1}^n v_i \frac{\partial}{\partial x_i},
 \left\langle \sum_{k=1}^\infty \sum_{i=1}^n v_i 
 \frac{\partial f_k}{\partial x_i} (x)
 \frac{\partial }{\partial y_k}, 
-\sum_{l=1}^\infty \sum_{j,l=1}^n w_j \frac{\partial f_l}{\partial x_j} (x)
+\sum_{l=1}^\infty \sum_{j=1}^n w_j \frac{\partial f_l}{\partial x_j} (x)
 \frac{\partial }{\partial y_l} \right\rangle \\   
 &= \sum_{i,j=1}^n \sum_{k,l=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
 w_j \frac{\partial f_l}{\partial x_j} (x) 
 \left\langle \frac{\partial }{\partial y_k}, \frac{\partial }{\partial y_l} 
 \right\rangle\\
 &= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
-w_j \frac{\partial f_l}{\partial x_j} (x)\\
+w_j \frac{\partial f_k}{\partial x_j} (x)\\
 &= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i w_j \left( Df(x)^T Df(x) \right)_{ij} \\
 &= v^T Df(x)^T Df(x) w = \left\langle Df(x) v, Df(x) w \right\rangle,
 \end{align*}
@@ -407,10 +427,11 @@ and analogously
 
 \subsection{Statement of the Isomorphism} \label{sec_isomorphism_cohomology}
 
+From now on we will assume that the GKS condition is fulfilled.
 The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
 mappings between different cohomology spaces. 
 The first isomorphism is induced from a linear mapping
-between from the so called \textit{S-forms} 
+from the so called \textit{S-forms} 
 $S_p^k(K)$ to \textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
 be defined next.
 
@@ -438,7 +459,7 @@ bounded (cf \cite[p.191]{goldshtein}).
     \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
     \end{align*}
     be a collection of differential $k$-forms. We call $\theta$ S-form of degree
-    $k$ if we have for all for simplices
+    $k$ if we have for all simplices
     $\mu <\sigma$ 
     \begin{align*}
     j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
@@ -476,7 +497,7 @@ and then the resulting cohomology space
 We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
 integration mapping
 $I: S_p^k(K) \rightarrow C_p^k(K)$ 
-induces an isomorphism on the cohomologies i.e.
+induces an isomorphism on the cohomologies i.e. %% TBD: Say what "induces isomorphism means
 $[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
 spaces (see Theorem\,1 in \cite{goldshtein}
 and the proof thereof).
@@ -488,7 +509,7 @@ and the proof thereof).
 
 
 The next step is to obtain an isomorphism between the cohomology 
-of S-forms $\mathscr{H}_p^k(K)$ and the $L^p$ cohomology 
+of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
 $\lpcoho(\omegabar)$. At first, we define 
 \begin{align*}
 \varphi: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
@@ -510,7 +531,8 @@ In conclusion, we get the following isomorphisms of cohomologies:
     \lpcoho(\omegabar) \xrightarrow{[\iota]^{-1}} \mathscr{H}_p^k(K) 
     \xrightarrow{[I]} H^k_p(K).
 \end{align*}
-
+This result will be crucial in the next section to obtain a unique solution
+to our problem.
 
 
 
@@ -524,15 +546,21 @@ In conclusion, we get the following isomorphisms of cohomologies:
 
 In the problem, we have the additional constraint 
 \begin{align*}
-    \int_\gamma \omega = C_0.
+    \int_\gamma B \cdot \text{d}l = C_0
 \end{align*}
-for some $C_0 \in \real$ and a closed bounded $k$-chain $\gamma$. 
+for some $C_0 \in \real$ and a closed bounded triangulated curve $\gamma$.
+This corresponds in the language of differential forms in the general case
+to the integration of a $k$-form $\omega$
+over a $k$-chain $\gamma$
+\begin{align*}
+    \int_\gamma \omega  = C_0.
+\end{align*}
 However, we only assume 
-$\omega \in \mathring{W}^k_2(\Omega)$ so we have to check if and how this can
+$\omega \in \mathring{H}^k(d;\Omega)$ so we have to check if and how this can
 be well defined.
 
 Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can 
-therefore be applied on $\omega \in S^k_p(M)$ as
+therefore be applied on $\omega \in S^k_p(\omegabar)$ as
 \begin{align*}
     I(\omega) \vcentcolon= I (\varphi(\omega)).
 \end{align*}
@@ -610,7 +638,7 @@ Thm.\,\ref{operators}
 We start with the following
 \begin{proposition}\label{uniqueness_cochain}
     Let $\gamma$ be a $k$-chain s.t. the homology class $[\gamma]$ 
-    is a generator of the homology group. For any $C_0 \in \real$ 
+    spans the homology space. For any $C_0 \in \real$ 
     there exist a cochain $F \in C^k_p(K)$ s.t.
     \begin{align*}
     F(\gamma) = C_0 \text{ and } F(\partial d) = 0 
@@ -624,7 +652,7 @@ We start with the following
 \end{proposition} 
 \begin{proof}
     At first, we construct such a $k$-cochain $F$. Note that we assume
-    $[\gamma]$ to be a generator of the homology space. Using this
+    $[\gamma]$ to be a basis of the homology space. Using this
     we define $\tilde{F}: H^k_p(K) \rightarrow \real$ by setting 
     $\tilde{F}([\gamma]) = C_0$. Let $Z^k_p \subseteq C^k_p(K)$ 
     denote the space of closed $k$-cochains. Then we define the linear map
@@ -633,8 +661,8 @@ We start with the following
     properties.
 
     Next, we show uniqueness on closed chains.
-    Take any closed $k$-chain $c$. Because $[\gamma]$ is the generator of the 
-    homology group we have $\lambda \in \real$ s.t. $[c] = [\lambda \, \gamma]$ 
+    Take any closed $k$-chain $c$. Because $[\gamma]$ is a basis of the 
+    homology space we have $\lambda \in \real$ s.t. $[c] = [\lambda \, \gamma]$ 
     %%% TBD: I am not sure if we need \lambda integer or real
     . That means that we have
     some $(k-1)$-chain $d$ s.t. $c = \lambda \, \gamma + \partial d$. Using the 
@@ -658,26 +686,29 @@ For a vector field $B$ we define
         + B_3 \, dx_1 \wedge dx_2
 \end{align*} 
 as the corresponding 1-form and 2-form. 
-Then the exterior derivative is $d\omega$ corresponds to the divergence,
-the codifferential $\delta$ corresponds to the curl and the normal component
-being zero corresponds to $\omega \in \mathring{W}^2_2(\Omega)$.\cite{}. 
+Then the exterior derivative is $dD^2\,\omega$ corresponds to the divergence,
+the codifferential $\delta D^2\,\omega$ 
+corresponds to the curl and the normal component
+being zero on the boundary corresponds 
+to $\omega \in \mathring{H}^2(d)$.\cite{}. 
 
 If we then use the association of
 3-forms with scalars we have the corresponding boundary value problem without
 the integral condition for 
-a 2-form $\omega \in \mathring{W}_2^2(\Omega)$:
+2-forms: Find $\omega \in \mathring{H}^2(d)$ s.t.
 
 \begin{align}
     \delta \omega &= 0, \\ 
     d\omega  &= 0 \text{ in } \Omega.
 \end{align}
-Next, we have to add the integral condition. We use
+Next, we have to add the integral condition. 
+We use that we are in three dimensions so
 $**=(-1)^{k(n-k)}\tilde{\nu} = \tilde{\nu}$ \cite[p.66]{arnold} for any
-differential form $\tilde{\nu}$.
+$k$-form $\tilde{\nu}$.
 and observe
 \begin{align*}
     *D^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
-        = B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3\\ 
+        = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
     &= D^1 \, B.
 \end{align*}
 
@@ -686,8 +717,8 @@ Then we have
     \int_\gamma * D^2\, B = \int_\gamma D^1\, B = \int_\gamma B \cdot \text{d}l.
 \end{align*}
 In the last step we used the fact that the integration of a 1-form over a
-curve can is equivalent to the curve integral of the associated vector field
-(cf. \cite[6.2.3]{arnold}). Hence, we can add the integral condition 
+curve is equivalent to the curve integral of the associated vector field
+(cf. \cite[Sec. 6.2.3]{arnold}). Hence, we can add the integral condition 
 \begin{align}
     \int_\gamma *\omega = C_0 \label{integral_condition}
 \end{align}
@@ -695,9 +726,9 @@ and obtain the equivalent problem on differential forms.
 
 
 We are now able to proof existence of a 
-solution. Take a closed cochain $F \in C^k_p(K)$ s.t. $F(\gamma) = C_0$ 
+solution. Take a closed cochain $F \in C^1_2(K)$ s.t. $F(\gamma) = C_0$ 
 and 
-$F(\partial d) = 0$ for $(k-1)$-chains $d$ 
+$F(\partial d) = 0$ for any $2$-chain $d$ 
 as in Prop.\,\ref{uniqueness_cochain}. Then we know from 
 Sec.\,\ref{sec_isomorphism_cohomology} that 
 there exists a unique $[\theta] \in \mathscr{H}_2^1(K)$ s.t. 
@@ -720,7 +751,7 @@ and a harmonic $\omega \in \mathcal{H}^2$ s.t. %%%TBD: Define the L2 spaces
 \begin{align*}
     *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
 \end{align*}
-where the limit is in the $L^2$-sense. 
+where the limit is in $L^1_2(\Omega)$. 
 
 
 We will show that $\omega$ is then a solution. Because $\omega$ is harmonic
@@ -738,7 +769,7 @@ in Sec.\,\ref{well_definedness_integral}.
 
 Take a ball of radius $R>0$ 
 around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
-Using the factthat the range of $\delta$ is closed on bounded domains 
+Using the fact that the range of $\delta$ is closed on bounded domains 
 (cf. \cite[Lemma 7]{picard}) there is some $\phi_R \in H^3(\delta;B_R)$ s.t.
 \begin{align*}
     *\eta|_{B_R} = \omega|_{B_R} + \delta \phi_R.
@@ -751,8 +782,11 @@ We then get for the integral condition (\ref{integral_condition})
     &= \int_\gamma \eta|_{B_R} = C_0
 \end{align*}
 so the integral condition (\refeq{integral_condition}) is fulfilled and 
-$\omega$ is a indeed solution. \newline
+$\omega$ is indeed a solution. \newline
 {\color{red} TBD: Put all this in a theorem.}
+
+If we now translate this back to standard vector calculus terms we have found 
+the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
 
 
 % If we now take the Hodge decomposition
@@ -801,8 +835,6 @@ $\omega$ is a indeed solution. \newline
         \omega = \tilde{\omega} + *d\phi = \tilde{\omega} + *d**\phi 
         = \tilde{\omega} + (-1)^{(n-k)(k-1)+1}\delta * \phi.
     \end{align*}
-    
-    
     Then because $\omega$ and 
     $\tilde{\omega}$ are harmonic we have 
     $\omega, \tilde{\omega} \perp \delta H^{3}(\delta)$ and therefore 
@@ -811,51 +843,51 @@ $\omega$ is a indeed solution. \newline
     \end{align*}
 \end{proof}
 
-\section{Application: Homogeneous magnetostatic problem on the 
-exterior domain of a torus}
+% \section{Application: Homogeneous magnetostatic problem on the 
+% exterior domain of a torus}
 
-As an application of this general boundary value problem we will have a look
-at the following magnetostatic problem. Let $\Omega$ be the exterior domain of
-a triangulated torus i.e. $\real^3 \setminus \Omega$ is a torus with 
-triangulated surface. Let $B$ be the magnetic field. We then have the following
-boundary value problem:
-%%%TBD: Include a picture
-It is natural to identify the magnetic field $B$ with a 2-form $\omega$.
-Then the exterior derivative is $d\omega$ corresponds to the divergence,
-the codifferential $\delta$ corresponds to the curl and the normal component
-being zero is corresponds to $\omega \in \mathring{W}^2_2(\Omega)$.\cite{}. 
-The curve integral is an integration over a one-dimensional manifold and
-corresponds therefore to the integration of a one-form. Therefore the
-condition \ref{curve_integral_contition} is can be expressed with the hodge 
-star operator $*$ as
-\begin{align*}
-    \int_\gamma *\omega = C_0.
-\end{align*}
+% As an application of this general boundary value problem we will have a look
+% at the following magnetostatic problem. Let $\Omega$ be the exterior domain of
+% a triangulated torus i.e. $\real^3 \setminus \Omega$ is a torus with 
+% triangulated surface. Let $B$ be the magnetic field. We then have the following
+% boundary value problem:
+% %%%TBD: Include a picture
+% It is natural to identify the magnetic field $B$ with a 2-form $\omega$.
+% Then the exterior derivative is $d\omega$ corresponds to the divergence,
+% the codifferential $\delta$ corresponds to the curl and the normal component
+% being zero is corresponds to $\omega \in \mathring{W}^2_2(\Omega)$.\cite{}. 
+% The curve integral is an integration over a one-dimensional manifold and
+% corresponds therefore to the integration of a one-form. Therefore the
+% condition \ref{curve_integral_contition} is can be expressed with the hodge 
+% star operator $*$ as
+% \begin{align*}
+%     \int_\gamma *\omega = C_0.
+% \end{align*}
 
 
-Now we want to apply our previous results.
-$\Omega$ fulfills all required assumptions for the domain. Because $\gamma$
-goes around the torus once and the homology space $H^1_c$ is one-dimensional
-{\color{red}(TBD: This has to be referenced or proven)}. Therefore because 
-$\gamma$ is not a boundary $[\gamma]$ spans $H^1_c$. Now all assumptions are
-fulfilled and we can apply our result. We will do so on 1-forms and transfer the
-result to 2-forms using the Hodge star operator.
+% Now we want to apply our previous results.
+% $\Omega$ fulfills all required assumptions for the domain. Because $\gamma$
+% goes around the torus once and the homology space $H^1_c$ is one-dimensional
+% {\color{red}(TBD: This has to be referenced or proven)}. Therefore because 
+% $\gamma$ is not a boundary $[\gamma]$ spans $H^1_c$. Now all assumptions are
+% fulfilled and we can apply our result. We will do so on 1-forms and transfer the
+% result to 2-forms using the Hodge star operator.
 
-\subsection*{Existence}
-Let 
-$\tilde{\omega} \in \mathring{W}^1_2(\Omega) $ be the unique solution of our 
-general problem \ref{} and define $\omega \vcentcolon= *\tilde{\omega}$. Then
-we use $**=(-1)^{k(n-k)}\tilde{\omega} = \tilde{\omega}$ \cite[p.66]{arnold} 
-to get 
-\begin{align*}
-    d\omega = ** d*\tilde{\omega} = * (-1)^{n(k-1)+1} \delta \tilde{\omega}
-    = 0
-\end{align*}
-and
-\begin{align*}
-    \delta \omega = (-1)^{n(k-1)+1} *d*\omega = (-1)^{n(k-1)+1}* d\tilde{omega}
-    = 0.
-\end{align*}
+% \subsection*{Existence}
+% Let 
+% $\tilde{\omega} \in \mathring{W}^1_2(\Omega) $ be the unique solution of our 
+% general problem \ref{} and define $\omega \vcentcolon= *\tilde{\omega}$. Then
+% we use $**=(-1)^{k(n-k)}\tilde{\omega} = \tilde{\omega}$ \cite[p.66]{arnold} 
+% to get 
+% \begin{align*}
+%     d\omega = ** d*\tilde{\omega} = * (-1)^{n(k-1)+1} \delta \tilde{\omega}
+%     = 0
+% \end{align*}
+% and
+% \begin{align*}
+%     \delta \omega = (-1)^{n(k-1)+1} *d*\omega = (-1)^{n(k-1)+1}* d\tilde{omega}
+%     = 0.
+% \end{align*}
 
 
 
