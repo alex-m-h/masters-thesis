@@ -46,7 +46,7 @@ piecewise straight (i.e. triangulated) closed curve around the torus.
 %%% TBD: Picture
 {\color{red} (TBD: Define the "triangulated torus" more rigorous)}
 
-Let $B$ be a magnetic field on the domain.
+Let $B$ be a magnetic field on the domain $\Omega$.
 We the have the following boundary value problem:
 
 \begin{align}
@@ -89,7 +89,7 @@ s.t. the corresponding $L_p$-norm is finite. \par
 
 Our next goal is to extend the exterior derivative $d$ 
 of smooth differential forms in the weak sense (cf. \cite{goldshtein}). 
-This is done analogous to the definition of the usual weak derivative.
+This is done analogously to the definition of the usual weak derivative.
 The exterior derivative $d\omega \in L^p_{k+1}(\Omega)$ is defined as
 the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t. 
 \begin{align*}
@@ -126,19 +126,19 @@ and for $p=\infty$
         \, d\omega = 0\}.
     \end{align*}
     We call the $k$-forms in $\mathfrak{B}_k$ exact and the forms in 
-    $\mathfrak{Z}_k$ closed.
+    $\mathfrak{Z}_k$ closed. Because $d \circ d=0$ we always have  
+    $\mathfrak{B}_k \subseteq \mathfrak{Z}_k$.
     Then we define the de Rham- or $L^p$-cohomology space $\lpcoho(\Omega)$ as 
     the quotient space
     \begin{align*}
         \lpcoho (\Omega) \vcentcolon= \faktor{\mathfrak{Z}_k}{\mathfrak{B}_k}.
     \end{align*}
-    %%% TBD: We need dd=0 here
 \end{definition}
 \vspace{0.5cm}
-
 We want to examine the Hilbert space $L^k_2(\Omega)$ more closely
 (see \cite[Sec. 6.2.6]{arnold} for more details).  
 %%% TBD: This is only for bounded domains. What changes?
+% Picard defines it as completion of smooth functions \cite[p.37]{picard}
 We denote $H^k(d;\Omega) \vcentcolon= W^k_2(\Omega)$. If the domain is clear
 we will leave it out.
 Because $d:L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$
@@ -175,11 +175,11 @@ follow the more intuitive approach taken by Arnold.
 
 
 \begin{definition}[Affine simplex]
-    Let $x_1$, $x_2$, ..., $x_n$ be affine independent. Then 
+    Let $x_0$, $x_1$, ..., $x_k \in \real^n$ be affine independent. Then 
     \begin{align*}
-    [x_1,x_2,...,x_n] \vcentcolon= \text{conv}\,\{x_1,...,x_n\}
+    [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\,\{x_0,...,x_k\}
     \end{align*}
-    is called an affine simplex.
+    is called an affine $k$-simplex.
 \end{definition}
 \noindent We will assume all simplices to be affine.
 %%% TBD: Question: In the book this is defined in infinite dimensions. Does this
@@ -371,13 +371,15 @@ w_j \frac{\partial f_k}{\partial x_j} (x)\\
 &= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i w_j \left( Df(x)^T Df(x) \right)_{ij} \\
 &= v^T Df(x)^T Df(x) w = \left\langle Df(x) v, Df(x) w \right\rangle,
 \end{align*}
-where $D$ denotes the Jacobian.
+where $D$ denotes the Jacobian. 
+{\color{red} (TBD: This Jacobian as written here would technically be in 
+$\real^{\infty \times n}$. Only finitely many lines are non-zero though, 
+but this is not quite rigorous yet. )}
 %%% TBD: This is only well-defined if x is in the interior of a full simplex.
-%%% Also these matrices is not precise because we are not in finite dimensions
 
 We have two crucial assumptions on the triangulation for the result to hold 
 (cf. \cite[p.194]{goldshtein}). We summarize them under 
-\textit{GKS-condition} named after the three authors of the \cite{goldshtein}.
+\textit{GKS-condition} named after the three authors of \cite{goldshtein}.
 
 \begin{assumption}[GKS-condition]
     We will assume the following on the simplicial complex $K$ 
@@ -430,6 +432,20 @@ and analogously
 From now on we will assume that the GKS condition is fulfilled.
 The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
 mappings between different cohomology spaces. 
+
+\begin{definition}[Induced map]
+    Let $V$ and $W$ be real vector spaces, $X \subseteq V$, $Y \subseteq W$ be 
+    subspaces. For a linear map $L: V \rightarrow W$ with $L(X) \subseteq Y$ 
+    we define the induced map
+    \begin{align*}
+        [L]: \faktor{V}{X} \rightarrow \faktor{W}{Y},\,
+        [v] \mapsto [Lv].
+    \end{align*}     
+\end{definition}
+It is easy to check that the induced map is well-defined using the
+definition of quotient space. %% Proven on the 27.11.2022
+
+
 The first isomorphism is induced from a linear mapping
 from the so called \textit{S-forms} 
 $S_p^k(K)$ to \textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
@@ -497,7 +513,7 @@ and then the resulting cohomology space
 We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
 integration mapping
 $I: S_p^k(K) \rightarrow C_p^k(K)$ 
-induces an isomorphism on the cohomologies i.e. %% TBD: Say what "induces isomorphism means
+induces an isomorphism on the cohomologies i.e. 
 $[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
 spaces (see Theorem\,1 in \cite{goldshtein}
 and the proof thereof).
@@ -711,7 +727,6 @@ and observe
         = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
     &= D^1 \, B.
 \end{align*}
-
 Then we have 
 \begin{align*}
     \int_\gamma * D^2\, B = \int_\gamma D^1\, B = \int_\gamma B \cdot \text{d}l.
@@ -747,7 +762,7 @@ First we compute
 Using the Hodge decomposition for unbounded domains 
 (cf. \cite[Lemma 1]{picard}) we get therefore that there exists 
 a sequence  $(\phi_i)_{i\in \mathbb{N}} \subseteq H^3(\delta,\Omega)$ 
-and a harmonic $\omega \in \mathcal{H}^2$ s.t. %%%TBD: Define the L2 spaces
+and a harmonic $\omega \in \mathring{H}^2(d) \cap H^3(\delta)$ s.t. 
 \begin{align*}
     *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
 \end{align*}
@@ -784,10 +799,6 @@ We then get for the integral condition (\ref{integral_condition})
 so the integral condition (\refeq{integral_condition}) is fulfilled and 
 $\omega$ is indeed a solution. \newline
 {\color{red} TBD: Put all this in a theorem.}
-
-If we now translate this back to standard vector calculus terms we have found 
-the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
-
 
 % If we now take the Hodge decomposition
 % $L^2_2(\omegabar) = \bar{\mathfrak{B^k}} \oplus \mathcal{H}^k \oplus
@@ -842,6 +853,8 @@ the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
     \omega = \tilde{\omega}.    
     \end{align*}
 \end{proof}
+If we now translate this back to standard vector calculus terms we have found 
+the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
 
 % \section{Application: Homogeneous magnetostatic problem on the 
 % exterior domain of a torus}
