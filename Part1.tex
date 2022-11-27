@@ -518,7 +518,8 @@ In conclusion, we get the following isomorphisms of cohomologies:
 
 
 \section{Existence and uniqueness of solutions}
-\subsection{Well-definedness of the integral constraint}
+\subsection{Well-definedness of the integral constraint} 
+\label{well_definedness_integral}
 
 
 In the problem, we have the additional constraint 
@@ -727,6 +728,13 @@ we already know that $d\omega = 0$, $\delta \omega = 0$ and
 $\omega \in \mathring{H}^2(d)$. It remains to show that the integral condition
 (\refeq{integral_condition}) is also satisfied.
 
+At first we check that the integral is well-defined. We have $\delta \omega = 0$
+which implies
+\begin{align*}
+    d * \omega = ** d*\omega = (-1)^{n(k-1)+1} *\delta \omega = 0
+\end{align*}
+so $*\omega$ is a closed 1-form. Therefore the integral is well-defined as shown
+in Sec.\,\ref{well_definedness_integral}.
 
 Take a ball of radius $R>0$ 
 around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
@@ -774,25 +782,32 @@ $\omega$ is a indeed solution. \newline
 \end{theorem}
 \begin{proof}
     Let $\omega, \tilde{\omega}$ both be solutions. 
-    Because $\int_\gamma \omega = \int_\gamma \tilde{\omega}$ and $\omega$ and
-    $\tilde{\omega}$ are closed we have due to Prop.\,\ref{uniqueness_cochain} %%%TBD
-    that $\int_c \omega = \int_c \tilde{\omega}$ for any closed $k$-chain $c$.
-    So we have for the induced homomorphism $[I]([\rop \omega]) = 
-    [I]([\rop \tilde{\omega}])$ and because $[I]$ is an isomorphism 
-    $[\rop \omega] = [\rop \tilde{\omega}]$. Hence,
+    Because $\int_\gamma *\omega = \int_\gamma *\tilde{\omega}$ and $*\omega$ and
+    $*\tilde{\omega}$ are closed we have due to Prop.\,\ref{uniqueness_cochain} %%%TBD
+    that $\int_c *\omega = \int_c *\tilde{\omega}$ for any closed $1$-chain $c$.
+    So we have for the induced homomorphism $[I]([\rop *\omega]) = 
+    [I]([\rop *\tilde{\omega}])$ and because $[I]$ is an isomorphism 
+    $[\rop *\omega] = [\rop *\tilde{\omega}]$. Hence,
     \begin{align*}
-    [\tilde{\omega}] = [\rop \tilde{\omega}] = 
-    [\rop \omega] = [\omega]
+    [*\tilde{\omega}] = [\rop *\tilde{\omega}] = 
+    [\rop *\omega] = [*\omega].
     \end{align*}
-    we get the equality of the cohomology classes. \par
-    
     That is equivalent to the
-    existence of some $(k-1)$-form $\phi \in W^{k-1}_2(\omegabar)$ s.t.
-    $\omega = \tilde{\omega} + d\phi$. Then because $\omega$ and 
-    $\tilde{\omega}$ are harmonic we have 
-    $\omega, \tilde{\omega} \perp dW^{k-1}_2(\omegabar)$ and therefore 
+    existence of some $0$-form $\phi \in H^0(d)$ s.t.
+    $*\omega = *\tilde{\omega} + d\phi$. We continue by applying the Hodge
+    star operator to both sides and use the definition of the codifferential 
+    $\delta$:
     \begin{align*}
-    \omega = \tilde{\omega}.
+        \omega = \tilde{\omega} + *d\phi = \tilde{\omega} + *d**\phi 
+        = \tilde{\omega} + (-1)^{(n-k)(k-1)+1}\delta * \phi.
+    \end{align*}
+    
+    
+    Then because $\omega$ and 
+    $\tilde{\omega}$ are harmonic we have 
+    $\omega, \tilde{\omega} \perp \delta H^{3}(\delta)$ and therefore 
+    \begin{align*}
+    \omega = \tilde{\omega}.    
     \end{align*}
 \end{proof}
 
