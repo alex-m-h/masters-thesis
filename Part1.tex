@@ -687,40 +687,87 @@ Then we have
 In the last step we used the fact that the integration of a 1-form over a
 curve can is equivalent to the curve integral of the associated vector field
 (cf. \cite[6.2.3]{arnold}). Hence, we can add the integral condition 
-\begin{align*}
-    \int_\gamma *\omega = C_0
-\end{align*}
+\begin{align}
+    \int_\gamma *\omega = C_0 \label{integral_condition}
+\end{align}
 and obtain the equivalent problem on differential forms.
 
 
 We are now able to proof existence of a 
-solution. Take such a closed cochain $F \in C^k_p(K)$ s.t. $F(\gamma) = C_0$ and 
-$F(\partial d) = 0$ for $(k-1)$-chains $d$. Then we know from 
+solution. Take a closed cochain $F \in C^k_p(K)$ s.t. $F(\gamma) = C_0$ 
+and 
+$F(\partial d) = 0$ for $(k-1)$-chains $d$ 
+as in Prop.\,\ref{uniqueness_cochain}. Then we know from 
 Sec.\,\ref{sec_isomorphism_cohomology} that 
-there exists a unique $[\theta] \in \mathscr{H}_p^k(K)$ s.t. 
-$[I]([\theta]) = [F]$. Let us take $\eta \vcentcolon= 
-\varphi^{-1} \theta$. Then $\int_\gamma \eta = C_0$ holds. If we now take
-the Hodge decomposition
-$L^k_2(\omegabar) = \bar{\mathfrak{B^k}} \oplus \mathcal{H}^k \oplus
-\bar{\mathfrak{B^*_k}}$ and define $\omega$ as the projection of $\eta$ onto the
-harmonic forms $\mathcal{H}^k$. Then we know that $d\omega = 0$, 
-$\delta\omega = 0$ and $\text{tr}\,\omega = 0$. So we only have to show that
-\begin{align*}
-\int_\gamma \omega = C_0.
-\end{align*}
+there exists a unique $[\theta] \in \mathscr{H}_2^1(K)$ s.t. 
+$[I]([\theta]) = [F]$. Let us take the 1-form $\eta \vcentcolon= 
+\varphi^{-1} \theta \in W^1_2(\omega)$. Then $\int_\gamma \eta = C_0$ holds. 
+Because we need a 2-form we will take a closer look at $*\eta$.
+We have that the Hodge star operator $*: L^1_2(\Omega) \rightarrow 
+L^2_2(\Omega)$ is a Hilbert space isometry. 
+%%% TBD: Add proof, already written down on 26.11.2022
 
-We know from the Hodge decomposition that there exists a sequence
-$(\phi_i)_{i\in \mathbb{N}} \subseteq L^{k-1}_2(M)$ s.t. 
-$\omega = \eta - \lim_{i \rightarrow \infty} d\phi_i$.
-Let now be $R>0$ large enough s.t. $\gamma \subseteq B_R$. Then we know that
-$d W^{k-1}_2(B_R)$ is closed in $L_2^k(B_R)$. \cite{}  Therefore there exists 
-$\phi_R \in  W^{k-1}_2(B_R)$ s.t. 
-$\lim_{i \rightarrow \infty} d\phi_i|_{B_R} = d\phi_R$. So we have
-$\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and 
+
+First we compute
 \begin{align*}
-\int_\gamma \omega = \int_\gamma \omega|_{B_R} = \int_\gamma \eta|_{B_R} = C_0.
+    \delta *\eta = (-1)^{n(k-1)+1} *d**\eta = (-1)^{n(k-1)+1} *d\eta = 0.
 \end{align*}
-This proves existence.
+Using the Hodge decomposition for unbounded domains 
+(cf. \cite[Lemma 1]{picard}) we get therefore that there exists 
+a sequence  $(\phi_i)_{i\in \mathbb{N}} \subseteq H^3(\delta,\Omega)$ 
+and a harmonic $\omega \in \mathcal{H}^2$ s.t. %%%TBD: Define the L2 spaces
+\begin{align*}
+    *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
+\end{align*}
+where the limit is in the $L^2$-sense. 
+
+
+We will show that $\omega$ is then a solution. Because $\omega$ is harmonic
+we already know that $d\omega = 0$, $\delta \omega = 0$ and 
+$\omega \in \mathring{H}^2(d)$. It remains to show that the integral condition
+(\refeq{integral_condition}) is also satisfied.
+
+
+Take a ball of radius $R>0$ 
+around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
+Using the factthat the range of $\delta$ is closed on bounded domains 
+(cf. \cite[Lemma 7]{picard}) there is some $\phi_R \in H^3(\delta;B_R)$ s.t.
+\begin{align*}
+    *\eta|_{B_R} = \omega|_{B_R} + \delta \phi_R.
+\end{align*}
+We then get for the integral condition (\ref{integral_condition}) 
+\begin{align*}
+    \int_\gamma *\omega &= \int_\gamma *\omega|_{B_R} = 
+    \int_\gamma *(*\eta|_{B_R} - \delta \phi_R) = 
+    \int_\gamma \eta|_{B_R} - (-1)^{3\cdot 2+1} d * \phi_R \\
+    &= \int_\gamma \eta|_{B_R} = C_0
+\end{align*}
+so the integral condition (\refeq{integral_condition}) is fulfilled and 
+$\omega$ is a indeed solution. \newline
+{\color{red} TBD: Put all this in a theorem.}
+
+
+% If we now take the Hodge decomposition
+% $L^2_2(\omegabar) = \bar{\mathfrak{B^k}} \oplus \mathcal{H}^k \oplus
+% \bar{\mathfrak{B^*_k}}$ and define $\omega$ as the projection of $\eta$ onto the
+% harmonic forms $\mathcal{H}^k$. Then we know that $d\omega = 0$, 
+% $\delta\omega = 0$ and $\text{tr}\,\omega = 0$. So we only have to show that
+% \begin{align*}
+% \int_\gamma \omega = C_0.
+% \end{align*}
+
+% We know from the Hodge decomposition that there exists a sequence
+% $(\phi_i)_{i\in \mathbb{N}} \subseteq L^{k-1}_2(M)$ s.t. 
+% $\omega = \eta - \lim_{i \rightarrow \infty} d\phi_i$.
+% Let now be $R>0$ large enough s.t. $\gamma \subseteq B_R$. Then we know that
+% $d W^{k-1}_2(B_R)$ is closed in $L_2^k(B_R)$. \cite{}  Therefore there exists 
+% $\phi_R \in  W^{k-1}_2(B_R)$ s.t. 
+% $\lim_{i \rightarrow \infty} d\phi_i|_{B_R} = d\phi_R$. So we have
+% $\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and 
+% \begin{align*}
+% \int_\gamma \omega = \int_\gamma \omega|_{B_R} = \int_\gamma \eta|_{B_R} = C_0.
+% \end{align*}
+% This proves existence.
 
 \begin{theorem}
     The solution of the problem is unique.
