@@ -29,6 +29,7 @@
 \DeclareMathOperator{\diver}{div}
 
 \newcommand{\aop}{\mathscr{A}}
+\newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 \newcommand{\omegabar}{\overline{\Omega}}
@@ -80,24 +81,32 @@ and for $p=\infty$ as
 \end{align*}
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
 with the $L_2$ inner product  
-\begin{align*}
+\begin{align}
 \langle \omega, \nu \rangle \vcentcolon= 
-\int_\Omega \langle \omega, \nu \rangle _{\text{Alt}^k}.
-\end{align*}
+\int_\Omega \langle \omega, \nu \rangle _{\text{Alt}^k}. 
+\label{def_inner_product}
+\end{align}
 $L_p^k(\Omega)$ are the spaces of $k$-forms 
 s.t. the corresponding $L_p$-norm is finite. \par
 
 Our next goal is to extend the exterior derivative $d$ 
 of smooth differential forms in the weak sense (cf. \cite{goldshtein}). 
-This is done analogously to the definition of the usual weak derivative.
-The exterior derivative $d\omega \in L^p_{k+1}(\Omega)$ is defined as
+Let $\mathring{d}: L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$ be the exterior
+derivative as an unbounded operator with domain 
+$D(\mathring{d}) = \smoothcompforms{k}{\Omega}$ 
+which are the smooth compactly supported differential forms of degree $k$. 
+Analogous, let 
+$\mathring{\delta}: L^k_2(\Omega) \rightarrow L^{k-1}_2(\Omega)$ be the 
+codifferential operator $\mathring{\delta} \vcentcolon= 
+(-1)^{n(k-1)+1}*\mathring{d}*$ also with domain $\smoothcompforms{k}{\Omega}$.
+
+Then the exterior derivative $ d\omega \in L^p_{k+1}(\Omega)$ is defined as
 the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t. 
 \begin{align*}
-\int_\Omega d\omega \wedge \phi = (-1)^{k+1}\int_\Omega \omega \wedge d\phi
-\quad \forall \phi \in C_0^\infty \Lambda^{n-k-1}(\Omega).
+\int_\Omega d\omega \wedge \phi = \int_\Omega \omega \wedge 
+\mathring{\delta}\phi
+\quad \forall \phi \in C_0^\infty \Lambda^{k}(\Omega).
 \end{align*}
-where $C_0^\infty \Lambda^{n-k-1}(\Omega)$ are the $(n-k-1)$-forms with 
-smooth compactly supported coefficients.
 Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
 W^k_p(\Omega) &= \left\{ \omega \in L^p\Lambda^k(\Omega)\, | 
@@ -140,21 +149,60 @@ We want to examine the Hilbert space $L^k_2(\Omega)$ more closely
 %%% TBD: This is only for bounded domains. What changes?
 % Picard defines it as completion of smooth functions \cite[p.37]{picard}
 We denote $H^k(d;\Omega) \vcentcolon= W^k_2(\Omega)$. If the domain is clear
-we will leave it out.
-Because $d:L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$
-is an unbounded, densely defined operator with domain 
-$C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is 
-equal to the codifferential operator of differential forms i.e.
+we will leave it out. Note that the above definition of the exterior derivative
+is in the Hilbert space setting equivalent to defining $d$ as the adjoint
+of $\mathring{\delta}$. 
+
+
+In order to extend $\mathring{\delta}$ as well, we will need the following
+\begin{proposition}
+    The Hodge star operator $*:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
+    Hilbert space isometry.
+\end{proposition}
+\begin{proof}
+    This follows directly from the definition of the inner product 
+    (\refeq{def_inner_product}) and the fact that $*$ is an isometry 
+    when applied to alternating forms $\text{Alt}^k$ \cite[p.66]{arnold}.
+\end{proof}
+Now we just define $\delta \vcentcolon= (-1)^{n(k-1)+1}*d*$ as in the smooth
+setting. A simple computation shows that this is 
+then the adjoint of $\mathring{d}$. Define 
 \begin{align*}
-    \delta = (-1)^{(n-k)(k-1)+1} * d *.
+    H^k(\delta; \Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \,
+    *\omega \in H^{n-k}(d) \}.
 \end{align*}
-Analogous to the
-exterior derivative we define 
+Now take $\omega \in H^{k+1}(\delta)$ and $\phi \in 
+\smoothcompforms{k}{\Omega}$. Then 
 \begin{align*}
-    H^k(\delta;\Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \, 
-    \delta \omega \in L^{k-1}_2 (\Omega) \}. 
+    &\langle \delta \omega, \phi \rangle = 
+    (-1)^{nk+1} \langle *d* \omega, \phi \rangle \\  
+    &= (-1)^{nk+1} (-1)^{k(n-k)} \langle d* \omega, *\phi \rangle =
+    (-1)^{nk+1} (-1)^{k(n-k)} 
+        \langle * \omega, \mathring{\delta}*\phi \rangle \\
+    &= (-1)^{nk+1} (-1)^{k(n-k)} (-1)^{n(n-k-1)+1}
+        \langle * \omega, *\mathring{d}**\phi \rangle \\
+    &=(-1)^{n(n-1)+2} (-1)^{k(n-k)} \langle \omega, \mathring{d}**\phi \rangle\\
+    &= \langle \omega, \mathring{d}\phi \rangle
 \end{align*}
-Analogous to $H^k(d)$ we write $H^k(\delta)$ if the domain is clear.
+where we used repeatedly that $*$ is an isometry and 
+$** = (-1)^{k(n-k)}\text{Id}$. This shows that $\delta$ is the adjoint of 
+$\mathring{d}$ and has the domain $H^k(\delta)$.
+
+
+% Because $d:L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$
+% is an unbounded, densely defined operator with domain 
+% $C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is 
+% equal to the codifferential operator of differential forms i.e.
+% \begin{align*}
+%     \delta = (-1)^{(n-k)(k-1)+1} * d *.
+% \end{align*}
+% Analogous to the
+% exterior derivative we define 
+% \begin{align*}
+%     H^k(\delta;\Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \, 
+%     \delta \omega \in L^{k-1}_2 (\Omega) \}. 
+% \end{align*}
+% Analogous to $H^k(d)$ we write $H^k(\delta)$ if the domain is clear.
 We then define 
 additionally the space $\mathring{H}^k(d;\Omega)$ as the closure of 
 $C_0^\infty \Lambda^k(\Omega) \subseteq H^k(d;\Omega)$ w.r.t. 
@@ -257,7 +305,7 @@ We can now define the homology spaces of our simplicial complex.
     \end{align*}
 \end{definition}
 \noindent The homology spaces are independent of the chosen simplicial complex
-\cite{}. %%%TBD: Are you sure?
+\cite{}. %%%TBD: Are you sure? Yes. Answer written on 28.11.2022
 
 
 Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
