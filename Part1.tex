@@ -103,16 +103,17 @@ codifferential operator $\mathring{\delta} \vcentcolon=
 Then the exterior derivative $ d\omega \in L^p_{k+1}(\Omega)$ is defined as
 the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t. 
 \begin{align*}
-\int_\Omega d\omega \wedge \phi = \int_\Omega \omega \wedge 
-\mathring{\delta}\phi
+\int_\Omega d\omega \wedge *\phi = \int_\Omega \omega \wedge 
+*\mathring{\delta}\phi
 \quad \forall \phi \in C_0^\infty \Lambda^{k}(\Omega).
 \end{align*}
 Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
 W^k_p(\Omega) &= \left\{ \omega \in L^p\Lambda^k(\Omega)\, | 
-\, d\omega \in L^p\Lambda^{k+1}(\Omega) \right\}, \\ %%%%%%%%%%%%%%%%%%%%%%
+\, d\omega \in L_p^{k+1}(\Omega) \right\}, \\ %%%%%%%%%%%%%%%%%%%%%%
 W^k_{p,loc}(\Omega) &= \left\{ \omega \, k \text{-form} \, | \,
-\omega|_A \in W^k_\infty(A) \text{ for every } A \subseteq M \text{ compact} 
+\omega|_A \in W^k_p(A) \text{ for every } A \subseteq \Omega 
+\text{ compact} 
 \right\}.
 \end{align*}
 For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm 
@@ -237,7 +238,8 @@ follow the more intuitive approach taken by Arnold.
     A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
     \begin{enumerate}
         \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
-        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$ is in $K$.
+        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$  
+                is either empty or a face of both $\sigma$ and $\tau$.
     \end{enumerate}
     We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
     $K$.
@@ -697,45 +699,43 @@ Thm.\,\ref{operators}
 
 \subsection{Existence and uniqueness}
 
-
-
 We start with the following
 \begin{proposition}\label{uniqueness_cochain}
-    Let $\gamma$ be a $k$-chain s.t. the homology class $[\gamma]$ 
-    spans the homology space. For any $C_0 \in \real$ 
-    there exist a cochain $F \in C^k_p(K)$ s.t.
+    Let $\gamma$ be a closed $k$-chain s.t. the homology class $[\gamma]$ 
+    spans the homology space $H^k_c$. Then for any $C_0 \in \real 
+    \setminus \{0\}$ 
+    if we have closed cochains $F,G$ s.t.
     \begin{align*}
-    F(\gamma) = C_0 \text{ and } F(\partial d) = 0 
-    \text{ for all } (k-1) \text{-chains } d.
+    F(\gamma) = G(\gamma)= C_0
     \end{align*}
-    Furthermore, if we have another $G \in C^k_p(K)$ with these two properties
-    then 
-    \begin{align*}
-        F(c) = G(c) \quad \text{for all closed } k \text{-chains } c.
-    \end{align*}
+    then $[F] = [G]$ i.e. their cohomology classes are equal.
 \end{proposition} 
 \begin{proof}
-    At first, we construct such a $k$-cochain $F$. Note that we assume
-    $[\gamma]$ to be a basis of the homology space. Using this
-    we define $\tilde{F}: H^k_p(K) \rightarrow \real$ by setting 
-    $\tilde{F}([\gamma]) = C_0$. Let $Z^k_p \subseteq C^k_p(K)$ 
-    denote the space of closed $k$-cochains. Then we define the linear map
-    $\pi: Z^k_p \rightarrow H^k_p(K), \, f \mapsto [f]$ and 
-    $F \vcentcolon= \tilde{F} \circ \pi$. This $F$ has then oviously the desired
-    properties.
-
-    Next, we show uniqueness on closed chains.
-    Take any closed $k$-chain $c$. Because $[\gamma]$ is a basis of the 
-    homology space we have $\lambda \in \real$ s.t. $[c] = [\lambda \, \gamma]$ 
-    %%% TBD: I am not sure if we need \lambda integer or real
-    . That means that we have
-    some $(k-1)$-chain $d$ s.t. $c = \lambda \, \gamma + \partial d$. Using the 
-    properties of $F$ and $G$,
+    % At first, we construct such a $k$-cochain $F$. Note that we assume
+    % $[\gamma]$ to be a basis of the homology space. Using this
+    % we define $\tilde{F}: H^k_p(K) \rightarrow \real$ by setting 
+    % $\tilde{F}([\gamma]) = C_0$. Let $Z^k_p \subseteq C^k_p(K)$ 
+    % denote the space of closed $k$-cochains. Then we define the linear map
+    % $\pi: Z^k_p \rightarrow H^k_p(K), \, f \mapsto [f]$ and 
+    % $F \vcentcolon= \tilde{F} \circ \pi$. This $F$ has then oviously the desired
+    % properties.
+    From \cite[Sec. 2.5]{arnold} we know that 
+    $\text{dim}\,H^k(K) = \text{dim}\,H^k_c$. Because $F$ and $G$ are closed we
+    therefore have $\lambda_F, \lambda_G \in \real$ and a cohomology class 
+    $[b]$ s.t.
+    $[F] = \lambda_F [b]$ and $[G] = \lambda_G [b]$. This is 
+    equivalent to the existence of $(k-1)$-cochains $J_F,J_G$ s.t. 
     \begin{align*}
-        F(c) = F(\lambda \, \gamma + \partial d) = 
-        \lambda F(\gamma) = \lambda \, C_0.
+        F = \lambda_F b + \delta J_F \text{ and } G = \lambda_G b + \delta J_G.
     \end{align*}
-    Because the same computation is valid for $G$, $F(c) = G(c)$ follows.
+    so 
+    \begin{align*}
+        0 \neq \lambda_F b(\gamma) + \delta J_F(\gamma) = F(\gamma) = G(\gamma)
+        = \lambda_G b(\gamma) + \delta J_F(\gamma).
+    \end{align*}
+    Because $\gamma$ is closed we have for any $(k-1)$-chain $J$, 
+    $\delta J(\gamma) = J(\partial \gamma) = 0$ and so we arrive at
+    $\lambda_F = \lambda_G$ i.e. $[F] = [G]$.
 \end{proof}
 
 
@@ -875,11 +875,16 @@ $\omega$ is indeed a solution. \newline
 \end{theorem}
 \begin{proof}
     Let $\omega, \tilde{\omega}$ both be solutions. 
-    Because $\int_\gamma *\omega = \int_\gamma *\tilde{\omega}$ and $*\omega$ and
-    $*\tilde{\omega}$ are closed we have due to Prop.\,\ref{uniqueness_cochain} %%%TBD
-    that $\int_c *\omega = \int_c *\tilde{\omega}$ for any closed $1$-chain $c$.
-    So we have for the induced homomorphism $[I]([\rop *\omega]) = 
-    [I]([\rop *\tilde{\omega}])$ and because $[I]$ is an isomorphism 
+    Because  $*\omega$ and
+    $*\tilde{\omega}$ are closed the cochains 
+    $c\mapsto \int_c \rop*\omega$ and 
+    $c\mapsto \int_c \rop*\tilde{\omega}$ are closed.
+    
+    Due to $\int_\gamma \rop *\omega = \int_\gamma \rop *\tilde{\omega}$ and the 
+    assumption that $[\gamma]$ spans the homology space we have with 
+    Prop.\,\ref{uniqueness_cochain} 
+    $[I(\rop *\omega)] = [I(\rop *\tilde{\omega})]$
+    and because $[I]$ is an isomorphism 
     $[\rop *\omega] = [\rop *\tilde{\omega}]$. Hence,
     \begin{align*}
     [*\tilde{\omega}] = [\rop *\tilde{\omega}] = 
