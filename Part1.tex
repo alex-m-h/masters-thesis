@@ -29,6 +29,7 @@
 \DeclareMathOperator{\diver}{div}
 
 \newcommand{\aop}{\mathscr{A}}
+\newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
 \newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
@@ -62,12 +63,85 @@ solutions. In order to do so we will need to introduce Sobolev spaces of
 differential forms and basics from
 simplicial topology.
 
+At first, let us introduce some basic notions about differential forms. 
+We follow the brief introduction given by Arnold (cf. \cite[Sec. 6.1]{arnold}), 
+but less details will be given. 
+Let $V$ be a real vector space with $\text{dim}\,V = n$ 
+    and $\text{Alt}^k\,V$ be the 
+space of $k$-alternating maps from $V^k$ to $\real$. For $\omega \in 
+\alternating{k}{V}$, $\mu \in 
+\alternating{l}{V}$ we define the wedge product $\omega \wedge \mu \in 
+\alternating{k+l}{V}$ 
+\begin{align*}
+    (\omega \wedge \mu) (v_1,...,v_k,v_{k+1},...,v_{k+l}) =
+    \sum\limits_{\substack{i_1 < ... < i_k \\ i_{k+1} < ... < i_{k+l}}}
+    \text{sgn}(i_1,...,i_{k+l}) \omega(v_{i_1},...,v_{i_k}) 
+    \nu(v_{i_{k+1}},...,v_{i_{k+l}})
+\end{align*}
+where $\text{sgn}(i_1,...,i_{k+l})$ is the sign of the permutation 
+$(1,...,k+l) \mapsto (i_1,...,i_{k+l})$. This definition is not very intuitive.
+{\color{red} TBD: Examples in 3D}.
 
-Let $\Omega \subseteq \real^n$ be a Lipschitz domain and $\text{Alt}^k$ 
-the space of alternating $k$-linear maps on $\real^n$. 
-Let $\langle \cdot,\cdot\rangle_{\text{Alt}^k}$ be the standard inner
-product of alterating $k$-linear maps and 
-$\lVert \cdot \rVert _{\text{Alt}^k}$ be the induced norm. Then
+Let $\{ u_i\}_{i=1}^n$ be any basis of $V$ and $\{ u^i\}_{i=1}^n$ the 
+correspoding dual basis. Then 
+\begin{align*}
+    \{u^{i_1} \wedge u^{i_2} \wedge ... \wedge u^{i_k} | \, 
+    1 \leq i_1 < ... < i_k \leq n \}
+\end{align*}
+is a basis of $\alternating{k}{V}$. In particular, 
+$\dim\, \alternating{k}{V} = \binom{n}{k}$.
+
+Given a inner product $\langle\cdot, \cdot \rangle_V$ on $V$ we obtain an inner 
+product on $\alternating{k}{V}$ by defining
+\begin{align*}
+    \langle u^{i_1} \wedge u^{i_2} \wedge... \wedge u^{i_k}, 
+    u^{j_1} \wedge... \wedge u^{j_k} \rangle_{\alternating{k}{V}} 
+    \vcentcolon= \det \left[ ( \langle u_{i_k}, u_{i_l} \rangle_V )_
+    {1\leq k,l \leq n} \right] 
+\end{align*}
+which is then extended to all of $\alternating{k}{V}$ by linearity. 
+We denote with $\lVert \cdot \rVert _\alternating{k}{V}$ the induced norm.
+From this definition it follows directly that for a orthonormal basis 
+$b_1$,..., $b_n$ the corresponding basis 
+$b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}$, 
+$1\leq i_1 < ... < i_k \leq n$ is an orthonormal basis of $\alternating{k}{V}$.
+
+
+$\alternating{n}{V}$ is one-dimensional and so we have to choose a basis.
+We say that two orthonormal bases of $V$ 
+have the same orientation if the change of basis has positive determinant. 
+That divides the orthonormal bases into two classes with different orientation.
+We choose one of these classes and call these orthonormal bases positively
+oriented. Take $\omega \in \alternating{n}{V}$. Then 
+$\omega(b_1,...,b_n)$ is the same for any positively oriented orthornormal
+basis. We now define the \textit{volume form} vol $\in \alternating{n}{v}$ by requiring
+it to be $1$ on all positively oriented orthonormal bases. Using this volume 
+form we can now define the \textit{Hodge star operator} 
+$*: \alternating{k}{V} \rightarrow \alternating{n-k}{V}$ via the property 
+\begin{align*}
+    \omega \wedge \mu = \langle *\omega, \mu \rangle_{\alternating{n-k}{V}} 
+    \text{vol}
+    \quad \forall \omega \in \alternating{k}{V} , \, 
+    \mu \in \alternating{n-k}{V}.
+\end{align*}
+The Hodge star is an isometry, we have $** = (-1)^{k(n-k)}\text{Id}$ and 
+\begin{align*}
+    \omega \wedge *\mu = \langle \omega, \mu \rangle_{\alternating{k}{V}} 
+    \text{vol} \quad \forall \omega, \mu \in \alternating{k}{V}.
+\end{align*}
+In particular in $\real^3$, we have $** = \text{Id}$ i.e. $*$ is self-inverse.
+
+
+Now we will move on to differential forms. We will mostly deal with the
+case $V = \real^n$ and denote $\text{Alt}^k\,\real^n$ just as $\text{Alt}^k$.
+Let $\Omega \subseteq \real^n$ be a Lipschitz domain and denote the space 
+of differential forms of degree $k$ on $\Omega$ as $\Lambda^k(\Omega)$.
+We extend the Hodge star operator to differential forms 
+$*: \Lambda^k(\Omega) \rightarrow \Lambda^{n-k}(\Omega)$ simply by applying it 
+pointwise.
+
+
+Then
 we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
@@ -79,6 +153,8 @@ and for $p=\infty$ as
 \begin{align*}
 \esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{\text{Alt}^k}.
 \end{align*}
+$L_p^k(\Omega)$ are the spaces of $k$-forms 
+s.t. the corresponding $L_p$-norm is finite.
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
 with the $L_2$ inner product  
 \begin{align}
@@ -86,8 +162,16 @@ with the $L_2$ inner product
 \int_\Omega \langle \omega, \nu \rangle _{\text{Alt}^k}. 
 \label{def_inner_product}
 \end{align}
-$L_p^k(\Omega)$ are the spaces of $k$-forms 
-s.t. the corresponding $L_p$-norm is finite. \par
+\begin{proposition}
+    The Hodge star operator $*:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
+    Hilbert space isometry.
+\end{proposition}
+\begin{proof}
+    This follows directly from the definition of the inner product 
+    (\refeq{def_inner_product}) and the fact that $*$ is an isometry 
+    when applied to alternating forms $\text{Alt}^k$.
+\end{proof}
+
 
 Our next goal is to extend the exterior derivative $d$ 
 of smooth differential forms in the weak sense (cf. \cite{goldshtein}). 
@@ -156,15 +240,6 @@ of $\mathring{\delta}$.
 
 
 In order to extend $\mathring{\delta}$ as well, we will need the following
-\begin{proposition}
-    The Hodge star operator $*:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
-    Hilbert space isometry.
-\end{proposition}
-\begin{proof}
-    This follows directly from the definition of the inner product 
-    (\refeq{def_inner_product}) and the fact that $*$ is an isometry 
-    when applied to alternating forms $\text{Alt}^k$ \cite[p.66]{arnold}.
-\end{proof}
 Now we just define $\delta \vcentcolon= (-1)^{n(k-1)+1}*d*$ as in the smooth
 setting. A simple computation shows that this is 
 then the adjoint of $\mathring{d}$. Define 
@@ -711,14 +786,6 @@ We start with the following
     then $[F] = [G]$ i.e. their cohomology classes are equal.
 \end{proposition} 
 \begin{proof}
-    % At first, we construct such a $k$-cochain $F$. Note that we assume
-    % $[\gamma]$ to be a basis of the homology space. Using this
-    % we define $\tilde{F}: H^k_p(K) \rightarrow \real$ by setting 
-    % $\tilde{F}([\gamma]) = C_0$. Let $Z^k_p \subseteq C^k_p(K)$ 
-    % denote the space of closed $k$-cochains. Then we define the linear map
-    % $\pi: Z^k_p \rightarrow H^k_p(K), \, f \mapsto [f]$ and 
-    % $F \vcentcolon= \tilde{F} \circ \pi$. This $F$ has then oviously the desired
-    % properties.
     From \cite[Sec. 2.5]{arnold} we know that 
     $\text{dim}\,H^k(K) = \text{dim}\,H^k_c$. Because $F$ and $G$ are closed we
     therefore have $\lambda_F, \lambda_G \in \real$ and a cohomology class 
