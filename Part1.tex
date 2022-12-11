@@ -193,11 +193,11 @@ the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t.
 \end{align*}
 Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
-W^k_p(\Omega) &= \left\{ \omega \in L^p\Lambda^k(\Omega)\, | 
-\, d\omega \in L_p^{k+1}(\Omega) \right\}, \\ %%%%%%%%%%%%%%%%%%%%%%
+W^k_p(\Omega) &= \left\{ \omega \in L^k_p(\Omega)\, | 
+    \, d\omega \in L_p^{k+1}(\Omega) \right\}, \\ 
 W^k_{p,loc}(\Omega) &= \left\{ \omega \, k \text{-form} \, | \,
-\omega|_A \in W^k_p(A) \text{ for every } A \subseteq \Omega 
-\text{ compact} 
+\omega|_A \in W^k_p(A) \text{ for every open } A \subseteq \Omega 
+\text{ s.t. } \overline{A} \subseteq \Omega \text{ is compact} %TBD: Check that this is right
 \right\}.
 \end{align*}
 For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm 
@@ -239,10 +239,11 @@ is in the Hilbert space setting equivalent to defining $d$ as the adjoint
 of $\mathring{\delta}$. 
 
 
-In order to extend $\mathring{\delta}$ as well, we will need the following
+% In order to extend $\mathring{\delta}$ as well, we will need the following
 Now we just define $\delta \vcentcolon= (-1)^{n(k-1)+1}*d*$ as in the smooth
-setting. A simple computation shows that this is 
-then the adjoint of $\mathring{d}$. Define 
+setting. We will show that this is the adjoint of $\mathring{d}$. Denote with
+$D(\mathring{d}^*) \subseteq L_2^{k+1}(\Omega)$ the domain of the adjoint. 
+Define 
 \begin{align*}
     H^k(\delta; \Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \,
     *\omega \in H^{n-k}(d) \}.
@@ -261,24 +262,23 @@ Now take $\omega \in H^{k+1}(\delta)$ and $\phi \in
     &= \langle \omega, \mathring{d}\phi \rangle
 \end{align*}
 where we used repeatedly that $*$ is an isometry and 
-$** = (-1)^{k(n-k)}\text{Id}$. This shows that $\delta$ is the adjoint of 
-$\mathring{d}$ and has the domain $H^k(\delta)$.
+$** = (-1)^{k(n-k)}\text{Id}$. This shows that $H^{k+1}(\delta) \subseteq 
+D(\mathring{d}^*)$ and that $\mathring{d}^* \omega = \delta \omega$. Now for 
+the other inclusion assume that $\omega \in D(\mathring{d}^*)$ and take 
+$\phi \in \smoothcompforms{n-k}{\Omega}$ arbitrary.
+\begin{align*}
+    \langle *\omega, \mathring{\delta}\phi \rangle = \pm 
+    \langle \omega, \mathring{d}*\phi \rangle = 
+    \pm \langle \mathring{d}^* \omega, *\phi \rangle = 
+    \pm \langle *\mathring{d}^* \omega, \phi \rangle.
+\end{align*} 
+Here we use $\pm$ to mean that we choose the sign correctly, s.t. all the
+operations are correct. Then by choosing the sign appropriately we find that
+$ \pm *\mathring{d}^* \omega = d*\omega$ and therefore 
+$*\omega \in H^{n-k-1}(d)$ so we proved $D(\mathring{d}^*) \subseteq 
+H^{k+1}(\delta)$ and we are done.
 
 
-% Because $d:L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$
-% is an unbounded, densely defined operator with domain 
-% $C_0^\infty \Lambda^{k}(\Omega)$ the adjoint $\delta$ is well-defined and is 
-% equal to the codifferential operator of differential forms i.e.
-% \begin{align*}
-%     \delta = (-1)^{(n-k)(k-1)+1} * d *.
-% \end{align*}
-% Analogous to the
-% exterior derivative we define 
-% \begin{align*}
-%     H^k(\delta;\Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \, 
-%     \delta \omega \in L^{k-1}_2 (\Omega) \}. 
-% \end{align*}
-% Analogous to $H^k(d)$ we write $H^k(\delta)$ if the domain is clear.
 We then define 
 additionally the space $\mathring{H}^k(d;\Omega)$ as the closure of 
 $C_0^\infty \Lambda^k(\Omega) \subseteq H^k(d;\Omega)$ w.r.t. 
@@ -286,7 +286,37 @@ the $H^k(d)$-norm i.e.
 $\mathring{H}^k(d;\Omega)$ corresponds to $k$-forms in $H^k(d;\Omega)$
 being zero on the boundary. {\color{red} TBD: There are several different 
 ways to characterize zero boundary conditions in the $L^2$ setting. We have
-to choose the one that works best.}
+to choose the one that works best.} % I should probably take Picard's definition
+% because I want to use his Hodge decomposition 
+Then we define the spaces 
+\begin{align*}
+    H^k_0(d;\Omega) &\vcentcolon= \{ \omega \in H^k(d;\Omega) 
+    | d\omega = 0 \} \\
+    \mathring{H}^k_0(d;\Omega) &\vcentcolon= \{ \omega \in \mathring{H}^k(d;\Omega) 
+    | d\omega = 0 \}
+\end{align*}
+i.e. the spaces of closed forms. We will use the analogous definition for 
+$H^k_0(\delta;\Omega)$ and $\mathring{H}^k_0(\delta;\Omega)$ which we call 
+coclosed forms. We then define the spaces of harmonic forms
+\begin{align*}
+    \mathring{H}^k_0(d,\delta;\Omega) \vcentcolon= 
+    \{ \omega \in \mathring{H}^k(d;\Omega) 
+    | \, d\omega = 0, \delta\omega = 0 \}.
+\end{align*}
+With this one can prove the Hodge decomposition (\cite[Lemma 1]{arnold})
+\begin{align}
+    L_2^k(\Omega) = \overline{d\mathring{H}^{k-1}(d)} \stackrel{\perp}{\oplus} 
+    \mathring{H}^k_0(d,\delta) \stackrel{\perp}{\oplus} 
+    \overline{\delta H^{k+1}(\delta)} \label{hodge_decomposition}
+\end{align}
+and furthermore for the closed and coclosed forms respectively,
+\begin{align}
+    \mathring{H}^k_0(d) &= \overline{d\mathring{H}^{k-1}(d)} 
+    \stackrel{\perp}{\oplus}
+    \mathring{H}^k_0(d,\delta) \label{decomposition_closed_forms} \\
+    H^k_0(\delta) &= \overline{\delta H^{k+1}(\delta)} \stackrel{\perp}{\oplus}
+    \mathring{H}^k_0(d,\delta). \label{decomposition_coclosed_forms}
+\end{align}
 
 
 Before we can reformulate the boundary value problem in the language of 
