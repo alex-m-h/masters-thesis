@@ -23,6 +23,8 @@
 \theoremstyle{definition}
 \newtheorem{assumption}{Assumption}
 \newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{problem}{Problem}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator{\curl}{curl}
@@ -766,51 +768,137 @@ existence of solutions in the next section.
 
 
 \section{Existence and uniqueness of solutions}
-\subsection{Well-definedness of the integral constraint} 
-\label{well_definedness_integral}
+
+\subsection{Reformulation of the problem} 
+
+We will return now to the magnetostatic problem. In order to use the results
+above we will reformulate the problem in the notation of differential forms.
+There are two ways to identify a vector field with a differential form 
+(cf. \cite[Table 6.1 and p.70]{arnold}) either as a 1-form or a 2-form. 
+For a vector field $B$ we define
+\begin{align*}
+    F^1\, B &\vcentcolon= B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3 \text{ and}\\
+    F^2\, B &\vcentcolon= B_2 \, dx_2 \wedge dx_3 - B_2 \, dx_1 \wedge dx_3
+        + B_3 \, dx_1 \wedge dx_2
+\end{align*} 
+as the corresponding 1-form and 2-form. 
+Then the exterior derivative is $dF^2\,\omega$ corresponds to the divergence,
+the codifferential $\delta F^2\,\omega$ 
+corresponds to the curl and the normal component
+being zero on the boundary corresponds 
+to $\omega \in \mathring{H}^2(d)$.\cite{}. 
+
+If we then use the association of
+3-forms with scalars we have the corresponding boundary value problem without
+the integral condition for 
+2-forms: Find $\omega \in \mathring{H}^2(d)$ s.t.
+\begin{align}
+    \delta \omega &= 0, \\ 
+    d\omega  &= 0 \text{ in } \Omega.
+\end{align}
+Next, we have to add the integral condition. 
+We use that we are in three dimensions so
+$**=(-1)^{k(n-k)}\tilde{\nu} = \tilde{\nu}$ \cite[p.66]{arnold} for any
+$k$-form $\tilde{\nu}$.
+and observe
+\begin{align*}
+    *F^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
+        = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
+    &= F^1 \, B.
+\end{align*}
+Then we have 
+\begin{align*}
+    \int_\gamma * F^2\, B = \int_\gamma F   ^1\, B = \int_\gamma B \cdot \text{d}l.
+\end{align*}
+In the last step we used the fact that the integration of a 1-form over a
+curve is equivalent to the curve integral of the associated vector field
+(cf. \cite[Sec. 6.2.3]{arnold}). Hence, we can add the integral condition 
+\begin{align}
+    \int_\gamma *\omega = C_0 \label{integral_condition}.
+\end{align}
+However, we have  only $\omega \in \mathring{H}_0^2(d,\delta)$ so 
+$*\omega \in H^1(\delta)$ so this integral might not be well defined. In order 
+to deal with this, we will again use the operator $\rop$ and $\bar{I}$ from 
+Sec.\,\ref{sec_isomorphism_cohomology}. Instead of using 
+(\refeq{integral_condition}) directly we use the condition 
+\begin{align*}
+    \int_\gamma \rop * \omega = C_0.
+\end{align*}
+This is equivalent to $(\bar{I}*\omega)(\gamma) = C_0$. We know that this is 
+well-defined. 
 
 
-In the problem, we have the additional constraint 
+We want to give some justification about why this is a reasonable extension.
+For any closed $\eta \in W^1_p(\omegabar)$ we have $\rop \eta = \eta - 
+d\aop\eta$ from Thm.\,\ref{operators}. For smooth 
+$\phi \in \Lambda^0(\omegabar)$ we immediately get from the standard Stoke's 
+theorem that $\int_c d\phi = 0$ for all closed $1$-chains $c$. If we 
+assume sufficient regularity on $\rop \eta$, $d\aop\eta$ and $\eta$ 
+then we would have indeed 
 \begin{align*}
-    \int_\gamma B \cdot \text{d}l = C_0
+    \int_\gamma \rop \eta = \int_\gamma \eta - d\aop\eta = \int_\gamma \eta.
 \end{align*}
-for some $C_0 \in \real$ and a closed bounded triangulated curve $\gamma$.
-This corresponds in the language of differential forms in the general case
-to the integration of a $k$-form $\omega$
-over a $k$-chain $\gamma$
-\begin{align*}
-    \int_\gamma \omega  = C_0.
-\end{align*}
-However, we only assume 
-$\omega \in \mathring{H}^k(d;\Omega)$ so we have to check if and how this can
-be well defined.
 
-Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can 
-therefore be applied on $\omega \in S^k_p(\omegabar)$ as
-\begin{align*}
-    I(\omega) \vcentcolon= I (\varphi(\omega)).
-\end{align*}
-\noindent If we fix now the closed 
-$k$-chain $\gamma$ then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
-$S^k_p(\omegabar)$, but it is a-priori not clear how to extend this to closed forms in
-$W_p^k(\omegabar)$. 
+\begin{remark}
+    This justification can be done more rigorously with the help of S-forms
+    (cf. \cite{goldshtein}) which correspond to $W_{\infty,loc}(\omegabar)$
+    with an additional decaying condition. Then we obtain that the integral 
+    is consistent with the integral on these S-forms.
+\end{remark}
+\noindent To summarize we obtain the following problem.
 
-We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(\omegabar)$ because 
-otherwise $I$ would not induce an isomorphism on cohomology. We extend this now
-by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(\omegabar)$. 
-We have to check whether this is consistent with the definition above i.e. we
-have to show that if $d\nu \in S^k_p(M)$ for some 
-$\nu \in W_p^{k-1}k(\omegabar)$ then 
-it must follow from the previous definition of the integral that indeed
-\begin{align*}
-    \int_\gamma d\nu = 0
-\end{align*}
-holds.
-Let $A \subseteq M$ be a bounded neighborhood of $\gamma$. We can then find 
-$\tilde{\nu}$ s.t.  $\tilde{\nu} \in W^{k-1}_q(A)$ for any $q > 1$ and 
-$d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. Now it is possible to apply 
-Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
-$\int_\gamma d\nu = 0$ and consequently we have shown consistency.
+\begin{problem}
+    Find $\omega \in \mathring{H}^2(d;\Omega)$ s.t.
+    \begin{align*}
+        d \omega &= 0, \\
+        \delta \omega &= 0 \text{ in $\Omega$}, \\
+        (\bar{I}\omega)(\gamma)  &= C_0.
+    \end{align*}
+\end{problem}
+\noindent We will examine existence and 
+uniqueness of this problem in the next section.
+
+% In the problem, we have the additional constraint 
+% \begin{align*}
+%     \int_\gamma B \cdot \text{d}l = C_0
+% \end{align*}
+% for some $C_0 \in \real$ and a closed bounded triangulated curve $\gamma$.
+% This corresponds in the language of differential forms 
+% to the integration of a $1$-form $\omega$
+% over a $k$-chain $\gamma$
+% \begin{align*}
+%     \int_\gamma \omega  = C_0.
+% \end{align*}
+% However, we only assume 
+% $\omega \in \mathring{H}^k(d;\Omega)$ so we have to check if and how this can
+% be well defined.
+
+% Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can 
+% therefore be applied on $\omega \in S^k_p(\omegabar)$ as
+% \begin{align*}
+%     I(\omega) \vcentcolon= I (\varphi(\omega)).
+% \end{align*}
+% \noindent If we fix now the closed 
+% $k$-chain $\gamma$ then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
+% $S^k_p(\omegabar)$, but it is a-priori not clear how to extend this to closed forms in
+% $W_p^k(\omegabar)$. 
+
+% We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(\omegabar)$ because 
+% otherwise $I$ would not induce an isomorphism on cohomology. We extend this now
+% by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(\omegabar)$. 
+% We have to check whether this is consistent with the definition above i.e. we
+% have to show that if $d\nu \in S^k_p(M)$ for some 
+% $\nu \in W_p^{k-1}k(\omegabar)$ then 
+% it must follow from the previous definition of the integral that indeed
+% \begin{align*}
+%     \int_\gamma d\nu = 0
+% \end{align*}
+% holds.
+% Let $A \subseteq M$ be a bounded neighborhood of $\gamma$. We can then find 
+% $\tilde{\nu}$ s.t.  $\tilde{\nu} \in W^{k-1}_q(A)$ for any $q > 1$ and 
+% $d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. Now it is possible to apply 
+% Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
+% $\int_\gamma d\nu = 0$ and consequently we have shown consistency.
 
 
 % In order to extend the functional $\int_\gamma$ 
@@ -848,15 +936,6 @@ $\int_\gamma d\nu = 0$ and consequently we have shown consistency.
 % \int_\gamma \omega.
 % \end{align*}
 
-
-
-
-
-
-
-
-
-
 \subsection{Existence and uniqueness}
 
 We start with the following
@@ -891,53 +970,7 @@ We start with the following
 \end{proof}
 
 
-We will return now to the magnetostatic problem. In order to use the results
-above we will reformulate the problem in the notation of differential forms.
-There are two ways to identify a vector field with a differential form 
-(cf. \cite[Table 6.1 and p.70]{arnold}) either as a 1-form or a 2-form. 
-For a vector field $B$ we define
-\begin{align*}
-    D^1\, B &\vcentcolon= B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3 \text{ and}\\
-    D^2\, B &\vcentcolon= B_2 \, dx_2 \wedge dx_3 - B_2 \, dx_1 \wedge dx_3
-        + B_3 \, dx_1 \wedge dx_2
-\end{align*} 
-as the corresponding 1-form and 2-form. 
-Then the exterior derivative is $dD^2\,\omega$ corresponds to the divergence,
-the codifferential $\delta D^2\,\omega$ 
-corresponds to the curl and the normal component
-being zero on the boundary corresponds 
-to $\omega \in \mathring{H}^2(d)$.\cite{}. 
 
-If we then use the association of
-3-forms with scalars we have the corresponding boundary value problem without
-the integral condition for 
-2-forms: Find $\omega \in \mathring{H}^2(d)$ s.t.
-
-\begin{align}
-    \delta \omega &= 0, \\ 
-    d\omega  &= 0 \text{ in } \Omega.
-\end{align}
-Next, we have to add the integral condition. 
-We use that we are in three dimensions so
-$**=(-1)^{k(n-k)}\tilde{\nu} = \tilde{\nu}$ \cite[p.66]{arnold} for any
-$k$-form $\tilde{\nu}$.
-and observe
-\begin{align*}
-    *D^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
-        = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
-    &= D^1 \, B.
-\end{align*}
-Then we have 
-\begin{align*}
-    \int_\gamma * D^2\, B = \int_\gamma D^1\, B = \int_\gamma B \cdot \text{d}l.
-\end{align*}
-In the last step we used the fact that the integration of a 1-form over a
-curve is equivalent to the curve integral of the associated vector field
-(cf. \cite[Sec. 6.2.3]{arnold}). Hence, we can add the integral condition 
-\begin{align}
-    \int_\gamma *\omega = C_0 \label{integral_condition}
-\end{align}
-and obtain the equivalent problem on differential forms.
 
 
 We are now able to proof existence of a 
