@@ -485,11 +485,15 @@ to our case.
 
 \section{Isomorphism of Cohomology}
 
-\subsection{Assumptions}
+% \subsection{Assumptions}
 % In order to formulate the assumptions necessary for the result from 
 % \cite{goldshtein} to work we will define some basic things from 
 % simplicial topology theory. More details and references can be found in 
 % \cite[Chapter 4.21]{topology_and_geometry}.
+Before we state the theorem about the isomorphism of we will first formulate 
+a crucial assumption for this result to hold.
+
+
 Because $\omegabar$ from our problem is itself a polyhedron we can
 assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$ and we can
 simply use the identity as triangulation.
@@ -569,24 +573,11 @@ and analogously
 \end{align*}
 %%% TBD: Give more details and interpretation
 
-% In order to formulate the second assumption we have to note that for our
-% triangulation $\tau$ we have that $M = |K|$. Therefore $\tau$ is just the 
-% identity in our case. However, we use a different metric on $M$ and $|K|$. 
-% On our domain $M$ we use the Euclidian metric. On $|K|$ however, we have to use
-% the standard simplicial metric which is defined as follows (cf. 
-% \cite[p.191]{goldshtein}). 
-% We enumerate the vertices of the triangulation as ${ x_1,\, x_2,\, ... }$.
-% Let $f: |K| \rightarrow \ell^2$ be an embedding 
-% of the triangulation $|K|$ into $\real^\infty$ s.t. $f(x_i) = e_i$ where $e_i$ 
-% are the standard unit vectors of $\real^\infty$ and $f$ is affine on every 
-% simplex. Keeping this in mind, we have the following assumption 
-
-
 \subsection{Statement of the Isomorphism} \label{sec_isomorphism_cohomology}
 
 From now on we will assume that the GKS condition is fulfilled.
-The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
-mappings between different cohomology spaces. 
+% The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
+% mappings between different cohomology spaces. 
 
 \begin{definition}[Induced map]
     Let $V$ and $W$ be real vector spaces, $X \subseteq V$, $Y \subseteq W$ be 
@@ -618,96 +609,160 @@ be defined next.
     \norm{f}_{C_p^k(K)} < \infty \}.
     \end{align*}
 \end{definition}
-Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
-$\tau < \sigma$. It can be shown that the standard embedding 
-$j: \tau \hookrightarrow \sigma$ induces an
-restriction operator 
-$j^*_{\sigma, \tau}:W^*_\infty(\sigma) \rightarrow W^*_\infty(\tau) $ which is 
-bounded (cf \cite[p.191]{goldshtein}). 
-\begin{definition}[S-forms]
-    Let 
-    \begin{align*}
-    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
-    \end{align*}
-    be a collection of differential $k$-forms. We call $\theta$ S-form of degree
-    $k$ if we have for all simplices
-    $\mu <\sigma$ 
-    \begin{align*}
-    j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
-    \end{align*}
-    We denote with $S^k(K)$ the space of all S-forms of degree $k$ over the chain
-    complex $K$. 
-    For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
-    \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
-\end{definition}
-For $\theta \in S^k(K)$ we now define the norm
-\begin{align*}
-\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
-\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
-\end{align*} 
-$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
+% Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
+% $\tau < \sigma$. It can be shown that the standard embedding 
+% $j: \tau \hookrightarrow \sigma$ induces an
+% restriction operator 
+% $j^*_{\sigma, \tau}:W^*_\infty(\sigma) \rightarrow W^*_\infty(\tau) $ which is 
+% bounded (cf \cite[p.191]{goldshtein}). 
+% \begin{definition}[S-forms]
+%     Let 
+%     \begin{align*}
+%     \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
+%     \end{align*}
+%     be a collection of differential $k$-forms. We call $\theta$ S-form of degree
+%     $k$ if we have for all simplices
+%     $\mu <\sigma$ 
+%     \begin{align*}
+%     j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
+%     \end{align*}
+%     We denote with $S^k(K)$ the space of all S-forms of degree $k$ over the chain
+%     complex $K$. 
+%     For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
+%     \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
+% \end{definition}
+% For $\theta \in S^k(K)$ we now define the norm
+% \begin{align*}
+% \lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
+% \lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
+% \end{align*} 
+% $S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
 
-Using integration we can define define the homomorphism 
-(see \cite[p.191]{goldshtein})
+% Using integration we can define define the homomorphism 
+% (see \cite[p.191]{goldshtein})
+% \begin{align*}
+% I: S_p^k(K) \rightarrow C_p^k(K), \; I(\theta)(\sigma) = 
+% \int_\sigma \theta(\sigma) \text{ for } \sigma \in K.
+% \end{align*}
+% With the exterior derivative $d$ on S-forms as defined above we define 
+% \begin{align*}
+%     \mathcal{Z}_p^k &\vcentcolon= \{ \theta \in S^k_p(K) | \, d\theta = 0 \} \\
+%     \mathcal{B}_p^k &\vcentcolon= dS^k_p(K)
+% \end{align*}
+% and then the resulting cohomology space
+
+% \begin{align*}
+%     \mathscr{H}_p^k(K) \vcentcolon= 
+%     \faktor{\mathcal{Z}_p^k}{\mathcal{B}_p^k}.
+% \end{align*}
+
+% We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
+% integration mapping
+% $I: S_p^k(K) \rightarrow C_p^k(K)$ 
+% induces an isomorphism on the cohomologies i.e. 
+% $[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
+% spaces (see Theorem\,1 in \cite{goldshtein}
+% and the proof thereof).
+
+
+
+
+
+
+
+% The next step is to obtain an isomorphism between the cohomology 
+% of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
+% $\lpcoho(\omegabar)$. At first, we define 
+% \begin{align*}
+% \varphi: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
+% \omega \mapsto \{ \omega|_\sigma \, |\, \sigma \in K \}.
+% \end{align*}
+% This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
+% way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$.  Using the
+% isomorphism $\varphi$ we now define 
+% $S^k_p(M) \vcentcolon= \varphi^{-1} S^k_p(K)$.
+% It can be shown that $S^k_p(M) \subseteq W^k_p(M)$. Let 
+% $\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
+% The inclusion induces an
+% isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
+% $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
+
+
+% In conclusion, we get the following isomorphisms of cohomologies:
+% \begin{align*}
+%     \lpcoho(\omegabar) \xrightarrow{[\iota]^{-1}} \mathscr{H}_p^k(K) 
+%     \xrightarrow{[I]} H^k_p(K).
+% \end{align*}
+% This result will be crucial in the next section to obtain a unique solution
+% to our problem.
+
+The idea is that for a $k$-form $\theta$ we have the cochain 
+$I(\theta) \in C^k(K)$, $I(\theta)(\sigma) = \int_\sigma \theta$ for any
+$k$-simplex $\sigma$. We want to show that this map induces a isomorphism on
+cohomology. 
+
+
+At first, we will discuss when and how this integration mapping is well-defined. 
+In order to do so, we will use restriction operatorss that are introduced in
+\cite[p.191]{goldshtein}. Let $\sigma, \tau \in K$ be simplices s.t.
+$\tau < \sigma$ i.e. $\tau$ is a face of $\sigma$. The pullback of the standard
+inclusion mapping $j_{\tau, \sigma}: \tau \hookrightarrow \sigma$ gives us 
+a restriction 
+$j^*_{\tau, \sigma}: W^k_\infty(\sigma) \rightarrow W^k_\infty(\tau)$, but 
+we have to check whether this is well-defined. In order to do so, take 
+some $\eta \in W^k_\infty(\sigma)$. Before restriction we extend $\eta$ to 
+a neighborhood $U \supseteq \sigma$ in the affine hull of $\sigma$ to 
+get $\tilde{\eta} \in W^k_\infty(U)$. Then we set 
+$j^*_{\tau, \sigma} \eta = j^*_{\tau, U}$ which is now well-defined and 
+independent of the extension $\tilde{\eta}$ chosen. It should be stressed 
+that this construction does not work for $W^k_p$ with $p < \infty$. 
+
+
+Now take $\eta \in W^k_{\infty,loc}(\omegabar)$. By applying this restriction
+operator repeatedly we can now find $\eta_\sigma \in W^k_\infty(\sigma)$ for 
+every $\sigma \in K$. Then we define 
 \begin{align*}
-I: S_p^k(K) \rightarrow C_p^k(K), \; I(\theta)(\sigma) = 
-\int_\sigma \theta(\sigma) \text{ for } \sigma \in K.
+    (I\eta) (\sigma) = \int_\sigma \eta_\sigma 
+    \text{ for all $k$-simplices } \sigma \in K .
 \end{align*}
-With the exterior derivative $d$ on S-forms as defined above we define 
+So we have established that $I: W^k_{\infty,loc}(\omegabar) \rightarrow C^k(K)$ 
+is well-defined.
+
+
+In the next step, we will use two operators $\rop$ and $\aop$ from 
+\cite{goldshtein}.
+The precise definition and details of their construction
+are not relevant for our purposes because we will only use
+the following properties (cf. \cite[Thm.2]{goldshtein}).
+
+\begin{theorem}\label{operators}
+    Assume that the triangulation $\tau$ fulfills the GKS-condition.
+    Then there exist linear mappings 
+    $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
+    L^k_{1,loc}(\omegabar)$, $\mathscr{A}: L^k_{1,loc}(\omegabar) 
+    \rightarrow L^{k-1}_{1,loc}(\omegabar)$ 
+    such that
+    \begin{enumerate}
+        \item $\mathscr{R}\omega - \omega = 
+            d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
+            $\omega \in W^k_{1,loc}(\omegabar)$
+        \item for any $1 \leq p \leq \infty$, 
+            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
+    \end{enumerate}
+\end{theorem}
+where
 \begin{align*}
-    \mathcal{Z}_p^k &\vcentcolon= \{ \theta \in S^k_p(K) | \, d\theta = 0 \} \\
-    \mathcal{B}_p^k &\vcentcolon= dS^k_p(K)
-\end{align*}
-and then the resulting cohomology space
-
-\begin{align*}
-    \mathscr{H}_p^k(K) \vcentcolon= 
-    \faktor{\mathcal{Z}_p^k}{\mathcal{B}_p^k}.
+    S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
+    I\eta \in C^k_p(K)\}.
 \end{align*}
 
-We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
-integration mapping
-$I: S_p^k(K) \rightarrow C_p^k(K)$ 
-induces an isomorphism on the cohomologies i.e. 
-$[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
-spaces (see Theorem\,1 in \cite{goldshtein}
-and the proof thereof).
-
-
-
-
-
-
-
-The next step is to obtain an isomorphism between the cohomology 
-of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
-$\lpcoho(\omegabar)$. At first, we define 
-\begin{align*}
-\varphi: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
-\omega \mapsto \{ \omega|_\sigma \, |\, \sigma \in K \}.
-\end{align*}
-This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
-way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$.  Using the
-isomorphism $\varphi$ we now define 
-$S^k_p(M) \vcentcolon= \varphi^{-1} S^k_p(K)$.
-It can be shown that $S^k_p(M) \subseteq W^k_p(M)$. Let 
-$\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
-The inclusion induces an
-isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
-$[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
-
-
-In conclusion, we get the following isomorphisms of cohomologies:
-\begin{align*}
-    \lpcoho(\omegabar) \xrightarrow{[\iota]^{-1}} \mathscr{H}_p^k(K) 
-    \xrightarrow{[I]} H^k_p(K).
-\end{align*}
-This result will be crucial in the next section to obtain a unique solution
-to our problem.
-
-
-
-
+Now define $\bar{I} \vcentcolon= I \circ \rop$. This gives a well-defined 
+mapping from $W^k_p(\omegabar)$ to $C^k_p(K)$. Following the arguments of 
+\cite{goldshtein} and using the properties of $\rop$ and $\aop$ one can show 
+that the induced homomorphism of cohomologies 
+$[\bar{I}]: H^k_{p,dR}(\omegabar) \rightarrow H^k_p(K)$ is an isomorphism.
+This isomorphism will play a crucial part in the proof of uniqueness and 
+existence of solutions in the next section.
 
 
 \section{Existence and uniqueness of solutions}
@@ -758,40 +813,40 @@ Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get
 $\int_\gamma d\nu = 0$ and consequently we have shown consistency.
 
 
-In order to extend the functional $\int_\gamma$ 
-further we will use two operators
-$\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second section 
-of \cite{goldshtein}. The precise definition and details of their construction
-are not relevant for our purposes because we will only use
-the following properties (cf. \cite[Thm.2]{goldshtein}).
+% In order to extend the functional $\int_\gamma$ 
+% further we will use two operators
+% $\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second section 
+% of \cite{goldshtein}. The precise definition and details of their construction
+% are not relevant for our purposes because we will only use
+% the following properties (cf. \cite[Thm.2]{goldshtein}).
 
-\begin{theorem}\label{operators}
-    Assume that the triangulation $\tau$ fulfills the GKS-condition.
-    Then there exist linear mappings $\mathscr{R}: L^k_{1,loc} \rightarrow 
-    L^k_{1,loc}$, $\mathscr{A}: L^k_{1,loc} \rightarrow L^{k-1}_{1,loc}$ 
-    such that
-    \begin{enumerate}
-        \item $\mathscr{R}\omega - \omega = 
-            d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
-            $\omega \in W^k_{1,loc}(\omegabar)$
-        \item for any $1 \leq p \leq \infty$, 
-            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
-    \end{enumerate}
-\end{theorem}
+% \begin{theorem}\label{operators}
+%     Assume that the triangulation $\tau$ fulfills the GKS-condition.
+%     Then there exist linear mappings $\mathscr{R}: L^k_{1,loc} \rightarrow 
+%     L^k_{1,loc}$, $\mathscr{A}: L^k_{1,loc} \rightarrow L^{k-1}_{1,loc}$ 
+%     such that
+%     \begin{enumerate}
+%         \item $\mathscr{R}\omega - \omega = 
+%             d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
+%             $\omega \in W^k_{1,loc}(\omegabar)$
+%         \item for any $1 \leq p \leq \infty$, 
+%             $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
+%     \end{enumerate}
+% \end{theorem}
 
-\noindent We can now use the operator $\rop$ to define $\int_\gamma \omega$ for closed
-$\omega \in W^k_p(M)$ as
-\begin{align*}
-\int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
-\end{align*}
-This is consistent with the curve integral for S-forms 
-because if $\omega \in S^k_p(M)$ closed then due to 
-Thm.\,\ref{operators}
-\begin{align*}
-\int_\gamma \rop\omega = 
-\int_\gamma \omega + d\mathscr{A}\omega + \mathscr{A}d\omega = 
-\int_\gamma \omega.
-\end{align*}
+% \noindent We can now use the operator $\rop$ to define $\int_\gamma \omega$ for closed
+% $\omega \in W^k_p(M)$ as
+% \begin{align*}
+% \int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
+% \end{align*}
+% This is consistent with the curve integral for S-forms 
+% because if $\omega \in S^k_p(M)$ closed then due to 
+% Thm.\,\ref{operators}
+% \begin{align*}
+% \int_\gamma \rop\omega = 
+% \int_\gamma \omega + d\mathscr{A}\omega + \mathscr{A}d\omega = 
+% \int_\gamma \omega.
+% \end{align*}
 
 
 
