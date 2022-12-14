@@ -503,37 +503,130 @@ a designated representation in the form of
 In Section\,\ref{sec_isomorphism_cohomology} we will only deal with 
 simplicial complexes instead of chain groups.
 
-
-
-Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
-else than the dual space of the space of $k$-chains i.e.
+\begin{definition}[Cochain group]
+    Let $G$ be a group. Then we define the \textit{$k$-cochain group} 
+    \begin{align*}
+        C^k(X;G) \vcentcolon= \text{Hom}(C_k(X),G)
+    \end{align*}
+    i.e. the group of all homomorphisms from the chain group to $G$.
+\end{definition}
+\noindent We use a superindex if an object is related to cochains and 
+we use a subindex if it is related to chains. In this spirit, we define
 \begin{align*}
-    C^k(K) \vcentcolon= \text{Hom}(C^k_c;\, \real)
+    \partial^k: C^k(X;G) \rightarrow C^{k+1}(X;G),\, 
+    (\partial^k F) (c) \vcentcolon= F(\partial_k c).
 \end{align*}
-where Hom$(X,Y)$ is the space of all vector space homomorphisms (i.e. linear 
-mappings) from $X$ to $Y$.
-We now introduce an operator between these spaces of cochains.
-\begin{definition}
-    We define the operator $\delta: C^k{K} \rightarrow C^{k+1}(K)$ via
+
+We call  cochain $F \in C^k(X;G)$ \textit{closed} if $\partial^k F = 0$ 
+and we call $F$
+\textit{exact} if there exists $G \in C^{k+1}(X;G)$ s.t. $F = \partial^{k-1} G$. 
+So in analogy to the boundary map we denote
+\begin{align*}
+    \text{"closed $k$-cochains"} &= \text{ker}\,\partial^k =\vcentcolon 
+    Z^k(X;G) \\
+    \text{"exact $k$-cochains"} &= \text{im}\,\partial^{k-1} =\vcentcolon 
+    B^k(X;G).
+\end{align*}
+We get immediately from the definition of $\partial^k$ that 
+$\partial^k \circ \partial^{k+1} = 0$, analogous to the boundary of chains.
+
+
+Analogous to the homology groups, we thus obtain the \textit{cohomology groups}.
+\begin{definition}[Singular cohomology groups]
+    We define the \textit{singular cohomology group}
+    as
     \begin{align*}
-        (\delta f) (c) \vcentcolon= f(\partial c).
+        H^k(X;G) \vcentcolon= \faktor{Z^k(X;G)}{B^k(X;G)}.
     \end{align*}
-    We call a cochain $f \in C^k(K)$ \textit{closed} if $\delta f = 0$ 
-    and we call $f$
-    \textit{exact} if there is a $g \in C^{k+1}(K)$ s.t. $f = \delta g$.
 \end{definition}
-We define the cohomology spaces analogous to homology spaces above.
-\begin{definition}[Cohomology of cochains]
-    Denote the space of closed $k$-cochains as $Z^k(K)$ and $B^k(K)$ the space
-    of exact $k$-cochains. We then define the \textit{cohomology spaces}
-    $H^k(K)$ as
+\noindent In our situation later, $G$ will always be the real numbers.
+
+
+Now the question arises how the homology and cohomology groups are related to
+each other. In order to answer this question, we have to introduce
+the notion of \textit{exact sequences}.
+
+\begin{definition}[Exact sequence]
+    Let $(G_i)_{i\in \integers}$ be a sequence of groups and 
+    $(f_i)_{i\in\integers}$ be a sequence of homomorphisms
+    $f_i: G_i \rightarrow G_{i+1}$. We call this sequence of homomorphisms
+    exact if $\text{im}\,f_{i-1} = \text{ker}\,f_i$.
+\end{definition}
+Then the \textit{universal coefficient theorem} gives us the following 
+exact sequence
+\begin{align*}
+    0 \rightarrow \text{Ext}(H_{k-1}(X),G) \rightarrow 
+    H^k(X;G) \xrightarrow{\beta} \text{Hom}(H_k(x),G) \rightarrow 0
+\end{align*}
+with the homomorphism
+\begin{align*}
+    \beta([F])([c]) = F(c).
+\end{align*}
+The definition of Ext can be found in \cite[Sec.\,V.6]{topology_and_geometry}, 
+but the definition does not matter for our purposes because for $G = \real$ 
+we get
+$\text{Ext}(H_{k-1}(X),G) = 0$. This is because the real numbers are 
+a divisible and hence injective group. The definition of these terms and 
+the necessary connections can be found in \cite[V.6]{topology_and_geometry}, 
+but we will not go any further into the algebraic background.
+
+
+So we obtain the exact sequence
+\begin{align*}
+    0 \rightarrow H^k(X;\real) \xrightarrow{\beta} 
+    \text{Hom}(H_k(x),\real) \rightarrow 0.
+\end{align*}
+The exactness gives us $\text{ker}\,\beta = 0$ and 
+$\text{im}\,\beta = \text{Hom}(H_k(x),G)$ i.e. $\beta$ is an isomorphism.
+
+As an application let us prove the following proposition that will be used 
+later to prove the uniqueness of the magnetostatic problem. %TBD: Section ?
+\begin{proposition} \label{uniqueness_cochain_class}
+    Assume that $H_1(X) \cong \integers[\gamma]$ i.e. $[\gamma]$ is a generator
+    of the homology group. Let $F$ and $G$ both be closed 
+    $1$-chains with $F(\gamma)=G(\gamma)$. Then $[F] = [G]$.
+\end{proposition} 
+\begin{proof}
+    Take $c$ be any closed $1$-chain. Then $[c] = [n\gamma]$ for some 
+    $n\in \integers$ and thus
     \begin{align*}
-        H^k(K) \vcentcolon= \faktor{Z^k(K)}{B^k(K)}.
+        \beta([F])([c]) = \beta([F])(n[\gamma]) = 
+        n\;F(\gamma) = n\;G(\gamma) = \beta([G])(n[\gamma]) = \beta([G])([c])
     \end{align*}
-\end{definition}
-We will later show that if we consider certain subspaces of cochains so called
-\textit{p-summable} cochains that the $L^p$-cohomology defined above and the
-cohomology spaces of these $p$-summable cochains are isomorphic.
+    so $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism we obtain
+    $[F] = [G]$.
+\end{proof}
+
+
+% Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
+% else than the dual space of the space of $k$-chains i.e.
+% \begin{align*}
+%     C^k(K) \vcentcolon= \text{Hom}(C^k_c;\, \real)
+% \end{align*}
+% where Hom$(X,Y)$ is the space of all vector space homomorphisms (i.e. linear 
+% mappings) from $X$ to $Y$.
+% We now introduce an operator between these spaces of cochains.
+% \begin{definition}
+%     We define the operator $\delta: C^k{K} \rightarrow C^{k+1}(K)$ via
+%     \begin{align*}
+%         (\delta f) (c) \vcentcolon= f(\partial c).
+%     \end{align*}
+%     We call a cochain $f \in C^k(K)$ \textit{closed} if $\delta f = 0$ 
+%     and we call $f$
+%     \textit{exact} if there is a $g \in C^{k+1}(K)$ s.t. $f = \delta g$.
+% \end{definition}
+% We define the cohomology spaces analogous to homology spaces above.
+% \begin{definition}[Cohomology of cochains]
+%     Denote the space of closed $k$-cochains as $Z^k(K)$ and $B^k(K)$ the space
+%     of exact $k$-cochains. We then define the \textit{cohomology spaces}
+%     $H^k(K)$ as
+%     \begin{align*}
+%         H^k(K) \vcentcolon= \faktor{Z^k(K)}{B^k(K)}.
+%     \end{align*}
+% \end{definition}
+% We will later show that if we consider certain subspaces of cochains so called
+% \textit{p-summable} cochains that the $L^p$-cohomology defined above and the
+% cohomology spaces of these $p$-summable cochains are isomorphic.
 
 
 % from now on be a an exterior polyhedral domain of a compact set i.e. 
