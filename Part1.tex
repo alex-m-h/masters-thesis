@@ -32,6 +32,7 @@
 
 \newcommand{\aop}{\mathscr{A}}
 \newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
+\newcommand{\integers}{\mathbb{Z}}
 \newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
@@ -320,36 +321,174 @@ and furthermore for the closed and coclosed forms respectively,
     \mathring{H}^k_0(d,\delta). \label{decomposition_coclosed_forms}
 \end{align}
 
+\section{Tools from Algebraic Topology}
 
-Before we can reformulate the boundary value problem in the language of 
-differential forms we have to 
-introduce some things from simplicial topology. A quick overview over the
-essential notions that we will use can for example be found in 
-\cite[Chapter 2]{arnold}. A more thorough introduction can be found in 
-\cite[Chapter 4]{topology_and_geometry}. For the sake of brevity, we will 
-follow the more intuitive approach taken by Arnold.
+In order to deal with the topological aspects of the problem we need to 
+use some results from algebraic topology. This material is taken from 
+Chapter 4 and 5 of Bredon's "Topology and Geometry" 
+\cite{topology_and_geometry} where a lot more details and results can be found.
+We start with the basic definitions from homology.
+
+\begin{definition}[Standard simplex]
+    Let $\ell^2$ be the space of real square-summable sequences and 
+    $e_1$, $e_2$, ... be the standard orthonormal basis. Then the 
+    standard simplex
+    $\Delta_k$ is defined as the convex combination of $e_1$, $e_2$, ..., $e_k$
+    i.e.
+    \begin{align*}
+        \Delta_k \vcentcolon= \left\{ \sum\limits_{i=0}^k \lambda_i e_i | \,
+        \sum\limits_{i=0}^k \lambda_i = 1,\, 0 \leq \lambda_i \leq 1 \right\}.
+    \end{align*}
+\end{definition}
+
+\begin{definition}[(Singular) affine simplex]
+    Given points $v_0$, $v_1$, ..., $v_k \in \real^n$ we define the map 
+    \begin{align*}
+        [v_0,...,v_k]: \Delta_k \rightarrow \real^n,\, \
+        \sum\limits_{i=0}^k \lambda_i e_i \mapsto 
+        \sum\limits_{i=0}^k \lambda_i v_i.
+    \end{align*}
+    This map is called \textit{affine singular simplex}. If the 
+    $v_i$ are additionally affine independent we call it 
+    \textit{affine simplex}.
+\end{definition}
+\noindent This map is well defined because the $\lambda_i$ are the barycentric
+coordinates and for every $x \in \Delta_k$ the $\lambda_i \in [0,1]$ 
+s.t. $x = \sum_i \lambda_i e_i$ are uniquely determined.
+
+$[e_0,...,\hat{e}_i,...,e_k]$ denotes the affine simplex where the vertex $e_i$
+was removed. 
+\begin{definition}[Face map]
+    The affine simplex $[e_0,...,\hat{e}_i,...,e_k]: \Delta_{k-1} \rightarrow 
+    \Delta_k$ is called the $i$-th face map and is denoted by $F_i^k$.
+\end{definition}
 
 
-\begin{definition}[Affine simplex]
+\begin{definition}[Singular $k$-chain group]
+    Let $X$ be a topological space. Then a \textit{singular $k$-simplex} of $X$
+    is a continuous map $\sigma_k: \Delta_k \rightarrow X$. 
+    The \textit{singular $k$-chain group} $\Delta_k(X)$ is the free abelian
+    group based on all singular $k$-simplices i.e. it is the group of all 
+    formal finite sums $\sum_\sigma n_\sigma \sigma_k$ with $n_\sigma \in 
+    \mathbb{Z}$. We set $\Delta_k(X) = 0$ for $k<0$
+\end{definition}
+
+\begin{definition}[Boundary]
+    Let $\sigma: \Delta_k \rightarrow X$ be a singular $k$-simplex. Then the 
+    \textit{$i$-th face} of $\sigma$ is $\sigma^{(i)}=\sigma \circ F_i^k$.
+    The boundary of $\sigma$ is 
+    \begin{align*}
+        \partial_k \sigma \vcentcolon= \sum\limits_{i=0}^k (-1)^i \sigma^{(i)}.
+    \end{align*}
+    This is a $(k-1)$-chain. We extend this map to all $k$-chains by
+    \begin{align*}
+        \partial_k: \Delta_k(X) \rightarrow \Delta_{k-1}(X),\,
+        \partial_k(\sum_\sigma n_\sigma \sigma) = 
+        \sum_\sigma n_\sigma \partial_k\sigma.
+    \end{align*}
+\end{definition}
+
+We set $\partial_k = 0$ for $k\leq 0$. 
+We have $\partial_k \circ \partial_{k+1} = 0$. The proof is done by direct 
+computation, see
+\cite[Ch.\,4, Lemma 1.6]{topology_and_geometry}.
+We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial_k c = 0$ 
+and we call $c$ 
+a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
+$c = \partial_{k+1} d$ or phrased differently
+\begin{align*}
+    \text{"$k$-cycles"} &= \text{ker}\,\partial_k =\vcentcolon Z_k(X) \\
+    \text{"$k$-boundaries"} &= \text{im}\,\partial_{k+1} =\vcentcolon= B_k(X)
+\end{align*}
+
+
+
+
+% \begin{definition}[$k$-chain]
+%     Let $K$ be a simplicial complex. A formal linear combination of $k$ 
+%     simplices
+%     \begin{align*}
+%         c = \sum\limits_{\sigma \in K\, k \text{ simplex}} c_\sigma \sigma
+%     \end{align*}
+%     with $c_\sigma \in \real$ is called \textit{$k$-chain}. The vector space 
+%     of all $k$-chains is denoted by ${C}^\text{c}_k$.
+% \end{definition}
+
+% These spaces of $k$-chains become now a chain complex by introducing the 
+% boundary operator $\partial$.
+
+% \begin{definition}[Boundary]
+%     For any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ we define the boundary
+%     \begin{align*}
+%         \partial[x_{i_0},\, x_{i_1},...,\, x_{i_k}] \vcentcolon=
+%         \sum\limits_{j=0}^k (-1)^j [x_{i_0},\, x_{i_1},...,\, 
+%         \hat{x}_{i_j},...,\, x_{i_k}]
+%     \end{align*}
+%     where $[x_{i_0},\, x_{i_1},...,\, \hat{x}_{i_j},...,\, x_{i_k}]$ is the
+%     simplex without vertex $x_{i_j}$. We then extend the definition
+%     of the boundary operator linearly to $k$-chains 
+%     $c = \sum_\sigma c_\sigma \sigma$ by
+%     \begin{align*}
+%         \partial c \vcentcolon= \sum\limits_\sigma c_\sigma \partial \sigma.
+%     \end{align*}.
+% \end{definition}
+
+% A crucial property of the chain operator is the following.
+
+% \begin{proposition}
+%     $\partial \circ \partial = 0$.
+% \end{proposition}
+% \begin{proof}
+%     This can be proven by direct computation, analogous to 
+%     \cite[Chap.4, Lemma 1.6]{topology_and_geometry}
+% \end{proof}
+
+We are now ready to define homology groups.
+\begin{definition}[Singular homology group]
+    The \textit{$k$-th homology group} $H_k(X)$ is the quotient group
+    \begin{align*}
+        H_k(X) \vcentcolon= \faktor{Z_k(X)}{B_k(X)}.
+    \end{align*}
+    For a $k$-chain $c$ we write $[c]$ for the corresponding homology class.
+\end{definition}
+
+If $H_k(X)$ is finitely generated then its rank is called the 
+\textit{$k$-th Betti number}. In the cases that we will consider 
+all homology groups will be finitely generated.
+
+
+\begin{definition}[Simplicial complex]
+    
+\end{definition}
+
+\noindent The homology spaces are independent of the chosen simplicial complex
+\cite{}. %%%TBD: Are you sure? Yes. Answer written on 28.11.2022
+
+Simplices as defined before are maps which is very abstract. The next 
+definition is what one commonly thinks of as a simplex in $\real^n$. 
+\begin{definition}[Physical simplex]
     Let $x_0$, $x_1$, ..., $x_k \in \real^n$ be affine independent. Then 
     \begin{align*}
     [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\,\{x_0,...,x_k\}
     \end{align*}
-    is called an affine $k$-simplex.
+    is called physical $k$-simplex.
 \end{definition}
-\noindent We will assume all simplices to be affine.
+\noindent It should be mentioned that Bredon calls these just affine simplices
+in \cite{topology_and_geometry}. We changed the naming here to make the 
+difference to the affine simplices from above more clear as these are
+completely different objects.
 %%% TBD: Question: In the book this is defined in infinite dimensions. Does this
 %%% lead to any problems?
 
 \begin{definition}[Simplicial complex]
-    A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
+    A \textit{simplicial complex} $K$ is a collection of phyiscal simplices s.t.
     \begin{enumerate}
         \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
         \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$  
                 is either empty or a face of both $\sigma$ and $\tau$.
     \end{enumerate}
-    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
-    $K$.
+    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ 
+    the polyhedron of $K$.
 \end{definition}
 For any topological space $X$ a homeomorphism 
 $\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
@@ -361,60 +500,9 @@ a designated representation in the form of
     \sigma = [x_{i_0},\, x_{i_1}, ...,x_{i_k}].
 \end{align*} 
 
-\begin{definition}[$k$-chain]
-    Let $K$ be a simplicial complex. A formal linear combination of $k$ 
-    simplices
-    \begin{align*}
-        c = \sum\limits_{\sigma \in K\, k \text{ simplex}} c_\sigma \sigma
-    \end{align*}
-    with $c_\sigma \in \real$ is called \textit{$k$-chain}. The vector space 
-    of all $k$-chains is denoted by ${C}^\text{c}_k$.
-\end{definition}
+In Section\,\ref{sec_isomorphism_cohomology} we will only deal with 
+simplicial complexes instead of chain groups.
 
-These spaces of $k$-chains become now a chain complex by introducing the 
-boundary operator $\partial$.
-
-\begin{definition}[Boundary]
-    For any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ we define the boundary
-    \begin{align*}
-        \partial[x_{i_0},\, x_{i_1},...,\, x_{i_k}] \vcentcolon=
-        \sum\limits_{j=0}^k (-1)^j [x_{i_0},\, x_{i_1},...,\, 
-        \hat{x}_{i_j},...,\, x_{i_k}]
-    \end{align*}
-    where $[x_{i_0},\, x_{i_1},...,\, \hat{x}_{i_j},...,\, x_{i_k}]$ is the
-    simplex without vertex $x_{i_j}$. We then extend the definition
-    of the boundary operator linearly to $k$-chains 
-    $c = \sum_\sigma c_\sigma \sigma$ by
-    \begin{align*}
-        \partial c \vcentcolon= \sum\limits_\sigma c_\sigma \partial \sigma.
-    \end{align*}.
-\end{definition}
-
-A crucial property of the chain operator is the following.
-
-\begin{proposition}
-    $\partial \circ \partial = 0$.
-\end{proposition}
-\begin{proof}
-    This can be proven by direct computation, analogous to 
-    \cite[Chap.4, Lemma 1.6]{topology_and_geometry}
-\end{proof}
-
-We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
-a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
-$c = \partial d$. Let $Z^k_c \subseteq C^k_c$ be the subspace of $k$-cycles
-and $B^k_c \subseteq C^k_c$ the subspace of $k$-boundaries.
-We can now define the homology spaces of our simplicial complex.
-
-\begin{definition}[Chain homology]
-    The homology spaces $H^k_c$ are the quotient spaces of 
-    cycles and boundaries i.e.
-    \begin{align*}
-        H^k_c\vcentcolon= \faktor{Z^k_c}{B^k_c}.
-    \end{align*}
-\end{definition}
-\noindent The homology spaces are independent of the chosen simplicial complex
-\cite{}. %%%TBD: Are you sure? Yes. Answer written on 28.11.2022
 
 
 Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
