@@ -333,10 +333,10 @@ We start with the basic definitions from homology.
     Let $\ell^2$ be the space of real square-summable sequences and 
     $e_1$, $e_2$, ... be the standard orthonormal basis. Then the 
     standard simplex
-    $\Delta_k$ is defined as the convex combination of $e_1$, $e_2$, ..., $e_k$
+    $C_k$ is defined as the convex combination of $e_1$, $e_2$, ..., $e_k$
     i.e.
     \begin{align*}
-        \Delta_k \vcentcolon= \left\{ \sum\limits_{i=0}^k \lambda_i e_i | \,
+        C_k \vcentcolon= \left\{ \sum\limits_{i=0}^k \lambda_i e_i | \,
         \sum\limits_{i=0}^k \lambda_i = 1,\, 0 \leq \lambda_i \leq 1 \right\}.
     \end{align*}
 \end{definition}
@@ -344,7 +344,7 @@ We start with the basic definitions from homology.
 \begin{definition}[(Singular) affine simplex]
     Given points $v_0$, $v_1$, ..., $v_k \in \real^n$ we define the map 
     \begin{align*}
-        [v_0,...,v_k]: \Delta_k \rightarrow \real^n,\, \
+        [v_0,...,v_k]: C_k \rightarrow \real^n,\, \
         \sum\limits_{i=0}^k \lambda_i e_i \mapsto 
         \sum\limits_{i=0}^k \lambda_i v_i.
     \end{align*}
@@ -353,28 +353,28 @@ We start with the basic definitions from homology.
     \textit{affine simplex}.
 \end{definition}
 \noindent This map is well defined because the $\lambda_i$ are the barycentric
-coordinates and for every $x \in \Delta_k$ the $\lambda_i \in [0,1]$ 
+coordinates and for every $x \in C_k$ the $\lambda_i \in [0,1]$ 
 s.t. $x = \sum_i \lambda_i e_i$ are uniquely determined.
 
 $[e_0,...,\hat{e}_i,...,e_k]$ denotes the affine simplex where the vertex $e_i$
 was removed. 
 \begin{definition}[Face map]
-    The affine simplex $[e_0,...,\hat{e}_i,...,e_k]: \Delta_{k-1} \rightarrow 
-    \Delta_k$ is called the $i$-th face map and is denoted by $F_i^k$.
+    The affine simplex $[e_0,...,\hat{e}_i,...,e_k]: C_{k-1} \rightarrow 
+    C_k$ is called the $i$-th face map and is denoted by $F_i^k$.
 \end{definition}
 
 
 \begin{definition}[Singular $k$-chain group]
     Let $X$ be a topological space. Then a \textit{singular $k$-simplex} of $X$
-    is a continuous map $\sigma_k: \Delta_k \rightarrow X$. 
-    The \textit{singular $k$-chain group} $\Delta_k(X)$ is the free abelian
+    is a continuous map $\sigma_k: C_k \rightarrow X$. 
+    The \textit{singular $k$-chain group} $C_k(X)$ is the free abelian
     group based on all singular $k$-simplices i.e. it is the group of all 
     formal finite sums $\sum_\sigma n_\sigma \sigma_k$ with $n_\sigma \in 
-    \mathbb{Z}$. We set $\Delta_k(X) = 0$ for $k<0$
+    \mathbb{Z}$. We set $C_k(X) = 0$ for $k<0$
 \end{definition}
 
 \begin{definition}[Boundary]
-    Let $\sigma: \Delta_k \rightarrow X$ be a singular $k$-simplex. Then the 
+    Let $\sigma: C_k \rightarrow X$ be a singular $k$-simplex. Then the 
     \textit{$i$-th face} of $\sigma$ is $\sigma^{(i)}=\sigma \circ F_i^k$.
     The boundary of $\sigma$ is 
     \begin{align*}
@@ -382,7 +382,7 @@ was removed.
     \end{align*}
     This is a $(k-1)$-chain. We extend this map to all $k$-chains by
     \begin{align*}
-        \partial_k: \Delta_k(X) \rightarrow \Delta_{k-1}(X),\,
+        \partial_k: C_k(X) \rightarrow C_{k-1}(X),\,
         \partial_k(\sum_\sigma n_\sigma \sigma) = 
         \sum_\sigma n_\sigma \partial_k\sigma.
     \end{align*}
