@@ -32,6 +32,7 @@
 
 \newcommand{\aop}{\mathscr{A}}
 \newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
+\newcommand{\integers}{\mathbb{Z}}
 \newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
@@ -323,17 +324,13 @@ and furthermore for the closed and coclosed forms respectively,
 
 Before we can reformulate the boundary value problem in the language of 
 differential forms we have to 
-introduce some things from simplicial topology. A quick overview over the
-essential notions that we will use can for example be found in 
-\cite[Chapter 2]{arnold}. A more thorough introduction can be found in 
-\cite[Chapter 4]{topology_and_geometry}. For the sake of brevity, we will 
-follow the more intuitive approach taken by Arnold.
-
+introduce some things from simplicial topology. This material is taken from
+\cite{topology_and_geometry} where a lot more details and results can be found.
 
 \begin{definition}[Affine simplex]
     Let $x_0$, $x_1$, ..., $x_k \in \real^n$ be affine independent. Then 
     \begin{align*}
-    [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\,\{x_0,...,x_k\}
+    [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\{x_0,...,x_k\}
     \end{align*}
     is called an affine $k$-simplex.
 \end{definition}
@@ -362,16 +359,16 @@ a designated representation in the form of
 \end{align*} 
 
 \begin{definition}[$k$-chain]
-    Let $K$ be a simplicial complex. A formal linear combination of $k$ 
-    simplices
+    Let $K$ be a simplicial complex. By $C_k(K)$ we will denote the 
+    free abelian group on the $k$-simplices
+    i.e. the abelian group of all formal finite sums
     \begin{align*}
-        c = \sum\limits_{\sigma \in K\, k \text{ simplex}} c_\sigma \sigma
+        \sum_\sigma n_\sigma \sigma
     \end{align*}
-    with $c_\sigma \in \real$ is called \textit{$k$-chain}. The vector space 
-    of all $k$-chains is denoted by ${C}^\text{c}_k$.
+    with $\sigma$ being $k$-simplices. The elements of $C_k(K)$
+    (i.e. sums of the above form) are called \textit{$k$-chains}.
 \end{definition}
-
-These spaces of $k$-chains become now a chain complex by introducing the 
+These groups of $k$-chains become now a chain complex by introducing the 
 boundary operator $\partial$.
 
 \begin{definition}[Boundary]
@@ -402,50 +399,111 @@ A crucial property of the chain operator is the following.
 
 We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
 a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
-$c = \partial d$. Let $Z^k_c \subseteq C^k_c$ be the subspace of $k$-cycles
-and $B^k_c \subseteq C^k_c$ the subspace of $k$-boundaries.
-We can now define the homology spaces of our simplicial complex.
+$c = \partial d$. Let $Z_k(K) \subseteq C_k(K)$ be the subgroup of $k$-cycles
+and $B_k(K) \subseteq C_k(K)$ the subgroup of $k$-boundaries.
+We can now define the simplicial homology groups of our simplicial complex.
 
-\begin{definition}[Chain homology]
-    The homology spaces $H^k_c$ are the quotient spaces of 
+\begin{definition}[Simplicial homology]
+    The homology groups $H_k(K)$ are the quotient groups of 
     cycles and boundaries i.e.
     \begin{align*}
-        H^k_c\vcentcolon= \faktor{Z^k_c}{B^k_c}.
+        H_k(K)\vcentcolon= \faktor{Z_k(K)}{B_k(K)}.
     \end{align*}
 \end{definition}
-\noindent The homology spaces are independent of the chosen simplicial complex
+\noindent The homology groups are independent of the chosen simplicial complex.
 \cite{}. %%%TBD: Are you sure? Yes. Answer written on 28.11.2022
 
 
-Next, we define the space of \textit{$k$-cochains} $C^k(K)$ which is nothing 
-else than the dual space of the space of $k$-chains i.e.
+Let $G$ be any group. Then we define the group 
+of \textit{$k$-cochains} $C^k(K;G)$ by
 \begin{align*}
-    C^k(K) \vcentcolon= \text{Hom}(C^k_c;\, \real)
+    C^k(K;G) \vcentcolon= \text{Hom}(C_k(K),\,G)
 \end{align*}
-where Hom$(X,Y)$ is the space of all vector space homomorphisms (i.e. linear 
-mappings) from $X$ to $Y$.
+i.e. the group of all homomorphisms from $k$-chains to $G$. 
+We generally use the superindex if something is related to 
+cochains and the subindex if it is related to chains. 
 We now introduce an operator between these spaces of cochains.
 \begin{definition}
-    We define the operator $\delta: C^k{K} \rightarrow C^{k+1}(K)$ via
+    We define the operator $\delta: C^k(K;G) \rightarrow C^{k+1}(K;G)$ via
     \begin{align*}
         (\delta f) (c) \vcentcolon= f(\partial c).
     \end{align*}
-    We call a cochain $f \in C^k(K)$ \textit{closed} if $\delta f = 0$ 
+    for a $(k+1)$-chain $c$.
+    We call a cochain $f \in C^k(K;G)$ \textit{closed} if $\delta f = 0$ 
     and we call $f$
-    \textit{exact} if there is a $g \in C^{k+1}(K)$ s.t. $f = \delta g$.
+    \textit{exact} if there is a $g \in C^{k+1}(K;G)$ s.t. $f = \delta g$.
 \end{definition}
-We define the cohomology spaces analogous to homology spaces above.
-\begin{definition}[Cohomology of cochains]
-    Denote the space of closed $k$-cochains as $Z^k(K)$ and $B^k(K)$ the space
-    of exact $k$-cochains. We then define the \textit{cohomology spaces}
+\noindent We define the cohomology spaces analogous to homology spaces above.
+\begin{definition}[Simplicial cohomology]
+    Denote the closed $k$-cochains as $Z^k(K;G)$ and the 
+    exact ones with $B^k(K;G)$. 
+    We then define the \textit{simplicial cohomology groups}
     $H^k(K)$ as
     \begin{align*}
-        H^k(K) \vcentcolon= \faktor{Z^k(K)}{B^k(K)}.
+        H^k(K;G) \vcentcolon= \faktor{Z^k(K;G)}{B^k(K;G)}.
     \end{align*}
 \end{definition}
+Note that in the case of $G = \real$ this becomes a vector space.
 We will later show that if we consider certain subspaces of cochains so called
 \textit{p-summable} cochains that the $L^p$-cohomology defined above and the
 cohomology spaces of these $p$-summable cochains are isomorphic.
+
+
+Now of course there is the question how the homology and cohomology groups 
+are related to each other. This question is answered by the
+\textit{universal coefficent theorem}. But before we can formulate it we have 
+to introduce exact sequences.
+\begin{definition}[Exact sequence]
+    Let $(G_i)_{i\in \integers}$ be a sequence of groups and 
+    $(f_i)_{i \in \integers}$ be a sequence of homomorphisms
+    $f_i: G_i \rightarrow G_{i+1}$. Then this sequence of homomorphisms is
+    called \textit{exact} if $\text{im}\,f_{i-1} = \text{ker}\,f_i$.
+\end{definition}
+
+The universal coefficent theorem in the case of simplicial homology states
+that the sequence 
+\begin{align}
+    0 \rightarrow \text{Ext}(H_{k-1}(K),G) \rightarrow 
+    H^k(K;G) \xrightarrow{\beta} \rightarrow \text{Hom}(H_k(K),G) 
+    \rightarrow 0 \label{univeral_coefficient_theorem}
+\end{align}
+is exact. 
+$\beta$ is defined via $\beta([F])([c]) \vcentcolon= F(c)$.
+The definition of Ext can be found in \cite{topology_and_geometry},
+but it does not matter for our purpose because from now on we will assume
+$G = \real$ and
+$\text{Ext}(H_{k-1}(K),\real) = 0$. This follows from the fact that 
+$\real$ is a divisible and hence injective abelian group. The definition 
+these terms and the connections used can also be found in 
+\cite[Ch.\,V.6]{topology_and_geometry}. However, we will not dwelve into the 
+algebraic background further. We can conclude from the exactness of the 
+above short sequence that $\text{ker}\,\beta = 0$ and 
+$\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
+
+
+As an application, we will show the following proposition which will be used
+later to show uniqueness of a solution of the magnetostatic problem.
+
+\begin{proposition}\label{uniqueness_cochain}
+    Assume that $H_1(K) = \integers [\gamma]$ i.e. the homology class of the 
+    closed $1$-chain $\gamma$ is a generator of the first homology group. 
+    Let $F$ and $G$ be two closed $1$-cochains s.t. $F(\gamma) = G(\gamma)$.
+    Let $[F]$, $[G] \in H^k(K;\real)$ be the corresponding cohomology classes. 
+    Then we have $[F] = [G]$.
+\end{proposition}
+\begin{proof}
+    Take $[c] \in H_1(K)$ arbitrary. Then there exists  $n \in \integers$ s.t.
+    $[c] = n [\gamma]$.
+    Using $\beta$ from \ref{univeral_coefficient_theorem}
+    We have
+    \begin{align*}
+        \beta([F])([c]) = \beta([F])(n [\gamma]) 
+        = n \beta([F])([\gamma]) = n \; F(\gamma) = n \; F(\gamma) = 
+        \beta([G])([c])
+    \end{align*}
+    and thus $\beta([F]) = \beta([G])$. Because $\beta$ is a isomorphism
+    and so $[F] = [G]$.
+\end{proof}
 
 
 % from now on be a an exterior polyhedral domain of a compact set i.e. 
@@ -852,7 +910,7 @@ then we would have indeed
     \begin{align*}
         d \omega &= 0, \\
         \delta \omega &= 0 \text{ in $\Omega$}, \\
-        (\bar{I}\omega)(\gamma)  &= C_0.
+        \bar{I}(*\omega)(\gamma)  &= C_0.
     \end{align*}
 \end{problem}
 \noindent We will examine existence and 
@@ -938,100 +996,180 @@ uniqueness of this problem in the next section.
 
 \subsection{Existence and uniqueness}
 
+% We start with the following
+% \begin{proposition}\label{uniqueness_cochain}
+%     Let $\gamma$ be a closed $k$-chain s.t. the homology class $[\gamma]$ 
+%     spans the homology space $H^k_c$. Then for any $C_0 \in \real 
+%     \setminus \{0\}$ 
+%     if we have closed cochains $F,G$ s.t.
+%     \begin{align*}
+%     F(\gamma) = G(\gamma)= C_0
+%     \end{align*}
+%     then $[F] = [G]$ i.e. their cohomology classes are equal.
+% \end{proposition} 
+% \begin{proof}
+%     From \cite[Sec. 2.5]{arnold} we know that 
+%     $\text{dim}\,H^k(K) = \text{dim}\,H^k_c$. Because $F$ and $G$ are closed we
+%     therefore have $\lambda_F, \lambda_G \in \real$ and a cohomology class 
+%     $[b]$ s.t.
+%     $[F] = \lambda_F [b]$ and $[G] = \lambda_G [b]$. This is 
+%     equivalent to the existence of $(k-1)$-cochains $J_F,J_G$ s.t. 
+%     \begin{align*}
+%         F = \lambda_F b + \delta J_F \text{ and } G = \lambda_G b + \delta J_G.
+%     \end{align*}
+%     so 
+%     \begin{align*}
+%         0 \neq \lambda_F b(\gamma) + \delta J_F(\gamma) = F(\gamma) = G(\gamma)
+%         = \lambda_G b(\gamma) + \delta J_F(\gamma).
+%     \end{align*}
+%     Because $\gamma$ is closed we have for any $(k-1)$-chain $J$, 
+%     $\delta J(\gamma) = J(\partial \gamma) = 0$ and so we arrive at
+%     $\lambda_F = \lambda_G$ i.e. $[F] = [G]$.
+% \end{proof}
+
+From now on we assume $n=3$ i.e. we are in three dimensional space.
 We start with the following
-\begin{proposition}\label{uniqueness_cochain}
-    Let $\gamma$ be a closed $k$-chain s.t. the homology class $[\gamma]$ 
-    spans the homology space $H^k_c$. Then for any $C_0 \in \real 
-    \setminus \{0\}$ 
-    if we have closed cochains $F,G$ s.t.
+
+\begin{proposition}\label{integral_exact_form_zero}
+    Let $(\phi_i)_{i\in\mathbb{N}} \subseteq H^0(d)$ s.t. $(d\phi_i)$ 
+    is convergent and let $\gamma \in C_1(K)$ be a bounded $1$-chain.
+    Then
     \begin{align*}
-    F(\gamma) = G(\gamma)= C_0
+        \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i)(\gamma) = 0.
     \end{align*}
-    then $[F] = [G]$ i.e. their cohomology classes are equal.
-\end{proposition} 
+\end{proposition}
 \begin{proof}
-    From \cite[Sec. 2.5]{arnold} we know that 
-    $\text{dim}\,H^k(K) = \text{dim}\,H^k_c$. Because $F$ and $G$ are closed we
-    therefore have $\lambda_F, \lambda_G \in \real$ and a cohomology class 
-    $[b]$ s.t.
-    $[F] = \lambda_F [b]$ and $[G] = \lambda_G [b]$. This is 
-    equivalent to the existence of $(k-1)$-cochains $J_F,J_G$ s.t. 
+    % Let $L \subseteq K$ be a bounded simplicial subcomplex 
+    % s.t. it is full dimensional and $\gamma \in C_1(L)$
+    % {\color{red} Make this more rigorous. We need to be able to restrict 
+    % $L^2$-functions without problems.}  That means there is
+    % $\phi_L \in H^0(d;|L|)$ s.t.
+    % $\lim\limits_{i\rightarrow \infty} d\phi_i = d\phi_L$. 
+    % We can now use the existence and properties of the operators from 
+    % Thm\,\ref{operators}, but on $L$ instead of $K$. We call the operators 
+    % $\rop_L$ and $\aop_L$. Then we have 
+    
+    Because 
+    $[\bar{I}]$ is a isomorphism of cohomology $\bar{I}$ has to send 
+    exact forms to exact cochains. Because $\gamma$ is closed $1$-chain 
+    we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$.
+    Next we show for every closed $1$-form $\nu \in H^1(d)$ we have 
     \begin{align*}
-        F = \lambda_F b + \delta J_F \text{ and } G = \lambda_G b + \delta J_G.
+        \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
+        = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
+        = \bar{I}(\nu)(\gamma)
     \end{align*}
-    so 
+    where we used the properties of $\rop$. Let $\tilde{\Omega}$ be a bounded
+    subdomain of $\omega$.
+    Because the image of $d$ is closed for every bounded domain 
+    (cf. \cite[Lemma 7]{picard}) we have for any convergent sequence 
+    $(d\psi_i)$ exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
     \begin{align*}
-        0 \neq \lambda_F b(\gamma) + \delta J_F(\gamma) = F(\gamma) = G(\gamma)
-        = \lambda_G b(\gamma) + \delta J_F(\gamma).
+        \lim\limits_{i \rightarrow \infty}d\psi_i| _{\tilde{\Omega}} 
+        = d\tilde{\psi}.
     \end{align*}
-    Because $\gamma$ is closed we have for any $(k-1)$-chain $J$, 
-    $\delta J(\gamma) = J(\partial \gamma) = 0$ and so we arrive at
-    $\lambda_F = \lambda_G$ i.e. $[F] = [G]$.
+    Then due to the continuity of $\rop$
+    \begin{align*}
+        \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) =
+        \bar{I}(\rop \lim\limits_{i \rightarrow \infty}d\phi_i) = 
+        \bar{I}(\lim\limits_{i \rightarrow \infty}d\rop \phi_i) =
+        \int_\gamma \rop \lim\limits_{i \rightarrow \infty}d\rop \phi_i =
+        \int_\gamma \rop d\tilde{\psi} = 0.
+    \end{align*}
 \end{proof}
 
-
-
-
-
-We are now able to proof existence of a 
-solution. Take a closed cochain $F \in C^1_2(K)$ s.t. $F(\gamma) = C_0$ 
-and 
-$F(\partial d) = 0$ for any $2$-chain $d$ 
-as in Prop.\,\ref{uniqueness_cochain}. Then we know from 
-Sec.\,\ref{sec_isomorphism_cohomology} that 
-there exists a unique $[\theta] \in \mathscr{H}_2^1(K)$ s.t. 
-$[I]([\theta]) = [F]$. Let us take the 1-form $\eta \vcentcolon= 
-\varphi^{-1} \theta \in W^1_2(\omega)$. Then $\int_\gamma \eta = C_0$ holds. 
-Because we need a 2-form we will take a closer look at $*\eta$.
-We have that the Hodge star operator $*: L^1_2(\Omega) \rightarrow 
-L^2_2(\Omega)$ is a Hilbert space isometry. 
-%%% TBD: Add proof, already written down on 26.11.2022
-
-
-First we compute
+Now we construct a solution. Let us denote 
+$\Omega_R \vcentcolon= \Omega \cap B_R$ with $R>0$ large enough 
+s.t. $\gamma \subseteq \tilde{\Omega}$. Then we can know there exists
+a smooth closed $1$-form $\nu$ defined on $\Omega_R$ 
+s.t. $\int_\gamma \nu = (\bar{I}\nu)(\gamma)$ \cite{}. Because the trace of 
+$\nu$ on the exterior boundary of $B_R$ is smooth we can now extend this by 
+solving the boundary problem on $\real^3 \setminus B_R$
 \begin{align*}
-    \delta *\eta = (-1)^{n(k-1)+1} *d**\eta = (-1)^{n(k-1)+1} *d\eta = 0.
+    d\chi &= 0 \text{ in } \real^3 \setminus \overline{B}_R \\ 
+    \text{tr}\,\chi &= \text{tr}\,\nu \text{ on } \partial B_R.
 \end{align*}
-Using the Hodge decomposition for unbounded domains 
-(cf. \cite[Lemma 1]{picard}) we get therefore that there exists 
-a sequence  $(\phi_i)_{i\in \mathbb{N}} \subseteq H^3(\delta,\Omega)$ 
-and a harmonic $\omega \in \mathring{H}^2(d) \cap H^3(\delta)$ s.t. 
+This problem has indeed a solution (cf. \cite{schwarz}).
+We obtain a $1$-form $\bar{\nu} \in H^1(d;\Omega)$ s.t. $d\bar{\nu} = 0$
+and $\bar{I}(\nu)(\gamma) = C_0$. $*\bar{\nu}$ is now a $2$-form with 
+$\delta*\bar{\nu} = 0$ i.e. it is co-closed. We use the Hodge decomposition 
+(\refeq{hodge_decomposition}) and project $*\bar{\nu}$ onto 
+$\mathring{H}^2_0(d,\delta;\Omega)$ to obtain $\omega$.
+Thus we have $d\omega = 0$, $\delta\omega=0$ and the boundary conditions are
+fulfilled. What remains is to show the integral condition. We have using 
+Prop.\,\ref{integral_exact_form_zero}
 \begin{align*}
-    *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
+    \bar{I}(*\omega)(\gamma) = 
+    \bar{I}(*(*\bar{\nu} - \lim\limits_{i\rightarrow\infty}\delta\phi_i))
+    (\gamma)=
+    \bar{I}(\bar{\nu} \pm \lim\limits_{i\rightarrow\infty}d\phi_i)
+    (\gamma)=
+    \bar{I}(\bar{\nu})(\gamma) = C_0.
 \end{align*}
-where the limit is in $L^1_2(\Omega)$. 
+So the integral condition is also fulfilled and thus 
+$\omega$ is indeed a solution.
+
+% We start with a smooth $1$-form $
+
+% % We are now able to proof existence of a 
+% % solution. Take a closed cochain $F \in C^1_2(K)$ s.t. $F(\gamma) = C_0$ 
+% % and 
+% % $F(\partial d) = 0$ for any $2$-chain $d$ 
+% % as in Prop.\,\ref{uniqueness_cochain}. Then we know from 
+% % Sec.\,\ref{sec_isomorphism_cohomology} that 
+% % there exists a unique $[\theta] \in \mathscr{H}_2^1(K)$ s.t. 
+% % $[I]([\theta]) = [F]$. Let us take the 1-form $\eta \vcentcolon= 
+% % \varphi^{-1} \theta \in W^1_2(\omega)$. Then $\int_\gamma \eta = C_0$ holds. 
+% % Because we need a 2-form we will take a closer look at $*\eta$.
+% % We have that the Hodge star operator $*: L^1_2(\Omega) \rightarrow 
+% % L^2_2(\Omega)$ is a Hilbert space isometry. 
+% %%% TBD: Add proof, already written down on 26.11.2022
 
 
-We will show that $\omega$ is then a solution. Because $\omega$ is harmonic
-we already know that $d\omega = 0$, $\delta \omega = 0$ and 
-$\omega \in \mathring{H}^2(d)$. It remains to show that the integral condition
-(\refeq{integral_condition}) is also satisfied.
+% First we compute
+% \begin{align*}
+%     \delta *\eta = (-1)^{n(k-1)+1} *d**\eta = (-1)^{n(k-1)+1} *d\eta = 0.
+% \end{align*}
+% Using the Hodge decomposition for unbounded domains 
+% (cf. \cite[Lemma 1]{picard}) we get therefore that there exists 
+% a sequence  $(\phi_i)_{i\in \mathbb{N}} \subseteq H^3(\delta,\Omega)$ 
+% and a harmonic $\omega \in \mathring{H}^2(d) \cap H^3(\delta)$ s.t. 
+% \begin{align*}
+%     *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
+% \end{align*}
+% where the limit is in $L^1_2(\Omega)$. 
 
-At first we check that the integral is well-defined. We have $\delta \omega = 0$
-which implies
-\begin{align*}
-    d * \omega = ** d*\omega = (-1)^{n(k-1)+1} *\delta \omega = 0
-\end{align*}
-so $*\omega$ is a closed 1-form. Therefore the integral is well-defined as shown
-in Sec.\,\ref{well_definedness_integral}.
 
-Take a ball of radius $R>0$ 
-around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
-Using the fact that the range of $\delta$ is closed on bounded domains 
-(cf. \cite[Lemma 7]{picard}) there is some $\phi_R \in H^3(\delta;B_R)$ s.t.
-\begin{align*}
-    *\eta|_{B_R} = \omega|_{B_R} + \delta \phi_R.
-\end{align*}
-We then get for the integral condition (\ref{integral_condition}) 
-\begin{align*}
-    \int_\gamma *\omega &= \int_\gamma *\omega|_{B_R} = 
-    \int_\gamma *(*\eta|_{B_R} - \delta \phi_R) = 
-    \int_\gamma \eta|_{B_R} - (-1)^{3\cdot 2+1} d * \phi_R \\
-    &= \int_\gamma \eta|_{B_R} = C_0
-\end{align*}
-so the integral condition (\refeq{integral_condition}) is fulfilled and 
-$\omega$ is indeed a solution. \newline
-{\color{red} TBD: Put all this in a theorem.}
+% We will show that $\omega$ is then a solution. Because $\omega$ is harmonic
+% we already know that $d\omega = 0$, $\delta \omega = 0$ and 
+% $\omega \in \mathring{H}^2(d)$. It remains to show that the integral condition
+% (\refeq{integral_condition}) is also satisfied.
+
+% At first we check that the integral is well-defined. We have $\delta \omega = 0$
+% which implies
+% \begin{align*}
+%     d * \omega = ** d*\omega = (-1)^{n(k-1)+1} *\delta \omega = 0
+% \end{align*}
+% so $*\omega$ is a closed 1-form. Therefore the integral is well-defined as shown
+% in Sec.\,\ref{well_definedness_integral}.
+
+% Take a ball of radius $R>0$ 
+% around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
+% Using the fact that the range of $\delta$ is closed on bounded domains 
+% (cf. \cite[Lemma 7]{picard}) there is some $\phi_R \in H^3(\delta;B_R)$ s.t.
+% \begin{align*}
+%     *\eta|_{B_R} = \omega|_{B_R} + \delta \phi_R.
+% \end{align*}
+% We then get for the integral condition (\ref{integral_condition}) 
+% \begin{align*}
+%     \int_\gamma *\omega &= \int_\gamma *\omega|_{B_R} = 
+%     \int_\gamma *(*\eta|_{B_R} - \delta \phi_R) = 
+%     \int_\gamma \eta|_{B_R} - (-1)^{3\cdot 2+1} d * \phi_R \\
+%     &= \int_\gamma \eta|_{B_R} = C_0
+% \end{align*}
+% so the integral condition (\refeq{integral_condition}) is fulfilled and 
+% $\omega$ is indeed a solution. \newline
+% {\color{red} TBD: Put all this in a theorem.}
 
 % If we now take the Hodge decomposition
 % $L^2_2(\omegabar) = \bar{\mathfrak{B^k}} \oplus \mathcal{H}^k \oplus
@@ -1059,40 +1197,81 @@ $\omega$ is indeed a solution. \newline
     The solution of the problem is unique.
 \end{theorem}
 \begin{proof}
-    Let $\omega, \tilde{\omega}$ both be solutions. 
-    Because  $*\omega$ and
-    $*\tilde{\omega}$ are closed the cochains 
-    $c\mapsto \int_c \rop*\omega$ and 
-    $c\mapsto \int_c \rop*\tilde{\omega}$ are closed.
-    
-    Due to $\int_\gamma \rop *\omega = \int_\gamma \rop *\tilde{\omega}$ and the 
-    assumption that $[\gamma]$ spans the homology space we have with 
-    Prop.\,\ref{uniqueness_cochain} 
-    $[I(\rop *\omega)] = [I(\rop *\tilde{\omega})]$
-    and because $[I]$ is an isomorphism 
-    $[\rop *\omega] = [\rop *\tilde{\omega}]$. Hence,
+    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then 
+    $c \mapsto \bar{I}(*\omega)(c)$, 
+    $c \mapsto \bar{I}(*\tilde{\omega})(c)$ are both 
+    closed $1$-cochains in $H^1(K)$. Then we know from 
+    (\ref{uniqueness_cochain}) that they are in the same cohomology class 
+    and so $\bar{I}(\omega)(\cdot) - \bar{I}(\tilde{\omega})(\cdot) = \delta J$.
+    We can now use the techniques from \cite{goldshtein} 
+    {\color{red}TBD: More rigorous argument.} to get that 
+    $*\omega - \tilde{*\omega} = d \theta$ with $\theta \in W^0_{2,loc}$. 
+    By applying the Hodge star operator we get 
+    $\omega - \tilde{\omega} = \delta \mu$ with $\mu \in W^3_{2,loc}$
+    That means 
+    we can not immediately conclude that $\delta \mu = 0$.
+
+    Let us briefly return to vector proxies. Let $B$ and $\tilde{B}$ be 
+    vector proxies of $\omega$ and $\tilde{\omega}$ respectively. 
+    Because we have $B, \tilde{B} \in \mathring{H}(\diver)$ %TBD: Not defined
+    and $B-\tilde{B} = \nabla \phi$ with $\phi \in W^{1,2}_{loc}(\Omega)$.
+    Because $B$ and $\tilde{B}$ are both harmonic we have 
     \begin{align*}
-    [*\tilde{\omega}] = [\rop *\tilde{\omega}] = 
-    [\rop *\omega] = [*\omega].
+        0 = \int_\Omega (B-\tilde{B}) \cdot \nabla f dx 
+        = \int_\Omega \nabla \phi \cdot \nabla f dx
+        \quad \forall 
+        f \in H^1(\Omega).
     \end{align*}
-    That is equivalent to the
-    existence of some $0$-form $\phi \in H^0(d)$ s.t.
-    $*\omega = *\tilde{\omega} + d\phi$. We continue by applying the Hodge
-    star operator to both sides and use the definition of the codifferential 
-    $\delta$:
+    Now we can find a sequence $(\phi_l) \subseteq C_0^\infty(\Omega)$. 
+    s.t. $\phi_l \rightarrow \phi$ in $W^{1,2}_{loc}(\Omega)$. 
+    Let now $\tilde{\Omega}$ be any precompact subdomain of $\Omega$. Then
     \begin{align*}
-        \omega = \tilde{\omega} + *d\phi = \tilde{\omega} + *d**\phi 
-        = \tilde{\omega} + (-1)^{(n-k)(k-1)+1}\delta * \phi.
+        0 = \int_{\tilde{\Omega}} \nabla\phi \cdot \nabla \phi_l 
+        \rightarrow \lVert \nabla \phi \rVert _{L^2(\tilde{\Omega})}.
     \end{align*}
-    Then because $\omega$ and 
-    $\tilde{\omega}$ are harmonic we have 
-    $\omega, \tilde{\omega} \perp \delta H^{3}(\delta)$ and therefore 
-    \begin{align*}
-    \omega = \tilde{\omega}.    
-    \end{align*}
+    So $\nabla \phi |_{\tilde{\Omega}} = 0$. Because this holds for every 
+    precompact $\tilde{\Omega}$ we get $\nabla \phi  = 0$ and arrive at
+    $B = \tilde{B}$. Because the corresponding vector proxies are equal we 
+    obtain $\omega = \tilde{\omega}$.
 \end{proof}
-If we now translate this back to standard vector calculus terms we have found 
-the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
+
+
+
+% \begin{proof}
+%     Let $\omega, \tilde{\omega}$ both be solutions. 
+%     Because  $*\omega$ and
+%     $*\tilde{\omega}$ are closed the cochains 
+%     $c\mapsto \int_c \rop*\omega$ and 
+%     $c\mapsto \int_c \rop*\tilde{\omega}$ are closed.
+    
+%     Due to $\int_\gamma \rop *\omega = \int_\gamma \rop *\tilde{\omega}$ and the 
+%     assumption that $[\gamma]$ spans the homology space we have with 
+%     Prop.\,\ref{uniqueness_cochain} 
+%     $[I(\rop *\omega)] = [I(\rop *\tilde{\omega})]$
+%     and because $[I]$ is an isomorphism 
+%     $[\rop *\omega] = [\rop *\tilde{\omega}]$. Hence,
+%     \begin{align*}
+%     [*\tilde{\omega}] = [\rop *\tilde{\omega}] = 
+%     [\rop *\omega] = [*\omega].
+%     \end{align*}
+%     That is equivalent to the
+%     existence of some $0$-form $\phi \in H^0(d)$ s.t.
+%     $*\omega = *\tilde{\omega} + d\phi$. We continue by applying the Hodge
+%     star operator to both sides and use the definition of the codifferential 
+%     $\delta$:
+%     \begin{align*}
+%         \omega = \tilde{\omega} + *d\phi = \tilde{\omega} + *d**\phi 
+%         = \tilde{\omega} + (-1)^{(n-k)(k-1)+1}\delta * \phi.
+%     \end{align*}
+%     Then because $\omega$ and 
+%     $\tilde{\omega}$ are harmonic we have 
+%     $\omega, \tilde{\omega} \perp \delta H^{3}(\delta)$ and therefore 
+%     \begin{align*}
+%     \omega = \tilde{\omega}.    
+%     \end{align*}
+% \end{proof}
+% If we now translate this back to standard vector calculus terms we have found 
+% the unique solution of the homogeneous magnetostatic on our domain $\Omega$.
 
 % \section{Application: Homogeneous magnetostatic problem on the 
 % exterior domain of a torus}
