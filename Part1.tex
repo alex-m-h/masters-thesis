@@ -793,7 +793,12 @@ In the next step, we will use two operators $\rop$ and $\aop$ from
 \cite{goldshtein}.
 The precise definition and details of their construction
 are not relevant for our purposes because we will only use
-the following properties (cf. \cite[Thm.2]{goldshtein}).
+the some properties that we collect in the following theorem
+(cf. \cite[Thm.2]{goldshtein}). Let 
+\begin{align*}
+    S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
+    I\eta \in C^k_p(K)\}.
+\end{align*}
 
 \begin{theorem}\label{operators}
     Assume that the triangulation $\tau$ fulfills the GKS-condition.
@@ -804,18 +809,13 @@ the following properties (cf. \cite[Thm.2]{goldshtein}).
     such that
     \begin{enumerate}
         \item $\mathscr{R}\omega - \omega = 
-            d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
+            d\mathscr{A}\omega + \mathscr{A}d\omega$ and 
+            $d\rop \omega  = \rop d \omega$ for 
             $\omega \in W^k_{1,loc}(\omegabar)$
         \item for any $1 \leq p \leq \infty$, 
             $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
     \end{enumerate}
 \end{theorem}
-where
-\begin{align*}
-    S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
-    I\eta \in C^k_p(K)\}.
-\end{align*}
-
 Now define $\bar{I} \vcentcolon= I \circ \rop$. This gives a well-defined 
 mapping from $W^k_p(\omegabar)$ to $C^k_p(K)$. Following the arguments of 
 \cite{goldshtein} and using the properties of $\rop$ and $\aop$ one can show 
@@ -1031,8 +1031,9 @@ From now on we assume $n=3$ i.e. we are in three dimensional space.
 We start with the following
 
 \begin{proposition}\label{integral_exact_form_zero}
-    Let $(\phi_i)_{i\in\mathbb{N}} \subseteq H^0(d)$ s.t. $(d\phi_i)$ 
-    is convergent and let $\gamma \in C_1(K)$ be a bounded $1$-chain.
+    Let $(\phi_i)_{i\in\mathbb{N}} \subseteq H^0(d)$ s.t. 
+    $(d\phi_i)_{i\in\mathbb{N}}$ 
+    is convergent and let $\gamma \in C_1(K)$ be a bounded closed $1$-chain.
     Then
     \begin{align*}
         \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i)(\gamma) = 0.
@@ -1059,16 +1060,18 @@ We start with the following
         = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
         = \bar{I}(\nu)(\gamma)
     \end{align*}
-    where we used the properties of $\rop$. Let $\tilde{\Omega}$ be a bounded
-    subdomain of $\omega$.
+    where we used the properties of $\rop$ from Thm\,\ref{operators}. 
+    Let $\tilde{\Omega}$ be a bounded
+    subdomain of $\Omega$.
     Because the image of $d$ is closed for every bounded domain 
-    (cf. \cite[Lemma 7]{picard}) we have for any convergent sequence 
-    $(d\psi_i)$ exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
+    (cf. \cite[Lemma 7]{picard}) we have that for any convergent sequence 
+    $(d\psi_i)_{i\in \mathbb{N}} \subseteq L^1_2(\Omega)$ 
+    there exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
     \begin{align*}
         \lim\limits_{i \rightarrow \infty}d\psi_i| _{\tilde{\Omega}} 
         = d\tilde{\psi}.
     \end{align*}
-    Then due to the continuity of $\rop$
+    Then we use the continuity of $\rop$
     \begin{align*}
         \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) =
         \bar{I}(\rop \lim\limits_{i \rightarrow \infty}d\phi_i) = 
@@ -1078,36 +1081,41 @@ We start with the following
     \end{align*}
 \end{proof}
 
-Now we construct a solution. Let us denote 
-$\Omega_R \vcentcolon= \Omega \cap B_R$ with $R>0$ large enough 
-s.t. $\gamma \subseteq \tilde{\Omega}$. Then we can know there exists
-a smooth closed $1$-form $\nu$ defined on $\Omega_R$ 
-s.t. $\int_\gamma \nu = (\bar{I}\nu)(\gamma)$ \cite{}. Because the trace of 
-$\nu$ on the exterior boundary of $B_R$ is smooth we can now extend this by 
-solving the boundary problem on $\real^3 \setminus B_R$
+Now we construct a solution. Let $L \subseteq K$ be a bounded
+simplicial subcomplex s.t. $\gamma \in C_1(L)$ and the star of 
+every vertex from $\gamma$ does not touch the boundary. Now we can 
+find a smooth closed $1$-form $\nu$ on $|L|$ with 
 \begin{align*}
-    d\chi &= 0 \text{ in } \real^3 \setminus \overline{B}_R \\ 
-    \text{tr}\,\chi &= \text{tr}\,\nu \text{ on } \partial B_R.
+    \int_\gamma \nu = C_0
 \end{align*}
-This problem has indeed a solution (cf. \cite{schwarz}).
-We obtain a $1$-form $\bar{\nu} \in H^1(d;\Omega)$ s.t. $d\bar{\nu} = 0$
-and $\bar{I}(\nu)(\gamma) = C_0$. $*\bar{\nu}$ is now a $2$-form with 
-$\delta*\bar{\nu} = 0$ i.e. it is co-closed. We use the Hodge decomposition 
-(\refeq{hodge_decomposition}) and project $*\bar{\nu}$ onto 
-$\mathring{H}^2_0(d,\delta;\Omega)$ to obtain $\omega$.
-Thus we have $d\omega = 0$, $\delta\omega=0$ and the boundary conditions are
-fulfilled. What remains is to show the integral condition. We have using 
-Prop.\,\ref{integral_exact_form_zero}
+using the standard de Rham isomorphism. We now use the Hodge decomposition
+(\ref{hodge_decomposition}) and project $\nu$ onto the harmonic functions 
+to obtain $\omega_L \in \mathring{H}_0(d,\delta;|L|)$. Let 
+$\rop_L$ be the same operator from above but now constructed for the 
+complex $L$. Then there is a $\psi \in H^0(d;|K|)$ s.t.
 \begin{align*}
-    \bar{I}(*\omega)(\gamma) = 
-    \bar{I}(*(*\bar{\nu} - \lim\limits_{i\rightarrow\infty}\delta\phi_i))
-    (\gamma)=
-    \bar{I}(\bar{\nu} \pm \lim\limits_{i\rightarrow\infty}d\phi_i)
-    (\gamma)=
-    \bar{I}(\bar{\nu})(\gamma) = C_0.
+    \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\nu - d\psi) =
+    \int_\gamma \rop_L \nu = \int_\gamma \nu = C_0.
 \end{align*}
-So the integral condition is also fulfilled and thus 
-$\omega$ is indeed a solution.
+Because $\omega_L$ is zero on the boundary we can extend it by zero to 
+obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
+Because the construction of the operator $\rop$ is local on the stars 
+of the vertices
+(cf. \cite{goldshtein}) we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
+every simplex attached to $\gamma$ and therefore 
+$\int_\gamma \rop_L \omega_L = \int_\gamma \rop \bar{\omega}_L = C_0$. 
+Now we project $*\bar{\omega}_L$ onto harmonic forms to get 
+$\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Then we get
+\begin{align*}
+    \int_\gamma \rop * \omega = \int_\gamma \rop *(*\bar{\omega}_L - 
+    \lim\limits_{i \rightarrow \infty}\delta \phi_i) = 
+    \int_\gamma \rop \bar{\omega}_L \pm 
+    \lim\limits_{i \rightarrow \infty}d \psi_i = 
+    \int_\gamma \rop \bar{\omega}_L = C_0.
+\end{align*}
+Thus $\omega$ fulfills the integral condition. 
+Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
+are satisfied as well $\omega$ is a solution.
 
 % We start with a smooth $1$-form $
 
@@ -1197,18 +1205,26 @@ $\omega$ is indeed a solution.
     The solution of the problem is unique.
 \end{theorem}
 \begin{proof}
-    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then 
-    $c \mapsto \bar{I}(*\omega)(c)$, 
-    $c \mapsto \bar{I}(*\tilde{\omega})(c)$ are both 
-    closed $1$-cochains in $H^1(K)$. Then we know from 
-    (\ref{uniqueness_cochain}) that they are in the same cohomology class 
-    and so $\bar{I}(\omega)(\cdot) - \bar{I}(\tilde{\omega})(\cdot) = \delta J$.
-    We can now use the techniques from \cite{goldshtein} 
-    {\color{red}TBD: More rigorous argument.} to get that 
-    $*\omega - \tilde{*\omega} = d \theta$ with $\theta \in W^0_{2,loc}$. 
-    By applying the Hodge star operator we get 
-    $\omega - \tilde{\omega} = \delta \mu$ with $\mu \in W^3_{2,loc}$
-    That means 
+    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $*\omega$ is 
+    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed. 
+    $I(\rop * \omega), I(rop * \tilde{\omega}) \in C^1_2(K)$ 
+    are closed $1$-chains with
+    $I(\rop * \omega)(\gamma) = I(\rop * \tilde{\omega})(\gamma)$. 
+    Thus Prop.\,\ref{uniqueness_cochain} implies 
+    $[I(\rop * \omega)] = [I(\rop * \tilde{\omega})] \in H^1(K;\real)$.
+    We obtain a $\theta \in W_{\infty,loc}^0(\omegabar)$. With the 
+    properties of $\rop$ there exists a $\eta \in L_{2,loc}^0(\Omega)$
+    with $d\eta \in L^1_2(\Omega)$ s.t. 
+    \begin{align*}
+        *\omega - *\tilde{omega} = -d\aop(*\omega - *\tilde{\omega})
+        + d \theta = d\eta.
+    \end{align*}
+    By applying the Hodge star operator on both sides we find 
+    $\mu \in L_{2,loc}^3(\Omega)$ with $\delta \eta \in L^2_2(\Omega)$ s.t.
+    \begin{align*}
+        \omega - \tilde{\omega} = \delta \mu.
+    \end{align*}
+    But because $\mu$ is only in $L_{2,loc}^3(\Omega)$ 
     we can not immediately conclude that $\delta \mu = 0$.
 
     Let us briefly return to vector proxies. Let $B$ and $\tilde{B}$ be 
