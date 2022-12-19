@@ -1052,9 +1052,9 @@ We start with the following
     
     Because 
     $[\bar{I}]$ is a isomorphism of cohomology $\bar{I}$ has to send 
-    exact forms to exact cochains. Because $\gamma$ is closed $1$-chain 
+    exact forms to exact cochains. Because $\gamma$ is a closed $1$-chain 
     we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$.
-    Next we show for every closed $1$-form $\nu \in H^1(d)$ we have 
+    For every closed $1$-form $\nu \in H^1(d)$ we have 
     \begin{align*}
         \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
         = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
@@ -1097,7 +1097,7 @@ complex $L$. Then there is a $\psi \in H^0(d;|K|)$ s.t.
     \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\nu - d\psi) =
     \int_\gamma \rop_L \nu = \int_\gamma \nu = C_0.
 \end{align*}
-Because $\omega_L$ is zero on the boundary we can extend it by zero to 
+Because $\omega_L$ has zero trace on the boundary we can extend it by zero to 
 obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
 Because the construction of the operator $\rop$ is local on the stars 
 of the vertices
@@ -1115,7 +1115,7 @@ $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Then we get
 \end{align*}
 Thus $\omega$ fulfills the integral condition. 
 Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
-are satisfied as well $\omega$ is a solution.
+are satisfied as well and $\omega$ is a solution.
 
 % We start with a smooth $1$-form $
 
@@ -1206,48 +1206,68 @@ are satisfied as well $\omega$ is a solution.
 \end{theorem}
 \begin{proof}
     Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $*\omega$ is 
-    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed. 
-    $I(\rop * \omega), I(rop * \tilde{\omega}) \in C^1_2(K)$ 
-    are closed $1$-chains with
+    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed. The same 
+    holds for $\tilde{\omega}$. 
+    $I(\rop * \omega), I(\rop * \tilde{\omega}) \in C^1_2(K)$ 
+    are closed $1$-cochains with
     $I(\rop * \omega)(\gamma) = I(\rop * \tilde{\omega})(\gamma)$. 
     Thus Prop.\,\ref{uniqueness_cochain} implies 
     $[I(\rop * \omega)] = [I(\rop * \tilde{\omega})] \in H^1(K;\real)$.
-    We obtain a $\theta \in W_{\infty,loc}^0(\omegabar)$. With the 
+    Using the Whitney transformation (cf. \cite{goldshtein}) 
+    we obtain a $\theta \in W_{\infty,loc}^0(\omegabar)$ s.t. 
+    \begin{align*}
+        \rop * \omega - \rop * \tilde{\omega} = d\theta.
+    \end{align*}
+    Using the 
     properties of $\rop$ there exists a $\eta \in L_{2,loc}^0(\Omega)$
     with $d\eta \in L^1_2(\Omega)$ s.t. 
     \begin{align*}
-        *\omega - *\tilde{omega} = -d\aop(*\omega - *\tilde{\omega})
+        *\omega - *\tilde{\omega} = -d\aop(*\omega - *\tilde{\omega})
         + d \theta = d\eta.
     \end{align*}
     By applying the Hodge star operator on both sides we find 
     $\mu \in L_{2,loc}^3(\Omega)$ with $\delta \eta \in L^2_2(\Omega)$ s.t.
-    \begin{align*}
-        \omega - \tilde{\omega} = \delta \mu.
-    \end{align*}
+    \begin{align}
+        \omega - \tilde{\omega} = \delta \mu. \label{difference_solutions}
+    \end{align}
     But because $\mu$ is only in $L_{2,loc}^3(\Omega)$ 
     we can not immediately conclude that $\delta \mu = 0$.
 
     Let us briefly return to vector proxies. Let $B$ and $\tilde{B}$ be 
     vector proxies of $\omega$ and $\tilde{\omega}$ respectively. 
-    Because we have $B, \tilde{B} \in \mathring{H}(\diver)$ %TBD: Not defined
-    and $B-\tilde{B} = \nabla \phi$ with $\phi \in W^{1,2}_{loc}(\Omega)$.
+    (\refeq{difference_solutions}) then translates to 
+    $B, \tilde{B} \in \mathring{H}(\diver)$ %TBD: Not defined
+    and $B-\tilde{B} = \nabla \phi$ with $\phi \in L^2_{loc}(\Omega)$ and
+    $\nabla \phi \in L^2(\Omega)^3$.
     Because $B$ and $\tilde{B}$ are both harmonic we have 
     \begin{align*}
-        0 = \int_\Omega (B-\tilde{B}) \cdot \nabla f dx 
-        = \int_\Omega \nabla \phi \cdot \nabla f dx
+        0 = \int_\Omega (B-\tilde{B}) \cdot \nabla f\, dx 
+        = \int_\Omega \nabla \phi \cdot \nabla f \,dx
         \quad \forall 
         f \in H^1(\Omega).
     \end{align*}
-    Now we can find a sequence $(\phi_l) \subseteq C_0^\infty(\Omega)$. 
-    s.t. $\phi_l \rightarrow \phi$ in $W^{1,2}_{loc}(\Omega)$. 
-    Let now $\tilde{\Omega}$ be any precompact subdomain of $\Omega$. Then
-    \begin{align*}
-        0 = \int_{\tilde{\Omega}} \nabla\phi \cdot \nabla \phi_l 
-        \rightarrow \lVert \nabla \phi \rVert _{L^2(\tilde{\Omega})}.
-    \end{align*}
-    So $\nabla \phi |_{\tilde{\Omega}} = 0$. Because this holds for every 
-    precompact $\tilde{\Omega}$ we get $\nabla \phi  = 0$ and arrive at
-    $B = \tilde{B}$. Because the corresponding vector proxies are equal we 
+    { \color{red}
+        I did not achieve to show the following yet. There was a mistake in my
+        original reasoning.
+        Can we find a sequence  $(\phi_l) \subseteq H^1(\Omega)$ s.t. 
+        $\nabla\phi_l \rightarrow \nabla\phi$ in $L^2(\Omega)$?
+        If so then $\nabla \phi \in \overline{\nabla H^1(\Omega)}$.
+        Then $\nabla \phi = 0$ because $B - \tilde{B} \in 
+        \overline{\nabla H^1(\Omega)}^\perp.$ 
+        Or can we show $\nabla \phi = 0$ in a different way?
+    }
+
+    % Now we can find a sequence $(\phi_l) \subseteq C_0^\infty(\Omega)$. 
+    % s.t. $\phi_l \rightarrow \phi$ in $W^{1,2}_{loc}(\Omega)$. 
+    % Let now $\tilde{\Omega}$ be any precompact subdomain of $\Omega$. Then
+    % \begin{align*}
+    %     0 = \int_{\tilde{\Omega}} \nabla\phi \cdot \nabla \phi_l 
+    %     \rightarrow \lVert \nabla \phi \rVert _{L^2(\tilde{\Omega})}.
+    % \end{align*}
+    % So $\nabla \phi |_{\tilde{\Omega}} = 0$. Because this holds for every 
+    % precompact $\tilde{\Omega}$ we get $\nabla \phi  = 0$ and arrive at
+    % $B = \tilde{B}$. 
+    If the corresponding vector proxies are equal we 
     obtain $\omega = \tilde{\omega}$.
 \end{proof}
 
