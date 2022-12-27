@@ -1246,29 +1246,22 @@ are satisfied as well and $\omega$ is a solution.
         \quad \forall 
         f \in H^1(\Omega).
     \end{align*}
-    { \color{red}
-        I did not achieve to show the following yet. There was a mistake in my
-        original reasoning.
-        Can we find a sequence  $(\phi_l) \subseteq H^1(\Omega)$ s.t. 
-        $\nabla\phi_l \rightarrow \nabla\phi$ in $L^2(\Omega)$?
-        If so then $\nabla \phi \in \overline{\nabla H^1(\Omega)}$.
-        Then $\nabla \phi = 0$ because $B - \tilde{B} \in 
-        \overline{\nabla H^1(\Omega)}^\perp.$ 
-        Or can we show $\nabla \phi = 0$ in a different way?
-    }
-
-    % Now we can find a sequence $(\phi_l) \subseteq C_0^\infty(\Omega)$. 
-    % s.t. $\phi_l \rightarrow \phi$ in $W^{1,2}_{loc}(\Omega)$. 
-    % Let now $\tilde{\Omega}$ be any precompact subdomain of $\Omega$. Then
-    % \begin{align*}
-    %     0 = \int_{\tilde{\Omega}} \nabla\phi \cdot \nabla \phi_l 
-    %     \rightarrow \lVert \nabla \phi \rVert _{L^2(\tilde{\Omega})}.
-    % \end{align*}
-    % So $\nabla \phi |_{\tilde{\Omega}} = 0$. Because this holds for every 
-    % precompact $\tilde{\Omega}$ we get $\nabla \phi  = 0$ and arrive at
-    % $B = \tilde{B}$. 
-    If the corresponding vector proxies are equal we 
-    obtain $\omega = \tilde{\omega}$.
+    Let $\rho_\epsilon$ be a standard mollifier with compact support. 
+    Then we have 
+    \begin{align*}
+        \partial_{x_i} (\rho_\epsilon * \phi) = 
+        (\partial_{x_i} \rho_\epsilon) * \phi = 
+        \rho_\epsilon * (\partial_{x_i} \phi) 
+        \xrightarrow{\epsilon \rightarrow 0} 
+        \partial_{x_i} \phi \text{ in $L^2(\Omega)$}.
+    \end{align*}
+    In the last step it is crucial that $\partial_{x_i} \phi \in L^2(\Omega)$.
+    So we know that $\nabla \phi \in \overline{\nabla H^1(\Omega)}$. 
+    Because $B$ and $\tilde{B}$ are harmonic we have 
+    $B - \tilde{B} \in 
+    \overline{\nabla H^1(\Omega)}^\perp$ and hence $\nabla \phi = 0$
+    and $B = \tilde{B}$. Because the corresponding vector proxies are equal we 
+    we obtain $\omega = \tilde{\omega}$.
 \end{proof}
 
 
