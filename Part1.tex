@@ -16,7 +16,7 @@
 % \bibliography{bibliography}
 % \bibliographystyle{ieeetr}
 
-
+\newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 
@@ -35,6 +35,7 @@
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
+\newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 \newcommand{\omegabar}{\overline{\Omega}}
 \newcommand{\real}{\mathbb{R}}
@@ -1051,88 +1052,172 @@ We start with the following
     % $\rop_L$ and $\aop_L$. Then we have 
     
     Because 
-    $[\bar{I}]$ is a isomorphism of cohomology $\bar{I}$ has to send 
+    $[\bar{I}]$ is an isomorphism of cohomology $\bar{I}$ has to send 
     exact forms to exact cochains. Because $\gamma$ is a closed $1$-chain 
     we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$.
-    For every closed $1$-form $\nu \in H^1(d)$ we have 
+    $\bar{I}$ is a continuous operator \ref{} and so we have 
+    $\bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) = 
+    \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i)$ with the limit of 
+    cochains taken w.r.t. the norm 
+    in $C^1_2(K)$. Now let $J_\gamma$ be the set of indices of simplices 
+    contained in $\gamma$ i.e.
     \begin{align*}
-        \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
-        = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
-        = \bar{I}(\nu)(\gamma)
+        \gamma = \sum\limits_{i \in J_\gamma} \sigma_i.
     \end{align*}
-    where we used the properties of $\rop$ from Thm\,\ref{operators}. 
-    Let $\tilde{\Omega}$ be a bounded
-    subdomain of $\Omega$.
-    Because the image of $d$ is closed for every bounded domain 
-    (cf. \cite[Lemma 7]{picard}) we have that for any convergent sequence 
-    $(d\psi_i)_{i\in \mathbb{N}} \subseteq L^1_2(\Omega)$ 
-    there exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
+    Here we remind that we fixed the ordering and indices for our simplicial 
+    complex \ref{}. Let $N_\gamma \vcentcolon= |J_\gamma|$ which is finite. Then 
+
     \begin{align*}
-        \lim\limits_{i \rightarrow \infty}d\psi_i| _{\tilde{\Omega}} 
-        = d\tilde{\psi}.
+        &\left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_j) 
+        \right) (\gamma) \right| 
+        \leq \left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
+        - \bar{I}(d\phi_j) 
+        \right) (\gamma) \right| \\
+        &\leq \sum\limits_{k \in J_\gamma} 
+        \left| \left( 
+            \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
+            - \bar{I}(d\phi_i) 
+        \right) (\sigma_k) \right| \\
+        &\leq N^{1/2}_\gamma \left(
+            \sum\limits_{k \in J_\gamma} 
+            \left| \left( 
+                    \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
+                    - \bar{I}(d\phi_j) 
+                \right) (\sigma_k) 
+            \right|^2
+        \right)^{1/2} \\
+        &\leq N^{1/2}_\gamma \lVert  
+            \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i)
+            - \bar{I}(d\phi_j)
+        \rVert _{C^{1}_2(K)} 
+        \leq N^{1/2}_\gamma \epsilon
     \end{align*}
-    Then we use the continuity of $\rop$
+    and thus 
     \begin{align*}
-        \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) =
-        \bar{I}(\rop \lim\limits_{i \rightarrow \infty}d\phi_i) = 
-        \bar{I}(\lim\limits_{i \rightarrow \infty}d\rop \phi_i) =
-        \int_\gamma \rop \lim\limits_{i \rightarrow \infty}d\rop \phi_i =
-        \int_\gamma \rop d\tilde{\psi} = 0.
+        \left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
+        \right) (\gamma) \right| = 0
     \end{align*}
+    because $\epsilon$ was arbitrarily small.
+    % For every closed $1$-form $\nu \in H^1(d)$ we have 
+    % \begin{align*}
+    %     \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
+    %     = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
+    %     = \bar{I}(\nu)(\gamma)
+    % \end{align*}
+    % where we used the properties of $\rop$ from Thm\,\ref{operators}. 
+    % Let $\tilde{\Omega}$ be a bounded
+    % subdomain of $\Omega$.
+    % Because the image of $d$ is closed for every bounded domain 
+    % (cf. \cite[Lemma 7]{picard}) we have that for any convergent sequence 
+    % $(d\psi_i)_{i\in \mathbb{N}} \subseteq L^1_2(\Omega)$ 
+    % there exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
+    % \begin{align*}
+    %     \lim\limits_{i \rightarrow \infty}d\psi_i| _{\tilde{\Omega}} 
+    %     = d\tilde{\psi}.
+    % \end{align*}
+    % Then we use the continuity of $\rop$
+    % \begin{align*}
+    %     \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) =
+    %     \bar{I}(\rop \lim\limits_{i \rightarrow \infty}d\phi_i) = 
+    %     \bar{I}(\lim\limits_{i \rightarrow \infty}d\rop \phi_i) =
+    %     \int_\gamma \rop \lim\limits_{i \rightarrow \infty}d\rop \phi_i =
+    %     \int_\gamma \rop d\tilde{\psi} = 0.
+    % \end{align*}
 \end{proof}
 
 Now we construct a solution. Let $L \subseteq K$ be a bounded
 simplicial subcomplex s.t. $\gamma \in C_1(L)$ and the star of 
-every vertex from $\gamma$ does not touch the boundary. Now we can 
-find a smooth closed $1$-form $\nu$ on $|L|$ with 
+every vertex from $\gamma$ does not touch the boundary of $L$. Let $\rop_L$ be 
+the regularization operator from Thm.\,\ref{operators}, but now constructed for
+$L$ instead of $K$.
+
+Take a cochain $F \in C^1(L)$ s.t. $F(\gamma) = C_0$. Then we take the 
+Whitney transformation of $wF$ defined at \ref{}. Because $w$ induces an 
+isomorphism on cohomology $I(wF)(\gamma) = F(\gamma) = C_0$. Then denote 
+$\theta \vcentcolon= \varphi wF$. By our definition of integration \ref{}
+we have then $I(\theta) = C_0$ and due to Lemma \ref{} 
 \begin{align*}
-    \int_\gamma \nu = C_0
+    \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
+\end{align*} 
+
+We now use the Hodge decomposition
+(\ref{hodge_decomposition}) and project $\theta$ onto the harmonic functions 
+to obtain $\omega_L \in \mathring{H}^1_0(d,\delta;|L|)$ with 
+\begin{align*}
+    \omega_L = \theta_L - d\psi
 \end{align*}
-using the standard de Rham isomorphism. We now use the Hodge decomposition
-(\ref{hodge_decomposition}) and project $\nu$ onto the harmonic functions 
-to obtain $\omega_L \in \mathring{H}_0(d,\delta;|L|)$. Let 
-$\rop_L$ be the same operator from above but now constructed for the 
-complex $L$. Then there is a $\psi \in H^0(d;|K|)$ s.t.
+with $\psi \in H^0(d;|L|)$. 
 \begin{align*}
-    \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\nu - d\psi) =
-    \int_\gamma \rop_L \nu = \int_\gamma \nu = C_0.
+    \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\theta - d\psi) =
+    \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
 \end{align*}
 Because $\omega_L$ has zero trace on the boundary we can extend it by zero to 
 obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
+{\color{red} More details!}
 Because the construction of the operator $\rop$ is local on the stars 
 of the vertices
 (cf. \cite{goldshtein}) we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
-every simplex attached to $\gamma$ and therefore 
+every simplex attached to $\gamma$ because $\rop_L$ and $\rop$ are constructed
+in the same manner. Therefore 
 $\int_\gamma \rop_L \omega_L = \int_\gamma \rop \bar{\omega}_L = C_0$. 
 Now we project $*\bar{\omega}_L$ onto harmonic forms to get 
-$\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Then we get
+$\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Because the domain $\Omega$
+is unbounded the image of $d$ and $\delta$ are not closed anymore. So we 
+obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
 \begin{align*}
-    \int_\gamma \rop * \omega = \int_\gamma \rop *(*\bar{\omega}_L - 
-    \lim\limits_{i \rightarrow \infty}\delta \phi_i) = 
-    \int_\gamma \rop \bar{\omega}_L \pm 
-    \lim\limits_{i \rightarrow \infty}d \psi_i = 
+    *\bar{\omega}_L = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i.
+\end{align*}
+where the limit is in the $L^2$-sense. Apply the Hodge star operator on 
+both sides, use the fact that it is an isometry and thus continuous and then 
+remember the definition of $\delta$ to get a sequence 
+$(\psi_i)_{i \in \naturalnum} \subseteq H^0(d)$ s.t.
+\begin{align*}
+    \bar{\omega}_L = *\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
+\end{align*}
+Then we get
+\begin{align*}
+    \int_\gamma \rop * \omega 
+    =\int_\gamma \rop (\bar{\omega}_L - 
+    \lim\limits_{i \rightarrow \infty}d \psi_i) = 
     \int_\gamma \rop \bar{\omega}_L = C_0.
 \end{align*}
 Thus $\omega$ fulfills the integral condition. 
 Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
 are satisfied as well and $\omega$ is a solution.
 
-% We start with a smooth $1$-form $
 
-% % We are now able to proof existence of a 
-% % solution. Take a closed cochain $F \in C^1_2(K)$ s.t. $F(\gamma) = C_0$ 
-% % and 
-% % $F(\partial d) = 0$ for any $2$-chain $d$ 
-% % as in Prop.\,\ref{uniqueness_cochain}. Then we know from 
-% % Sec.\,\ref{sec_isomorphism_cohomology} that 
-% % there exists a unique $[\theta] \in \mathscr{H}_2^1(K)$ s.t. 
-% % $[I]([\theta]) = [F]$. Let us take the 1-form $\eta \vcentcolon= 
-% % \varphi^{-1} \theta \in W^1_2(\omega)$. Then $\int_\gamma \eta = C_0$ holds. 
-% % Because we need a 2-form we will take a closer look at $*\eta$.
-% % We have that the Hodge star operator $*: L^1_2(\Omega) \rightarrow 
-% % L^2_2(\Omega)$ is a Hilbert space isometry. 
-% %%% TBD: Add proof, already written down on 26.11.2022
+In the proof of uniqueness we will use the following lemma. 
+We are now back in the realm of standard vector analysis so all the notation
+is to be seen in this light (e.g. $H^1$ is here the standard Sobolov space 
+and not related to differential forms).
 
+\begin{lemma}
+    Let $\phi \in L^2_{loc}(\Omega)$ with $\nabla \phi \in L^2(\Omega)$. Then 
+    there exists a sequence $(\phi_l)_{i \in \naturalnum} \subseteq H^1(\Omega)$
+    s.t. $\nabla \phi_i \rightarrow \nabla \phi$ in $L^2(\Omega)^3$.
+\end{lemma}
+\begin{proof}
+    Take $B_R$ with $R$ large enough s.t. $B_R^c \subseteq \Omega$. 
+    Define $\Omega_R \vcentcolon= B_R \cap \Omega$. Then 
+    $\overline{\Omega}_R \subseteq B_{R+1}$ and $\Omega_R$ is a Lipschitz 
+    domain and $B_{R+1}$ is pre-compact and
+    $\phi|_{\Omega_R} \in W^{1,2}(\Omega_R)$. Therefore we can find an extension
+    $E\phi \in W_0^{1,2}(\Omega_{R+1}) \hookrightarrow W^{1,2}(\mathbb{R}^3)$
+    (cf. \cite[Thm.\,5.2.1]{sobolev}). So we can now define
+    \begin{align*}
+    \bar{\phi} \vcentcolon=
+    \begin{cases}
+        \phi & \mbox{in $\Omega$}\\
+        E\phi & \mbox{in $\Omega^c$.}\\
+    \end{cases}
+    \end{align*}
+    Then $\phi \in L^2_{loc}(\real^3)$ and 
+    $\nabla \bar{\phi} \in L^2(\real^3)^3$. 
+    Then there exists a sequence $(\phi_l) _{l \in \naturalnum}$ s.t.
+    $\nabla \phi_l \rightarrow \nabla \bar{\phi}$ in $L^2(\real^3)^3$ 
+    (cf. \cite[Lemma\,1.1]{simader}). By restricting $\phi_l$ to $\Omega$ 
+    we obtain the result.
+\end{proof}
 
 % First we compute
 % \begin{align*}
@@ -1206,18 +1291,34 @@ are satisfied as well and $\omega$ is a solution.
 \end{theorem}
 \begin{proof}
     Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $*\omega$ is 
-    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed. The same 
+    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed because 
+    \begin{align*}
+        d \rop * \omega = \rop d*\omega = 0.
+    \end{align*}
+    The same 
     holds for $\tilde{\omega}$. 
     $I(\rop * \omega), I(\rop * \tilde{\omega}) \in C^1_2(K)$ 
     are closed $1$-cochains with
     $I(\rop * \omega)(\gamma) = I(\rop * \tilde{\omega})(\gamma)$. 
     Thus Prop.\,\ref{uniqueness_cochain} implies 
     $[I(\rop * \omega)] = [I(\rop * \tilde{\omega})] \in H^1(K;\real)$.
-    Using the Whitney transformation (cf. \cite{goldshtein}) 
-    we obtain a $\theta \in W_{\infty,loc}^0(\omegabar)$ s.t. 
+    Now we use the Whitney transformation. We know that $[I]$ and $[w]$ are 
+    inverses on cohomology from \ref{}. That means we get 
     \begin{align*}
-        \rop * \omega - \rop * \tilde{\omega} = d\theta.
+        [\varphi \rop *\omega] = [wI\varphi \rop *\omega] 
+        = [wI\varphi \rop *\tilde{\omega}] = [\varphi \rop *\tilde{\omega}].
     \end{align*}
+    Here the cohomology classes are in the cohomology spaces of S-forms 
+    $\mathscr{H}^1_2(K)$. That means there is a S-form $\theta \in S^0(K)$ s.t.
+    \begin{align*}
+        &\varphi \rop *\omega - \varphi \rop *\omega = d\theta \\ 
+        &\Rightarrow \rop *\omega -  \rop *\omega = \varphi^{-1} d\theta 
+        = d\varphi^{-1}\theta =\vcentcolon d\tilde{\theta}.
+    \end{align*}
+    We have $\tilde{\theta} \in S^0(\omegabar) \subseteq 
+    W_{\infty,loc}^0(\omegabar)$ and $d \tilde{\theta} \in S_2^1(\omegabar)
+    \subseteq W_2^1(\omegabar)$.
+
     Using the 
     properties of $\rop$ there exists a $\eta \in L_{2,loc}^0(\Omega)$
     with $d\eta \in L^1_2(\Omega)$ s.t. 
@@ -1246,17 +1347,18 @@ are satisfied as well and $\omega$ is a solution.
         \quad \forall 
         f \in H^1(\Omega).
     \end{align*}
-    Let $\rho_\epsilon$ be a standard mollifier with compact support. 
-    Then we have 
-    \begin{align*}
-        \partial_{x_i} (\rho_\epsilon * \phi) = 
-        (\partial_{x_i} \rho_\epsilon) * \phi = 
-        \rho_\epsilon * (\partial_{x_i} \phi) 
-        \xrightarrow{\epsilon \rightarrow 0} 
-        \partial_{x_i} \phi \text{ in $L^2(\Omega)$}.
-    \end{align*}
-    In the last step it is crucial that $\partial_{x_i} \phi \in L^2(\Omega)$.
-    So we know that $\nabla \phi \in \overline{\nabla H^1(\Omega)}$. 
+    % Let $\rho_\epsilon$ be a standard mollifier with compact support. 
+    % Then we have 
+    % \begin{align*}
+    %     \partial_{x_i} (\rho_\epsilon * \phi) = 
+    %     (\partial_{x_i} \rho_\epsilon) * \phi = 
+    %     \rho_\epsilon * (\partial_{x_i} \phi) 
+    %     \xrightarrow{\epsilon \rightarrow 0} 
+    %     \partial_{x_i} \phi \text{ in $L^2(\Omega)$}.
+    % \end{align*}
+    % In the last step it is crucial that $\partial_{x_i} \phi \in L^2(\Omega)$.
+    Thank to Lemma\,\ref{} we know that 
+    $\nabla \phi \in \overline{\nabla H^1(\Omega)}$. 
     Because $B$ and $\tilde{B}$ are harmonic we have 
     $B - \tilde{B} \in 
     \overline{\nabla H^1(\Omega)}^\perp$ and hence $\nabla \phi = 0$
