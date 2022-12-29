@@ -17,15 +17,18 @@
 % \bibliography{bibliography}
 % \bibliographystyle{ieeetr}
 
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
-\newtheorem{theorem}{Theorem}
+\numberwithin{equation}{subsection}
+
+\newtheorem{lemma}{Lemma}[section]
+\numberwithin{lemma}{subsection}
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{theorem}[lemma]{Theorem}
 
 \theoremstyle{definition}
-\newtheorem{assumption}{Assumption}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
-\newtheorem{problem}{Problem}
+\newtheorem{assumption}[lemma]{Assumption}
+\newtheorem{definition}[lemma]{Definition}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{problem}[lemma]{Problem}
 
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator{\curl}{curl}
@@ -44,6 +47,8 @@
 
 
 \begin{document}
+
+\section{Differential forms}
 
 Our goal is to study the homogeneous magnetostatic problem on the exterior 
 domain of a triangulated torus. That means 
@@ -71,6 +76,9 @@ simplicial topology.
 At first, let us introduce some basic notions about differential forms. 
 We follow the brief introduction given by Arnold (cf. \cite[Sec. 6.1]{arnold}), 
 but less details will be given. 
+
+\subsection{Alternating maps}
+
 Let $V$ be a real vector space with $\text{dim}\,V = n$ 
     and $\text{Alt}^k\,V$ be the 
 space of $k$-alternating maps from $V^k$ to $\real$. For $\omega \in 
@@ -808,6 +816,22 @@ isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e.
 $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
 
 
+\begin{remark}
+    Let $L \subseteq K$ be a full-dimensional %TBD: Define that
+    simplicial subcomplex. Let $\rop_L$ be the regularization operator 
+    constructed for this simplicial subcomplex. The construction of the
+    regularization operator is done locally on the stars of the vertices. 
+    Therefore if we now look at a vertex $x_i \in L$ s.t. its star 
+    $\Sigma_i$ does not include any boundary vertices of $L$ then we have 
+    $\rop \omega = \rop_L(\omega|_{|L|})$ for any $\omega \in W^k_{1,loc}(|K|)$
+    if we choose the ordering of the vertices appropriately.
+    We will not prove this because it would require to go over the construction
+    of the operator which we want to avoid as it involves several steps 
+    and is quite technical. Thus, 
+    we refer to \cite[Sec.\,2]{goldshtein} for further details.
+\end{remark}
+
+
 % However, the question remains how we can go to the other direction i.e.
 
 % In conclusion, we get the following isomorphisms of cohomologies:
@@ -893,36 +917,47 @@ curve is equivalent to the curve integral of the associated vector field
     \int_\gamma *\omega = C_0 \label{integral_condition}.
 \end{align}
 However, we have  only $\omega \in \mathring{H}_0^2(d,\delta)$ so 
-$*\omega \in H^1(\delta)$ so this integral might not be well defined. In order 
-to deal with this, we will again use the operator $\rop$ and $\bar{I}$ from 
-Sec.\,\ref{sec_isomorphism_cohomology}. Instead of using 
-(\refeq{integral_condition}) directly we use the condition 
-\begin{align*}
-    \int_\gamma \rop * \omega = C_0.
-\end{align*}
-This is equivalent to $(\bar{I}*\omega)(\gamma) = C_0$. We know that this is 
-well-defined. 
+$*\omega \in H^1(d)$ so this integral might not be well defined. In order 
+to deal with this, we will again use the operator $\rop$ from 
+Sec.\,\ref{sec_isomorphism_cohomology}. 
 
-
-We want to give some justification about why this is a reasonable extension.
-For any closed $\eta \in W^1_p(\omegabar)$ we have $\rop \eta = \eta - 
-d\aop\eta$ from Thm.\,\ref{operators}. For smooth 
-$\phi \in \Lambda^0(\omegabar)$ we immediately get from the standard Stoke's 
-theorem that $\int_c d\phi = 0$ for all closed $1$-chains $c$. If we 
-assume sufficient regularity on $\rop \eta$, $d\aop\eta$ and $\eta$ 
-then we would have indeed 
+We know from Thm.~\ref{thm:operators} that $\rop *\omega \in S^1_2(\omegabar)$.
+Using the operator $\varphi$ from \ref{eq:} we obtain 
+$\varphi \rop *\omega \in S^1_2(K)$. Now we know from Sec.~\ref{sec:} that 
+the integration mapping $I: S^1_2(K) \rightarrow C^1_2(K)$ is well-defined.
+Denote $\bar{I} \vcentcolon= I\circ \varphi \circ \rop$ and 
+let us replace the integral condition (\ref{eq:integral_condition}) with 
 \begin{align*}
-    \int_\gamma \rop \eta = \int_\gamma \eta - d\aop\eta = \int_\gamma \eta.
+    \bar{I}(*\omega)(\gamma) = C_0.
 \end{align*}
 
-\begin{remark}
-    This justification can be done more rigorously with the help of S-forms
-    (cf. \cite{goldshtein}) which correspond to $W_{\infty,loc}(\omegabar)$
-    with an additional decaying condition. Then we obtain that the integral 
-    is consistent with the integral on these S-forms.
-\end{remark}
-\noindent To summarize we obtain the following problem.
+Of course, we have to justify why this is reasonable. 
+So let us take $\eta \in S^1_2(\omegabar)$. That means we can integrate it 
+directly. Let us also assume that $\eta$ is closed and 
+$\int_\gamma \eta = C_0$. %TBD: Define the integral on S^k_p(\omegabar)
+Then we know from Thm.~\ref{thm:operators}
+\begin{align*}
+    \rop \eta = \eta + d\aop \eta + \aop d\eta 
+    \stackrel{\eta \text{ closed}}{=} \eta + d\aop \eta.
+\end{align*}
+We know further that $\aop \eta \in S^0_2(\omegabar)$. 
+Apply $\varphi$ on both sides and use that fact that it commutes with the 
+exterior derivative to get
+\begin{align*}
+    \varphi \rop \eta = \varphi\eta + d \varphi\aop \eta.
+\end{align*}
+$[I]$ is an isomorphism of cohomology and thus sends exact S-forms to exact 
+cochains. $\gamma$ is closed so $I(d \varphi\aop \eta)(\gamma) = 0$ and 
+we conclude 
+\begin{align*}
+    \bar{I}(\eta)(\gamma) = I(\varphi \rop \eta)(\gamma) = I(\varphi \eta)
+    \stackrel{\text{by def.}}{=} I(\eta),
+\end{align*}
+i.e. the integral remains unchanged if we integrate closed forms over 
+closed chains. Because $*\omega$ is closed we thus do not change the integral 
+if the curve integral $*\omega$ would already have been well defined before.
 
+To summarize we obtain the following problem.
 \begin{problem}
     Find $\omega \in \mathring{H}^2(d;\Omega)$ s.t.
     \begin{align*}
@@ -1067,7 +1102,7 @@ We start with the following
     % \end{align*}
 \end{proof}
 
-\begin{lemma}\label{extension_by_zero}
+\begin{lemma}\label{lem:extension_by_zero}
     Let $\Omega, U$ be open and $U \subseteq \Omega$. 
     Let $\nu \in \mathring{H}^k(d;U)$. Define $\bar{\nu}$ as the 
     zero extension of $\nu$ in $\Omega \setminus U$. 
@@ -1135,7 +1170,7 @@ with $\psi \in H^0(d;|L|)$.
     \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
 \end{align*}
 Because $\omega_L \in \mathring{H}^1(d;|L|)$ we can use 
-Lemma\,\ref{extension_by_zero} extend it by zero to 
+Lemma~\ref{lem:extension_by_zero} extend it by zero to 
 obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
 Because the construction of the operator $\rop$ is local on the stars 
 of the vertices
