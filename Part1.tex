@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{xcolor}
 \usepackage{csquotes}
+\usepackage{enumerate}
 \usepackage{faktor}
 \usepackage{mathrsfs}
 \usepackage{mathtools}
@@ -36,7 +37,7 @@
 \newcommand{\smoothcompforms}[2]{C_0^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}
 \newcommand{\naturalnum}{\mathbb{N}}
-\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\norm}[2]{\lVert #1 \rVert_{#2}}
 \newcommand{\omegabar}{\overline{\Omega}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\rop}{\mathscr{R}} % short for R operator
@@ -207,12 +208,12 @@ W^k_{p,loc}(\Omega) &= \left\{ \omega \, k \text{-form} \, | \,
 For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm 
 \begin{align*}
 \lVert \omega \rVert _{W^k_p} &\vcentcolon= 
-\left( \norm{\omega}^p_{L^k_p} + \norm{d\omega}^p_{L^k_p} \right)^{1/p}
+\left( \norm{\omega}{L^k_p}^p + \norm{d\omega}{L^k_p}^p \right)^{1/p}
 \end{align*}
 and for $p=\infty$
 \begin{align*}
     \lVert \omega \rVert _{W^k_\infty} &\vcentcolon= 
-    \max\left\{ \norm{\omega}_{L^k_\infty},\, \norm{d\omega}_{L^k_\infty}
+    \max\left\{ \norm{\omega}{L^k_\infty},\, \norm{d\omega}{L^k_\infty}
     \right\}.
 \end{align*}
     
@@ -487,40 +488,41 @@ later to show uniqueness of a solution of the magnetostatic problem.
 
 \begin{proposition}\label{uniqueness_cochain}
     Assume that $H_1(K) = \integers [\gamma]$ i.e. the homology class of the 
-    closed $1$-chain $\gamma$ is a generator of the first homology group. 
-    Let $F$ and $G$ be two closed $1$-cochains s.t. $F(\gamma) = G(\gamma)$.
-    Let $[F]$, $[G] \in H^k(K;\real)$ be the corresponding cohomology classes. 
-    Then we have $[F] = [G]$.
+    closed $1$-chain $\gamma$ is a generator of the first homology group.
+    Then we have the following:
+    \begin{enumerate}[(i)]
+        \item For any $C_0 \in \real$ there exists a closed $1$-chain 
+            $F \in Z^1(K)$ with $F(\gamma) = C_0$,
+        \item any other $G \in Z^1(K)$ with $G(\gamma) = C_0$ 
+            is in the same cohomology class i.e. $[F] = [G]$.
+    \end{enumerate}
 \end{proposition}
 \begin{proof}
+    \textbf{Proof of (i)} %TBD: This could be wrong
+    Because $[\gamma]$ is a generator of the homology group we  obtain a 
+    homomorphism $\hat{F} \in \text{Hom}(H_1(K),\real)$ by fixing
+    $\hat{F}([\gamma]) = C_0$. This determines the other values.
+    Then we know from (\ref{univeral_coefficient_theorem}) that there exists
+    a $[F] \in H^1(K)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
+    isomorphism. So we obtain
+    \begin{align*}
+        F(\gamma) = \beta([F])([\gamma]) = \hat{F}([\gamma]) = C_0.
+    \end{align*}
+
+    \textbf{Proof of (ii)} %TBD: This could be wrong
     Take $[c] \in H_1(K)$ arbitrary. Then there exists  $n \in \integers$ s.t.
     $[c] = n [\gamma]$.
     Using $\beta$ from \ref{univeral_coefficient_theorem}
     We have
     \begin{align*}
         \beta([F])([c]) = \beta([F])(n [\gamma]) 
-        = n \beta([F])([\gamma]) = n \; F(\gamma) = n \; F(\gamma) = 
+        = n \beta([F])([\gamma]) = n \, F(\gamma) = n \, F(\gamma) = 
         \beta([G])([c])
     \end{align*}
-    and thus $\beta([F]) = \beta([G])$. Because $\beta$ is a isomorphism
-    and so $[F] = [G]$.
+    and thus $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism
+    we arrive at $[F] = [G]$.
 \end{proof}
 
-
-% from now on be a an exterior polyhedral domain of a compact set i.e. 
-% $\real^3 \setminus \Omega$ 
-% is a compact polyhedron. We then have the following boundary value
-% problem: For a fixed $C_0 \in \real$ and closed bounded curve $\gamma$ 
-% find $\omega \in \mathring{W}^k_2(\Omega)$ s.t.
-% \begin{align*}
-%     d\omega &= 0, \\
-%     \delta\omega &= 0 \text{ and} \\
-%     \int_\gamma \omega &= C_0.
-% \end{align*}
-% Because we consider polyhedral domains we assume that $\gamma$ consists of 
-% finitely many $k$-simplices and that the cohomology class $[\gamma]$ is a 
-% generator of the simplicial homology space. The well-definedness of the 
-% integral over $\gamma$ will be discussed later.
 In order to show existence and uniqueness of solutions of the magnetostatic 
 problem we rely on a result about the isomorphism of a simplicial 
 cohomology space $H^k_p(K)$ and the $L^p$-cohomology space 
@@ -545,6 +547,7 @@ to our case.
 
 
 \section{Isomorphism of Cohomology}
+
 
 % \subsection{Assumptions}
 % In order to formulate the assumptions necessary for the result from 
@@ -634,8 +637,7 @@ and analogously
 \end{align*}
 %%% TBD: Give more details and interpretation
 
-\subsection{Statement of the Isomorphism} \label{sec_isomorphism_cohomology}
-
+\subsection{S-forms}
 From now on we will assume that the GKS condition is fulfilled.
 % The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
 % mappings between different cohomology spaces. 
@@ -661,93 +663,152 @@ be defined next.
 \begin{definition}
     We define the following norm of a $k$-cochain $f$
     \begin{align*}
-    \norm{f}_{C_p^k(K)} \vcentcolon= 
+    \norm{f}{C_p^k(K)} \vcentcolon= 
     \left( \sum\limits_{c \, k\text{-chain}} |f(c)|^p \right)^{1/p}.
     \end{align*}
     and the space of \textit{p-summable k-cochains}
     \begin{align*}
     C_p^k(K) \vcentcolon= \{f \, k\text{-cochain} | \,  
-    \norm{f}_{C_p^k(K)} < \infty \}.
+    \norm{f}{C_p^k(K)} < \infty \}.
     \end{align*}
 \end{definition}
-% Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
-% $\tau < \sigma$. It can be shown that the standard embedding 
-% $j: \tau \hookrightarrow \sigma$ induces an
-% restriction operator 
-% $j^*_{\sigma, \tau}:W^*_\infty(\sigma) \rightarrow W^*_\infty(\tau) $ which is 
-% bounded (cf \cite[p.191]{goldshtein}). 
-% \begin{definition}[S-forms]
-%     Let 
-%     \begin{align*}
-%     \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
-%     \end{align*}
-%     be a collection of differential $k$-forms. We call $\theta$ S-form of degree
-%     $k$ if we have for all simplices
-%     $\mu <\sigma$ 
-%     \begin{align*}
-%     j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
-%     \end{align*}
-%     We denote with $S^k(K)$ the space of all S-forms of degree $k$ over the chain
-%     complex $K$. 
-%     For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
-%     \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
-% \end{definition}
-% For $\theta \in S^k(K)$ we now define the norm
-% \begin{align*}
-% \lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
-% \lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
-% \end{align*} 
-% $S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
+Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
+$\tau < \sigma$. We need a restriction operator 
+$j^*_{\tau,\sigma}:W_{\infty,loc}^k(\sigma) \rightarrow W_{\infty,loc}^k(\tau)$.
+This is done by extending a $\omega \in W_{\infty,loc}^k(\sigma)$ first 
+to some $\tilde{\omega}\in W_{\infty,loc}^k(U)$ with 
+$U$ an open neighborhood of $\sigma$ in the affine hull of $\sigma$. Then 
+$\tau \subseteq U$ and we apply a restriction operator $j^*_{\tau,U}$
+and define $j^*_{\tau,\sigma} \omega \vcentcolon= j^*_{\tau,U}\tilde{\omega}$. 
+This restriction is then well defined, bounded and independent of the chosen 
+extension $\tilde{\omega}$ (cf. \cite[p.191]{goldshtein}). It should be 
+emphasized that this restriction only works for $W^k_\infty$ and fails for 
+$W^k_p$, $p<\infty$. 
 
-% Using integration we can define define the homomorphism 
-% (see \cite[p.191]{goldshtein})
-% \begin{align*}
-% I: S_p^k(K) \rightarrow C_p^k(K), \; I(\theta)(\sigma) = 
-% \int_\sigma \theta(\sigma) \text{ for } \sigma \in K.
-% \end{align*}
-% With the exterior derivative $d$ on S-forms as defined above we define 
-% \begin{align*}
-%     \mathcal{Z}_p^k &\vcentcolon= \{ \theta \in S^k_p(K) | \, d\theta = 0 \} \\
-%     \mathcal{B}_p^k &\vcentcolon= dS^k_p(K)
-% \end{align*}
-% and then the resulting cohomology space
+\begin{definition}[S-forms]
+    Let 
+    \begin{align*}
+    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
+    \end{align*}
+    be a collection of differential $k$-forms. We call $\theta$ S-form of degree
+    $k$ if we have for all simplices
+    $\mu <\sigma$ 
+    \begin{align*}
+    j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
+    \end{align*}
+    We denote with $S^k(K)$ the space of all S-forms of degree $k$ 
+    over the chain complex $K$. 
+    For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
+    \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
+    % TBD: Did i define what a cochain complex is?
+\end{definition}
+For $\theta \in S^k(K)$ we now define the norm
+\begin{align*}
+\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
+\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
+\end{align*} 
+$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
 
-% \begin{align*}
-%     \mathscr{H}_p^k(K) \vcentcolon= 
-%     \faktor{\mathcal{Z}_p^k}{\mathcal{B}_p^k}.
-% \end{align*}
+The integration of an S-form $\theta \in S^k(K)$ over a chain
+$c = \sum n_\sigma \sigma \in C_k(K)$ is then simply defined as 
+\begin{align*}
+    \int_c \theta 
+    \vcentcolon= \sum\limits_\sigma n_\sigma \int_\sigma \theta(\sigma).
+\end{align*}
+We also write $I(\theta)(c) \vcentcolon= \int_c \theta$.
+Then the integration mapping $I: S^k(K) \rightarrow C^k(K)$ is a homomorphism
+(see \cite[p.191]{goldshtein}).
+The reason why S-forms are a useful concept is because they provide an 
+intermediate step between differential forms and cochains.
 
-% We denote the standard cochain cohomology as $H^k_p(K)$. Then we have that the 
-% integration mapping
-% $I: S_p^k(K) \rightarrow C_p^k(K)$ 
-% induces an isomorphism on the cohomologies i.e. 
-% $[I]: \mathscr{H}_p^k(K) \rightarrow H^k_p(K)$ is an isomorphism of vector 
-% spaces (see Theorem\,1 in \cite{goldshtein}
-% and the proof thereof).
+With the exterior derivative $d$ on S-forms as defined above we define 
+\begin{align*}
+    \mathscr{Z}^k &\vcentcolon= \{ \theta \in S^k(K) | \, d\theta = 0 \} \\
+    \mathscr{B}^k &\vcentcolon= dS^{k-1}(K)
+\end{align*}
+and then the resulting cohomology space
+\begin{align*}
+    \mathscr{H}^k(K) \vcentcolon= 
+    \faktor{\mathscr{Z}^k}{\mathscr{B}^k}.
+\end{align*}
+We also define the in the case of $p$-summable S-forms
+\begin{align*}
+    \mathscr{Z}_p^k &\vcentcolon= \{ \theta \in S_p^k(K) | \, d\theta = 0 \} \\
+\end{align*}
+as well $\mathscr{B}_p^k$ and $\mathscr{H}_p^k(K)$ analogously.
+
+Then we have that the integration mapping
+$I: S^k(K) \rightarrow C^k(K)$ 
+induces an isomorphism on the cohomologies i.e. 
+$[I]: \mathscr{H}^k(K) \rightarrow H^k(K)$ is an isomorphism of vector 
+spaces (see \cite[p.191]{goldshtein}).
+Also $I: S_p^k(K) \rightarrow C_p^k(K)$ is well defined and induces an
+isomorphism on the respective cohomology spaces as well 
+(see \cite[Thm.\,1]{goldshtein} and the proof thereof).
 
 
 
+\subsection{Isomorphism between cohomologies of S-forms and $L^p$-cohomology}
 
 
 
+The next step is to obtain an isomorphism between the cohomology 
+of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
+$\lpcoho(\omegabar)$. 
+In order to achieve that we need a some connection between differential forms
+and S-forms. Take $\omega \in W_{\infty,loc}^k(\omegabar)$. Using the analogous
+reasoning as above, we use the restriction operators $j^*_{\sigma,\tau}$ to 
+restrict $\omega$ to the simplices. Denote the resulting 
+forms as $\omega(\sigma) \in W^k_{\infty,loc}(\sigma)$. So we obtain an 
+S-form $\{ \omega(\sigma) | \, \sigma \in K \}$. This way we constructed 
+an operator $\varphi: W^k_{\infty,loc}(\omegabar) \rightarrow S^k(K)$. This 
+operator $\varphi$ is an isomorphism \cite[Lemma\,1]{goldshtein}. 
+To also obtain corresponding forms to the $p$-summable S-forms we simply 
+define $S^k_p(\omegabar) \vcentcolon= \phi^{-1}S^k_p(K)$.
+It can be shown that $S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$ and that the inclusion 
+operator is bounded (\cite[Lemma\,4]{goldshtein}). 
 
-% The next step is to obtain an isomorphism between the cohomology 
-% of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
-% $\lpcoho(\omegabar)$. At first, we define 
-% \begin{align*}
-% \varphi: W^k_{\infty,loc}(M) \rightarrow S^k(K), \;
-% \omega \mapsto \{ \omega|_\sigma \, |\, \sigma \in K \}.
-% \end{align*}
-% This is a well-defined vector space isomorphism (\cite[p.191]{goldshtein}). This
-% way we can identify $W^k_{\infty,loc}(M)$ with $S^k(K)$.  Using the
-% isomorphism $\varphi$ we now define 
-% $S^k_p(M) \vcentcolon= \varphi^{-1} S^k_p(K)$.
-% It can be shown that $S^k_p(M) \subseteq W^k_p(M)$. Let 
-% $\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
-% The inclusion induces an
-% isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
-% $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
 
+Now we also want to go in the other direction i.e. we want to obtain 
+a $\theta \in S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$. This is done 
+using two operators $\rop: L^k_{1,loc}(\omegabar) \rightarrow 
+L^k_{1,loc}(\omegabar)$ and $\aop: L^k_{1,loc}(\omegabar) \rightarrow 
+L^{k-1}_{1,loc}(\omegabar)$.
+The precise definition and details of their construction
+are not relevant for our purposes because we will only use
+the some properties that we collect in the following theorem
+(cf. \cite[Thm.2]{goldshtein}).
+
+\begin{theorem}\label{operators}
+    Assume that the triangulation $\tau$ fulfills the GKS-condition.
+    Then there exist linear mappings 
+    $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
+    L^k_{1,loc}(\omegabar)$, $\mathscr{A}: L^k_{1,loc}(\omegabar) 
+    \rightarrow L^{k-1}_{1,loc}(\omegabar)$ 
+    such that
+    \begin{enumerate}[(i)]
+        \item $\rop(W^k_{1,loc}(\omegabar)) \subseteq W^k_{1,loc}(\omegabar)$,
+            $\aop(W^k_{1,loc}(\omegabar)) \subseteq W^{k-1}_{1,loc}(\omegabar)$
+            and $\mathscr{R}\omega - \omega = 
+            d\mathscr{A}\omega + \mathscr{A}d\omega$ and 
+            $d\rop \omega  = \rop d \omega$ for 
+            $\omega \in W^k_{1,loc}(\omegabar)$
+        \item for any $1 \leq p \leq \infty$, 
+            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$ and
+            $\aop(S^k_p(\omegabar)) \subseteq S^{k-1}_p(\omegabar)$
+        \item $\rop: W^k_p(\omegabar) \rightarrow 
+            (S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ is bounded.
+    \end{enumerate}
+\end{theorem}
+
+Let 
+$\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
+The inclusion induces an
+isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
+$[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
+
+
+% However, the question remains how we can go to the other direction i.e.
 
 % In conclusion, we get the following isomorphisms of cohomologies:
 % \begin{align*}
@@ -757,73 +818,29 @@ be defined next.
 % This result will be crucial in the next section to obtain a unique solution
 % to our problem.
 
-The idea is that for a $k$-form $\theta$ we have the cochain 
-$I(\theta) \in C^k(K)$, $I(\theta)(\sigma) = \int_\sigma \theta$ for any
-$k$-simplex $\sigma$. We want to show that this map induces a isomorphism on
-cohomology. 
+% The idea is that for a $k$-form $\theta$ we have the cochain 
+% $I(\theta) \in C^k(K)$, $I(\theta)(\sigma) = \int_\sigma \theta$ for any
+% $k$-simplex $\sigma$. We want to show that this map induces a isomorphism on
+% cohomology. 
 
+% In the next step, we will use two operators $\rop$ and $\aop$ from 
+% \cite{goldshtein}.
+% The precise definition and details of their construction
+% are not relevant for our purposes because we will only use
+% the some properties that we collect in the following theorem
+% (cf. \cite[Thm.2]{goldshtein}). Let 
+% \begin{align*}
+%     S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
+%     I\eta \in C^k_p(K)\}.
+% \end{align*}
 
-At first, we will discuss when and how this integration mapping is well-defined. 
-In order to do so, we will use restriction operatorss that are introduced in
-\cite[p.191]{goldshtein}. Let $\sigma, \tau \in K$ be simplices s.t.
-$\tau < \sigma$ i.e. $\tau$ is a face of $\sigma$. The pullback of the standard
-inclusion mapping $j_{\tau, \sigma}: \tau \hookrightarrow \sigma$ gives us 
-a restriction 
-$j^*_{\tau, \sigma}: W^k_\infty(\sigma) \rightarrow W^k_\infty(\tau)$, but 
-we have to check whether this is well-defined. In order to do so, take 
-some $\eta \in W^k_\infty(\sigma)$. Before restriction we extend $\eta$ to 
-a neighborhood $U \supseteq \sigma$ in the affine hull of $\sigma$ to 
-get $\tilde{\eta} \in W^k_\infty(U)$. Then we set 
-$j^*_{\tau, \sigma} \eta = j^*_{\tau, U}$ which is now well-defined and 
-independent of the extension $\tilde{\eta}$ chosen. It should be stressed 
-that this construction does not work for $W^k_p$ with $p < \infty$. 
-
-
-Now take $\eta \in W^k_{\infty,loc}(\omegabar)$. By applying this restriction
-operator repeatedly we can now find $\eta_\sigma \in W^k_\infty(\sigma)$ for 
-every $\sigma \in K$. Then we define 
-\begin{align*}
-    (I\eta) (\sigma) = \int_\sigma \eta_\sigma 
-    \text{ for all $k$-simplices } \sigma \in K .
-\end{align*}
-So we have established that $I: W^k_{\infty,loc}(\omegabar) \rightarrow C^k(K)$ 
-is well-defined.
-
-
-In the next step, we will use two operators $\rop$ and $\aop$ from 
-\cite{goldshtein}.
-The precise definition and details of their construction
-are not relevant for our purposes because we will only use
-the some properties that we collect in the following theorem
-(cf. \cite[Thm.2]{goldshtein}). Let 
-\begin{align*}
-    S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
-    I\eta \in C^k_p(K)\}.
-\end{align*}
-
-\begin{theorem}\label{operators}
-    Assume that the triangulation $\tau$ fulfills the GKS-condition.
-    Then there exist linear mappings 
-    $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
-    L^k_{1,loc}(\omegabar)$, $\mathscr{A}: L^k_{1,loc}(\omegabar) 
-    \rightarrow L^{k-1}_{1,loc}(\omegabar)$ 
-    such that
-    \begin{enumerate}
-        \item $\mathscr{R}\omega - \omega = 
-            d\mathscr{A}\omega + \mathscr{A}d\omega$ and 
-            $d\rop \omega  = \rop d \omega$ for 
-            $\omega \in W^k_{1,loc}(\omegabar)$
-        \item for any $1 \leq p \leq \infty$, 
-            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
-    \end{enumerate}
-\end{theorem}
-Now define $\bar{I} \vcentcolon= I \circ \rop$. This gives a well-defined 
-mapping from $W^k_p(\omegabar)$ to $C^k_p(K)$. Following the arguments of 
-\cite{goldshtein} and using the properties of $\rop$ and $\aop$ one can show 
-that the induced homomorphism of cohomologies 
-$[\bar{I}]: H^k_{p,dR}(\omegabar) \rightarrow H^k_p(K)$ is an isomorphism.
-This isomorphism will play a crucial part in the proof of uniqueness and 
-existence of solutions in the next section.
+% Now define $\bar{I} \vcentcolon= I \circ \rop$. This gives a well-defined 
+% mapping from $W^k_p(\omegabar)$ to $C^k_p(K)$. Following the arguments of 
+% \cite{goldshtein} and using the properties of $\rop$ and $\aop$ one can show 
+% that the induced homomorphism of cohomologies 
+% $[\bar{I}]: H^k_{p,dR}(\omegabar) \rightarrow H^k_p(K)$ is an isomorphism.
+% This isomorphism will play a crucial part in the proof of uniqueness and 
+% existence of solutions in the next section.
 
 
 \section{Existence and uniqueness of solutions}
@@ -917,83 +934,6 @@ then we would have indeed
 \noindent We will examine existence and 
 uniqueness of this problem in the next section.
 
-% In the problem, we have the additional constraint 
-% \begin{align*}
-%     \int_\gamma B \cdot \text{d}l = C_0
-% \end{align*}
-% for some $C_0 \in \real$ and a closed bounded triangulated curve $\gamma$.
-% This corresponds in the language of differential forms 
-% to the integration of a $1$-form $\omega$
-% over a $k$-chain $\gamma$
-% \begin{align*}
-%     \int_\gamma \omega  = C_0.
-% \end{align*}
-% However, we only assume 
-% $\omega \in \mathring{H}^k(d;\Omega)$ so we have to check if and how this can
-% be well defined.
-
-% Above, we introduced the integral operator $I$ for $S^k_p(K)$ which can 
-% therefore be applied on $\omega \in S^k_p(\omegabar)$ as
-% \begin{align*}
-%     I(\omega) \vcentcolon= I (\varphi(\omega)).
-% \end{align*}
-% \noindent If we fix now the closed 
-% $k$-chain $\gamma$ then $I(\cdot)(\gamma) = \int_\gamma$ becomes a functional on
-% $S^k_p(\omegabar)$, but it is a-priori not clear how to extend this to closed forms in
-% $W_p^k(\omegabar)$. 
-
-% We know that $\int_\gamma d\eta = 0$ for $\eta \in S^{k-1}_p(\omegabar)$ because 
-% otherwise $I$ would not induce an isomorphism on cohomology. We extend this now
-% by setting $\int_\gamma d\nu = 0$ for all $\nu \in W^{k-1}_p(\omegabar)$. 
-% We have to check whether this is consistent with the definition above i.e. we
-% have to show that if $d\nu \in S^k_p(M)$ for some 
-% $\nu \in W_p^{k-1}k(\omegabar)$ then 
-% it must follow from the previous definition of the integral that indeed
-% \begin{align*}
-%     \int_\gamma d\nu = 0
-% \end{align*}
-% holds.
-% Let $A \subseteq M$ be a bounded neighborhood of $\gamma$. We can then find 
-% $\tilde{\nu}$ s.t.  $\tilde{\nu} \in W^{k-1}_q(A)$ for any $q > 1$ and 
-% $d\tilde{\nu} = d\nu$ \cite[Thm 3.1.1]{schwarz}. Now it is possible to apply 
-% Stoke's theorem \cite[Thm. 9]{goldshtein_integration} to get  
-% $\int_\gamma d\nu = 0$ and consequently we have shown consistency.
-
-
-% In order to extend the functional $\int_\gamma$ 
-% further we will use two operators
-% $\mathscr{R}$ and $\mathscr{A}$ which are constructed in the second section 
-% of \cite{goldshtein}. The precise definition and details of their construction
-% are not relevant for our purposes because we will only use
-% the following properties (cf. \cite[Thm.2]{goldshtein}).
-
-% \begin{theorem}\label{operators}
-%     Assume that the triangulation $\tau$ fulfills the GKS-condition.
-%     Then there exist linear mappings $\mathscr{R}: L^k_{1,loc} \rightarrow 
-%     L^k_{1,loc}$, $\mathscr{A}: L^k_{1,loc} \rightarrow L^{k-1}_{1,loc}$ 
-%     such that
-%     \begin{enumerate}
-%         \item $\mathscr{R}\omega - \omega = 
-%             d\mathscr{A}\omega + \mathscr{A}d\omega$ for 
-%             $\omega \in W^k_{1,loc}(\omegabar)$
-%         \item for any $1 \leq p \leq \infty$, 
-%             $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$.
-%     \end{enumerate}
-% \end{theorem}
-
-% \noindent We can now use the operator $\rop$ to define $\int_\gamma \omega$ for closed
-% $\omega \in W^k_p(M)$ as
-% \begin{align*}
-% \int_\gamma \omega \vcentcolon= \int_\gamma \rop\omega.
-% \end{align*}
-% This is consistent with the curve integral for S-forms 
-% because if $\omega \in S^k_p(M)$ closed then due to 
-% Thm.\,\ref{operators}
-% \begin{align*}
-% \int_\gamma \rop\omega = 
-% \int_\gamma \omega + d\mathscr{A}\omega + \mathscr{A}d\omega = 
-% \int_\gamma \omega.
-% \end{align*}
 
 \subsection{Existence and uniqueness}
 
@@ -1097,7 +1037,9 @@ We start with the following
         \left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
         \right) (\gamma) \right| = 0
     \end{align*}
-    because $\epsilon$ was arbitrarily small.
+    because $\epsilon$ was arbitrarily small. {\color{red} This can be done 
+    more elegantly by identifying $C^1_2(K)$ with $\ell^2$. 
+    See notes from 28.12}
     % For every closed $1$-form $\nu \in H^1(d)$ we have 
     % \begin{align*}
     %     \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
@@ -1125,16 +1067,57 @@ We start with the following
     % \end{align*}
 \end{proof}
 
+\begin{lemma}\label{extension_by_zero}
+    Let $\Omega, U$ be open and $U \subseteq \Omega$. 
+    Let $\nu \in \mathring{H}^k(d;U)$. Define $\bar{\nu}$ as the 
+    zero extension of $\nu$ in $\Omega \setminus U$. 
+    Then $\bar{\nu} \in \mathring{H}^k(d;\Omega)$ and 
+    $d\bar{\nu} = d\nu$ in $U$ and zero in $\Omega \setminus U$.
+\end{lemma}
+\begin{proof}
+    The proof works exactly as in the standard Sobolev case. 
+    Take $\varphi \in \smoothcompforms{k}{\Omega}$ arbitrary. 
+    Define $\bar{\nu}' = d\nu$ in $U$ and $\bar{\nu}' = 0$ in 
+    $\Omega \setminus U$. We want to show that 
+    \begin{align*}
+        \int_\Omega \bar{\nu} \wedge *\delta \varphi 
+        = \int_\Omega \bar{\nu}' \wedge *\varphi
+    \end{align*}
+    which implies that $\bar{\nu}' = d\bar{\nu}$. If
+    $\text{supp}\, \varphi \subseteq U$ this follows by applying the definition 
+    of $d\nu$. If $\text{supp}\, \varphi \subseteq 
+    \text{int}(\Omega \setminus U)$ then it is also trivial since both 
+    $\bar{\nu}$ and $\bar{\nu}'$ are zero in $\Omega \setminus U$. 
+
+    Otherwise, we recognize $\varphi |_U \in C_c^\infty \Lambda^{k+1}(U)$. 
+    Thus we get from the definition of the zero boundary condition \ref{}
+    \begin{align*}
+        \langle \bar{\nu}, \delta \varphi \rangle_{L^k_2(\Omega)}
+        = \langle \nu, \delta \varphi \rangle_{L^k_2(U)}
+        = \langle d\nu, \varphi \rangle_{L^k_2(U)}
+        = \langle \bar{\nu}', \varphi \rangle_{L^k_2(\Omega)}.
+    \end{align*}
+    Thus, $\bar{\nu}' = d\bar{\nu}$. Because $d\nu \in L^{k+1}_2(U)$,
+    $d\bar{\nu} \in L^{k+1}_2(\Omega)$ and the lemma is proven.
+\end{proof}
+
 Now we construct a solution. Let $L \subseteq K$ be a bounded
 simplicial subcomplex s.t. $\gamma \in C_1(L)$ and the star of 
-every vertex from $\gamma$ does not touch the boundary of $L$. Let $\rop_L$ be 
+every vertex from $\gamma$ does not touch the boundary of $L$. 
+We also require that $H_1(L) = \integers [\gamma]$.
+Let $\rop_L$ be 
 the regularization operator from Thm.\,\ref{operators}, but now constructed for
 $L$ instead of $K$.
 
-Take a cochain $F \in C^1(L)$ s.t. $F(\gamma) = C_0$. Then we take the 
-Whitney transformation of $wF$ defined at \ref{}. Because $w$ induces an 
-isomorphism on cohomology $I(wF)(\gamma) = F(\gamma) = C_0$. Then denote 
-$\theta \vcentcolon= \varphi wF$. By our definition of integration \ref{}
+We know from \ref{uniqueness_cochain} that a closed cochain $F \in C^1(L)$ 
+exists s.t. $F(\gamma) = C_0$. 
+We know from \ref{} that $[I]: \mathscr{H}^1(L) \rightarrow H^1(L)$ is a 
+isomorphism. Thus we find a $\theta \in S^1(L)$ s.t. $[I(\theta)] = [F]$
+i.e. $I(\theta) = F + \delta J$ for some $J\in C^0(L)$. Thus 
+$I(\theta) = F(\gamma) + (\delta J)(\gamma) \stackrel{\gamma \text{ closed}}{=} 
+F(\gamma) = C_0$.
+
+By our definition of integration \ref{}
 we have then $I(\theta) = C_0$ and due to Lemma \ref{} 
 \begin{align*}
     \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
@@ -1151,9 +1134,9 @@ with $\psi \in H^0(d;|L|)$.
     \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\theta - d\psi) =
     \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
 \end{align*}
-Because $\omega_L$ has zero trace on the boundary we can extend it by zero to 
+Because $\omega_L \in \mathring{H}^1(d;|L|)$ we can use 
+Lemma\,\ref{extension_by_zero} extend it by zero to 
 obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
-{\color{red} More details!}
 Because the construction of the operator $\rop$ is local on the stars 
 of the vertices
 (cf. \cite{goldshtein}) we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
