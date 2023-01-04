@@ -377,11 +377,14 @@ and furthermore for the closed and coclosed forms respectively,
     \mathring{H}^k_0(d,\delta). \label{decomposition_coclosed_forms}
 \end{align}
 
+\section{Simplicial topology}
 
 Before we can reformulate the boundary value problem in the language of 
 differential forms we have to 
 introduce some things from simplicial topology. This material is taken from
 \cite{topology_and_geometry} where a lot more details and results can be found.
+
+\subsection{Simplicial complex}
 
 \begin{definition}[Affine simplex]
     Let $x_0$, $x_1$, ..., $x_k \in \real^n$ be affine independent. Then 
@@ -450,8 +453,10 @@ A crucial property of the chain operator is the following.
 \end{proposition}
 \begin{proof}
     This can be proven by direct computation, analogous to 
-    \cite[Chap.4, Lemma 1.6]{topology_and_geometry}
+    \cite[Chap.~4, Lemma~1.6]{topology_and_geometry}
 \end{proof}
+
+\subsection{(Co-)Homology}
 
 We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
 a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
@@ -467,7 +472,7 @@ We can now define the simplicial homology groups of our simplicial complex.
     \end{align*}
 \end{definition}
 \noindent The homology groups are independent of the chosen simplicial complex.
-\cite{}. %%%TBD: Are you sure? Yes. Answer written on 28.11.2022
+\cite[p.248]{topology_and_geometry}. 
 
 
 Let $G$ be any group. Then we define the group 
@@ -531,7 +536,7 @@ $G = \real$ and
 $\text{Ext}(H_{k-1}(K),\real) = 0$. This follows from the fact that 
 $\real$ is a divisible and hence injective abelian group. The definition 
 these terms and the connections used can also be found in 
-\cite[Ch.\,V.6]{topology_and_geometry}. However, we will not dwelve into the 
+\cite[Sec.~V.6]{topology_and_geometry}. However, we will not dwelve into the 
 algebraic background further. We can conclude from the exactness of the 
 above short sequence that $\text{ker}\,\beta = 0$ and 
 $\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
@@ -566,16 +571,19 @@ later to show uniqueness of a solution of the magnetostatic problem.
     \textbf{Proof of (ii)} %TBD: This could be wrong
     Take $[c] \in H_1(K)$ arbitrary. Then there exists  $n \in \integers$ s.t.
     $[c] = n [\gamma]$.
-    Using $\beta$ from \ref{univeral_coefficient_theorem}
+    Using $\beta$ from (\ref{univeral_coefficient_theorem})
     We have
     \begin{align*}
         \beta([F])([c]) = \beta([F])(n [\gamma]) 
-        = n \beta([F])([\gamma]) = n \, F(\gamma) = n \, F(\gamma) = 
+        = n \beta([F])([\gamma]) = n \, F(\gamma) = n \, G(\gamma) = 
         \beta([G])([c])
     \end{align*}
     and thus $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism
     we arrive at $[F] = [G]$.
 \end{proof}
+
+
+\section{Isomorphism of Cohomology}
 
 In order to show existence and uniqueness of solutions of the magnetostatic 
 problem we rely on a result about the isomorphism of a simplicial 
@@ -590,17 +598,6 @@ proved explicitely for smooth manifolds without boundary the results can be
 extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and 
 the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
 to our case.
-
-
-
-
-
-
-
-
-
-
-\section{Isomorphism of Cohomology}
 
 
 % \subsection{Assumptions}
