@@ -71,7 +71,7 @@ where $n$ is the outward normal vector field on $\partial \Omega$ and
 $C_0 \in \real$. We want to prove existence and uniqueness of 
 solutions. In order to do so we will need to introduce Sobolev spaces of 
 differential forms and basics from
-simplicial topology.
+simplicial topology {\color{red} among other things...}
 
 At first, let us introduce some basic notions about differential forms. 
 We follow the brief introduction given by Arnold (cf. \cite[Sec. 6.1]{arnold}), 
@@ -125,9 +125,11 @@ We say that two orthonormal bases of $V$
 have the same orientation if the change of basis has positive determinant. 
 That divides the orthonormal bases into two classes with different orientation.
 We choose one of these classes and call these orthonormal bases positively
-oriented. Take $\omega \in \alternating{n}{V}$. Then 
+oriented. In $\real^n$, the convention is to define the class as 
+positively oriented which includes the standard orthonormal basis.
+Take $\omega \in \alternating{n}{V}$. Then 
 $\omega(b_1,...,b_n)$ is the same for any positively oriented orthornormal
-basis. We now define the \textit{volume form} vol $\in \alternating{n}{v}$ by requiring
+basis. We now define the \textit{volume form} vol $\in \alternating{n}{V}$ by requiring
 it to be $1$ on all positively oriented orthonormal bases. Using this volume 
 form we can now define the \textit{Hodge star operator} 
 $*: \alternating{k}{V} \rightarrow \alternating{n-k}{V}$ via the property 
@@ -159,7 +161,7 @@ we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
 \lVert \omega \rVert _{L_p^k(\Omega)}\vcentcolon=
-\left(\int_\Omega \lVert \omega \rVert _{\text{Alt}^k}^p \right)^{1/p}
+\left(\int_\Omega \lVert \omega(x) \rVert _{\text{Alt}^k}^p \,dx \right)^{1/p}
 \end{align*}
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
 and for $p=\infty$ as
@@ -172,7 +174,7 @@ For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold})
 with the $L_2$ inner product  
 \begin{align}
 \langle \omega, \nu \rangle \vcentcolon= 
-\int_\Omega \langle \omega, \nu \rangle _{\text{Alt}^k}. 
+\int_\Omega \langle \omega(x), \nu(x) \rangle _{\text{Alt}^k} \,dx. 
 \label{def_inner_product}
 \end{align}
 \begin{proposition}
@@ -208,7 +210,7 @@ Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
 W^k_p(\Omega) &= \left\{ \omega \in L^k_p(\Omega)\, | 
     \, d\omega \in L_p^{k+1}(\Omega) \right\}, \\ 
-W^k_{p,loc}(\Omega) &= \left\{ \omega \, k \text{-form} \, | \,
+W^k_{p,loc}(\Omega) &= \left\{ \omega \ k \text{-form} \, | \,
 \omega|_A \in W^k_p(A) \text{ for every open } A \subseteq \Omega 
 \text{ s.t. } \overline{A} \subseteq \Omega \text{ is compact} %TBD: Check that this is right
 \right\}.
@@ -252,55 +254,99 @@ is in the Hilbert space setting equivalent to defining $d$ as the adjoint
 of $\mathring{\delta}$. 
 
 
-% In order to extend $\mathring{\delta}$ as well, we will need the following
-Now we just define $\delta \vcentcolon= (-1)^{n(k-1)+1}*d*$ as in the smooth
-setting. We will show that this is the adjoint of $\mathring{d}$. Denote with
-$D(\mathring{d}^*) \subseteq L_2^{k+1}(\Omega)$ the domain of the adjoint. 
-Define 
+
+In order to extend $\mathring{\delta}$ as well, we will need the following
+
+\begin{definition}[Codifferential operator]
+    Analogous to the smooth case, 
+    we define the \textit{codifferential operator} for any $k$ as an unbounded
+    operator $\delta: L^k_2(\Omega) \rightarrow L^{k-1}_2$ as
+    \begin{align*}
+        \delta \vcentcolon= (-1)^{n(k-1)+1}*d*
+    \end{align*}
+    with domain
+    \begin{align*}
+        D(\delta) = \{ \omega \in L^k_2(\Omega) | \,
+        *\omega \in H^{n-k}(d) \} 
+        =\vcentcolon H^k(\delta; \Omega).
+    \end{align*}
+\end{definition}
+
+\begin{proposition}
+    $\delta = \mathring{d}^*$ i.e. $\delta$ is the adjoint of $\mathring{d}$.
+\end{proposition}
+\begin{proof}
+    Denote with
+    $D(\mathring{d}^*) \subseteq L_2^{k-1}(\Omega)$ the domain of the adjoint.
+    Now take $\omega \in H^k(\delta)$ and $\phi \in 
+    \smoothcompforms{k}{\Omega}$.
+    Then 
+    \begin{align*}
+        &\langle \delta \omega, \phi \rangle = 
+        (-1)^{nk+1} \langle *d* \omega, \phi \rangle \\  
+        &= (-1)^{nk+1} (-1)^{k(n-k)} \langle d* \omega, *\phi \rangle =
+        (-1)^{nk+1} (-1)^{k(n-k)} 
+            \langle * \omega, \mathring{\delta}*\phi \rangle \\
+        &= (-1)^{nk+1} (-1)^{k(n-k)} (-1)^{n(n-k-1)+1}
+            \langle * \omega, *\mathring{d}**\phi \rangle \\
+        &=(-1)^{n(n-1)+2} (-1)^{k(n-k)} \langle \omega, \mathring{d}**\phi \rangle\\
+        &= \langle \omega, \mathring{d}\phi \rangle
+    \end{align*}
+    where we used repeatedly that $*$ is an isometry and 
+    $** = (-1)^{k(n-k)}\text{Id}$. This shows that $H^{k+1}(\delta) \subseteq 
+    D(\mathring{d}^*)$ and that $\mathring{d}^* \omega = \delta \omega$. Now for 
+    the other inclusion assume that $\omega \in D(\mathring{d}^*)$ and take 
+    $\phi \in \smoothcompforms{n-k}{\Omega}$ arbitrary.
+    \begin{align*}
+        \langle *\omega, \mathring{\delta}\phi \rangle = \pm 
+        \langle \omega, \mathring{d}*\phi \rangle = 
+        \pm \langle \mathring{d}^* \omega, *\phi \rangle = 
+        \pm \langle *\mathring{d}^* \omega, \phi \rangle.
+    \end{align*} 
+    Here we use $\pm$ to mean that we choose the sign correctly, s.t. all the
+    operations are correct. Then by choosing the sign appropriately we find that
+    $ \pm *\mathring{d}^* \omega = d*\omega$ and therefore 
+    $*\omega \in H^{n-k-1}(d)$ so we proved $D(\mathring{d}^*) \subseteq 
+    H^{k+1}(\delta)$ and we are done.    
+\end{proof}
+
+In order to deal with the boundary of our domain we introduce Homogeneous
+boundary conditions for these Sobolev spaces of differential forms.
+
+\begin{definition}[Zero boundary condition]
+    We say that $\omega \in H^k(d;\Omega)$ has zero boundary condition if
+    \begin{align*}
+        \langle d\omega,\chi \rangle _{L^{k+1}_2(\Omega)}
+        =  \langle \omega,\delta\chi \rangle _{L^k_2(\Omega)}
+        \quad \forall \chi \in H^{k+1}(\delta;\Omega). 
+    \end{align*}
+    Denote $\mathring{H}^k(d;\Omega) \vcentcolon= \{ \omega \in H^k(d;\Omega)|\,
+    \omega \text{ has zero boundary condition} \}$. 
+\end{definition}
+Of course we should justify why this is a reasonable definition. If $\Omega$ 
+is lipschitz and bounded we have the integration by parts formula 
+(cf. \cite[Thm.~6.3]{arnold})
 \begin{align*}
-    H^k(\delta; \Omega) \vcentcolon= \{ \omega \in L^k_2(\Omega) | \,
-    *\omega \in H^{n-k}(d) \}.
-\end{align*}
-Now take $\omega \in H^{k+1}(\delta)$ and $\phi \in 
-\smoothcompforms{k}{\Omega}$. Then 
-\begin{align*}
-    &\langle \delta \omega, \phi \rangle = 
-    (-1)^{nk+1} \langle *d* \omega, \phi \rangle \\  
-    &= (-1)^{nk+1} (-1)^{k(n-k)} \langle d* \omega, *\phi \rangle =
-    (-1)^{nk+1} (-1)^{k(n-k)} 
-        \langle * \omega, \mathring{\delta}*\phi \rangle \\
-    &= (-1)^{nk+1} (-1)^{k(n-k)} (-1)^{n(n-k-1)+1}
-        \langle * \omega, *\mathring{d}**\phi \rangle \\
-    &=(-1)^{n(n-1)+2} (-1)^{k(n-k)} \langle \omega, \mathring{d}**\phi \rangle\\
-    &= \langle \omega, \mathring{d}\phi \rangle
-\end{align*}
-where we used repeatedly that $*$ is an isometry and 
-$** = (-1)^{k(n-k)}\text{Id}$. This shows that $H^{k+1}(\delta) \subseteq 
-D(\mathring{d}^*)$ and that $\mathring{d}^* \omega = \delta \omega$. Now for 
-the other inclusion assume that $\omega \in D(\mathring{d}^*)$ and take 
-$\phi \in \smoothcompforms{n-k}{\Omega}$ arbitrary.
-\begin{align*}
-    \langle *\omega, \mathring{\delta}\phi \rangle = \pm 
-    \langle \omega, \mathring{d}*\phi \rangle = 
-    \pm \langle \mathring{d}^* \omega, *\phi \rangle = 
-    \pm \langle *\mathring{d}^* \omega, \phi \rangle.
+    \int_\Omega d\omega \wedge \mu 
+    = (-1)^k \int_\Omega \omega \wedge d \mu  + \int_{\partial\Omega} 
+    \text{tr}\,\mu \wedge \text{tr}\,\omega \quad \text{for } \omega \in 
+    H^1\Lambda^k(\Omega),\ \mu \in H^{n-k-1}(d;\Omega)  
 \end{align*} 
-Here we use $\pm$ to mean that we choose the sign correctly, s.t. all the
-operations are correct. Then by choosing the sign appropriately we find that
-$ \pm *\mathring{d}^* \omega = d*\omega$ and therefore 
-$*\omega \in H^{n-k-1}(d)$ so we proved $D(\mathring{d}^*) \subseteq 
-H^{k+1}(\delta)$ and we are done.
+where $H^1\Lambda^k(\Omega)$ are the differential forms with all coefficients
+being in $H^1(\Omega)$ (here we mean just the standard Sobolev space). 
+Let now $\omega \in \mathring{H}^k(d)$. Then if we use
+the integration by parts formula and 
+$\langle d\omega,\mu \rangle_{L^{k+1}(\Omega)} = 
+\langle \omega, \delta \mu \rangle_{L^k(\Omega)}$ we get 
+after some computation using the Hodge star
+\begin{align*}
+    \langle \text{tr}\,\omega, \text{tr}\,*\mu \rangle_{L^{k+1}(\Omega)}
+    = 0 \quad \forall \mu \in H^1\Lambda^k(\Omega)
+\end{align*}
+and thus $\text{tr}\,\omega = 0$ because $H^1\Lambda^k(\Omega)$ is 
+dense in $L^k_2(\Omega)$. 
 
 
-We then define 
-additionally the space $\mathring{H}^k(d;\Omega)$ as the closure of 
-$C_0^\infty \Lambda^k(\Omega) \subseteq H^k(d;\Omega)$ w.r.t. 
-the $H^k(d)$-norm i.e. 
-$\mathring{H}^k(d;\Omega)$ corresponds to $k$-forms in $H^k(d;\Omega)$
-being zero on the boundary. {\color{red} TBD: There are several different 
-ways to characterize zero boundary conditions in the $L^2$ setting. We have
-to choose the one that works best.} % I should probably take Picard's definition
-% because I want to use his Hodge decomposition 
 Then we define the spaces 
 \begin{align*}
     H^k_0(d;\Omega) &\vcentcolon= \{ \omega \in H^k(d;\Omega) 
@@ -751,13 +797,13 @@ induces an isomorphism on the cohomologies i.e.
 $[I]: \mathscr{H}^k(K) \rightarrow H^k(K)$ is an isomorphism of vector 
 spaces (see \cite[p.191]{goldshtein}).
 Also $I: S_p^k(K) \rightarrow C_p^k(K)$ is well defined and induces an
-isomorphism on the respective cohomology spaces as well 
+isomorphism on the respective cohomology spaces as well. Furthermore, 
+$I$ is continuous.
 (see \cite[Thm.\,1]{goldshtein} and the proof thereof).
 
 
 
 \subsection{Isomorphism between cohomologies of S-forms and $L^p$-cohomology}
-
 
 
 The next step is to obtain an isomorphism between the cohomology 
@@ -769,25 +815,69 @@ reasoning as above, we use the restriction operators $j^*_{\sigma,\tau}$ to
 restrict $\omega$ to the simplices. Denote the resulting 
 forms as $\omega(\sigma) \in W^k_{\infty,loc}(\sigma)$. So we obtain an 
 S-form $\{ \omega(\sigma) | \, \sigma \in K \}$. This way we constructed 
-an operator $\varphi: W^k_{\infty,loc}(\omegabar) \rightarrow S^k(K)$. This 
-operator $\varphi$ is an isomorphism \cite[Lemma\,1]{goldshtein}. 
+an operator 
+\begin{align}
+    \varphi: W_{\infty,loc}^k(\omegabar) \rightarrow S^k(K),\ \omega \mapsto 
+    \{ \omega(\sigma) | \, \sigma \in K \} \label{eq:forms_Sforms_isom}
+\end{align}
+This 
+operator $\varphi$ is an isomorphism \cite[Lemma~1]{goldshtein}. 
 To also obtain corresponding forms to the $p$-summable S-forms we simply 
-define $S^k_p(\omegabar) \vcentcolon= \phi^{-1}S^k_p(K)$.
-It can be shown that $S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$ and that the inclusion 
-operator is bounded (\cite[Lemma\,4]{goldshtein}). 
+define $S^k_p(\omegabar) \vcentcolon= \varphi^{-1}S^k_p(K)$.
+It can be shown that $S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$.
+Now if we have some $\omega \in S^k_p(\omegabar)$ then we have can look at 
+two possible norms. From the inclusion we know that 
+$\norm{\omega}{W^k_p(\omegabar)} < \infty$. But we can also use the norm 
+induced by $\varphi$ denoted by 
+\begin{align}
+    \norm{\omega}{S^k_p(\omegabar)} 
+    \vcentcolon= \norm{\varphi \omega}{S^k_p(K)}. \label{eq:induced_norm}
+\end{align}
+Let us briefly show that this is indeed a norm.
+\begin{proposition}
+    Let $K$ be a simplicial complex and $\omegabar = |K|$. 
+    Then $\norm{\cdot}{S^k_p(\omegabar)}$ 
+    is a norm and $\varphi$ as defined at (\ref{eq:forms_Sforms_isom})  
+    is an isometry.
+\end{proposition}
+\begin{proof}
+    Subadditivity and absolute homogeneity follow directly from the linearity 
+    of $\varphi$ and the corresponding property of $\norm{\cdot}{S^k_p(K)}$.
+    For the positive definiteness 
+    \begin{align*}
+        \norm{\omega}{S^k_p(\omegabar)} = 0 
+        \Leftrightarrow \norm{\varphi \omega}{S^k_p(K)}
+        \Leftrightarrow \varphi \omega = 0
+        \stackrel{\varphi \text{ isom.}}{\Leftrightarrow} \omega = 0.
+    \end{align*}
+    $\varphi$ is an isometry by construction.
+\end{proof}
+We then also have that the inclusion operator $\iota: S^k_p(\omegabar) 
+\hookrightarrow W^k_p(\omegabar)$
+is bounded (\cite[Lemma\,4]{goldshtein}). 
+
+\begin{remark}
+    In the paper \cite{goldshtein}, no difference is made between the spaces 
+    $S^k_p(\omegabar)$ and $S^k_p(K)$ because they can be identified with each 
+    other via $\varphi$. However, we will follow the approach from Nowaczyk's 
+    thesis \cite{nowaczyk} to treat them separately because it is more precise 
+    and less confusing.
+\end{remark}
 
 
-Now we also want to go in the other direction i.e. we want to obtain 
-a $\theta \in S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$. This is done 
+Now we also want to introduce a regularization operator in order to 
+obtain 
+a form in $S^k_p(\omegabar)$ from form $W^k_p(\omegabar)$. 
+This is done 
 using two operators $\rop: L^k_{1,loc}(\omegabar) \rightarrow 
 L^k_{1,loc}(\omegabar)$ and $\aop: L^k_{1,loc}(\omegabar) \rightarrow 
 L^{k-1}_{1,loc}(\omegabar)$.
 The precise definition and details of their construction
 are not relevant for our purposes because we will only use
-the some properties that we collect in the following theorem
+some properties that we collect in the following theorem
 (cf. \cite[Thm.2]{goldshtein}).
 
-\begin{theorem}\label{operators}
+\begin{theorem}\label{thm:operators}
     Assume that the triangulation $\tau$ fulfills the GKS-condition.
     Then there exist linear mappings 
     $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
@@ -810,7 +900,7 @@ the some properties that we collect in the following theorem
 \end{theorem}
 
 Let 
-$\iota: S^k_p(M) \hookrightarrow W^k_p(M)$ be the inclusion operator. 
+$\iota: S^k_p(\omegabar) \hookrightarrow W^k_p(\omegabar)$ be the inclusion operator. 
 The inclusion induces an
 isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
 $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
