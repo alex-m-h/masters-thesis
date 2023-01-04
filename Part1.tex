@@ -11,6 +11,7 @@
 \usepackage{faktor}
 \usepackage{mathrsfs}
 \usepackage{mathtools}
+\usepackage{showlabels}
 
 \usepackage{biblatex}
 \addbibresource{bibliography.bib}
@@ -313,7 +314,7 @@ In order to extend $\mathring{\delta}$ as well, we will need the following
 In order to deal with the boundary of our domain we introduce Homogeneous
 boundary conditions for these Sobolev spaces of differential forms.
 
-\begin{definition}[Zero boundary condition]
+\begin{definition}[Zero boundary condition] \label{def:zero_boundary_condition}
     We say that $\omega \in H^k(d;\Omega)$ has zero boundary condition if
     \begin{align*}
         \langle d\omega,\chi \rangle _{L^{k+1}_2(\Omega)}
@@ -545,7 +546,7 @@ $\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
 As an application, we will show the following proposition which will be used
 later to show uniqueness of a solution of the magnetostatic problem.
 
-\begin{proposition}\label{uniqueness_cochain}
+\begin{proposition}\label{prop:uniqueness_cochain}
     Assume that $H_1(K) = \integers [\gamma]$ i.e. the homology class of the 
     closed $1$-chain $\gamma$ is a generator of the first homology group.
     Then we have the following:
@@ -599,12 +600,9 @@ extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and
 the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
 to our case.
 
+In this section, we will summarize the essential parts of \cite{goldshtein}
+which will be needed later on. 
 
-% \subsection{Assumptions}
-% In order to formulate the assumptions necessary for the result from 
-% \cite{goldshtein} to work we will define some basic things from 
-% simplicial topology theory. More details and references can be found in 
-% \cite[Chapter 4.21]{topology_and_geometry}.
 Before we state the theorem about the isomorphism of we will first formulate 
 a crucial assumption for this result to hold.
 
@@ -689,10 +687,6 @@ and analogously
 %%% TBD: Give more details and interpretation
 
 \subsection{S-forms}
-From now on we will assume that the GKS condition is fulfilled.
-% The isomorphism of the cohomology spaces from \cite{goldshtein} uses several
-% mappings between different cohomology spaces. 
-
 \begin{definition}[Induced map]
     Let $V$ and $W$ be real vector spaces, $X \subseteq V$, $Y \subseteq W$ be 
     subspaces. For a linear map $L: V \rightarrow W$ with $L(X) \subseteq Y$ 
@@ -708,7 +702,8 @@ definition of quotient space. %% Proven on the 27.11.2022
 
 The first isomorphism is induced from a linear mapping
 from the so called \textit{S-forms} 
-$S_p^k(K)$ to \textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
+$S_p^k(K)$ to 
+\textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
 be defined next.
 
 \begin{definition}
@@ -716,22 +711,23 @@ be defined next.
     \begin{align*}
     \norm{f}{C_p^k(K)} \vcentcolon= 
     \left( \sum\limits_{c \, k\text{-chain}} |f(c)|^p \right)^{1/p}.
-    \end{align*}
+    \end{align*} % TBD: Define K^(k), this is a convenient notation
     and the space of \textit{p-summable k-cochains}
     \begin{align*}
-    C_p^k(K) \vcentcolon= \{f \, k\text{-cochain} | \,  
+    C_p^k(K) \vcentcolon= \{f \in C^k(K) | \,  
     \norm{f}{C_p^k(K)} < \infty \}.
     \end{align*}
 \end{definition}
 Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
 $\tau < \sigma$. We need a restriction operator 
 $j^*_{\tau,\sigma}:W_{\infty,loc}^k(\sigma) \rightarrow W_{\infty,loc}^k(\tau)$.
-This is done by extending a $\omega \in W_{\infty,loc}^k(\sigma)$ first 
+This is done by extending $\omega \in W_{\infty,loc}^k(\sigma)$ first 
 to some $\tilde{\omega}\in W_{\infty,loc}^k(U)$ with 
 $U$ an open neighborhood of $\sigma$ in the affine hull of $\sigma$. Then 
 $\tau \subseteq U$ and we apply a restriction operator $j^*_{\tau,U}$
 and define $j^*_{\tau,\sigma} \omega \vcentcolon= j^*_{\tau,U}\tilde{\omega}$. 
-This restriction is then well defined, bounded and independent of the chosen 
+This restriction operator is then well defined, 
+bounded and independent of the chosen 
 extension $\tilde{\omega}$ (cf. \cite[p.191]{goldshtein}). It should be 
 emphasized that this restriction only works for $W^k_\infty$ and fails for 
 $W^k_p$, $p<\infty$. 
@@ -741,8 +737,9 @@ $W^k_p$, $p<\infty$.
     \begin{align*}
     \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
     \end{align*}
-    be a collection of differential $k$-forms. We call $\theta$ S-form of degree
-    $k$ if we have for all simplices
+    be a collection of differential $k$-forms. We call $\theta$ \textit{S-form 
+    of degree
+    $k$} if we have for all simplices
     $\mu <\sigma$ 
     \begin{align*}
     j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
@@ -750,7 +747,7 @@ $W^k_p$, $p<\infty$.
     We denote with $S^k(K)$ the space of all S-forms of degree $k$ 
     over the chain complex $K$. 
     For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
-    \sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
+    \,\sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
     % TBD: Did i define what a cochain complex is?
 \end{definition}
 For $\theta \in S^k(K)$ we now define the norm
@@ -847,13 +844,13 @@ Let us briefly show that this is indeed a norm.
         \Leftrightarrow \varphi \omega = 0
         \stackrel{\varphi \text{ isom.}}{\Leftrightarrow} \omega = 0.
     \end{align*}
-    $\varphi$ is an isometry by construction.
+    $\varphi$ is an isometry by construction of the norm.
 \end{proof}
 We then also have that the inclusion operator $\iota: S^k_p(\omegabar) 
 \hookrightarrow W^k_p(\omegabar)$
 is bounded (\cite[Lemma\,4]{goldshtein}). 
 
-\begin{remark}
+\begin{remark} \label{rem:local_construction_regularization}
     In the paper \cite{goldshtein}, no difference is made between the spaces 
     $S^k_p(\omegabar)$ and $S^k_p(K)$ because they can be identified with each 
     other via $\varphi$. However, we will follow the approach from Nowaczyk's 
@@ -869,13 +866,13 @@ This is done
 using two operators $\rop: L^k_{1,loc}(\omegabar) \rightarrow 
 L^k_{1,loc}(\omegabar)$ and $\aop: L^k_{1,loc}(\omegabar) \rightarrow 
 L^{k-1}_{1,loc}(\omegabar)$.
-The precise definition and details of their construction
-are not relevant for our purposes because we will only use
+We will not go over their construction but instead we will only use
 some properties that we collect in the following theorem
 (cf. \cite[Thm.2]{goldshtein}).
 
 \begin{theorem}\label{thm:operators}
-    Assume that the triangulation $\tau$ fulfills the GKS-condition.
+    Assume that the triangulation $\tau$ fulfills the GKS-condition 
+    defined at Def.~\ref{def:GKS_condition}.
     Then there exist linear mappings 
     $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
     L^k_{1,loc}(\omegabar)$, $\mathscr{A}: L^k_{1,loc}(\omegabar) 
@@ -892,7 +889,10 @@ some properties that we collect in the following theorem
             $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$ and
             $\aop(S^k_p(\omegabar)) \subseteq S^{k-1}_p(\omegabar)$
         \item $\rop: W^k_p(\omegabar) \rightarrow 
-            (S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ is bounded.
+            (S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ is bounded (here
+            we mean with $(S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ 
+            the space $S^k_p(\omegabar)$ endowed with the norm 
+            $\norm{\cdot}{S^k_p(\omegabar)}$))
     \end{enumerate}
 \end{theorem}
 
@@ -907,14 +907,13 @@ $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism.
     Let $L \subseteq K$ be a full-dimensional %TBD: Define that
     simplicial subcomplex. Let $\rop_L$ be the regularization operator 
     constructed for this simplicial subcomplex. The construction of the
-    regularization operator is done locally on the stars of the vertices. 
+    regularization operator is done locally on the stars of the vertices. %TBD: Define stars
     Therefore if we now look at a vertex $x_i \in L$ s.t. its star 
     $\Sigma_i$ does not include any boundary vertices of $L$ then we have 
     $\rop \omega = \rop_L(\omega|_{|L|})$ for any $\omega \in W^k_{1,loc}(|K|)$
     if we choose the ordering of the vertices appropriately.
     We will not prove this because it would require to go over the construction
-    of the operator which we want to avoid as it involves several steps 
-    and is quite technical. Thus, 
+    of the operator which we want to avoid as it is quite technical. Thus, 
     we refer to \cite[Sec.\,2]{goldshtein} for further details.
 \end{remark}
 
@@ -960,6 +959,7 @@ $[\iota]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism.
 
 We will return now to the magnetostatic problem. In order to use the results
 above we will reformulate the problem in the notation of differential forms.
+From now on we assume $n=3$ i.e. we are in three dimensional space.
 There are two ways to identify a vector field with a differential form 
 (cf. \cite[Table 6.1 and p.70]{arnold}) either as a 1-form or a 2-form. 
 For a vector field $B$ we define
@@ -984,15 +984,16 @@ the integral condition for
     d\omega  &= 0 \text{ in } \Omega.
 \end{align}
 Next, we have to add the integral condition. 
-We use that we are in three dimensions so
-$**=(-1)^{k(n-k)}\tilde{\nu} = \tilde{\nu}$ \cite[p.66]{arnold} for any
-$k$-form $\tilde{\nu}$.
+We remind the reader that we are in three dimensions so
+$**= \text{Id}$ 
 and observe
 \begin{align*}
     *F^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
         = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
     &= F^1 \, B.
 \end{align*}
+{\color{red}: Actually, we already use the Hodge star to define the vector 
+proxies. So of course the vector proxy of the Hodge star will be the same.}
 Then we have 
 \begin{align*}
     \int_\gamma * F^2\, B = \int_\gamma F   ^1\, B = \int_\gamma B \cdot \text{d}l.
@@ -1006,7 +1007,7 @@ curve is equivalent to the curve integral of the associated vector field
 However, we have  only $\omega \in \mathring{H}_0^2(d,\delta)$ so 
 $*\omega \in H^1(d)$ so this integral might not be well defined. In order 
 to deal with this, we will again use the operator $\rop$ from 
-Sec.\,\ref{sec_isomorphism_cohomology}. 
+Sec.\,\ref{sec:isomorphism_cohomology}. 
 
 We know from Thm.~\ref{thm:operators} that $\rop *\omega \in S^1_2(\omegabar)$.
 Using the operator $\varphi$ from \ref{eq:} we obtain 
@@ -1020,7 +1021,8 @@ let us replace the integral condition (\ref{eq:integral_condition}) with
 
 Of course, we have to justify why this is reasonable. 
 So let us take $\eta \in S^1_2(\omegabar)$. That means we can integrate it 
-directly. Let us also assume that $\eta$ is closed and 
+directly using the definition from \ref{}. 
+Let us also assume that $\eta$ is closed and 
 $\int_\gamma \eta = C_0$. %TBD: Define the integral on S^k_p(\omegabar)
 Then we know from Thm.~\ref{thm:operators}
 \begin{align*}
@@ -1090,7 +1092,7 @@ uniqueness of this problem in the next section.
 %     $\lambda_F = \lambda_G$ i.e. $[F] = [G]$.
 % \end{proof}
 
-From now on we assume $n=3$ i.e. we are in three dimensional space.
+
 We start with the following
 
 \begin{proposition}\label{integral_exact_form_zero}
@@ -1116,7 +1118,8 @@ We start with the following
     Because 
     $[\bar{I}]$ is an isomorphism of cohomology $\bar{I}$ has to send 
     exact forms to exact cochains. Because $\gamma$ is a closed $1$-chain 
-    we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$.
+    we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$. Because
+    $\rop$, $\phi$ and $I$ are all bounded
     $\bar{I}$ is a continuous operator \ref{} and so we have 
     $\bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) = 
     \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i)$ with the limit of 
@@ -1190,11 +1193,11 @@ We start with the following
 \end{proof}
 
 \begin{lemma}\label{lem:extension_by_zero}
-    Let $\Omega, U$ be open and $U \subseteq \Omega$. 
+    Let $\Omega$, $U$ be open and $U \subseteq \Omega$. 
     Let $\nu \in \mathring{H}^k(d;U)$. Define $\bar{\nu}$ as the 
     zero extension of $\nu$ in $\Omega \setminus U$. 
     Then $\bar{\nu} \in \mathring{H}^k(d;\Omega)$ and 
-    $d\bar{\nu} = d\nu$ in $U$ and zero in $\Omega \setminus U$.
+    $d\bar{\nu} = d\nu$ in $U$ and $d\bar{\nu} = 0$ in $\Omega \setminus U$.
 \end{lemma}
 \begin{proof}
     The proof works exactly as in the standard Sobolev case. 
@@ -1212,12 +1215,14 @@ We start with the following
     $\bar{\nu}$ and $\bar{\nu}'$ are zero in $\Omega \setminus U$. 
 
     Otherwise, we recognize $\varphi |_U \in C_c^\infty \Lambda^{k+1}(U)$. 
-    Thus we get from the definition of the zero boundary condition \ref{}
+    %Did I define that space?
+    Thus we get from the definition of the zero boundary condition 
+    (Def.~\ref{def:zero_boundary_condition})
     \begin{align*}
         \langle \bar{\nu}, \delta \varphi \rangle_{L^k_2(\Omega)}
         = \langle \nu, \delta \varphi \rangle_{L^k_2(U)}
-        = \langle d\nu, \varphi \rangle_{L^k_2(U)}
-        = \langle \bar{\nu}', \varphi \rangle_{L^k_2(\Omega)}.
+        = \langle d\nu, \varphi \rangle_{L^{k+1}_2(U)}
+        = \langle \bar{\nu}', \varphi \rangle_{L^{k+1}_2(\Omega)}.
     \end{align*}
     Thus, $\bar{\nu}' = d\bar{\nu}$. Because $d\nu \in L^{k+1}_2(U)$,
     $d\bar{\nu} \in L^{k+1}_2(\Omega)$ and the lemma is proven.
@@ -1228,17 +1233,24 @@ simplicial subcomplex s.t. $\gamma \in C_1(L)$ and the star of
 every vertex from $\gamma$ does not touch the boundary of $L$. 
 We also require that $H_1(L) = \integers [\gamma]$.
 Let $\rop_L$ be 
-the regularization operator from Thm.\,\ref{operators}, but now constructed for
+the regularization operator from Thm.\,\ref{thm:operators}, but now constructed for
 $L$ instead of $K$.
 
-We know from \ref{uniqueness_cochain} that a closed cochain $F \in C^1(L)$ 
+We know from Prop.~\ref{prop:uniqueness_cochain} 
+that a closed cochain $F \in C^1(L)$ 
 exists s.t. $F(\gamma) = C_0$. 
 We know from \ref{} that $[I]: \mathscr{H}^1(L) \rightarrow H^1(L)$ is a 
-isomorphism. Thus we find a $\theta \in S^1(L)$ s.t. $[I(\theta)] = [F]$
-i.e. $I(\theta) = F + \delta J$ for some $J\in C^0(L)$. Thus 
-$I(\theta) = F(\gamma) + (\delta J)(\gamma) \stackrel{\gamma \text{ closed}}{=} 
+isomorphism. Thus we find a $\tilde{\theta} \in S^1(L)$ s.t. 
+$[I(\tilde{\theta})] = [F]$
+i.e. $I(\tilde{\theta}) = F + \delta J$ for some $J\in C^0(L)$. Thus 
+$I(\tilde{\theta}) = F(\gamma) + (\delta J)(\gamma) 
+\stackrel{\gamma \text{ closed}}{=} 
 F(\gamma) = C_0$.
 
+Because $L$ is a finite simplicial complex every cochain is $2$-summable 
+i.e. $\tilde{\theta} \in S^1_2(L)$. 
+Continue by defining $\theta \vcentcolon= \phi^{-1}\tilde{\theta}
+\in S_2^1(|L|) \subseteq W^1_2(|L|)$.
 By our definition of integration \ref{}
 we have then $I(\theta) = C_0$ and due to Lemma \ref{} 
 \begin{align*}
@@ -1251,23 +1263,29 @@ to obtain $\omega_L \in \mathring{H}^1_0(d,\delta;|L|)$ with
 \begin{align*}
     \omega_L = \theta_L - d\psi
 \end{align*}
-with $\psi \in H^0(d;|L|)$. 
+with $\psi \in H^0(d;|L|)$. {\color{red} We need here that $d$ and $\delta$ 
+have closed range on bounded domains!}
 \begin{align*}
-    \int_\gamma \rop_L \omega_L = \int_\gamma \rop_L (\theta - d\psi) =
-    \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
+    \int_\gamma \rop_L \omega_L 
+    = \int_\gamma \rop_L (\theta - d\psi) 
+    \stackrel{d\rop_L = \rop_L d}{=}\int_\gamma \rop_L \theta 
+    = \int_\gamma \theta = C_0.
 \end{align*}
 Because $\omega_L \in \mathring{H}^1(d;|L|)$ we can use 
 Lemma~\ref{lem:extension_by_zero} extend it by zero to 
-obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed. 
+obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed {\color{red} Here we 
+definitely need $|L|$ open.} 
 Because the construction of the operator $\rop$ is local on the stars 
 of the vertices
-(cf. \cite{goldshtein}) we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
+(cf. Remark~\ref{rem:local_construction_regularization}) 
+we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
 every simplex attached to $\gamma$ because $\rop_L$ and $\rop$ are constructed
 in the same manner. Therefore 
 $\int_\gamma \rop_L \omega_L = \int_\gamma \rop \bar{\omega}_L = C_0$. 
 Now we project $*\bar{\omega}_L$ onto harmonic forms to get 
 $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Because the domain $\Omega$
-is unbounded the image of $d$ and $\delta$ are not closed anymore. So we 
+is unbounded the image of $d$ and $\delta$ are not closed anymore. So because 
+$*\bar{\omega}_L$ is co-closed we 
 obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
 \begin{align*}
     *\bar{\omega}_L = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i.
@@ -1298,7 +1316,7 @@ and not related to differential forms).
 
 \begin{lemma}
     Let $\phi \in L^2_{loc}(\Omega)$ with $\nabla \phi \in L^2(\Omega)$. Then 
-    there exists a sequence $(\phi_l)_{i \in \naturalnum} \subseteq H^1(\Omega)$
+    there exists a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^1(\Omega)$
     s.t. $\nabla \phi_i \rightarrow \nabla \phi$ in $L^2(\Omega)^3$.
 \end{lemma}
 \begin{proof}
@@ -1316,7 +1334,7 @@ and not related to differential forms).
         E\phi & \mbox{in $\Omega^c$.}\\
     \end{cases}
     \end{align*}
-    Then $\phi \in L^2_{loc}(\real^3)$ and 
+    Then $\bar{\phi} \in L^2_{loc}(\real^3)$ and 
     $\nabla \bar{\phi} \in L^2(\real^3)^3$. 
     Then there exists a sequence $(\phi_l) _{l \in \naturalnum}$ s.t.
     $\nabla \phi_l \rightarrow \nabla \bar{\phi}$ in $L^2(\real^3)^3$ 
@@ -1405,16 +1423,17 @@ and not related to differential forms).
     $I(\rop * \omega), I(\rop * \tilde{\omega}) \in C^1_2(K)$ 
     are closed $1$-cochains with
     $I(\rop * \omega)(\gamma) = I(\rop * \tilde{\omega})(\gamma)$. 
-    Thus Prop.\,\ref{uniqueness_cochain} implies 
+    Thus Prop.\,\ref{prop:uniqueness_cochain} implies 
     $[I(\rop * \omega)] = [I(\rop * \tilde{\omega})] \in H^1(K;\real)$.
-    Now we use the Whitney transformation. We know that $[I]$ and $[w]$ are 
+    Now we use the Whitney transformation. {\color{red} No we dont.} 
+    We know that $[I]$ and $[w]$ are 
     inverses on cohomology from \ref{}. That means we get 
     \begin{align*}
         [\varphi \rop *\omega] = [wI\varphi \rop *\omega] 
         = [wI\varphi \rop *\tilde{\omega}] = [\varphi \rop *\tilde{\omega}].
     \end{align*}
     Here the cohomology classes are in the cohomology spaces of S-forms 
-    $\mathscr{H}^1_2(K)$. That means there is a S-form $\theta \in S^0(K)$ s.t.
+    $\mathscr{H}^1(K)$. That means there is a S-form $\theta \in S^0(K)$ s.t.
     \begin{align*}
         &\varphi \rop *\omega - \varphi \rop *\omega = d\theta \\ 
         &\Rightarrow \rop *\omega -  \rop *\omega = \varphi^{-1} d\theta 
