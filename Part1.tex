@@ -80,24 +80,40 @@ but less details will be given.
 
 \subsection{Alternating maps}
 
-Let $V$ be a real vector space with $\text{dim}\,V = n$ 
-    and $\text{Alt}^k\,V$ be the 
-space of $k$-alternating maps from $V^k$ to $\real$. For $\omega \in 
+Let $V$ be a real vector space with $\text{dim}\,V = n$.
+Then $k$-linear maps are of the form
+\begin{align*}
+    \omega: \underbrace{V \times V \times ... \times V}_{k \text{ times}}
+    \rightarrow \real
+\end{align*}
+that are linear in every component. We call a $k$-linear form 
+\textit{alternating} if the sign switches when two arguments are exchanged i.e.
+\begin{align*}
+    \omega(v_1,...,v_i,...,v_j,...,v_k)
+    = - \omega(v_1,...,v_j,...,v_i,...,v_k), \text{ for } 1\leq i < j \leq k,
+    \quad v_1,...,v_k \in V.
+\end{align*}
+Denote the space of alternating maps by $\text{Alt}^k\,V$.
+
+For $\omega \in 
 \alternating{k}{V}$, $\mu \in 
 \alternating{l}{V}$ we define the wedge product $\omega \wedge \mu \in 
 \alternating{k+l}{V}$ 
 \begin{align*}
     (\omega \wedge \mu) (v_1,...,v_k,v_{k+1},...,v_{k+l}) =
-    \sum\limits_{\substack{i_1 < ... < i_k \\ i_{k+1} < ... < i_{k+l}}}
-    \text{sgn}(i_1,...,i_{k+l}) \omega(v_{i_1},...,v_{i_k}) 
-    \nu(v_{i_{k+1}},...,v_{i_{k+l}})
+    \sum\limits_\pi
+    \text{sgn}(\pi) \omega(v_{\pi(1)},...,v_{\pi(k)}) 
+    \nu(v_{\pi(k+1)},...,v_{\pi(k+l)})
 \end{align*}
-where $\text{sgn}(i_1,...,i_{k+l})$ is the sign of the permutation 
-$(1,...,k+l) \mapsto (i_1,...,i_{k+l})$. This definition is not very intuitive.
+where we sum over all permutations 
+$\pi: \{1,...,k+l\} \rightarrow \{1,...,k+l\}$ 
+s.t. $\pi(1) < ... < \pi(k)$ and $\pi(k+1) < ... < \pi(k+l)$.
+This definition is not very intuitive.
 {\color{red} TBD: Examples in 3D}.
 
 Let $\{ u_i\}_{i=1}^n$ be any basis of $V$ and $\{ u^i\}_{i=1}^n$ the 
-correspoding dual basis. Then 
+correspoding dual basis i.e. 
+$u^i:V \rightarrow \real$, $u^i(u_j) = \delta_{ij}$. Then 
 \begin{align*}
     \{u^{i_1} \wedge u^{i_2} \wedge ... \wedge u^{i_k} | \, 
     1 \leq i_1 < ... < i_k \leq n \}
@@ -116,12 +132,13 @@ product on $\alternating{k}{V}$ by defining
 which is then extended to all of $\alternating{k}{V}$ by linearity. 
 We denote with $\lVert \cdot \rVert _\alternating{k}{V}$ the induced norm.
 From this definition it follows directly that for a orthonormal basis 
-$b_1$,..., $b_n$ the corresponding basis 
+$b_1$, ..., $b_n$ the corresponding basis 
 $b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}$, 
 $1\leq i_1 < ... < i_k \leq n$ is an orthonormal basis of $\alternating{k}{V}$.
 
 
-$\alternating{n}{V}$ is one-dimensional and so we have to choose a basis.
+$\alternating{n}{V}$ is one-dimensional and so can choose a basis by fixing 
+a specific non-zero element.
 We say that two orthonormal bases of $V$ 
 have the same orientation if the change of basis has positive determinant. 
 That divides the orthonormal bases into two classes with different orientation.
@@ -130,31 +147,103 @@ oriented. In $\real^n$, the convention is to define the class as
 positively oriented which includes the standard orthonormal basis.
 Take $\omega \in \alternating{n}{V}$. Then 
 $\omega(b_1,...,b_n)$ is the same for any positively oriented orthornormal
-basis. We now define the \textit{volume form} vol $\in \alternating{n}{V}$ by requiring
+basis. We now define the 
+\textit{volume form} vol $\in \alternating{n}{V}$ by requiring
 it to be $1$ on all positively oriented orthonormal bases. Using this volume 
 form we can now define the \textit{Hodge star operator} 
-$*: \alternating{k}{V} \rightarrow \alternating{n-k}{V}$ via the property 
+$\star: \alternating{k}{V} \rightarrow \alternating{n-k}{V}$ via the property 
 \begin{align*}
-    \omega \wedge \mu = \langle *\omega, \mu \rangle_{\alternating{n-k}{V}} 
+    \omega \wedge \mu = \langle \star\omega, \mu \rangle_{\alternating{n-k}{V}} 
     \text{vol}
     \quad \forall \omega \in \alternating{k}{V} , \, 
     \mu \in \alternating{n-k}{V}.
 \end{align*}
-The Hodge star is an isometry, we have $** = (-1)^{k(n-k)}\text{Id}$ and 
+The Hodge star is an isometry, we have $\star\star = (-1)^{k(n-k)}\text{Id}$ and 
 \begin{align*}
-    \omega \wedge *\mu = \langle \omega, \mu \rangle_{\alternating{k}{V}} 
+    \omega \wedge \star\mu = \langle \omega, \mu \rangle_{\alternating{k}{V}} 
     \text{vol} \quad \forall \omega, \mu \in \alternating{k}{V}.
 \end{align*}
-In particular in $\real^3$, we have $** = \text{Id}$ i.e. $*$ is self-inverse.
+In particular in $\real^3$, we have 
+$\star\star = \text{Id}$ i.e. $\star$ is self-inverse.
 
 
-Now we will move on to differential forms. We will mostly deal with the
-case $V = \real^n$ and denote $\text{Alt}^k\,\real^n$ just as $\text{Alt}^k$.
-Let $\Omega \subseteq \real^n$ be a Lipschitz domain and denote the space 
-of differential forms of degree $k$ on $\Omega$ as $\Lambda^k(\Omega)$.
-We extend the Hodge star operator to differential forms 
-$*: \Lambda^k(\Omega) \rightarrow \Lambda^{n-k}(\Omega)$ simply by applying it 
-pointwise.
+$\alternating{0}{V}$ is just $\real$ by definition. So the Hodge star 
+now gives us a natural isomorphism from $\alternating{n}{V} \rightarrow \real$.
+We call the real number that is associated with an element of 
+$\alternating{n}{V}$ \textit{scalar proxy}. Similarly we have that 
+$\alternating{1}{V} = V'$, the usual dual space of $V$. Because $V$ is 
+finite-dimensional we know that $V \cong V'$ using the Riesz representation.
+Then with the help of the Hodge star we obtain a natural isomorphism 
+from $\alternating{n-1}{V} \rightarrow V$. We call the vector corresponding
+to a $1$- or $(n-1)$-alternating map \textit{vector proxy}. 
+
+Note that for $n=2$ the situation 
+is slightly ambiguous, see \cite[p.67]{arnold}. But this case will not be
+relevant in this thesis.
+
+
+Let us take a closer look at the case of $V= \real^3$ with the standard basis
+vectors $e_1$, $e_2$ and $e_3$. Denote the resulting elements 
+of the dual basis with $dx^i$. Then for some $v\in V$ we get the 
+corresponding $1$-alternating map $v_1 \, dx^1 + v_2 \, dx^2 + v_3 \, dx^3 \in 
+\text{Alt}^1$ and the $2$-alternating map
+$v_1\, dx^2 \wedge dx^3 - v_2 \,dx^1 \wedge dx^3 + v_3 \,dx^1 \wedge dx^2 \in 
+\text{Alt}^1$. For the scalar proxies, take $c \in \real$. Then 
+$c \in \text{Alt}^0$ of course and because 
+we have $\text{vol} = dx^1\wedge dx^2\wedge dx^3$ we get the corresponding 
+$c \, dx^1\wedge dx^2\wedge dx^3 \in \text{Alt}^3$.
+
+
+We can now use this relation to investigate the meaning of the wedge product
+for vector proxies. Let us denote $\Phi^k$ as the isomorphism to the
+$k$-alternating map with this scalar or vector as proxy. 
+Let $v, w \in  \real^3$. Then 
+\begin{align*}
+    &\Phi^1 v \wedge \Phi^1 w = \Phi^2 (v\times w) \text{ and} \\
+    &\Phi^1 v \wedge \Phi^2 w = \Phi^3 (v \cdot w).
+\end{align*}
+Note that for a $0$-alternating map (i.e. a scalar) 
+the wedge product is nothing but the vector-scalar multiplication.
+
+So in 3 dimensions, we can always relate the operations of differential forms
+to the operations of the corresponding proxies. 
+
+
+\subsection{Differential forms}
+
+
+Now we will move on to differential forms on a smooth, oriented, Riemannian 
+manifold $M$ of dimension $n$ 
+with or without boundary. We denote the Riemmanian metric by $g$.
+%TBD: Lipschitz
+Let $p \in M$ and $T_p M$ be the tangent space at the point $p$. 
+Due to our assumptions on $M$, this is an oriented inner product space of 
+dimension $n$ and we can apply 
+all of the constructions from the previous chapter
+{\color{red} Are you sure?}
+%TBD: What is that exactly?
+Then a differential $k$-form (or just $k$-form) $\omega$ maps any 
+such point $p$ to $\omega_p \in \alternating{k}{T_p M}$. In the special case 
+of a domain $\Omega$ in $\real^n$ we 
+have the tangent space $T_x \Omega \cong \real^n$. Using this identifcation 
+$\omega_x \in \text{Alt}^k$ and we have $a_{i_1,i_2,...,i_k}: 
+\Omega \rightarrow \real$ for $1\leq i_1 < ... < i_k \leq n$ and 
+\begin{align*}
+    \omega_x = \sum\limits_{1\leq i_1 < ... < i_k \leq n} a_{i_1,i_2,...,i_k}
+    dx^{i_1}\wedge ... \wedge dx^{i_k}.
+\end{align*}
+We denote the space of differential forms on $M$ as $\Lambda^k M$.
+
+We define the Hodge star operator to differential forms 
+$\star: \Lambda^k(\Omega) \rightarrow \Lambda^{n-k}(\Omega)$ simply by applying it 
+pointwise. In order for 
+the Hodge star to be well-defined the assumption of an orientation on our 
+manifold is crucial. We do the same for the exterior product to get
+$\wedge: \Lambda^k \times \Lambda^l \rightarrow \Lambda^{k+l}$. 
+
+
+
+
 
 
 Then
@@ -174,17 +263,18 @@ s.t. the corresponding $L_p$-norm is finite.
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
 with the $L_2$ inner product  
 \begin{align}
-\langle \omega, \nu \rangle \vcentcolon= 
-\int_\Omega \langle \omega(x), \nu(x) \rangle _{\text{Alt}^k} \,dx. 
-\label{def_inner_product}
+    \langle \omega, \nu \rangle \vcentcolon= 
+    \int_\Omega \langle \omega(x), \nu(x) \rangle _{\text{Alt}^k} \,dx
+    = \int_\Omega \omega \wedge \star \nu
+    \label{eq:def_inner_product} 
 \end{align}
 \begin{proposition}
-    The Hodge star operator $*:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
+    The Hodge star operator $\star:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
     Hilbert space isometry.
 \end{proposition}
 \begin{proof}
     This follows directly from the definition of the inner product 
-    (\refeq{def_inner_product}) and the fact that $*$ is an isometry 
+    (\refeq{eq:def_inner_product}) and the fact that $\star$ is an isometry 
     when applied to alternating forms $\text{Alt}^k$.
 \end{proof}
 
@@ -195,31 +285,38 @@ Let $\mathring{d}: L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$ be the exterior
 derivative as an unbounded operator with domain 
 $D(\mathring{d}) = \smoothcompforms{k}{\Omega}$ 
 which are the smooth compactly supported differential forms of degree $k$. 
+
+Note that when we talk about smoothness or regularity of differential forms we
+always mean the regularity of the coefficents when the form is expressed 
+via local charts. 
+
 Analogous, let 
 $\mathring{\delta}: L^k_2(\Omega) \rightarrow L^{k-1}_2(\Omega)$ be the 
 codifferential operator $\mathring{\delta} \vcentcolon= 
-(-1)^{n(k-1)+1}*\mathring{d}*$ also with domain $\smoothcompforms{k}{\Omega}$.
+(-1)^{n(k-1)+1}\star\mathring{d}\star$ 
+also with domain $\smoothcompforms{k}{\Omega}$. 
 
-Then the exterior derivative $ d\omega \in L^p_{k+1}(\Omega)$ is defined as
-the unique $(k+1)$-form in $L^p_{k+1}(\Omega)$ s.t. 
+Then the exterior derivative $ d\omega \in L^{k+1}_p(\Omega)$ is defined as
+the unique $(k+1)$-form in $L^{k+1}_p(\Omega)$ s.t. 
 \begin{align*}
-\int_\Omega d\omega \wedge *\phi = \int_\Omega \omega \wedge 
-*\mathring{\delta}\phi
+\int_\Omega d\omega \wedge \star\phi = \int_\Omega \omega \wedge 
+\star\mathring{\delta}\phi
 \quad \forall \phi \in C_0^\infty \Lambda^{k}(\Omega).
 \end{align*}
 Just as in the usual Sobolev setting we define the following spaces:
 \begin{align*}
-W^k_p(\Omega) &= \left\{ \omega \in L^k_p(\Omega)\, | 
-    \, d\omega \in L_p^{k+1}(\Omega) \right\}, \\ 
-W^k_{p,loc}(\Omega) &= \left\{ \omega \ k \text{-form} \, | \,
+W^k_p(\Omega) &= \left\{ \omega \in L^k_p(\Omega) \mid 
+     d\omega \in L_p^{k+1}(\Omega) \right\}, \\ 
+W^k_{p,loc}(\Omega) &= \left\{ \omega \ k \text{-form} \mid 
 \omega|_A \in W^k_p(A) \text{ for every open } A \subseteq \Omega 
 \text{ s.t. } \overline{A} \subseteq \Omega \text{ is compact} %TBD: Check that this is right
 \right\}.
 \end{align*}
 For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm 
 \begin{align*}
-\lVert \omega \rVert _{W^k_p} &\vcentcolon= 
-\left( \norm{\omega}{L^k_p}^p + \norm{d\omega}{L^k_p}^p \right)^{1/p}
+\lVert \omega \rVert _{W^k_p(\Omega)} &\vcentcolon= 
+\left( \norm{\omega}{L^k_p(\Omega)}^p 
+    + \norm{d\omega}{L^k_p(\Omega)}^p \right)^{1/p}
 \end{align*}
 and for $p=\infty$
 \begin{align*}
@@ -263,12 +360,12 @@ In order to extend $\mathring{\delta}$ as well, we will need the following
     we define the \textit{codifferential operator} for any $k$ as an unbounded
     operator $\delta: L^k_2(\Omega) \rightarrow L^{k-1}_2$ as
     \begin{align*}
-        \delta \vcentcolon= (-1)^{n(k-1)+1}*d*
+        \delta \vcentcolon= (-1)^{n(k-1)+1}\star d\,\star
     \end{align*}
     with domain
     \begin{align*}
         D(\delta) = \{ \omega \in L^k_2(\Omega) | \,
-        *\omega \in H^{n-k}(d) \} 
+        \star\omega \in H^{n-k}(d) \} 
         =\vcentcolon H^k(\delta; \Omega).
     \end{align*}
 \end{definition}
@@ -284,30 +381,32 @@ In order to extend $\mathring{\delta}$ as well, we will need the following
     Then 
     \begin{align*}
         &\langle \delta \omega, \phi \rangle = 
-        (-1)^{nk+1} \langle *d* \omega, \phi \rangle \\  
-        &= (-1)^{nk+1} (-1)^{k(n-k)} \langle d* \omega, *\phi \rangle =
+        (-1)^{nk+1} \langle \star d\star \omega, \phi \rangle \\  
+        &= (-1)^{nk+1} (-1)^{k(n-k)} \langle d\star \omega, \star\phi \rangle =
         (-1)^{nk+1} (-1)^{k(n-k)} 
-            \langle * \omega, \mathring{\delta}*\phi \rangle \\
+            \langle \star \omega, \mathring{\delta}\star\phi \rangle \\
         &= (-1)^{nk+1} (-1)^{k(n-k)} (-1)^{n(n-k-1)+1}
-            \langle * \omega, *\mathring{d}**\phi \rangle \\
-        &=(-1)^{n(n-1)+2} (-1)^{k(n-k)} \langle \omega, \mathring{d}**\phi \rangle\\
+            \langle \star \omega, \star\mathring{d}\star\star\phi \rangle \\
+        &=(-1)^{n(n-1)+2} (-1)^{k(n-k)} \langle \omega, 
+            \mathring{d}\star\star\phi \rangle\\
         &= \langle \omega, \mathring{d}\phi \rangle
     \end{align*}
-    where we used repeatedly that $*$ is an isometry and 
-    $** = (-1)^{k(n-k)}\text{Id}$. This shows that $H^{k+1}(\delta) \subseteq 
+    where we used repeatedly that $\star$ is an isometry and 
+    $\star\star = (-1)^{k(n-k)}\text{Id}$. 
+    This shows that $H^{k+1}(\delta) \subseteq 
     D(\mathring{d}^*)$ and that $\mathring{d}^* \omega = \delta \omega$. Now for 
     the other inclusion assume that $\omega \in D(\mathring{d}^*)$ and take 
     $\phi \in \smoothcompforms{n-k}{\Omega}$ arbitrary.
     \begin{align*}
-        \langle *\omega, \mathring{\delta}\phi \rangle = \pm 
-        \langle \omega, \mathring{d}*\phi \rangle = 
-        \pm \langle \mathring{d}^* \omega, *\phi \rangle = 
-        \pm \langle *\mathring{d}^* \omega, \phi \rangle.
+        \langle \star\omega, \mathring{\delta}\phi \rangle = \pm 
+        \langle \omega, \mathring{d}\star\phi \rangle = 
+        \pm \langle \mathring{d}^* \omega, \star\phi \rangle = 
+        \pm \langle \star\mathring{d}^* \omega, \phi \rangle.
     \end{align*} 
     Here we use $\pm$ to mean that we choose the sign correctly, s.t. all the
     operations are correct. Then by choosing the sign appropriately we find that
-    $ \pm *\mathring{d}^* \omega = d*\omega$ and therefore 
-    $*\omega \in H^{n-k-1}(d)$ so we proved $D(\mathring{d}^*) \subseteq 
+    $ \pm \star\mathring{d}^* \omega = d\star\omega$ and therefore 
+    $\star\omega \in H^{n-k-1}(d)$ so we proved $D(\mathring{d}^*) \subseteq 
     H^{k+1}(\delta)$ and we are done.    
 \end{proof}
 
@@ -341,11 +440,23 @@ $\langle d\omega,\mu \rangle_{L^{k+1}(\Omega)} =
 \langle \omega, \delta \mu \rangle_{L^k(\Omega)}$ we get 
 after some computation using the Hodge star
 \begin{align*}
-    \langle \text{tr}\,\omega, \text{tr}\,*\mu \rangle_{L^{k+1}(\Omega)}
-    = 0 \quad \forall \mu \in H^1\Lambda^k(\Omega)
+    \langle \text{tr}\,\omega, 
+        \star\,\text{tr}\,\star\mu \rangle_{L^k(\Omega)}
+    = 0 \quad \forall \mu \in H^1\Lambda^k(\Omega).
 \end{align*}
-and thus $\text{tr}\,\omega = 0$ because $H^1\Lambda^k(\Omega)$ is 
-dense in $L^k_2(\Omega)$. 
+The trace operator $\text{tr}: H^1\Lambda^k(\Omega) 
+\rightarrow H^{1/2}\Lambda^k(\Omega)$ is surjective \cite[Thm.~6.1]{arnold}.
+\begin{align*}
+    \star\text{tr}\star H^1\Lambda^{k+1}(\Omega) 
+    = \star \text{tr} H^1\Lambda^{n-k-1}(\Omega)
+    = \star H^{1/2}\Lambda^{n-k-1}(\Omega)
+    = H^{1/2}\Lambda^k(\Omega)
+\end{align*}
+is dense in $L^k_2(\Omega)$. Thus $\text{tr}\,\omega = 0$. So in the case 
+of bounded Lipschitz domains this definition is reasonable. The reason why we
+chose to define it as in Def.\,\ref{def:zero_boundary_condition} is that 
+is easily extendible to unbounded domains and the regularity of the boundary
+is not an issue. 
 
 
 Then we define the spaces 
@@ -392,7 +503,8 @@ introduce some things from simplicial topology. This material is taken from
     \begin{align*}
     [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\{x_0,...,x_k\}
     \end{align*}
-    is called an affine $k$-simplex.
+    is called an affine $k$-simplex. With $\text{conv}$ we mean the 
+    convex combination.
 \end{definition}
 \noindent We will assume all simplices to be affine.
 %%% TBD: Question: In the book this is defined in infinite dimensions. Does this
@@ -406,7 +518,7 @@ introduce some things from simplicial topology. This material is taken from
                 is either empty or a face of both $\sigma$ and $\tau$.
     \end{enumerate}
     We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
-    $K$.
+    $K$ and we denote the set of all $k$-simplices as $K^{(k)}$.
 \end{definition}
 For any topological space $X$ a homeomorphism 
 $\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
@@ -418,6 +530,18 @@ a designated representation in the form of
     \sigma = [x_{i_0},\, x_{i_1}, ...,x_{i_k}].
 \end{align*} 
 
+\begin{definition}[Star]
+    The \textit{star} of a vertex $x_i$ is the collection of all simplices 
+    $\sigma \in K$ s.t. $x_i$ is contained in $\sigma$. 
+    
+    We call a simplicial complex \textit{star-bounded} for some number $N$ 
+    if the star of any vertex contains at most $N$ simplices.
+\end{definition}
+{\color{red} Does this imply quasi-regularity?}
+Star-boundedness will be a crucial assumption later 
+(see Assumption \ref{ass:GKS-assumption}). Now we will introduce
+algebraic structures on the simplicial complex.
+
 \begin{definition}[$k$-chain]
     Let $K$ be a simplicial complex. By $C_k(K)$ we will denote the 
     free abelian group on the $k$-simplices
@@ -428,11 +552,13 @@ a designated representation in the form of
     with $\sigma$ being $k$-simplices. The elements of $C_k(K)$
     (i.e. sums of the above form) are called \textit{$k$-chains}.
 \end{definition}
-These groups of $k$-chains become now a chain complex by introducing the 
-boundary operator $\partial$.
+
 
 \begin{definition}[Boundary]
-    For any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ we define the boundary
+    We have the 
+    \textit{boundary operator} $\partial_k: C_k(K) \rightarrow C_{k-1}(K)$.
+    We first define it
+    for any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ 
     \begin{align*}
         \partial[x_{i_0},\, x_{i_1},...,\, x_{i_k}] \vcentcolon=
         \sum\limits_{j=0}^k (-1)^j [x_{i_0},\, x_{i_1},...,\, 
@@ -444,7 +570,9 @@ boundary operator $\partial$.
     $c = \sum_\sigma c_\sigma \sigma$ by
     \begin{align*}
         \partial c \vcentcolon= \sum\limits_\sigma c_\sigma \partial \sigma.
-    \end{align*}.
+    \end{align*}
+    By convention we define $\partial_0 = 0$. We will leave out the index $k$
+    if it is clear from the context or irrelevant.
 \end{definition}
 
 A crucial property of the chain operator is the following.
@@ -457,7 +585,7 @@ A crucial property of the chain operator is the following.
     \cite[Chap.~4, Lemma~1.6]{topology_and_geometry}
 \end{proof}
 
-\subsection{(Co-)Homology}
+\subsection{Simplicial (Co-)Homology}
 
 We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
 a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
@@ -482,9 +610,9 @@ of \textit{$k$-cochains} $C^k(K;G)$ by
     C^k(K;G) \vcentcolon= \text{Hom}(C_k(K),\,G)
 \end{align*}
 i.e. the group of all homomorphisms from $k$-chains to $G$. 
-We generally use the superindex if something is related to 
-cochains and the subindex if it is related to chains. 
-We now introduce an operator between these spaces of cochains.
+We generally use the superindex $^k$ if something is related to 
+cochains and the subindex $_k$ if it is related to chains. 
+We now introduce an operator between the groups of cochains.
 \begin{definition}
     We define the operator $\delta: C^k(K;G) \rightarrow C^{k+1}(K;G)$ via
     \begin{align*}
@@ -507,7 +635,8 @@ We now introduce an operator between these spaces of cochains.
 \end{definition}
 Note that in the case of $G = \real$ this becomes a vector space.
 We will later show that if we consider certain subspaces of cochains so called
-\textit{p-summable} cochains that the $L^p$-cohomology defined above and the
+\textit{p-summable} cochains (see Def.\,\ref{def:p_summable_cochains}) 
+that the $L_p$-cohomology defined above and the
 cohomology spaces of these $p$-summable cochains are isomorphic.
 
 
@@ -526,8 +655,8 @@ The universal coefficent theorem in the case of simplicial homology states
 that the sequence 
 \begin{align}
     0 \rightarrow \text{Ext}(H_{k-1}(K),G) \rightarrow 
-    H^k(K;G) \xrightarrow{\beta} \rightarrow \text{Hom}(H_k(K),G) 
-    \rightarrow 0 \label{univeral_coefficient_theorem}
+    H^k(K;G) \xrightarrow{\beta} \text{Hom}(H_k(K),G) 
+    \rightarrow 0 \label{eq:univeral_coefficient_theorem}
 \end{align}
 is exact. 
 $\beta$ is defined via $\beta([F])([c]) \vcentcolon= F(c)$.
@@ -537,14 +666,15 @@ $G = \real$ and
 $\text{Ext}(H_{k-1}(K),\real) = 0$. This follows from the fact that 
 $\real$ is a divisible and hence injective abelian group. The definition 
 these terms and the connections used can also be found in 
-\cite[Sec.~V.6]{topology_and_geometry}. However, we will not dwelve into the 
+\cite[Sec.\,V.6]{topology_and_geometry}. However, we will not dwelve into the 
 algebraic background further. We can conclude from the exactness of the 
 above short sequence that $\text{ker}\,\beta = 0$ and 
 $\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
 
 
 As an application, we will show the following proposition which will be used
-later to show uniqueness of a solution of the magnetostatic problem.
+later to show existence and uniqueness of a 
+solution of the magnetostatic problem.
 
 \begin{proposition}\label{prop:uniqueness_cochain}
     Assume that $H_1(K) = \integers [\gamma]$ i.e. the homology class of the 
@@ -562,7 +692,7 @@ later to show uniqueness of a solution of the magnetostatic problem.
     Because $[\gamma]$ is a generator of the homology group we  obtain a 
     homomorphism $\hat{F} \in \text{Hom}(H_1(K),\real)$ by fixing
     $\hat{F}([\gamma]) = C_0$. This determines the other values.
-    Then we know from (\ref{univeral_coefficient_theorem}) that there exists
+    Then we know from (\ref{eq:univeral_coefficient_theorem}) that there exists
     a $[F] \in H^1(K)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
     isomorphism. So we obtain
     \begin{align*}
@@ -572,7 +702,7 @@ later to show uniqueness of a solution of the magnetostatic problem.
     \textbf{Proof of (ii)} %TBD: This could be wrong
     Take $[c] \in H_1(K)$ arbitrary. Then there exists  $n \in \integers$ s.t.
     $[c] = n [\gamma]$.
-    Using $\beta$ from (\ref{univeral_coefficient_theorem})
+    Using $\beta$ from (\ref{eq:univeral_coefficient_theorem})
     We have
     \begin{align*}
         \beta([F])([c]) = \beta([F])(n [\gamma]) 
@@ -587,12 +717,11 @@ later to show uniqueness of a solution of the magnetostatic problem.
 \section{Isomorphism of Cohomology}
 
 In order to show existence and uniqueness of solutions of the magnetostatic 
-problem we rely on a result about the isomorphism of a simplicial 
-cohomology space $H^k_p(K)$ and the $L^p$-cohomology space 
-$H^k_{p,dR}(\omegabar)$.
-This result was proven in \cite{goldshtein}. In the diploma thesis of Nikolai
+problem we use a lot of results and tools from \cite{goldshtein}. 
+In the diploma thesis of Nikolai
 Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
-many additional details can be found. The result will be presented in the
+many additional details can be found. The results which are important for 
+our progress will be presented in the
 next section. It should be noted that even though the results in 
 \cite{goldshtein} are
 proved explicitely for smooth manifolds without boundary the results can be 
@@ -600,12 +729,13 @@ extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and
 the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
 to our case.
 
-In this section, we will summarize the essential parts of \cite{goldshtein}
-which will be needed later on. 
-
-Before we state the theorem about the isomorphism of we will first formulate 
-a crucial assumption for this result to hold.
-
+In the first section we will introduce S-forms which can be seen as a
+intermediate object between differential forms and we will go over the 
+basic results from \cite{goldshtein} how these S-forms are connected with 
+cochains on our simplicial complex $K$. Then we will look at how S-forms 
+and differential forms are connected. At last, we will introduce two  
+operators and their properties which are introduced in \cite{goldshtein}
+and will prove to be very useful later on.
 
 Because $\omegabar$ from our problem is itself a polyhedron we can
 assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$ and we can
@@ -709,8 +839,8 @@ be defined next.
 \begin{definition}
     We define the following norm of a $k$-cochain $f$
     \begin{align*}
-    \norm{f}{C_p^k(K)} \vcentcolon= 
-    \left( \sum\limits_{c \, k\text{-chain}} |f(c)|^p \right)^{1/p}.
+        \norm{f}{C_p^k(K)} \vcentcolon= 
+        \left( \sum\limits_{\sigma \in K^{(k)}} |f(\sigma)|^p \right)^{1/p}.
     \end{align*} % TBD: Define K^(k), this is a convenient notation
     and the space of \textit{p-summable k-cochains}
     \begin{align*}
@@ -769,6 +899,8 @@ Then the integration mapping $I: S^k(K) \rightarrow C^k(K)$ is a homomorphism
 The reason why S-forms are a useful concept is because they provide an 
 intermediate step between differential forms and cochains.
 
+N
+
 With the exterior derivative $d$ on S-forms as defined above we define 
 \begin{align*}
     \mathscr{Z}^k &\vcentcolon= \{ \theta \in S^k(K) | \, d\theta = 0 \} \\
@@ -802,7 +934,8 @@ $I$ is continuous.
 
 The next step is to obtain an isomorphism between the cohomology 
 of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
-$\lpcoho(\omegabar)$. 
+$\lpcoho(\omegabar)$. {\color{red} Do I really do that?}
+
 In order to achieve that we need a some connection between differential forms
 and S-forms. Take $\omega \in W_{\infty,loc}^k(\omegabar)$. Using the analogous
 reasoning as above, we use the restriction operators $j^*_{\sigma,\tau}$ to 
@@ -819,7 +952,7 @@ operator $\varphi$ is an isomorphism \cite[Lemma~1]{goldshtein}.
 To also obtain corresponding forms to the $p$-summable S-forms we simply 
 define $S^k_p(\omegabar) \vcentcolon= \varphi^{-1}S^k_p(K)$.
 It can be shown that $S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$.
-Now if we have some $\omega \in S^k_p(\omegabar)$ then we have can look at 
+Now if we have some $\omega \in S^k_p(\omegabar)$ then we can look at 
 two possible norms. From the inclusion we know that 
 $\norm{\omega}{W^k_p(\omegabar)} < \infty$. But we can also use the norm 
 induced by $\varphi$ denoted by 
@@ -858,6 +991,17 @@ is bounded (\cite[Lemma\,4]{goldshtein}).
     and less confusing.
 \end{remark}
 
+We can now extend our definition of integration on a simplex to any differential
+form $\omega \in W_{\infty,loc}^k(\omegabar)$ thanks to the 
+well-definedness of the restriction operators. We can do this by first 
+applying $\varphi$ which means nothing but applying these restrictions to obtain
+an S-form $\varphi \omega \in S^k(K)$ for which we have defined the integration 
+above. Note that this is exactly how integration is defined for continuous 
+differential forms. The only difference is that we had to give an additional 
+argument because the restriction can not be applied directly as in the 
+continuous case. We will sometimes just write $I(\omega) \vcentcolon= 
+I(\varphi\omega)$ or $\int_\sigma \omega = \int_\sigma (\varphi\omega)(\sigma)$
+for any simplex $\sigma \in K$.
 
 Now we also want to introduce a regularization operator in order to 
 obtain 
