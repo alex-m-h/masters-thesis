@@ -22,6 +22,7 @@
 
 \newtheorem{lemma}{Lemma}[section]
 \numberwithin{lemma}{subsection}
+\newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{theorem}[lemma]{Theorem}
 
@@ -585,34 +586,154 @@ A crucial property of the chain operator is the following.
     \cite[Chap.~4, Lemma~1.6]{topology_and_geometry}
 \end{proof}
 
+We can now generalize the notions of the chain groups by using factor groups.
+Let $L \subseteq K$ be a simplicial complex which we will call simplicial
+subcomplex. Then we define the factor group
+
+\begin{align*}
+    C_k(K,L) \vcentcolon= \faktor{C_k(K)}{C_k(L)}.
+\end{align*}
+We denote the elements of $C_k(K,L)$ i.e. the equivalence class 
+by $\underline{c}$ for some $c \in C_k(K)$. 
+Because $L$ is a simplicial complex we have $\partial_k c \in C_{k-1}(L)$ for
+any $c \in C_k(L)$. Thus it induces a homomorphism on the factor groups denoted
+by
+\begin{align*}
+    \underline{\partial}_k: C_k(K,L) \rightarrow C_{k-1}(K,L),\,
+    \underline{\partial}_k \underline{c} \vcentcolon= \underline{\partial_k c}.
+\end{align*}
+Note that $C(K,L)$ generalizes the definition of $C_k(K,L)$ because we 
+can choose $L = \emptyset$. Then the abelian group on $\emptyset$ is just 
+$\{ 0 \}$ and thus $C_k(K,L) = C_k(K)$.
+
+\begin{remark}
+    The last equality is technically not precise of course. 
+    However, for any group 
+    $G$ with identity $\iota$ the resulting factor group
+    $\faktor{G}{\{\iota\}}$ every equivalence class $\underline{g}$ would 
+    only include $g$ itself so we can trivially identify $G$ with 
+    $\faktor{G}{\{\iota\}}$ and we will do so from now on.
+\end{remark}
+
+We want to investigate how we can understand $\underline{c}$.
+
+\begin{proposition}
+    Let $c \in C_k(K)$ be arbitrary. Then
+    \begin{align*}
+        \underline{c} = \underline{0} 
+        \leftrightarrow c = \sum\limits_{\tau \in L} n_\tau \tau.
+    \end{align*}
+    As usual the right hand side is a finite sum. 
+    So for two $k$-chains $c = \sum_\sigma n_\sigma \sigma \in C_k(K)$ 
+    and $c' =  \sum_\sigma n'_\sigma \sigma$ we have
+    \begin{align}
+        \underline{c} = \underbar{c}' 
+        \leftrightarrow n_\sigma = n'_\sigma 
+        \quad \forall \sigma \in K \setminus L. 
+        \label{eq:equivalence_class_relative_chain_group}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    $c \in \underline{0}$ is just equivalent to saying that 
+    $c \in C_k(L)$ by definition of the factor group and thus we can write 
+    $c = \sum\limits_{\tau \in L} n_\tau \tau$.
+    (\ref{eq:equivalence_class_relative_chain_group}) follows from that 
+    because $\underline{c} = \underbar{c}'$ is equivalent to
+    $\underline{c - c'} = \underline{0}$.
+\end{proof}
+
+In this sense we can identify $C_k(K,L)$ with formal sums of 
+simplices in $K^{(k)}\setminus L^{(k)}$. 
+
 \subsection{Simplicial (Co-)Homology}
 
-We call a $k$-chain $c$ a \textit{$k$-cycle} if $\partial c = 0$ and we call $c$ 
-a \textit{$k$-boundary} if there exists a $(k+1)$-chain $d$ s.t. 
-$c = \partial d$. Let $Z_k(K) \subseteq C_k(K)$ be the subgroup of $k$-cycles
-and $B_k(K) \subseteq C_k(K)$ the subgroup of $k$-boundaries.
+We call a $k$-chain $\underline{c} \in C_k(K,L)$ a \textit{$k$-cycle} if 
+$\underline{\partial} \underline{c} = 0$ and we call $\underline{c}$ 
+a \textit{$k$-boundary} if there exists $\underline{d}$ s.t. 
+$\underline{c} = \underline{\partial} \underline{d}$. 
+Let $Z_k(K,L) = \text{ker}\,\underline{\partial_k}$ 
+and $B_k(K,L) = \text{im}\,\underline{\partial_{k-1}}$.
 We can now define the simplicial homology groups of our simplicial complex.
 
 \begin{definition}[Simplicial homology]
-    The homology groups $H_k(K)$ are the quotient groups of 
-    cycles and boundaries i.e.
+    The relative homology groups $H_k(K,L)$ are defined as
     \begin{align*}
-        H_k(K)\vcentcolon= \faktor{Z_k(K)}{B_k(K)}.
+        H_k(K)\vcentcolon= \faktor{Z_k(K,L)}{B_k(K,L)}.
     \end{align*}
 \end{definition}
-\noindent The homology groups are independent of the chosen simplicial complex.
-\cite[p.248]{topology_and_geometry}. 
 
+\begin{remark}
+We call them relative homology group because define them on the 
+for $C_k(K,L)$.
+The standard homology groups $H_k(K)$ (i.e. taking $L = \emptyset$) 
+are independent of the chosen triangulation of $|K|$
+\cite[p.248]{topology_and_geometry} because they are isomorphic to the 
+singular homology groups which only depend on $|K|$ 
+\end{remark}
 
-Let $G$ be any group. Then we define the group 
-of \textit{$k$-cochains} $C^k(K;G)$ by
+Let $G$ be any abelian group. Then we define the group 
+of \textit{$k$-cochains} $C^k(K,L;G)$ by
 \begin{align*}
-    C^k(K;G) \vcentcolon= \text{Hom}(C_k(K),\,G)
+    C^k(K,L;G) \vcentcolon= \text{Hom}(C_k(K,L),\,G)
 \end{align*}
-i.e. the group of all homomorphisms from $k$-chains to $G$. 
+i.e. the group of all homomorphisms from $C_k(K,L)$ to $G$. 
 We generally use the superindex $^k$ if something is related to 
 cochains and the subindex $_k$ if it is related to chains. 
 We now introduce an operator between the groups of cochains.
+
+$C^k(K,L;G)$ can be identified with the cochains that vanish on $L$.
+
+\begin{proposition}\label{prop:relative_cochains_vanish}
+    Define
+    \begin{align*}
+        \tilde{C}^k(K,L;G) \vcentcolon= \{ F \in C^k(K;G) 
+        \mid F(c) = 0 \quad \forall c \in C_k(L) \}.
+    \end{align*}
+    Then any $F \in \tilde{C}^k(K,L;G)$ induces and homomorphism
+    $\underline{F} \in C^k(K,L;G)$ and $j:\tilde{C}^k(K,L;G) 
+    \rightarrow C^k(K,L;G), \, F \mapsto \underline{F}$ is an isomorphism.
+\end{proposition}
+\begin{proof}
+    Because $C_k(L) \subseteq \ker F$ is a subgroup we get the 
+    induced homomorphism
+    \begin{align*}
+        \underline{F}: C_k(K,L) = \faktor{C_k(K)}{C_k(L)} \rightarrow
+        \faktor{G}{{0}} = G.
+    \end{align*}
+    \textbf{$j$ is injective.} Let $\underline{F}(\underline{c})=0$ for every 
+    $c \in C_k(K)$. Then $F(c) = \underline{F}(\underline{c}) = 0$ so $F = 0$.
+    \textbf{$j$ is surjective.} Let $\varphi \in C^k(K,L;G)$ be arbitrary. 
+    Then define $F \in C^k(K)$, $F(c) \vcentcolon= \varphi(\underline{c})$.
+    We first have to show that $F \in \tilde{C}^k(K,L)$. For any $d \in C_k(L)$
+    we get $\underline{d} = 0 \in C_k(K,L)$ and $F(d) = 0$.
+    Then we have for any $\underline{c} \in C_k(K,L)$, 
+    $\underline{F}(\underline{c}) = F(c) = \varphi(\underline{c})$ i.e. 
+    $\underline{F} = \varphi$ which proves surjectivity.
+\end{proof}
+
+\begin{proposition}
+    $j$ as defined in Prop.\,\ref{prop:relative_cochains_vanish} is a chain 
+    map.
+\end{proposition}
+\begin{proof}
+    Let $F \in \tilde{C}^k(K,L)$ be arbitrary. Then
+    \begin{align*}
+        \underline{\partial^k F}(\underline{c})
+        = \partial^k F (c) = F(\partial_k F) 
+        = \underline{F}(\underline{\partial_k c})
+        = \underline{F}(\underline{\partial}_k \underline{c})
+        = \underline{\partial}^k \underline{F} (\underline{c})
+        %TBD: We need here that \tilde(C)^k is also a cochain complex
+    \end{align*}
+    i.e. $j \circ \partial^k = \underline{\partial}^k\circ j$ and $j$ is a 
+    chain map.
+\end{proof}
+
+\begin{corollary}
+    The induced map $[j]: H^k(K,L;G) \rightarrow \tilde{H}^k(K,L;G)$ is an 
+    isomorphism.
+\end{corollary}
+
 \begin{definition}
     We define the operator $\delta: C^k(K;G) \rightarrow C^{k+1}(K;G)$ via
     \begin{align*}
@@ -671,36 +792,39 @@ algebraic background further. We can conclude from the exactness of the
 above short sequence that $\text{ker}\,\beta = 0$ and 
 $\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
 
+\subsection{Existence of uniqueness of cochain}
+
+
 
 As an application, we will show the following proposition which will be used
 later to show existence and uniqueness of a 
 solution of the magnetostatic problem.
 
 \begin{proposition}\label{prop:uniqueness_cochain}
-    Assume that $H_1(K) = \integers [\gamma]$ i.e. the homology class of the 
+    Assume that $H_1(K,L) = \integers [\gamma]$ i.e. the homology class of the 
     closed $1$-chain $\gamma$ is a generator of the first homology group.
     Then we have the following:
     \begin{enumerate}[(i)]
         \item For any $C_0 \in \real$ there exists a closed $1$-chain 
-            $F \in Z^1(K)$ with $F(\gamma) = C_0$,
-        \item any other $G \in Z^1(K)$ with $G(\gamma) = C_0$ 
+            $F \in Z^1(K,L)$ with $F(\gamma) = C_0$,
+        \item any other $G \in Z^1(K,L)$ with $G(\gamma) = C_0$ 
             is in the same cohomology class i.e. $[F] = [G]$.
     \end{enumerate}
 \end{proposition}
 \begin{proof}
     \textbf{Proof of (i)} %TBD: This could be wrong
     Because $[\gamma]$ is a generator of the homology group we  obtain a 
-    homomorphism $\hat{F} \in \text{Hom}(H_1(K),\real)$ by fixing
+    homomorphism $\hat{F} \in \text{Hom}(H_1(K,L),\real)$ by fixing
     $\hat{F}([\gamma]) = C_0$. This determines the other values.
     Then we know from (\ref{eq:univeral_coefficient_theorem}) that there exists
-    a $[F] \in H^1(K)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
+    a $[F] \in H^1(K,L)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
     isomorphism. So we obtain
     \begin{align*}
         F(\gamma) = \beta([F])([\gamma]) = \hat{F}([\gamma]) = C_0.
     \end{align*}
 
     \textbf{Proof of (ii)} %TBD: This could be wrong
-    Take $[c] \in H_1(K)$ arbitrary. Then there exists  $n \in \integers$ s.t.
+    Take $[c] \in H_1(K,L)$ arbitrary. Then there exists  $n \in \integers$ s.t.
     $[c] = n [\gamma]$.
     Using $\beta$ from (\ref{eq:univeral_coefficient_theorem})
     We have
@@ -712,6 +836,86 @@ solution of the magnetostatic problem.
     and thus $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism
     we arrive at $[F] = [G]$.
 \end{proof}
+
+The following lemma will be needed later in Sec.\,\ref{} to prove existence 
+and uniqueness of a solution of the magnetostatic problem. It is now 
+useful to think of $K$ as a triangulation of an exterior domain and $L$ 
+be the triangulation of the exterior of some ball $\real^3\setminus B_R$ with 
+$R > 0$ large enough. Then we assume for the simplicial subcomplex $L$
+that its geometric realization $|L|$ is homeomorphic to $\real^3\setminus B_R$.
+
+First we need to understand how the zero-th homology group looks like. 
+When we say path-connected we mean in the sense of simplicial topology i.e. 
+we can connect all vertices with a $1$-chain.
+
+\begin{lemma}\label{lem:zeroth_homology_group}
+    Let $K$ be a path-connected simplicial complex. Then the homology class 
+    of every vertex $[x_i] \in H_0(K)$ is a generator of the homology group.  
+\end{lemma}
+\begin{proof}
+    The proof works exactly as the proof of Theorem IV.2.1 in 
+    \cite{topology_and_geometry} where we use the notion of path-connected
+    on simplicial complexes.
+\end{proof}
+
+\begin{lemma}\label{lem:inclusion_zeroth_homology}
+    Let $K$, $L$ be simplicial complexes with $L \subseteq K$ and 
+    assume they are path-connected  Then
+    the inclusion $\iota: C_0(L) \hookrightarrow C_0(K)$ induces an isomorphism
+    on homology.
+\end{lemma}
+\begin{proof}
+    This follows immediately from Lemma \ref{lem:zeroth_homology_group}.
+\end{proof}
+
+
+\begin{lemma}\label{lem:isom_chains_and_relative_chains}
+    Let $K$ and $L$ be as in the previous lemma. Assume additionally
+    that $|L|$ is homeomorphic to $\real^3 \setminus B_R$.
+    Then the natural surjection
+    $j: C_1(K) \rightarrow C_1(K,L)$ induces an isomorphism on homology.
+\end{lemma}
+\begin{proof}
+    We have the exact sequence 
+    \begin{align*}
+        &H_1(L) \xrightarrow{[\iota_1]} H_1(K) \xrightarrow{[j_1]} H_1(K,L) \\
+        \xrightarrow{[\partial_1]} &H_0(L) \xrightarrow{[\iota_0]} H_0(K) 
+            \xrightarrow{[j_0]} H_0(K,L).
+    \end{align*}
+    We know that $H_1(L) \cong H_1(|L|) \cong H_1(\mathbb{S}^2) = 0$. 
+    Because $[\iota_0]$ is an isomorphism due to 
+    Lemma\,\ref{lem:inclusion_zeroth_homology} $\Im [\partial_1] = 0$. 
+    Thus, we get the exact sequence 
+    \begin{align*}
+        0 \xrightarrow{[\iota_1]} H_1(K) \xrightarrow{[j_1]} H_1(K,L)
+        \xrightarrow{[\partial_1]} 0
+    \end{align*}
+    and so $[j_1]$ is a isomorphism.
+\end{proof}
+
+Now using all these lemmas and results we can now prove the following
+important lemma that will be needed later in Sec.\,\ref{}
+
+\begin{lemma}
+    Let $K$ and $L$ be as in the previous lemma and assume that 
+    $H_1(K) = \integers [\gamma]$. Then there exists a cochain 
+    $F \in \tilde{C}^1(K,L)$ s.t. $F(\gamma) = C_0$.
+\end{lemma}
+\begin{proof}
+    We know from Lemma\,\ref{lem:isom_chains_and_relative_chains}
+    that $[j]:H_1(K) \rightarrow H_1(K,L)$ is a isomorphism. Thus, we have
+    $[j]([\gamma]) = [\underline{\gamma}] \in H_1(K,L)$ is a generator. 
+    We can now apply Prop.\,\ref{prop:uniqueness_cochain} to get a 
+    $\tilde{F} \in C^1(K,L)$ s.t. $\tilde{F}(\underline{\gamma}) = C_0$.
+    Now we continue with Prop.\,\ref{prop:relative_cochains_vanish} to 
+    get that there exists a unique $F \in \tilde{C}^1(K,L)$ s.t. 
+    $jF = \underline{F} = \tilde{F}$ and we arrive at 
+    \begin{align*}
+        F(\gamma) = \underline{F}(\underline{\gamma}) 
+        = \tilde{F}(\underline{\gamma}) = C_0.
+    \end{align*}
+\end{proof}
+
 
 
 \section{Isomorphism of Cohomology}
@@ -1174,7 +1378,8 @@ Then we know from Thm.~\ref{thm:operators}
     \stackrel{\eta \text{ closed}}{=} \eta + d\aop \eta.
 \end{align*}
 We know further that $\aop \eta \in S^0_2(\omegabar)$. 
-Apply $\varphi$ on both sides and use that fact that it commutes with the 
+Apply $\varphi$ on both sides and use that fact that it commutes 
+\ref{} with the 
 exterior derivative to get
 \begin{align*}
     \varphi \rop \eta = \varphi\eta + d \varphi\aop \eta.
@@ -1458,7 +1663,7 @@ We are now back in the realm of standard vector analysis so all the notation
 is to be seen in this light (e.g. $H^1$ is here the standard Sobolov space 
 and not related to differential forms).
 
-\begin{lemma}
+\begin{lemma}\label{lem:gradient_sequence}
     Let $\phi \in L^2_{loc}(\Omega)$ with $\nabla \phi \in L^2(\Omega)$. Then 
     there exists a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^1(\Omega)$
     s.t. $\nabla \phi_i \rightarrow \nabla \phi$ in $L^2(\Omega)^3$.
@@ -1625,7 +1830,7 @@ and not related to differential forms).
     %     \partial_{x_i} \phi \text{ in $L^2(\Omega)$}.
     % \end{align*}
     % In the last step it is crucial that $\partial_{x_i} \phi \in L^2(\Omega)$.
-    Thank to Lemma\,\ref{} we know that 
+    Thank to Lemma~\ref{lem:gradient_sequence} we know that 
     $\nabla \phi \in \overline{\nabla H^1(\Omega)}$. 
     Because $B$ and $\tilde{B}$ are harmonic we have 
     $B - \tilde{B} \in 
