@@ -1113,6 +1113,18 @@ For $\theta \in S^k(K)$ we now define the norm
 \end{align*} 
 $S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
 
+Let $L \subseteq K$ be a simplicial subcomplex. Then we define the 
+restriction operator 
+\begin{align*}
+    j^*_{K,L}: S^k(K) \rightarrow S^k(L),
+    \{ \theta(\sigma) \mid \sigma \in K \} 
+    \mapsto \{ \theta(\sigma) \mid \sigma \in L \}.
+\end{align*}
+Then we define $S^k(K,L) \vcentcolon= \ker j^*_{K,L}$ and analogously
+$S^k_p(K,L)$. So these are the S-forms that vanish on a simplicial subcomplex.
+As in the case of cochains (compare Sec.\,\ref{}) this generalizes 
+the first definition because we get $S^k(K,\emptyset) = S^k(K)$.
+
 The integration of an S-form $\theta \in S^k(K)$ over a chain
 $c = \sum n_\sigma \sigma \in C_k(K)$ is then simply defined as 
 \begin{align*}
@@ -1120,36 +1132,35 @@ $c = \sum n_\sigma \sigma \in C_k(K)$ is then simply defined as
     \vcentcolon= \sum\limits_\sigma n_\sigma \int_\sigma \theta(\sigma).
 \end{align*}
 We also write $I(\theta)(c) \vcentcolon= \int_c \theta$.
-Then the integration mapping $I: S^k(K) \rightarrow C^k(K)$ is a homomorphism
+Then the integration mapping 
+$I: S^k(K,L) \rightarrow C^k(K,L)$ is a homomorphism
 (see \cite[p.191]{goldshtein}).
 The reason why S-forms are a useful concept is because they provide an 
 intermediate step between differential forms and cochains.
 
 With the exterior derivative $d$ on S-forms as defined above we define 
 \begin{align*}
-    \mathscr{Z}^k &\vcentcolon= \{ \theta \in S^k(K) | \, d\theta = 0 \} \\
-    \mathscr{B}^k &\vcentcolon= dS^{k-1}(K)
+    \mathscr{Z}^k(K,L) &\vcentcolon= \{ \theta \in S^k(K,L) 
+        | \, d\theta = 0 \} \\
+    \mathscr{B}^k(K,L) &\vcentcolon= dS^{k-1}(K,L)
 \end{align*}
 and then the resulting cohomology space
 \begin{align*}
-    \mathscr{H}^k(K) \vcentcolon= 
-    \faktor{\mathscr{Z}^k}{\mathscr{B}^k}.
+    \mathscr{H}^k(K,L) \vcentcolon= 
+    \faktor{\mathscr{Z}^k(K,L)}{\mathscr{B}^k(K,L)}.
 \end{align*}
 We also define the in the case of $p$-summable S-forms
 \begin{align*}
-    \mathscr{Z}_p^k &\vcentcolon= \{ \theta \in S_p^k(K) | \, d\theta = 0 \} \\
+    \mathscr{Z}_p^k(K,L) &\vcentcolon= \{ \theta \in S_p^k(K,L) | \, d\theta = 0 \} \\
 \end{align*}
-as well $\mathscr{B}_p^k$ and $\mathscr{H}_p^k(K)$ analogously.
+as well $\mathscr{B}_p^k(K,L)$ and $\mathscr{H}_p^k(K,L)$ analogously.
 
 Then we have that the integration mapping
-$I: S^k(K) \rightarrow C^k(K)$ 
+$I: S_p^k(K,L) \rightarrow C_p^k(K,L)$ 
 induces an isomorphism on the cohomologies i.e. 
-$[I]: \mathscr{H}^k(K) \rightarrow H^k(K)$ is an isomorphism of vector 
-spaces (see \cite[p.191]{goldshtein}).
-Also $I: S_p^k(K) \rightarrow C_p^k(K)$ is well defined and induces an
-isomorphism on the respective cohomology spaces as well. Furthermore, 
-$I$ is continuous.
-(see \cite[Thm.\,1]{goldshtein} and the proof thereof).
+$[I]: \mathscr{H}_p^k(K,L) \rightarrow 
+\tilde{H}_p^k(K,L)$ is an isomorphism of vector 
+spaces (see \cite[Thm.\,1]{goldshtein} and the proof thereof).
 
 
 
@@ -1611,31 +1622,36 @@ We start with the following
 \end{theorem}
 \begin{proof}
     Under the given assumptions we know that we can find a 
-    $F \in \tilde{C}^k(K,L)$ (see Lemma \ref{}). Then We apply the theorem about
-    the isomorphism from \ref{} that there exists a S-form $\tilde{\theta}$
-    s.t. $[I(\tilde{\theta})] = [F] \in \tilde{H}^1(K,L)$. Thus 
+    $F \in \tilde{C}^1(K,L)$ (see Lemma \ref{}). 
+    Because $K \setminus L$ is finite $F$ is obviously 2-summable 
+    i.e. $F \in  \tilde{C}_2^1(K,L)$
+    Then We apply the theorem about
+    the isomorphism from \ref{} that there exists a 
+    S-form $\tilde{\theta} \in S^1_2(K,L)$
+    s.t. $[I(\tilde{\theta})] = [F] \in \tilde{H}_2^1(K,L)$. Thus 
     we have some $J \in \tilde{C}^1(K,L)$ s.t. 
     $I(\tilde{\theta}) = F + \partial J$ and thus 
     \begin{align*}
         I(\tilde{\theta})(\gamma) = F(\gamma) + J(\partial \gamma)
         \stackrel{\gamma \text{ closed}}{=} F(\gamma) = C_0.      
     \end{align*}
-    Now define $\theta \vcentcolon= \varphi \tilde{\theta}$.
-    So we found already a $1$-chain that has the desired curve integral.
+    Now define $\theta \vcentcolon= \varphi^{-1} \tilde{\theta}$.
+    So we found already a $1$-form that has the desired curve integral.
 
-    Because $j^*_{K,L}\tilde{\theta} = 0$ we have that $\theta = 0$ in 
-    $|L|$ almost everywhere. {\color{red} Reference this} 
-    We now use the fact that $\text{int}\,\omegabar = \text{int}\,\Omega$
-    and thus $\theta \in H^1(d;\Omega)$. {\color{red} identifcation of 
-    Solobev spaces of domain and closure}.
-    We now use the Hodge decomposition \ref{hodge_decomposition} 
-    Now we project $*\bar{\theta}$ onto harmonic forms to get 
+    $\tilde{\theta} \in S^1_2(K,L) \subseteq S^1_2(K)$ so 
+    $\theta \in S^1_2(\omegabar) \subseteq W^1_2(\omegabar)$.
+    We now use the fact that $\text{int}\,\omegabar = \text{int}\,\Omega$ and
+    remember the resulting identification of the Sobolev spaces 
+    $W^1_2(\omegabar)$ and $W^1_2(\Omega)$ (cf. Remark \ref{}) to obtain
+    $\theta \in H^1(d;\Omega)$.
+    Next, we will use the Hodge decomposition \ref{hodge_decomposition}.
+    Now we project $\star\bar{\theta}$ onto harmonic forms to get 
     $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. 
     So because 
-    $*\theta$ is co-closed we 
+    $\star\theta$ is co-closed we 
     obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
     \begin{align*}
-        *\theta = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i
+        \star\theta = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i
     \end{align*}
     where the limit is in the $L^2$-sense.
     Apply the Hodge star operator on 
@@ -1643,11 +1659,11 @@ We start with the following
     remember the definition of $\delta$ to get a sequence 
     $(\psi_i)_{i \in \naturalnum} \subseteq H^0(d)$ s.t.
     \begin{align*}
-        \theta = *\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
+        \theta = \star\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
     \end{align*}    
     Then we get
     \begin{align*}
-        \int_\gamma \rop * \omega 
+        \int_\gamma \rop \star \omega 
         =\int_\gamma \rop (\theta - 
         \lim\limits_{i \rightarrow \infty}d \psi_i) = 
         \int_\gamma \rop \theta = \int_\gamma \theta = C_0.
@@ -1764,30 +1780,31 @@ and not related to differential forms).
     The solution of the problem is unique.
 \end{theorem}
 \begin{proof}
-    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $*\omega$ is 
-    closed thus $\rop *\omega \in S_2^1(\omegabar)$ is also closed because 
+    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $\star\omega$ is 
+    closed thus $\rop \star\omega \in S_2^1(\omegabar)$ is also closed because 
     \begin{align*}
-        d \rop * \omega = \rop d*\omega = 0.
+        d \rop \star \omega = \rop d\star\omega = 0.
     \end{align*}
     The same 
     holds for $\tilde{\omega}$. 
-    $I(\rop * \omega), I(\rop * \tilde{\omega}) \in C^1_2(K)$ 
+    $I(\varphi \rop \star \omega)
+    , I(\varphi \rop \star \tilde{\omega}) \in C^1_2(K)$ 
     are closed $1$-cochains with
-    $I(\rop * \omega)(\gamma) = I(\rop * \tilde{\omega})(\gamma)$. 
+    $I(\varphi\rop \star \omega)(\gamma) 
+    = I(\varphi\rop \star \tilde{\omega})(\gamma)$. 
     Thus Prop.\,\ref{prop:uniqueness_cochain} implies 
-    $[I(\rop * \omega)] = [I(\rop * \tilde{\omega})] \in H^1(K;\real)$.
-    Now we use the Whitney transformation. {\color{red} No we dont.} 
-    We know that $[I]$ and $[w]$ are 
-    inverses on cohomology from \ref{}. That means we get 
+    $[I(\varphi\rop \star \omega)] 
+    = [I(\varphi\rop \star \tilde{\omega})] \in H^1(K)$.
+    Because $[I]: \mathscr{H}^1(K) \rightarrow H^1(K)$ is an isomorphism
+    (see \ref{}) we have 
     \begin{align*}
-        [\varphi \rop *\omega] = [wI\varphi \rop *\omega] 
-        = [wI\varphi \rop *\tilde{\omega}] = [\varphi \rop *\tilde{\omega}].
+        [\varphi\rop \star \omega] = [\varphi\rop \star \tilde{\omega}] 
     \end{align*}
     Here the cohomology classes are in the cohomology spaces of S-forms 
     $\mathscr{H}^1(K)$. That means there is a S-form $\theta \in S^0(K)$ s.t.
     \begin{align*}
-        &\varphi \rop *\omega - \varphi \rop *\omega = d\theta \\ 
-        &\Rightarrow \rop *\omega -  \rop *\omega = \varphi^{-1} d\theta 
+        &\varphi \rop \star\omega - \varphi \rop \star\omega = d\theta \\ 
+        &\Rightarrow \rop \star\omega -  \rop \star\omega = \varphi^{-1} d\theta 
         = d\varphi^{-1}\theta =\vcentcolon d\tilde{\theta}.
     \end{align*}
     We have $\tilde{\theta} \in S^0(\omegabar) \subseteq 
@@ -1798,7 +1815,8 @@ and not related to differential forms).
     properties of $\rop$ there exists a $\eta \in L_{2,loc}^0(\Omega)$
     with $d\eta \in L^1_2(\Omega)$ s.t. 
     \begin{align*}
-        *\omega - *\tilde{\omega} = -d\aop(*\omega - *\tilde{\omega})
+        \star\omega - \star\tilde{\omega} 
+        = -d\aop(\star\omega - \star\tilde{\omega})
         + d \theta = d\eta.
     \end{align*}
     By applying the Hodge star operator on both sides we find 
