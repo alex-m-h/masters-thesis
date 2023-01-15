@@ -35,6 +35,9 @@
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\Ima}{im}
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\supp}{supp}
 
 \newcommand{\aop}{\mathscr{A}}
 \newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
@@ -285,7 +288,9 @@ of smooth differential forms in the weak sense (cf. \cite{goldshtein}).
 Let $\mathring{d}: L^k_2(\Omega) \rightarrow L^{k+1}_2(\Omega)$ be the exterior
 derivative as an unbounded operator with domain 
 $D(\mathring{d}) = \smoothcompforms{k}{\Omega}$ 
-which are the smooth compactly supported differential forms of degree $k$. 
+which are the smooth compactly supported differential forms $\varphi$ 
+of degree $k$
+with $\supp \varphi \subseteq \interior M$.
 
 Note that when we talk about smoothness or regularity of differential forms we
 always mean the regularity of the coefficents when the form is expressed 
@@ -325,6 +330,23 @@ and for $p=\infty$
     \max\left\{ \norm{\omega}{L^k_\infty},\, \norm{d\omega}{L^k_\infty}
     \right\}.
 \end{align*}
+
+\begin{remark}
+    Throughout this thesis, we will mostly deal with open subdomains $\Omega 
+    \subseteq \real^n$ with Lipschitz boundary. Then $\Omega$
+    is a smooth submanifold of $\real^n$ and $\omegabar$ is a 
+    Lipschitz manifold with boundary. If we now assume that
+    $\Omega = \interior \omegabar$ then $W^k_p(\Omega)$ and $W^k_p(\omegabar)$
+    are essentially the same. Take $\omega \in W^k_p(\Omega)$ and extend 
+    it arbitrarily to $\overline{\omega} \in W^k_p(\omegabar)$. Then because 
+    $\partial \Omega$ is a null set $\overline{\omega} \in L_2^k(\omegabar)$ and 
+    because the definition of the exterior derivative uses only smooth 
+    funtions with compact support contained in $\interior \omegabar = \Omega$ 
+    we get that $d\overline{\omega} = d\omega \in L^k_2(\omegabar)$ (again 
+    by choosing arbitrary values on the boundary). From now on we will in the
+    assumed setting treat the spaces $W^k_p(\omegabar)$ and $W^k_p(\Omega)$ 
+    as the same.
+\end{remark}
     
 \begin{definition}[$L^p$-cohomology]
     We define the following subspaces of $W^k_p(\Omega)$, $1\leq p \leq\infty$:
@@ -884,7 +906,7 @@ we can connect all vertices with a $1$-chain.
     \end{align*}
     We know that $H_1(L) \cong H_1(|L|) \cong H_1(\mathbb{S}^2) = 0$. 
     Because $[\iota_0]$ is an isomorphism due to 
-    Lemma\,\ref{lem:inclusion_zeroth_homology} $\Im [\partial_1] = 0$. 
+    Lemma\,\ref{lem:inclusion_zeroth_homology} $\Ima [\partial_1] = 0$. 
     Thus, we get the exact sequence 
     \begin{align*}
         0 \xrightarrow{[\iota_1]} H_1(K) \xrightarrow{[j_1]} H_1(K,L)
@@ -1102,8 +1124,6 @@ Then the integration mapping $I: S^k(K) \rightarrow C^k(K)$ is a homomorphism
 (see \cite[p.191]{goldshtein}).
 The reason why S-forms are a useful concept is because they provide an 
 intermediate step between differential forms and cochains.
-
-N
 
 With the exterior derivative $d$ on S-forms as defined above we define 
 \begin{align*}
@@ -1396,7 +1416,7 @@ closed chains. Because $*\omega$ is closed we thus do not change the integral
 if the curve integral $*\omega$ would already have been well defined before.
 
 To summarize we obtain the following problem.
-\begin{problem}
+\begin{problem} \label{prob:magnetostatic_reformulated}
     Find $\omega \in \mathring{H}^2(d;\Omega)$ s.t.
     \begin{align*}
         d \omega &= 0, \\
@@ -1577,85 +1597,67 @@ We start with the following
     $d\bar{\nu} \in L^{k+1}_2(\Omega)$ and the lemma is proven.
 \end{proof}
 
-Now we construct a solution. Let $L \subseteq K$ be a bounded
-simplicial subcomplex s.t. $\gamma \in C_1(L)$ and the star of 
-every vertex from $\gamma$ does not touch the boundary of $L$. 
-We also require that $H_1(L) = \integers [\gamma]$.
-Let $\rop_L$ be 
-the regularization operator from Thm.\,\ref{thm:operators}, but now constructed for
-$L$ instead of $K$.
+\begin{theorem}[Existence of solution]
+    Let $\Omega \subseteq \real^3$ be such that $\real^3 \setminus \Omega$
+    is compact and $\interior \omegabar = \interior \Omega$. Assume there 
+    exists a simplicial complex $K$ s.t. $\omegabar = |K|$ and a simplicial
+    subcomplex $L \subseteq K$ s.t. $|L|$ is homeomorphic to the exterior 
+    of a ball with radius $R > 0$ and $K \setminus L$ is finite. 
+    For $K$ we require that $H_1(K) = \integers [\gamma]$ for a $1$-chain 
+    $\gamma$.
+    Assume that 
+    the GKS-condition \ref{} holds for $K$. Then there exists a solution 
+    to Problem \ref{prob:magnetostatic_problem_reformulated}.
+\end{theorem}
+\begin{proof}
+    Under the given assumptions we know that we can find a 
+    $F \in \tilde{C}^k(K,L)$ (see Lemma \ref{}). Then We apply the theorem about
+    the isomorphism from \ref{} that there exists a S-form $\tilde{\theta}$
+    s.t. $[I(\tilde{\theta})] = [F] \in \tilde{H}^1(K,L)$. Thus 
+    we have some $J \in \tilde{C}^1(K,L)$ s.t. 
+    $I(\tilde{\theta}) = F + \partial J$ and thus 
+    \begin{align*}
+        I(\tilde{\theta})(\gamma) = F(\gamma) + J(\partial \gamma)
+        \stackrel{\gamma \text{ closed}}{=} F(\gamma) = C_0.      
+    \end{align*}
+    Now define $\theta \vcentcolon= \varphi \tilde{\theta}$.
+    So we found already a $1$-chain that has the desired curve integral.
 
-We know from Prop.~\ref{prop:uniqueness_cochain} 
-that a closed cochain $F \in C^1(L)$ 
-exists s.t. $F(\gamma) = C_0$. 
-We know from \ref{} that $[I]: \mathscr{H}^1(L) \rightarrow H^1(L)$ is a 
-isomorphism. Thus we find a $\tilde{\theta} \in S^1(L)$ s.t. 
-$[I(\tilde{\theta})] = [F]$
-i.e. $I(\tilde{\theta}) = F + \delta J$ for some $J\in C^0(L)$. Thus 
-$I(\tilde{\theta}) = F(\gamma) + (\delta J)(\gamma) 
-\stackrel{\gamma \text{ closed}}{=} 
-F(\gamma) = C_0$.
-
-Because $L$ is a finite simplicial complex every cochain is $2$-summable 
-i.e. $\tilde{\theta} \in S^1_2(L)$. 
-Continue by defining $\theta \vcentcolon= \phi^{-1}\tilde{\theta}
-\in S_2^1(|L|) \subseteq W^1_2(|L|)$.
-By our definition of integration \ref{}
-we have then $I(\theta) = C_0$ and due to Lemma \ref{} 
-\begin{align*}
-    \int_\gamma \rop_L \theta = \int_\gamma \theta = C_0.
-\end{align*} 
-
-We now use the Hodge decomposition
-(\ref{hodge_decomposition}) and project $\theta$ onto the harmonic functions 
-to obtain $\omega_L \in \mathring{H}^1_0(d,\delta;|L|)$ with 
-\begin{align*}
-    \omega_L = \theta_L - d\psi
-\end{align*}
-with $\psi \in H^0(d;|L|)$. {\color{red} We need here that $d$ and $\delta$ 
-have closed range on bounded domains!}
-\begin{align*}
-    \int_\gamma \rop_L \omega_L 
-    = \int_\gamma \rop_L (\theta - d\psi) 
-    \stackrel{d\rop_L = \rop_L d}{=}\int_\gamma \rop_L \theta 
-    = \int_\gamma \theta = C_0.
-\end{align*}
-Because $\omega_L \in \mathring{H}^1(d;|L|)$ we can use 
-Lemma~\ref{lem:extension_by_zero} extend it by zero to 
-obtain $\bar{\omega}_L \in H^1(d;\Omega)$ which is closed {\color{red} Here we 
-definitely need $|L|$ open.} 
-Because the construction of the operator $\rop$ is local on the stars 
-of the vertices
-(cf. Remark~\ref{rem:local_construction_regularization}) 
-we have $\rop_L \omega_L = \rop \bar{\omega}_L$ on 
-every simplex attached to $\gamma$ because $\rop_L$ and $\rop$ are constructed
-in the same manner. Therefore 
-$\int_\gamma \rop_L \omega_L = \int_\gamma \rop \bar{\omega}_L = C_0$. 
-Now we project $*\bar{\omega}_L$ onto harmonic forms to get 
-$\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. Because the domain $\Omega$
-is unbounded the image of $d$ and $\delta$ are not closed anymore. So because 
-$*\bar{\omega}_L$ is co-closed we 
-obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
-\begin{align*}
-    *\bar{\omega}_L = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i.
-\end{align*}
-where the limit is in the $L^2$-sense. Apply the Hodge star operator on 
-both sides, use the fact that it is an isometry and thus continuous and then 
-remember the definition of $\delta$ to get a sequence 
-$(\psi_i)_{i \in \naturalnum} \subseteq H^0(d)$ s.t.
-\begin{align*}
-    \bar{\omega}_L = *\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
-\end{align*}
-Then we get
-\begin{align*}
-    \int_\gamma \rop * \omega 
-    =\int_\gamma \rop (\bar{\omega}_L - 
-    \lim\limits_{i \rightarrow \infty}d \psi_i) = 
-    \int_\gamma \rop \bar{\omega}_L = C_0.
-\end{align*}
-Thus $\omega$ fulfills the integral condition. 
-Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
-are satisfied as well and $\omega$ is a solution.
+    Because $j^*_{K,L}\tilde{\theta} = 0$ we have that $\theta = 0$ in 
+    $|L|$ almost everywhere. {\color{red} Reference this} 
+    We now use the fact that $\text{int}\,\omegabar = \text{int}\,\Omega$
+    and thus $\theta \in H^1(d;\Omega)$. {\color{red} identifcation of 
+    Solobev spaces of domain and closure}.
+    We now use the Hodge decomposition \ref{hodge_decomposition} 
+    Now we project $*\bar{\theta}$ onto harmonic forms to get 
+    $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. 
+    So because 
+    $*\theta$ is co-closed we 
+    obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
+    \begin{align*}
+        *\theta = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i
+    \end{align*}
+    where the limit is in the $L^2$-sense.
+    Apply the Hodge star operator on 
+    both sides, use the fact that it is an isometry and thus continuous and then 
+    remember the definition of $\delta$ to get a sequence 
+    $(\psi_i)_{i \in \naturalnum} \subseteq H^0(d)$ s.t.
+    \begin{align*}
+        \theta = *\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
+    \end{align*}    
+    Then we get
+    \begin{align*}
+        \int_\gamma \rop * \omega 
+        =\int_\gamma \rop (\theta - 
+        \lim\limits_{i \rightarrow \infty}d \psi_i) = 
+        \int_\gamma \rop \theta = \int_\gamma \theta = C_0.
+    \end{align*}
+    In the penultimate step equality we used the fact that 
+    $\rop$ does not change the integral because $\theta \in S^1(K)$ is closed.
+    Thus $\omega$ fulfills the integral condition. 
+    Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
+    are satisfied as well and $\omega$ is a solution.
+\end{proof}
 
 
 In the proof of uniqueness we will use the following lemma. 
@@ -1675,7 +1677,7 @@ and not related to differential forms).
     domain and $B_{R+1}$ is pre-compact and
     $\phi|_{\Omega_R} \in W^{1,2}(\Omega_R)$. Therefore we can find an extension
     $E\phi \in W_0^{1,2}(\Omega_{R+1}) \hookrightarrow W^{1,2}(\mathbb{R}^3)$
-    (cf. \cite[Thm.\,5.2.1]{sobolev}). So we can now define
+    (cf. \cite[Sec.\,1.5.1]{mazya}). So we can now define
     \begin{align*}
     \bar{\phi} \vcentcolon=
     \begin{cases}
@@ -1687,7 +1689,7 @@ and not related to differential forms).
     $\nabla \bar{\phi} \in L^2(\real^3)^3$. 
     Then there exists a sequence $(\phi_l) _{l \in \naturalnum}$ s.t.
     $\nabla \phi_l \rightarrow \nabla \bar{\phi}$ in $L^2(\real^3)^3$ 
-    (cf. \cite[Lemma\,1.1]{simader}). By restricting $\phi_l$ to $\Omega$ 
+    (cf. \cite[Lemma 1.1]{simader}). By restricting $\phi_l$ to $\Omega$ 
     we obtain the result.
 \end{proof}
 
