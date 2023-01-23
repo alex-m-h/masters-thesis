@@ -331,7 +331,7 @@ and for $p=\infty$
     \right\}.
 \end{align*}
 
-\begin{remark}
+\begin{remark} \label{rem:identification_sobolev_spaces}
     Throughout this thesis, we will mostly deal with open subdomains $\Omega 
     \subseteq \real^n$ with Lipschitz boundary. Then $\Omega$
     is a smooth submanifold of $\real^n$ and $\omegabar$ is a 
@@ -918,7 +918,7 @@ we can connect all vertices with a $1$-chain.
 Now using all these lemmas and results we can now prove the following
 important lemma that will be needed later in Sec.\,\ref{}
 
-\begin{lemma}
+\begin{lemma}\label{lem:existence_vanishing_cochain}
     Let $K$ and $L$ be as in the previous lemma and assume that 
     $H_1(K) = \integers [\gamma]$. Then there exists a cochain 
     $F \in \tilde{C}^1(K,L)$ s.t. $F(\gamma) = C_0$.
@@ -1009,10 +1009,10 @@ We have two crucial assumptions on the triangulation for the result to hold
 (cf. \cite[p.194]{goldshtein}). We summarize them under 
 \textit{GKS-condition} named after the three authors of \cite{goldshtein}.
 
-\begin{assumption}[GKS-condition]
+\begin{assumption}[GKS-condition] \label{ass:gks_condition}
     We will assume the following on the simplicial complex $K$ 
     and the triangulation $\tau$:
-    \begin{enumerate}
+    \begin{enumerate}[(i)]
     \item The star of every vertex in $K$ contains at most $N$ simplices.
     \item For the differential of $\tau$ we have constants 
         $C_1, C_2 > 0$ s.t.
@@ -1027,6 +1027,7 @@ We have two crucial assumptions on the triangulation for the result to hold
 \end{assumption}
 The first assumption is equivalent to every vertex being contained in
 at most $N$ simplices, which is fulfilled if we have a shape regular mesh.\par
+{\color{red} This has to be shown.}
 %%% TBD: Reference or proof or sth%%%
 
 Because $\tau$ is just the identity in our case 
@@ -1475,7 +1476,7 @@ uniqueness of this problem in the next section.
 
 We start with the following
 
-\begin{proposition}\label{integral_exact_form_zero}
+\begin{proposition}\label{prop:integral_exact_form_zero}
     Let $(\phi_i)_{i\in\mathbb{N}} \subseteq H^0(d)$ s.t. 
     $(d\phi_i)_{i\in\mathbb{N}}$ 
     is convergent and let $\gamma \in C_1(K)$ be a bounded closed $1$-chain.
@@ -1608,28 +1609,35 @@ We start with the following
     $d\bar{\nu} \in L^{k+1}_2(\Omega)$ and the lemma is proven.
 \end{proof}
 
-\begin{theorem}[Existence of solution]
+\begin{theorem}[Existence of solution]\label{thm:existence}
     Let $\Omega \subseteq \real^3$ be such that $\real^3 \setminus \Omega$
     is compact and $\interior \omegabar = \interior \Omega$. Assume there 
     exists a simplicial complex $K$ s.t. $\omegabar = |K|$ and a simplicial
     subcomplex $L \subseteq K$ s.t. $|L|$ is homeomorphic to the exterior 
-    of a ball with radius $R > 0$ and $K \setminus L$ is finite. 
+    of a ball with radius $R > 0$ and $K \setminus L$ is finite. Both 
+    $K$ and $L$ are assumed path-connected in the sense of simplicial complexes
+    (cf. \ref{}). 
     For $K$ we require that $H_1(K) = \integers [\gamma]$ for a $1$-chain 
     $\gamma$.
     Assume that 
-    the GKS-condition \ref{} holds for $K$. Then there exists a solution 
-    to Problem \ref{prob:magnetostatic_problem_reformulated}.
+    the GKS-condition \ref{ass:gks_condition} holds for $K$. 
+    Then there exists a solution 
+    to Problem \ref{prob:magnetostatic_reformulated}.
 \end{theorem}
 \begin{proof}
     Under the given assumptions we know that we can find a 
-    $F \in \tilde{C}^1(K,L)$ (see Lemma \ref{}). 
+    $F \in \tilde{C}^1(K,L)$ (see Lemma \ref{lem:existence_vanishing_cochain})
+    with $F(\gamma) = C_0$. 
     Because $K \setminus L$ is finite $F$ is obviously 2-summable 
     i.e. $F \in  \tilde{C}_2^1(K,L)$
-    Then We apply the theorem about
-    the isomorphism from \ref{} that there exists a 
+    Then we use the fact that the integration mapping 
+    $I: S^1_2(K,L) \rightarrow \tilde{C}^1_2(K,L)$ induces an isomorphism 
+    on cohomology
+    $[I]: \mathscr{H}^1_2(K,L) \rightarrow \tilde{H}^1_2(K,L)$.
+    So there exists a 
     S-form $\tilde{\theta} \in S^1_2(K,L)$
     s.t. $[I(\tilde{\theta})] = [F] \in \tilde{H}_2^1(K,L)$. Thus 
-    we have some $J \in \tilde{C}^1(K,L)$ s.t. 
+    we have some $J \in \tilde{C}^0_2(K,L)$ s.t. 
     $I(\tilde{\theta}) = F + \partial J$ and thus 
     \begin{align*}
         I(\tilde{\theta})(\gamma) = F(\gamma) + J(\partial \gamma)
@@ -1642,10 +1650,11 @@ We start with the following
     $\theta \in S^1_2(\omegabar) \subseteq W^1_2(\omegabar)$.
     We now use the fact that $\text{int}\,\omegabar = \text{int}\,\Omega$ and
     remember the resulting identification of the Sobolev spaces 
-    $W^1_2(\omegabar)$ and $W^1_2(\Omega)$ (cf. Remark \ref{}) to obtain
+    $W^1_2(\omegabar)$ and $W^1_2(\Omega)$ 
+    (cf. Remark \ref{rem:identification_sobolev_spaces}) to obtain
     $\theta \in H^1(d;\Omega)$.
-    Next, we will use the Hodge decomposition \ref{hodge_decomposition}.
-    Now we project $\star\bar{\theta}$ onto harmonic forms to get 
+    Next, we will use the Hodge decomposition (\ref{hodge_decomposition}).
+    Now we project $\star \theta$ onto harmonic forms to get 
     $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. 
     So because 
     $\star\theta$ is co-closed we 
@@ -1665,8 +1674,11 @@ We start with the following
     \begin{align*}
         \int_\gamma \rop \star \omega 
         =\int_\gamma \rop (\theta - 
-        \lim\limits_{i \rightarrow \infty}d \psi_i) = 
-        \int_\gamma \rop \theta = \int_\gamma \theta = C_0.
+        \lim\limits_{i \rightarrow \infty}d \psi_i) 
+        \stackrel{  \text{Prop.\ref{prop:integral_exact_form_zero}}  }{=} 
+            \int_\gamma \rop \theta 
+        \stackrel{  \text{Prop.\ref{}}  }{=}  
+            \int_\gamma \theta = C_0.
     \end{align*}
     In the penultimate step equality we used the fact that 
     $\rop$ does not change the integral because $\theta \in S^1(K)$ is closed.
@@ -1679,7 +1691,7 @@ We start with the following
 In the proof of uniqueness we will use the following lemma. 
 We are now back in the realm of standard vector analysis so all the notation
 is to be seen in this light (e.g. $H^1$ is here the standard Sobolov space 
-and not related to differential forms).
+and not a Sobolev space of differential forms).
 
 \begin{lemma}\label{lem:gradient_sequence}
     Let $\phi \in L^2_{loc}(\Omega)$ with $\nabla \phi \in L^2(\Omega)$. Then 
@@ -1703,81 +1715,17 @@ and not related to differential forms).
     \end{align*}
     Then $\bar{\phi} \in L^2_{loc}(\real^3)$ and 
     $\nabla \bar{\phi} \in L^2(\real^3)^3$. 
-    Then there exists a sequence $(\phi_l) _{l \in \naturalnum}$ s.t.
+    Then there exists a sequence 
+    $(\phi_l) _{l \in \naturalnum} \subseteq C^\infty_0(\real^3)$ s.t.
     $\nabla \phi_l \rightarrow \nabla \bar{\phi}$ in $L^2(\real^3)^3$ 
     (cf. \cite[Lemma 1.1]{simader}). By restricting $\phi_l$ to $\Omega$ 
     we obtain the result.
 \end{proof}
 
-% First we compute
-% \begin{align*}
-%     \delta *\eta = (-1)^{n(k-1)+1} *d**\eta = (-1)^{n(k-1)+1} *d\eta = 0.
-% \end{align*}
-% Using the Hodge decomposition for unbounded domains 
-% (cf. \cite[Lemma 1]{picard}) we get therefore that there exists 
-% a sequence  $(\phi_i)_{i\in \mathbb{N}} \subseteq H^3(\delta,\Omega)$ 
-% and a harmonic $\omega \in \mathring{H}^2(d) \cap H^3(\delta)$ s.t. 
-% \begin{align*}
-%     *\eta = \lim\limits_{i \rightarrow \infty} \delta \phi_i + \omega.
-% \end{align*}
-% where the limit is in $L^1_2(\Omega)$. 
-
-
-% We will show that $\omega$ is then a solution. Because $\omega$ is harmonic
-% we already know that $d\omega = 0$, $\delta \omega = 0$ and 
-% $\omega \in \mathring{H}^2(d)$. It remains to show that the integral condition
-% (\refeq{integral_condition}) is also satisfied.
-
-% At first we check that the integral is well-defined. We have $\delta \omega = 0$
-% which implies
-% \begin{align*}
-%     d * \omega = ** d*\omega = (-1)^{n(k-1)+1} *\delta \omega = 0
-% \end{align*}
-% so $*\omega$ is a closed 1-form. Therefore the integral is well-defined as shown
-% in Sec.\,\ref{well_definedness_integral}.
-
-% Take a ball of radius $R>0$ 
-% around the origin with $R$ large enough s.t. $\gamma \subseteq B_R$. 
-% Using the fact that the range of $\delta$ is closed on bounded domains 
-% (cf. \cite[Lemma 7]{picard}) there is some $\phi_R \in H^3(\delta;B_R)$ s.t.
-% \begin{align*}
-%     *\eta|_{B_R} = \omega|_{B_R} + \delta \phi_R.
-% \end{align*}
-% We then get for the integral condition (\ref{integral_condition}) 
-% \begin{align*}
-%     \int_\gamma *\omega &= \int_\gamma *\omega|_{B_R} = 
-%     \int_\gamma *(*\eta|_{B_R} - \delta \phi_R) = 
-%     \int_\gamma \eta|_{B_R} - (-1)^{3\cdot 2+1} d * \phi_R \\
-%     &= \int_\gamma \eta|_{B_R} = C_0
-% \end{align*}
-% so the integral condition (\refeq{integral_condition}) is fulfilled and 
-% $\omega$ is indeed a solution. \newline
-% {\color{red} TBD: Put all this in a theorem.}
-
-% If we now take the Hodge decomposition
-% $L^2_2(\omegabar) = \bar{\mathfrak{B^k}} \oplus \mathcal{H}^k \oplus
-% \bar{\mathfrak{B^*_k}}$ and define $\omega$ as the projection of $\eta$ onto the
-% harmonic forms $\mathcal{H}^k$. Then we know that $d\omega = 0$, 
-% $\delta\omega = 0$ and $\text{tr}\,\omega = 0$. So we only have to show that
-% \begin{align*}
-% \int_\gamma \omega = C_0.
-% \end{align*}
-
-% We know from the Hodge decomposition that there exists a sequence
-% $(\phi_i)_{i\in \mathbb{N}} \subseteq L^{k-1}_2(M)$ s.t. 
-% $\omega = \eta - \lim_{i \rightarrow \infty} d\phi_i$.
-% Let now be $R>0$ large enough s.t. $\gamma \subseteq B_R$. Then we know that
-% $d W^{k-1}_2(B_R)$ is closed in $L_2^k(B_R)$. \cite{}  Therefore there exists 
-% $\phi_R \in  W^{k-1}_2(B_R)$ s.t. 
-% $\lim_{i \rightarrow \infty} d\phi_i|_{B_R} = d\phi_R$. So we have
-% $\omega|_{B_R} = \eta|_{B_R} - d\phi_R$ and 
-% \begin{align*}
-% \int_\gamma \omega = \int_\gamma \omega|_{B_R} = \int_\gamma \eta|_{B_R} = C_0.
-% \end{align*}
-% This proves existence.
 
 \begin{theorem}
-    The solution of the problem is unique.
+    Let the same assumptions hold as in Thm.\,\ref{thm:existence}.
+    Then solution of the problem is unique.
 \end{theorem}
 \begin{proof}
     Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $\star\omega$ is 
