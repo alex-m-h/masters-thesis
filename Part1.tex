@@ -55,6 +55,45 @@
 
 \section{Differential forms}
 
+Before we define differential forms, let us start by revising some basics
+from differential geometry. We follow the approach from 
+\cite[Sec. II.5]{topology_and_geometry}. 
+It should be noted that there are different definitions of tangent space, but
+these lead to isomorphic notions 
+(see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
+Let $M$ be a smooth manifold without boundary.
+For a point $p \in M$ and a neighorhood $U$ we call a function 
+$f: U \rightarrow \real$ differentiable if for a local chart 
+$\phi: U \rightarrow \real^k$ we have that $f \circ \phi^{-1}$ is differentiable
+at $\phi(p)$.
+
+Let $I \subseteq \real$ be an interval containing $0$ and 
+$\gamma: I \rightarrow M$ be a differentiable curve with $\gamma(0) = p \in M$.
+For a differentiable $f: U \rightarrow \real$ 
+we define the the directional derivative 
+$D_\gamma(f) \vcentcolon= \frac{d}{dt} f(\gamma(t)) |_{t=0}$.
+We call the functional $D_\gamma: C^1(U) \rightarrow \real$ 
+tangent vector. With the help of a local chart $\phi$ we can now 
+express these derivations by 
+\begin{align}
+    D_\gamma(f) &=  \frac{d}{dt} f(\gamma(t)) |_{t=0}
+    =  \frac{d}{dt} (f \circ \phi^{-1} \circ \phi)  (\gamma(t)) |_{t=0}
+    \\ &= \sum\limits_{i=1}^k \frac{\partial (f \circ \phi^{-1})}{\partial x_i} 
+        (\phi(p))
+        \, \frac{d}{dt} [\phi^{-1}(\gamma(t))]_i |_{t=0}
+    = (\sum\limits_{i=1}^k v_i  \frac{\partial}{\partial x_i} )(f).
+\end{align}
+In the last step, we abused the location by denoting by $f$ also the 
+corresponding expression in local coordinates i.e. $f \circ \phi^{-1}$.
+This way we identified $D_\gamma$ with $v \in \real^k$ 
+by $v_i \vcentcolon= \frac{d}{dt} [\phi^{-1}(\gamma(t))]_i |_{t=0}$.
+If we use a curve $\tilde{\gamma}$ s.t. $D_{\tilde{\gamma}} = D_\gamma$ and 
+the same local chart $\phi$ then we obtain the same vector so this 
+identification is unique.  
+
+
+
+
 Our goal is to study the homogeneous magnetostatic problem on the exterior 
 domain of a triangulated torus. That means 
 that for the unbounded domain  $\Omega \subseteq \real^3$ we have
@@ -215,28 +254,125 @@ to the operations of the corresponding proxies.
 
 \subsection{Differential forms}
 
+Before we define differential forms, let us start by revising some basics
+from differential geometry. We follow the approach from 
+\cite[Sec. II.5]{topology_and_geometry}. 
+It should be noted that there are different definitions of tangent space, but
+these lead to isomorphic notions 
+(see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
+Let $M$ be a smooth manifold without boundary.
+For a point $p \in M$ and a neighorhood $U$ we call a function 
+$f: U \rightarrow \real$ differentiable if for a local chart 
+$\phi: U \rightarrow \real^k$ we have that $f \circ \phi^{-1}$ is differentiable
+at $\phi(p)$. Note that we assume that our manifold is differentiable so 
+all chart transitions are differentiable and thus this definition is independent
+of the chosen chart.
+
+Let $I \subseteq \real$ be an interval containing $0$ and 
+$\gamma: I \rightarrow M$ be a differentiable curve with $\gamma(0) = p \in M$.
+For a differentiable $f: U \rightarrow \real$ 
+we define the the directional derivative 
+$D_\gamma(f) \vcentcolon= \frac{d}{dt} f(\gamma(t)) |_{t=0}$.
+We call the functional $D_\gamma: C^1(U) \rightarrow \real$ 
+tangent vector.
+Let us fix a chart $\phi: U \rightarrow \real^n$ and let us define 
+\begin{align*}
+    \frac{\partial}{\partial x_i}|_p: C^1(U) \rightarrow \real
+    f \mapsto \frac{\partial (f \circ \phi^{-1})}{\partial x_i} (\phi(p)).
+\end{align*}
+The value depend in general on the chosen chart.
+With the help of a local chart $\phi$ we can now 
+express these derivations by 
+\begin{align}
+    D_\gamma(f) &=  \frac{d}{dt} f(\gamma(t)) |_{t=0}
+    =  \frac{d}{dt} (f \circ \phi^{-1} \circ \phi)  (\gamma(t)) |_{t=0}
+    \\ &= \sum\limits_{i=1}^k \frac{\partial (f \circ \phi^{-1})}{\partial x_i} 
+        (\phi(p))
+         \phi^{-1}\circ (\gamma)'_i (0)
+    \\ &= \left( \sum\limits_{i=1}^k \frac{\partial}{\partial x_i}|_p 
+          \phi^{-1}\circ (\gamma)'_i (0) \right) (f)
+\end{align}
+Thus we can express 
+\begin{align*}
+    D_\gamma = \sum\limits_{i=1}^k \frac{\partial}{\partial x_i}|_p 
+    \phi^{-1}\circ (\gamma)'_i (0).
+\end{align*}
+So we have that 
+$T_p M = \text{span}\, \left\{ \frac{\partial}{\partial x_i}|_p \right\}$.
+We will show that this indeed a basis. 
+Assume we have $\sum_{i=1}^n \lambda_i \frac{\partial}{\partial x_i}|_p = 0$
+Then because $\phi_j \circ \phi^{-1} (x) = x_j$ for $x \in \phi(U)$ and 
+$1 \leq j \leq n$. Then we have 
+\begin{align*}
+    0 = \left( \sum\limits_{i=1}^n \lambda_i \frac{\partial}{\partial x_i}|_p
+        \right) (\phi_j)
+    = \sum\limits_{i=1}^n \lambda_i \frac{\partial x_j}{\partial x_i}(\phi(p))
+    = \lambda_j
+\end{align*}
+so $\left\{ \frac{\partial}{\partial x_i}|_p \right\}$ is 
+linearly independent and thus a basis of $T_p M$. 
+
+\begin{definition}[Differential forms]
+    A differential $k$-form $\omega$ is a maps any point $p \in M$ to a 
+    alternating $k$-linear mapping $\omega_p \in \alternating{k}{T_p M}$.
+    We denote the space of differential $k$-forms on $M$ as $\Lambda^k M$.
+\end{definition}
+
+Let $T_p^* M$ be the dual space of $T_p M$ which is usually called 
+\textit{cotangent space}.
+As before let us choose a local chart $\phi: U \rightarrow \real^n$ with 
+$p \in U$ and define $\frac{\partial}{\partial x_i}|_p$ as before. 
+Because we know that this is a basis of $T_p M$ we denote the corresponding
+dual basis as $dx^i$, $i = 1,...,n$. From the consideration about
+alternating maps from section \ref{} we can now write any 
+$\omega \in \Lambda^k M$ with 
+\begin{align*}
+    \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
+        a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+\end{align*}
+with $a_{i_1,...,i_k}(p) \in \real$. The regularity of differential forms 
+is then defined via the regularity of these coefficents i.e. we call 
+a differential form smooth if all the $a_{i_1,...,i_k}$ are smooth 
+and we call a differential form differentiable if all the $a_{i_1,...,i_k}$
+are differentiable and so on. We denote the space $C^\infty \Lambda^k M$ the 
+space of smooth differential $k$-forms and analogous for other regularity.
+
+$\smoothcompforms{k}{M}$ are the smooth compactly supported differential forms
+which will become very crucial later when we discuss Sobolev spaces 
+of differential forms (see Sec. \ref{}). Note that the support is not 
+defined via the coefficent functions as above, but directly on the manifold 
+i.e. $\supp \omega = \overline{\{ p \in M \mid \omega_p \neq 0  \}} \subseteq M$
+where the closure is w.r.t. the topology on $M$.
+
+In order to define the Hodge star and an inner product on differential forms
+we need that 
+$T_p M$ is an inner product space.
+
+A Riemannian metric gives us at every point $p \in M$ 
+a symmetric, positive definite bilinear form 
+$g_p: T_p M \times T_p M \rightarrow \real$. Additionally, a Riemannian metric 
+is assumed to be smooth in the sense that for smooth vector fields 
+$X$ and $Y$ we have $p \mapsto g_p(X,Y)$ is a smooth function. The degree 
+of smoothness depends on the context. For example, for a differentiable 
+manifold it is only required to be differentiable as well. 
+{\color{red} More details... }
+Manifolds on which a Riemannian metric is defined are called 
+\textit{Riemannian manifolds}. The Riemannian metric provides us with the 
+inner product on every tangent space $T_p M$. 
 
 Now we will move on to differential forms on a smooth, oriented, Riemannian 
 manifold $M$ of dimension $n$ 
-with or without boundary. We denote the Riemmanian metric by $g$.
+with or without boundary. We denote the Riemannian metric by $g$.
 %TBD: Lipschitz
 Let $p \in M$ and $T_p M$ be the tangent space at the point $p$. 
-Due to our assumptions on $M$, this is an oriented inner product space of 
+Due to our assumptions on $M$, this is an inner product space of 
 dimension $n$ and we can apply 
 all of the constructions from the previous chapter
-{\color{red} Are you sure?}
-%TBD: What is that exactly?
-Then a differential $k$-form (or just $k$-form) $\omega$ maps any 
-such point $p$ to $\omega_p \in \alternating{k}{T_p M}$. In the special case 
-of a domain $\Omega$ in $\real^n$ we 
-have the tangent space $T_x \Omega \cong \real^n$. Using this identifcation 
-$\omega_x \in \text{Alt}^k$ and we have $a_{i_1,i_2,...,i_k}: 
-\Omega \rightarrow \real$ for $1\leq i_1 < ... < i_k \leq n$ and 
-\begin{align*}
-    \omega_x = \sum\limits_{1\leq i_1 < ... < i_k \leq n} a_{i_1,i_2,...,i_k}
-    dx^{i_1}\wedge ... \wedge dx^{i_k}.
-\end{align*}
-We denote the space of differential forms on $M$ as $\Lambda^k M$.
+{\color{red} Are you sure?}. We have a volume form vol on $M$ so the 
+previous constructions using the Hodge star operator are well-defined.  
+\cite{riemannian_geometry}.
+
+
 
 We define the Hodge star operator to differential forms 
 $\star: \Lambda^k(\Omega) \rightarrow \Lambda^{n-k}(\Omega)$ simply by applying it 
@@ -246,9 +382,73 @@ manifold is crucial. We do the same for the exterior product to get
 $\wedge: \Lambda^k \times \Lambda^l \rightarrow \Lambda^{k+l}$. 
 
 
+Next, we will define integration of an $n$-form over an $n$ dimensional 
+manifold. At first, we do so for an open set $U \subseteq \real^n$.
+This is the simplest example of an $n$-dimensional manifold where 
+we only have one chart which is the identify and the local coordinates are 
+just our standard coordinates. Let $\omega$ be an $n$-form on $U$ so we can 
+write 
+\begin{align*}
+    \omega_x = f(x) dx_1 \wedge dx_2 \wedge ... \wedge dx_n
+\end{align*}
+for $x \in U$. We can now simply define 
+\begin{align*}
+    \int_U \omega = \int_U f(x) dx.
+\end{align*}
 
+With this definition at hand we can now extend this definition to 
+any smooth oriented $n$-dimensional manifold $M$. As it is often done in 
+differential geometry we will work locally first and then extend this 
+construction globally by using a partition of unity.
 
+Let $(U,\phi)$ be a chart on $M$ and assume $\supp \omega \subseteq U$. 
+Then $(\phi^{-1})^* \omega$ is a $n$-form on $\phi(U) \subseteq \real^n$ and 
+we can apply our prior definition. So now we just define 
+\begin{align*}
+    \int_M \omega \vcentcolon= \int_{\phi(U)} (\phi^{-1})^* \omega.
+\end{align*}
+It can be shown that this definition does not depend on the chart if 
+we choose the atlas corresponding to the orientation of the manifold. 
 
+Now let us move on to the global definition. Let $\{(U_i,\phi_i)\}_{i=1}^\infty$
+be a oriented atlas and let $\{ \xi_i \}_{i=1}^\infty$ be a partition 
+of unity subordinate to it. Then $\supp \xi_i \omega \subseteq U_i$ 
+and we define 
+\begin{align*}
+    \int_M \omega \vcentcolon= \sum_{i=1}^\infty \int_M \xi_i \omega.
+\end{align*} 
+This definition is also independent of the chosen chart and partition of 
+unity. We will omit the proof. 
+{\color{red} In Bredon this is defined only for differentiable functions 
+but Arnold uses this in a $L^2$ setting. So there must be a way to generalize 
+the ideas of integrability etc. }
+
+Now that we defined integration we will also introduce a natural way to 
+differentiate differential forms. Let $\omega \in \Lambda^k (M)$ be given 
+in local coordinates with some chart $(U,\phi)$ as above i.e.
+\begin{align*}
+    \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
+        a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+\end{align*}
+
+Then we define the exterior derivative $d: Lambda^{k}(M) \rightarrow 
+Lambda^{k+1}(M)$. By
+\begin{align*}
+    (d\omega)_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} \sum\limits_{i=1}^n
+    \frac{\partial {a_{i_1,...,i_k}} }{\partial x_i}(\phi(p)) 
+    dx^k \wedge dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+\end{align*}
+As the other definitions above this is also independent of the chosen chart. 
+
+If the manifold is oriented and we have thus a Hodge star operator.
+Then we define the \textit{codifferential operator}
+$\delta \vcentcolon= (-1)^{n(k-1)+1} \star d \star$ which is then 
+an operator $\Lambda^{k}(M) \rightarrow 
+Lambda^{k-1}(M)$.
+
+The exterior derivative and the codifferential both require the differential 
+form to be differentiable. Later we will extend this in weak sense so 
+classical differentiabilty is no longer required (see \ref{}).
 
 Then
 we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
