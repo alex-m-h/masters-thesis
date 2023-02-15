@@ -35,6 +35,7 @@
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\diver}{div}
+\DeclareMathOperator{\grad}{grad}
 \DeclareMathOperator{\Ima}{im}
 \DeclareMathOperator{\interior}{int}
 \DeclareMathOperator{\supp}{supp}
@@ -1534,6 +1535,269 @@ $[\iota \circ \varphi^{-1}]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ 
 
 
 \section{Existence and uniqueness of solutions}
+
+We now return to the main problem that this thesis is about, the magnetostatic 
+problem. We exterior domain we mean that our domain $\Omega \subseteq \real^3$
+is the complement of a compact set. The main motivation for this problem is 
+the when $\Omega$ complement of a torus. This is also the motivation behind the
+topological assumption that we will give. 
+
+Of course in order for the curve integral constraint to be well-defined 
+we need to check the regularity of solutions. Then using the tools we developed
+in the previous sections we will proof existence and uniqueness.
+
+\subsection{Regularity of solutions}
+
+We will rely heavily on standard regularity results about elliptic systems 
+of the following form. Take $A_{ij}^{\alpha \beta} \in \real$
+for $i$, $j$, $\alpha$, $\beta = 1,2,3$ and 
+$A_{ij}^{\alpha \beta} = A_{ji}^{\beta \alpha}$. Then we have systems for the 
+form 
+\begin{align*}
+    -\sum\limits_{\alpha \beta j} \partial_\alpha 
+        (A_{ij}^{\alpha \beta} \partial_\beta B_j)
+    = f_i - \sum\limits_\alpha \partial_\alpha F_i^\alpha
+\end{align*}
+with data $f_i, F_i^\alpha \in L^2(\Omega)$. We call this system 
+\textit{elliptic} if $A$ satisfies the Legendre condition i.e.
+\begin{align}
+    \sum_{\alpha,\beta,i,j}A_{ij}^{\alpha \beta} \xi_\alpha^i \xi_\beta^j
+    \geq c |\xi|^2, \quad \forall \xi \in \real^{3 \times 3} 
+    \label{eq:legendre_condition}
+\end{align}
+with $c > 0$.
+We then call $B$ a weak solution
+of the problem if 
+\begin{align}
+    \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
+        A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx
+    = \int_\Omega \left\{ \sum\limits_i f_i \varphi_i + 
+        \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi_i \right\} dx
+    \label{eq:weak_elliptic_system}
+\end{align}
+for all $\varphi \in C^1_0(\Omega;\real^3)$. This formulation is taken from 
+\cite[Sec. 1.3]{Lectures on PDE}. At first we will slightly modify
+the notion of weak solution. 
+
+\begin{proposition}
+    Assume that we have an elliptic system with constant coefficients i.e. 
+    $A$ is constant. Then
+    (\ref{eq:weak_elliptic_system}) is fulfilled for all 
+    $\varphi \in C^1_0(\Omega;\real^3)$ if and only if it is fulfilled 
+    for $\varphi \in C^\infty_0(\Omega;\real^3)$.
+\end{proposition}
+\begin{proof}
+    This follows by a simple density argument. Assume that 
+    (\ref{eq:weak_elliptic_system}) is fulfilled for all test functions in 
+    $C^\infty_0(\Omega;\real^3)$. Now take $\varphi \in C^1_0(\Omega;\real^3)$
+    arbitrary. Because $\varphi \in H^1(\Omega)^3$ and 
+    $C^\infty_0(\Omega;\real^3)$ is dense in $H^1(\Omega)^3$ we can find 
+    a sequence $(\varphi^{(l)})_{l \in \naturalnum} \subseteq 
+    C^\infty_0(\Omega;\real^3)$ s.t. $\varphi^{(l)} \rightarrow \varphi$
+    in $H^1(\Omega)^3$. Thus the partial derivatives converge in $L^2(\Omega)$
+    and we get
+    \begin{align*}
+        &\int_\Omega \sum\limits_{i,j,\alpha,\beta} 
+            A_{ij}^{\alpha, \beta} \partial_\beta B_j \partial_\alpha \varphi_i
+            dx
+        = \sum\limits_{i,j,\alpha,\beta} A_{ij}^{\alpha, \beta}
+            \int_\Omega \partial_\beta B_j \lim\limits_{l\rightarrow \infty} 
+            \partial_\alpha \varphi^{(l)} dx
+        \\ &\stackrel{\text{$L^2$ limit}}{=} 
+            \lim\limits_{l\rightarrow \infty} 
+            \int_\Omega \left\{ \sum\limits_i f_i \varphi^{(l)}_i + 
+            \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi^{(l)}_i 
+            \right\} dx
+        = \int_\Omega \left\{ \sum\limits_i f_i \varphi_i + 
+            \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi_i 
+            \right\} dx.
+    \end{align*}
+    Since $\varphi \in C_0^1(\Omega;\real^3)$ was arbitrary the first 
+    direction of the equivalence is proved. The other direction is trivial.
+\end{proof}
+So we see that in the case of constant coefficents we can consider 
+just smooth compactly supported functions as test functions.
+
+Next, we will state the crucial result about the regularity of elliptic systems
+which will give us the desired regularity. This is Theorem 2.13 and Remark 2.16 
+in \cite{Lectures on ellitic PDEs} in slightly less generality.
+\begin{theorem}
+    Let $\Omega$ be an open domain in $\real^n$. Let $A$ be constant and 
+    satisfy the Legendre condition \ref{eq:legendre_condition}. Then for every 
+    $B \in H^1_{loc}(\Omega)^3$ weak solution in the sense of
+    (\ref{eq:weak_elliptic_system}) with $f \in H^k_{loc}(\Omega)^3$ and 
+    $F \in H^{k+1}_{loc}(\Omega;\real^{m\times n})$ 
+    we have $B \in H^{k+2}_{loc}(\Omega)^3$. 
+\end{theorem}
+
+\begin{corollary}\label{cor:smooth_solution}
+    If under the assumptions of the previous theorem we consider the 
+    homogeneous problem, i.e.
+    \begin{align*}
+        \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
+        A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx =0
+    \end{align*}
+    for all $\phi \in C^\infty_0(\Omega;\real^3)$, then $B$ is smooth.   
+\end{corollary}
+It should be noted that this does not guarantee us any regularity on the 
+boundary. 
+
+Before we can apply this result, we have to check whether a solution of our 
+problem $B$ is actually in $H^1_{loc}(\Omega)^3$. 
+
+\begin{theorem}\label{thm:solution_in_H1loc}
+    Assume $B \in H(\diver;\Omega) \cap H(\curl;\Omega)$. Then 
+    $B \in H^1_{loc}(\Omega)^3$.
+\end{theorem}
+Note that we did not assume $B$ to be a solution.
+\begin{proof}
+    We know that for a function $u \in H_0(\curl;U) \cap H(\diver;U)$ 
+    for some smooth domain $U$ we have $u \in H^1(U)^3$ 
+    (cf. \cite[Remark 3.48]{monk}). Our $\Omega$ is 
+    not assumed to be smooth so we can not apply this result directly.
+
+    Take $Q \subset\subset \Omega$ open. Then we can find an open 
+    cover of $\overline{Q}$ with a finite set of open balls $\{K_i\}_{i=1}^N$
+    s.t. $K_i \subseteq \Omega$ and 
+    \begin{align*}
+        \overline{Q} \subseteq \bigcup\limits_{i=1}^N K_i.
+    \end{align*}
+    As a open cover of a compact set we can find a smooth partition of unity 
+    $\{\chi_i\}_{i=1}^N$ subordinate to $\{K_i\}_{i=1}^N$. 
+    $(B \chi_i)|_{K_i} \in H_0(\curl;K_i) \cap H(\diver;K_i)$ and thus 
+    $(B \chi_i)|_{K_i} \in H^1(K_i)^3$ by the above mentioned result. 
+    Also because $B \chi_i$ has compact support in $K_i$ we can extend it by 
+    zero to obtain 
+    $B \chi_i \in H^1(\real^3)^3$. Whence,
+    \begin{align*}
+        B|_Q = \large( \sum\limits_{i=1}^N \chi_i |_Q \large) B|_Q = 
+        \sum\limits_{i=1}^N (\chi_i B)|_Q \in H^1(Q)
+    \end{align*}
+    i.e. $B \in H^1_{loc}(\Omega)^3$.
+\end{proof}
+
+The following lemma is a reformulation of the differential operator 
+$\grad \diver - \curl \curl$ which will be needed when we write our 
+magnetostatic problem in the above standard elliptic form.
+
+\begin{lemma}
+    Let $F \in H^2_{loc}(\Omega)^3$. Then 
+    \begin{align*}
+        \grad \diver F - \curl \curl F 
+        = \begin{pmatrix} \Delta F_1 \\ \Delta F_2 
+            \\ \Delta F_3  \end{pmatrix}.
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    By a simple calculation and changing the order of differentiation
+    \begin{align*}
+        \grad \diver F = \begin{pmatrix} \partial_1^2 F_1 \\ \partial_1\partial_2 
+            F_2 \\ \partial_1 \partial_3 F_3  \end{pmatrix}    
+    \end{align*}
+    and 
+    \begin{align*}
+        &\curl \curl F = \curl \begin{pmatrix} 
+            \partial_2 F_3 - \partial_3 F_2 \\ \partial_3 F_1 - \partial_1 F_3 
+            \\ \partial_1 F_2 - \partial_2 F_1  \end{pmatrix}
+        = \begin{pmatrix} 
+            \partial_2 (\partial_1 F_2 - \partial_2 F_1)
+                - \partial_3 (\partial_3 F_1 - \partial_1 F_3)
+            \\ \partial_3 (\partial_2 F_3 - \partial_3 F_2)
+                - \partial_1 (\partial_1 F_2 - \partial_2 F_1)
+            \\ \partial_1 (\partial_3 F_1 - \partial_1 F_3)
+                - \partial_2 (\partial_2 F_3 - \partial_3 F_2)  
+            \end{pmatrix}
+        \\ &= \begin{pmatrix}
+            \partial_1 \partial_2 F_2 - \partial^2_2 F_1 - \partial_3^2 F_1
+            + \partial_1 \partial_3 F_3 
+            \\ \partial_2 \partial_3 F_3 - \partial^2_3 F_2 - \partial_1^2 F_2
+            + \partial_1 \partial_2 F_3
+            \\ \partial_1 \partial_3 F_3 - \partial^2_3 F_2 - \partial_2^2 F_3
+            + \partial_2 \partial_3 F_2  
+            \end{pmatrix}
+    \end{align*}
+    and so by subtracting the two expressions
+    \begin{align*}
+        \grad \diver F - \curl \curl F  
+        = \begin{pmatrix}
+            \partial_1^2 B_1 + \partial_2^2 B_1 + \partial_3^2 B_1
+            \\ \partial_1^2 B_2 + \partial_2^2 B_2 + \partial_3^2 B_3
+            \\ \partial_1^2 B_3 + \partial_2^2 B_3 + \partial_3^2 B_3
+        \end{pmatrix}
+        = \begin{pmatrix}
+            \Delta B_1 \\ \Delta B_2 \\ \Delta B_3
+        \end{pmatrix}.
+    \end{align*}
+\end{proof}
+We want to rewrite this system in the expression of the elliptic system 
+\ref{}. We have the differential operator for $i = 1,2,3$
+\begin{align*}
+    - \Delta F_i = - \sum\limits_{\alpha = 1}^3 
+        \partial_\alpha \partial_\alpha F_i
+    = - \sum\limits_{\alpha,\beta = 1}^3 
+    \partial_\alpha \delta_{\alpha,\beta} \partial_\beta F_i
+    = - \sum\limits_{\alpha,\beta,j = 1}^3 
+    \partial_\alpha \delta_{\alpha,\beta} \delta_{ij} \partial_\beta F_j
+\end{align*}
+so we get $A_{ij}^{\alpha\beta} = \delta_{ij} \delta_{\alpha \beta}$.
+We have to check that the resulting differential operator is indeed
+elliptic, but this trivial because for any 
+$(\xi_\alpha^i)_{1\leq i,\alpha \leq 3}$
+we get 
+\begin{align*}
+    \sum\limits_{\alpha,\beta,i,j} A_{ij}^{\alpha\beta} \xi_\alpha^i \xi_\beta^j 
+    = \sum\limits_{\alpha,\beta,i,j} \delta_{ij} \delta_{\alpha \beta} 
+        \xi_\alpha^i \xi_\beta^j 
+    = \sum\limits_{\alpha,i} (\xi_\alpha^i)^2 = |\xi|^2
+\end{align*}
+so  the Legendre condition (\ref{eq:legendre_condition}) 
+is fulfilled and the resulting system is elliptic. The weak formulation 
+is 
+\begin{align*}
+    \int_\Omega \sum\limits_{\alpha,\beta,i,j} \delta_{ij} \delta_{\alpha\beta}
+        \partial_\beta B_j \partial_\alpha \phi_i dx 
+    = \sum\limits_{i=1}^3 \nabla B_i \cdot \nabla \varphi_i dx.
+\end{align*}
+Here we can assume $\varphi \in C_0^\infty (\Omega)^3$ because all coefficients
+are constant.
+
+\begin{theorem}[Smoothness of solutions]
+    Let $\Omega \subseteq \real^3$ open and 
+    $B \in H(\diver;\Omega) \cup H(\curl;\Omega)$ and 
+    \begin{align*}
+        \curl B &= 0,
+        \\ \diver B &= 0.
+    \end{align*}
+    Then $B$ is smooth.
+\end{theorem}
+\begin{proof}
+    Take $\varphi \in C_0^\infty(\Omega)^3$. Then 
+    \begin{align*}
+        0 &= \int_\Omega \diver B \diver \varphi + \curl B \cdot \curl \varphi dx
+        = - \int_\Omega B \cdot (\grad \diver \varphi - \curl \curl \varphi) dx
+        \\ &\stackrel{Lemma \ref{lem:}}{=} - \int_\Omega B \cdot 
+            \begin{pmatrix}
+                \Delta \varphi_1 \\ \Delta \varphi_2 \\ \Delta \varphi_3
+            \end{pmatrix}
+        = \sum\limits_{i=1}^3 \int_\Omega \nabla B_i \cdot \nabla \varphi_i dx.
+    \end{align*}
+    Note that the last integration by parts is well defined because 
+    $B \in H^1_{loc}(\Omega)$ according to \ref{thm:solution_in_H1loc}. 
+    So $B$ is a weak solution 
+    of the elliptic system given by 
+    $A_{ij}^{\alpha \beta} = \delta_{ij} \delta_{\alpha\beta}$. Because 
+    we look at the homogenous problem our right hand side is obviously smooth 
+    and thus $B$ is smooth as well due to Cor.\,\ref{cor:smooth_solution}.
+\end{proof}
+
+\begin{remark}
+    Obviously, the above arguments can be generalized by using a 
+    non-zero right hand side of our problem. Then we will in general 
+    not obtain a smooth solution, but for a sufficiently regular right hand 
+    side the curve integral would still be well-defined.
+    {\color{red} How much regularity? Source?}
+\end{remark}
+
 
 \subsection{Reformulation of the problem} 
 
