@@ -38,7 +38,9 @@
 \DeclareMathOperator{\grad}{grad}
 \DeclareMathOperator{\Ima}{im}
 \DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\vol}{vol}
 
 \newcommand{\aop}{\mathscr{A}}
 \newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
@@ -54,47 +56,7 @@
 
 \begin{document}
 
-\section{Differential forms}
-
-Before we define differential forms, let us start by revising some basics
-from differential geometry. We follow the approach from 
-\cite[Sec. II.5]{topology_and_geometry}. 
-It should be noted that there are different definitions of tangent space, but
-these lead to isomorphic notions 
-(see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
-Let $M$ be a smooth manifold without boundary.
-For a point $p \in M$ and a neighorhood $U$ we call a function 
-$f: U \rightarrow \real$ differentiable if for a local chart 
-$\phi: U \rightarrow \real^k$ we have that $f \circ \phi^{-1}$ is differentiable
-at $\phi(p)$.
-
-Let $I \subseteq \real$ be an interval containing $0$ and 
-$\gamma: I \rightarrow M$ be a differentiable curve with $\gamma(0) = p \in M$.
-For a differentiable $f: U \rightarrow \real$ 
-we define the the directional derivative 
-$D_\gamma(f) \vcentcolon= \frac{d}{dt} f(\gamma(t)) |_{t=0}$.
-We call the functional $D_\gamma: C^1(U) \rightarrow \real$ 
-tangent vector. With the help of a local chart $\phi$ we can now 
-express these derivations by 
-\begin{align}
-    D_\gamma(f) &=  \frac{d}{dt} f(\gamma(t)) |_{t=0}
-    =  \frac{d}{dt} (f \circ \phi^{-1} \circ \phi)  (\gamma(t)) |_{t=0}
-    \\ &= \sum\limits_{i=1}^k \frac{\partial (f \circ \phi^{-1})}{\partial x_i} 
-        (\phi(p))
-        \, \frac{d}{dt} [\phi^{-1}(\gamma(t))]_i |_{t=0}
-    = (\sum\limits_{i=1}^k v_i  \frac{\partial}{\partial x_i} )(f).
-\end{align}
-In the last step, we abused the location by denoting by $f$ also the 
-corresponding expression in local coordinates i.e. $f \circ \phi^{-1}$.
-This way we identified $D_\gamma$ with $v \in \real^k$ 
-by $v_i \vcentcolon= \frac{d}{dt} [\phi^{-1}(\gamma(t))]_i |_{t=0}$.
-If we use a curve $\tilde{\gamma}$ s.t. $D_{\tilde{\gamma}} = D_\gamma$ and 
-the same local chart $\phi$ then we obtain the same vector so this 
-identification is unique.  
-
-
-
-
+\section{Introduction}
 Our goal is to study the homogeneous magnetostatic problem on the exterior 
 domain of a triangulated torus. That means 
 that for the unbounded domain  $\Omega \subseteq \real^3$ we have
@@ -118,12 +80,14 @@ solutions. In order to do so we will need to introduce Sobolev spaces of
 differential forms and basics from
 simplicial topology {\color{red} among other things...}
 
-At first, let us introduce some basic notions about differential forms. 
-We follow the brief introduction given by Arnold (cf. \cite[Sec. 6.1]{arnold}), 
-but less details will be given. 
+\section{Differential forms}
+
 
 \subsection{Alternating maps}
 
+For the introduction of alternating maps we follow
+the short section in Arnold's book
+\cite[Sec. 6.1.]{arnold}.
 Let $V$ be a real vector space with $\text{dim}\,V = n$.
 Then $k$-linear maps are of the form
 \begin{align*}
@@ -136,6 +100,12 @@ that are linear in every component. We call a $k$-linear form
     \omega(v_1,...,v_i,...,v_j,...,v_k)
     = - \omega(v_1,...,v_j,...,v_i,...,v_k), \text{ for } 1\leq i < j \leq k,
     \quad v_1,...,v_k \in V.
+\end{align*}
+This also means for any permutation 
+$\pi: \{1,2,...,k\} \rightarrow \{1,2,...,k\}$
+\begin{align*}
+    \omega(v_{\pi(1)},v_{\pi(2)},...,v_{\pi(k)})
+    = \sgn(\pi)\, \omega(v_1, v_2,..., v_k)
 \end{align*}
 Denote the space of alternating maps by $\text{Alt}^k\,V$.
 
@@ -155,9 +125,17 @@ s.t. $\pi(1) < ... < \pi(k)$ and $\pi(k+1) < ... < \pi(k+l)$.
 This definition is not very intuitive.
 {\color{red} TBD: Examples in 3D}.
 
+For $1$-forms i.e. linear functionals $\omega_1,...,\omega_k$ 
+, $k \leq n$ we have the formula (\cite[p.260]{topology_and_geometry})
+\begin{align}
+    \omega_1 \wedge ... \wedge \omega_k (v_1,...,v_k)
+    = \det (\omega_s(v_t))_{1\leq s,t \leq n}. 
+    \label{eq:wedge_product_of_one_forms}
+\end{align}
+
 Let $\{ u_i\}_{i=1}^n$ be any basis of $V$ and $\{ u^i\}_{i=1}^n$ the 
 correspoding dual basis i.e. 
-$u^i:V \rightarrow \real$, $u^i(u_j) = \delta_{ij}$. Then 
+$u^i \in V'$, $u^i(u_j) = \delta_{ij}$ for $i,j = 1,2,..., n$. Then 
 \begin{align*}
     \{u^{i_1} \wedge u^{i_2} \wedge ... \wedge u^{i_k} | \, 
     1 \leq i_1 < ... < i_k \leq n \}
@@ -174,26 +152,80 @@ product on $\alternating{k}{V}$ by defining
     {1\leq k,l \leq n} \right] 
 \end{align*}
 which is then extended to all of $\alternating{k}{V}$ by linearity. 
-We denote with $\lVert \cdot \rVert _\alternating{k}{V}$ the induced norm.
-From this definition it follows directly that for a orthonormal basis 
+We denote with $\lvert \cdot \rvert _\alternating{k}{V}$ the induced norm.
+For an orthonormal basis 
 $b_1$, ..., $b_n$ the corresponding basis 
 $b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}$, 
 $1\leq i_1 < ... < i_k \leq n$ is an orthonormal basis of $\alternating{k}{V}$.
 
+We want to examine $\alternating{n}{V}$ a bit closer. Take 
+$\omega \in \alternating{n}{V}$ arbitrary. First of all, we can 
+recognize that if we have an ordered basis $(u_1,...,u_n)$ and vectors
+$(w_1,...,w_n)$ with transition matrix $A$ i.e. $w_i = \sum_j A_{j,i} u_j$ 
+then
+\begin{align*}
+    \omega(w_1,...,w_n) &= \sum\limits_{k_1,...,k_n = 1}^n 
+        \omega(u_{k_1},u_{k_2},..., u_{k_n}) \prod\limits_{j=1}^n A_{k_j,j}
+    \\ &= \omega(u_1,...,u_n) \sum\limits_{\pi \text{ Permutation}}
+        \sgn(\pi) \prod\limits_{j=1}^n A_{\pi(j),j}
+    \\ &= \det(A) \omega(u_1,...,u_n).
+\end{align*}
+That also implies that the value on a ordered basis determines 
+the alternating $n$-linear map completely.
 
-$\alternating{n}{V}$ is one-dimensional and so can choose a basis by fixing 
-a specific non-zero element.
-We say that two orthonormal bases of $V$ 
+$\alternating{n}{V}$ is one-dimensional and so we can choose a basis by fixing 
+a specific non-zero element. We want to choose one that will be used later on.
+
+We say that two bases of $V$ 
 have the same orientation if the change of basis has positive determinant. 
-That divides the orthonormal bases into two classes with different orientation.
-We choose one of these classes and call these orthonormal bases positively
+That divides the bases into two classes with different orientation.
+We choose one of these classes and call these bases positively
 oriented. In $\real^n$, the convention is to define the class as 
 positively oriented which includes the standard orthonormal basis.
-Take $\omega \in \alternating{n}{V}$. Then 
-$\omega(b_1,...,b_n)$ is the same for any positively oriented orthornormal
-basis. We now define the 
-\textit{volume form} vol $\in \alternating{n}{V}$ by requiring
-it to be $1$ on all positively oriented orthonormal bases. Using this volume 
+
+Let $\{ v_i \}_{i=1}^n$ be any positively oriented
+basis. Let $M$ be the Gramian matrix i.e. $M_{ij} = \langle v_i, v_j \rangle$ 
+which is always a symmetric positive definite matrix.
+Then we define the \textit{volume form}
+\begin{align*}
+    \vol \vcentcolon= \sqrt{\det M} \, v^1 \wedge v^2 \wedge ... \wedge v^n.
+\end{align*}
+The claim is now that for any positively oriented 
+orthonormal basis $\{b_i\}_{i=1}^n$ we have 
+\begin{align*}
+    \vol (b_1,\,b_2,...,\,b_n) = 1.
+\end{align*}
+Let us denote the $\tilde{v}_i = (\langle v_i, b_k \rangle )_{k=1}^n$
+i.e. the coefficents of $v_i$ in the orthonormal basis and 
+$\tilde{V} = (\tilde{v}_1 \mid \tilde{v}_2 \mid ... \mid \tilde{v}_n)$
+which is just the change of basis matrix. Then using basic linear algebra we get
+$ M = \tilde{V}^\top \tilde{V}$ and because both bases are positively oriented 
+$\sqrt{\det M} = \det \tilde{V}$. 
+\begin{align*}
+    v^i(b_j) = v^i \big( \sum\limits_{k=1}^n (\tilde{V}^{-1})_{kj} v_k \big)
+    = (\tilde{V}^{-1})_{ij}.
+\end{align*}
+So in total by using (\ref{eq:wedge_product_of_one_forms})
+\begin{align*}
+    \vol (b_1,\,b_2,...,\,b_n) =  \det \tilde{V} \det (v^i(b_j))_{ij}
+    = \det \tilde{V} \det \tilde{V}^{-1} = 1.
+\end{align*}
+This property also defines the volume form uniquely so it is independent of the 
+chosen basis.
+It also shows that $\vol$ is non-zero and thus 
+\begin{align*}
+    \alternating{n}{V} = \text{span} \{ \vol \}.
+\end{align*}
+
+Of course, if we choose $\{ v_i \}_{i}$ to be an orthonormal basis to begin 
+with the Gramian matrix is just the identity and 
+$\vol = v^1 \wedge ... \wedge v^n$. Especially in the case of $\real^n$ if 
+we denote the standard dual basis by $\{ dx^i \}_{i=1}^n$ then 
+\begin{align*}
+    \vol = dx^1 \wedge ... \wedge dx^n.
+\end{align*}
+
+Using the volume on $V$
 form we can now define the \textit{Hodge star operator} 
 $\star: \alternating{k}{V} \rightarrow \alternating{n-k}{V}$ via the property 
 \begin{align*}
@@ -212,7 +244,8 @@ $\star\star = \text{Id}$ i.e. $\star$ is self-inverse.
 
 
 $\alternating{0}{V}$ is just $\real$ by definition. So the Hodge star 
-now gives us a natural isomorphism from $\alternating{n}{V} \rightarrow \real$.
+now gives us a natural isomorphism from $\alternating{n}{V} \rightarrow \real$,
+$\star (\alpha \vol) = \alpha$.
 We call the real number that is associated with an element of 
 $\alternating{n}{V}$ \textit{scalar proxy}. Similarly we have that 
 $\alternating{1}{V} = V'$, the usual dual space of $V$. Because $V$ is 
@@ -230,7 +263,7 @@ Let us take a closer look at the case of $V= \real^3$ with the standard basis
 vectors $e_1$, $e_2$ and $e_3$. Denote the resulting elements 
 of the dual basis with $dx^i$. Then for some $v\in V$ we get the 
 corresponding $1$-alternating map $v_1 \, dx^1 + v_2 \, dx^2 + v_3 \, dx^3 \in 
-\text{Alt}^1$ and the $2$-alternating map
+\text{Alt}^1$ and the alternating bilinear map
 $v_1\, dx^2 \wedge dx^3 - v_2 \,dx^1 \wedge dx^3 + v_3 \,dx^1 \wedge dx^2 \in 
 \text{Alt}^1$. For the scalar proxies, take $c \in \real$. Then 
 $c \in \text{Alt}^0$ of course and because 
@@ -247,10 +280,9 @@ Let $v, w \in  \real^3$. Then
     &\Phi^1 v \wedge \Phi^2 w = \Phi^3 (v \cdot w).
 \end{align*}
 Note that for a $0$-alternating map (i.e. a scalar) 
-the wedge product is nothing but the vector-scalar multiplication.
-
-So in 3 dimensions, we can always relate the operations of differential forms
-to the operations of the corresponding proxies. 
+the wedge product is nothing but the usual multiplication.
+So in 3 dimensions, we can always relate the operations of alternating maps 
+forms to the operations of the corresponding proxies. 
 
 
 \subsection{Differential forms}
@@ -261,13 +293,22 @@ from differential geometry. We follow the approach from
 It should be noted that there are different definitions of tangent space, but
 these lead to isomorphic notions 
 (see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
-Let $M$ be a smooth manifold without boundary.
+Let $M$ be an $n$-dimensional smooth manifold with or without boundary.
 For a point $p \in M$ and a neighorhood $U$ we call a function 
-$f: U \rightarrow \real$ differentiable if for a local chart 
+$f: U \rightarrow \real$ differentiable at $p$ if for a local chart 
 $\phi: U \rightarrow \real^k$ we have that $f \circ \phi^{-1}$ is differentiable
-at $\phi(p)$. Note that we assume that our manifold is differentiable so 
-all chart transitions are differentiable and thus this definition is independent
-of the chosen chart.
+at $\phi(p)$.
+
+This defintion is independent of the chart. Let $(V,\psi)$ with $p \in V$ be 
+another chart. 
+Then $f\circ \psi^{-1} = f \circ \phi^{-1} \circ \phi \circ \psi^{-1}$ and 
+because $\phi \circ \psi^{-1}$ is a diffeomorphism it is differentiable as well.
+
+These type of definitions via local charts on a manifold are frequent in
+differential geometry. This is a proper definition if it is independent of the 
+chosen chart. Because we do not want to bother with the technicalities of 
+differential geometry too much we will very often leave out these types of
+proofs.  
 
 Let $I \subseteq \real$ be an interval containing $0$ and 
 $\gamma: I \rightarrow M$ be a differentiable curve with $\gamma(0) = p \in M$.
@@ -275,33 +316,39 @@ For a differentiable $f: U \rightarrow \real$
 we define the the directional derivative 
 $D_\gamma(f) \vcentcolon= \frac{d}{dt} f(\gamma(t)) |_{t=0}$.
 We call the functional $D_\gamma: C^1(U) \rightarrow \real$ 
-tangent vector.
-Let us fix a chart $\phi: U \rightarrow \real^n$ and let us define 
-\begin{align*}
-    \frac{\partial}{\partial x_i}|_p: C^1(U) \rightarrow \real
-    f \mapsto \frac{\partial (f \circ \phi^{-1})}{\partial x_i} (\phi(p)).
-\end{align*}
-The value depend in general on the chosen chart.
-With the help of a local chart $\phi$ we can now 
-express these derivations by 
+tangent vector. 
+
+We define 
 \begin{align}
-    D_\gamma(f) &=  \frac{d}{dt} f(\gamma(t)) |_{t=0}
-    =  \frac{d}{dt} (f \circ \phi^{-1} \circ \phi)  (\gamma(t)) |_{t=0}
+    \frac{\partial f}{\partial x_i} (p) 
+    = \frac{\partial (f \circ \phi^{-1})}{\partial x_i}(\phi(p)).
+    \label{eq:derivative_on_manifold}
+\end{align}
+Let us emphasize that this value is obviously not independent of the chosen 
+chart.
+
+We can now 
+express a tangent vector $D_\gamma$ by 
+\begin{align}
+    D_\gamma(f) &=  \frac{d}{dt} f(\gamma(t)) \big|_{t=0}
+    =  \frac{d}{dt} (f \circ \phi^{-1} \circ \phi)  (\gamma(t)) \big|_{t=0}
     \\ &= \sum\limits_{i=1}^k \frac{\partial (f \circ \phi^{-1})}{\partial x_i} 
         (\phi(p))
-         \phi^{-1}\circ (\gamma)'_i (0)
-    \\ &= \left( \sum\limits_{i=1}^k \frac{\partial}{\partial x_i}|_p 
-          \phi^{-1}\circ (\gamma)'_i (0) \right) (f)
+        \, (\phi_i\circ \gamma)'(0)
+    = (\sum\limits_{i=1}^k v_i  \frac{\partial}{\partial x_i}\Big|_p )(f).
 \end{align}
 Thus we can express 
 \begin{align*}
-    D_\gamma = \sum\limits_{i=1}^k \frac{\partial}{\partial x_i}|_p 
-    \phi^{-1}\circ (\gamma)'_i (0).
+    D_\gamma = \sum\limits_{i=1}^k 
+    (\phi_i \circ \gamma)' (0) \, \frac{\partial}{\partial x_i}\bigg|_p.
 \end{align*}
 So we have that 
-$T_p M = \text{span}\, \left\{ \frac{\partial}{\partial x_i}|_p \right\}$.
+\begin{align*}
+    T_p M = \text{span}\, 
+        \bigg\{ \frac{\partial}{\partial x_i}\bigg|_p \bigg\}_{i=1}^n.
+\end{align*}
 We will show that this indeed a basis. 
-Assume we have $\sum_{i=1}^n \lambda_i \frac{\partial}{\partial x_i}|_p = 0$
+Assume we have $\sum_{i=1}^n \lambda_i \, \partial/\partial x_i|_p = 0$
 Then because $\phi_j \circ \phi^{-1} (x) = x_j$ for $x \in \phi(U)$ and 
 $1 \leq j \leq n$. Then we have 
 \begin{align*}
@@ -310,7 +357,7 @@ $1 \leq j \leq n$. Then we have
     = \sum\limits_{i=1}^n \lambda_i \frac{\partial x_j}{\partial x_i}(\phi(p))
     = \lambda_j
 \end{align*}
-so $\left\{ \frac{\partial}{\partial x_i}|_p \right\}$ is 
+so $\frac{\partial}{\partial x_i}|_p $ are
 linearly independent and thus a basis of $T_p M$. 
 
 \begin{definition}[Differential forms]
@@ -342,8 +389,9 @@ $\smoothcompforms{k}{M}$ are the smooth compactly supported differential forms
 which will become very crucial later when we discuss Sobolev spaces 
 of differential forms (see Sec. \ref{}). Note that the support is not 
 defined via the coefficent functions as above, but directly on the manifold 
-i.e. $\supp \omega = \overline{\{ p \in M \mid \omega_p \neq 0  \}} \subseteq M$
-where the closure is w.r.t. the topology on $M$.
+i.e. $\supp \omega = \overline{\{ p \in M \mid \omega_p \neq 0  \}} 
+\subseteq \interior M$
+where the closure and the interior are w.r.t. the topology on $M$.
 
 In order to define the Hodge star and an inner product on differential forms
 we need that 
@@ -354,8 +402,7 @@ a symmetric, positive definite bilinear form
 $g_p: T_p M \times T_p M \rightarrow \real$. Additionally, a Riemannian metric 
 is assumed to be smooth in the sense that for smooth vector fields 
 $X$ and $Y$ we have $p \mapsto g_p(X,Y)$ is a smooth function. The degree 
-of smoothness depends on the context. For example, for a differentiable 
-manifold it is only required to be differentiable as well. 
+of smoothness depends on the smoothness of the manifold. 
 {\color{red} More details... }
 Manifolds on which a Riemannian metric is defined are called 
 \textit{Riemannian manifolds}. The Riemannian metric provides us with the 
@@ -369,11 +416,38 @@ Let $p \in M$ and $T_p M$ be the tangent space at the point $p$.
 Due to our assumptions on $M$, this is an inner product space of 
 dimension $n$ and we can apply 
 all of the constructions from the previous chapter
-{\color{red} Are you sure?}. We have a volume form vol on $M$ so the 
+{\color{red} Check this!}. We have a volume form vol on $M$ so the 
 previous constructions using the Hodge star operator are well-defined.  
-\cite{riemannian_geometry}.
+\cite[2.7]{riemannian_geometry}. 
 
+Let $\{(U_i,\phi_i)\}_{i=1}^\infty$ be an oriented atlas of $M$.
+For $p \in U_i$ we can define using local coordinates
+\begin{align*}
+    g_{kl}^{(i)}(p) \vcentcolon= g_p(\frac{\partial}{\partial x^{(i)}_k}\bigg|_p, 
+        \frac{\partial}{\partial x^{(i)}_l}\bigg|_p) 
+\end{align*}
+where we use the superscript $^{(i)}$ to mean the local coordinates for 
+chart $\phi_i$.
+Then we define the matrix $G^{(i)} \vcentcolon= 
+(g_{kl}^{(i)})_{k,l} \in \real^{n \times n}$ which is just the resulting Gramian 
+matrix. 
+Then we obtain the volume form 
+\begin{align*}
+    \text{vol}_p = \det G^{(i)} 
+    dx_{(i)}^1 \wedge dx_{(i)}^2 \wedge dx_{(i)}^n
+\end{align*}
+where $dx_{(i)}^k$ are the dual basis corresponding to 
+$\partial/\partial x^{(i)}_k$ the local coordinates 
+of chart $\phi_i$. 
 
+We know that this works if we choose any positively oriented basis. 
+Because our manifold is orientable and we chose a oriented atlas 
+$(U_i,\phi_i)$ we get that if we choose a different chart $(U_j,\phi_j)$ 
+then the 
+corresponding basis of the tangent space
+$\{ \frac{\partial}{\partial x^(j)_k} \}_k$ is also positively oriented because
+the change of basis matrix $D(\phi_j \circ \phi_i^{-1})(\phi(p))$ has positive
+determinant.
 
 We define the Hodge star operator to differential forms 
 $\star: \Lambda^k(\Omega) \rightarrow \Lambda^{n-k}(\Omega)$ simply by applying it 
@@ -383,16 +457,143 @@ manifold is crucial. We do the same for the exterior product to get
 $\wedge: \Lambda^k \times \Lambda^l \rightarrow \Lambda^{k+l}$. 
 
 
+Let $\omega \in \Lambda^k (M)$ be given 
+in local coordinates with some chart $(U,\phi)$ s.t. $p\in U$ as above,
+\begin{align*}
+    \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
+        a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+\end{align*}
+Then we define the exterior derivative $d: \Lambda^{k}(M) \rightarrow 
+\Lambda^{k+1}(M)$. By
+\begin{align*}
+    (d\omega)_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} \sum\limits_{i=1}^n
+    \frac{\partial a_{i_1,...,i_k}}{\partial x_i}(p) 
+    dx^i \wedge dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+\end{align*}
+We remind of the that the derivative of $a_{i_1,...,i_k}$ is meant w.r.t. 
+the chart as defined at (\ref{eq:derivative_on_manifold}).
+It can be shown that the $d\omega$ is independent of the chosen chart. 
+
+If the manifold is oriented and we have thus a Hodge star operator.
+Then we define the \textit{codifferential operator}
+$\delta \vcentcolon= (-1)^{n(k-1)+1} \star d \star$ which is then 
+an operator $\Lambda^{k}(M) \rightarrow 
+\Lambda^{k-1}(M)$.
+
+The exterior derivative and the codifferential both require the differential 
+form to be differentiable. Later we will extend this in weak sense so 
+classical differentiabilty is no longer required (see \ref{}).
+
+Let us have a closer look at this in the simplest situation of $M$ being a 
+domain $U \subseteq \real^3$. Let $\rho \in C^1(U)$ be a scalar
+and $F \in C^1(U;\real^3)$ be a vector field. Then we can view 
+$\rho$ as a $0$-form $\rho \in C^1\Lambda^0 U$. 
+In this case, we can simply take the identity as a chart 
+and $g_x(\partial / \partial x_i, \partial / \partial x_j) = \delta_{ij}$.
+Then we obtain 
+\begin{align*}
+    (d\rho)_x = \sum\limits_{i=1}^3 \frac{\partial \rho}{\partial x_i} dx^i. 
+\end{align*}
+Because $\partial / \partial x_i$ are orthonormal using the Riesz isomorphism
+we can identfy $d\rho$ with the vector field
+\begin{align*}
+    \sum\limits_{i=1}^3 \frac{\partial \rho}{\partial x_i} 
+    \frac{\partial }{\partial x_i} 
+    \leftrightarrow \grad \rho.
+\end{align*}
+So the exterior derivative of zero forms corresponds to the gradient.
+In an analgous way using vector proxies one can show that for 
+$1$-forms it corresponds to the $\curl$ and for $2$-forms to the divergence.
+This also shows the usefulness of the exterior derivative because it 
+provides a way to unify these differential operators
+and generalize them 
+to smooth manifolds.
+
+
+\subsection{Sobolev spaces of differential forms}
+
+In order to rigorously define Sobolev spaces we have to define $L^p$-spaces 
+of differential forms first. But before we can do that we should have a look
+how integration of a function can be defined on a smooth orientable 
+Riemannian manifold $M$. 
+
+We want to define integration in the framework of usual measure and integration
+theory which means defining it as a Lebesgue integral w.r.t. a measure on $M$
+which we have to define first along with a $\sigma$-algebra on $M$. 
+
+It is well known that
+the borel $\sigma$-algebra $\mathcal{B}$ on $\real^n$ is generated
+by all open sets. This idea can be applied to any topological space $X$ by 
+defining the borel $\sigma$-algebra $\mathcal{B}(X)$ as the $\sigma$-algebra 
+generated by all open sets. So we can simply use the topology on $M$ to define 
+our $\sigma$-algebra $\mathcal{B}(M)$. Because we know that all our 
+charts $\phi_i: U_i \rightarrow \real^n$ are homeomorphisms it is very 
+straightforward to show that a set $E \in \mathcal{B}(M)$ i.i.f.
+$\phi_i(E \cap U_i)$ is Borel-measurable. 
+
+Now, we need to define a measure on the manifold. This measure will 
+also involve the charts and it requires the manifold to be Riemannian 
+and orientable. Let $\{ \chi_i \}_{i=1}^\infty$ be partition of unity 
+subordinate to the $U_i$. {\color{red} I need stronger 
+requirements for the manifold. We need a countable basis. Or does any 
+Riemannian orientable manifold have that?}  Then we define the 
+\textit{Riemannian measure} for any $E \in \mathcal{B}(M)$
+\begin{align*}
+    V(E) \vcentcolon= \sum\limits_{i=1}^\infty \int_{\phi_i(U_i)}
+        \chi_i(\phi_i^{-1}(x)) \sqrt{\det G^{(i)}(\phi_i^{-1}(x))} dx 
+        \in [0,\infty]
+\end{align*}
+It can be shown that it is independent of the chosen oriented atlas 
+using the transformation behaviour of $G^{(i)}$. But the orientation is 
+crucial for it to be well-defined. 
+
+Now that we have the measure space $(M, \, \mathcal{B}(M), \, V)$
+we can define integration in the usual Lebesgue way.
+It is easily shown that a function $f: M \rightarrow \real$ is measurable 
+i.i.f. $f \circ \phi_i^{-1}$ is measurable for every chart $\phi_i$. 
+It is then simply an application of the definition of Lebesgue integration to
+show that for any measurable $f \geq 0$ we can express the integration as
+\begin{align*}
+    \int_M f \, dV = \sum\limits_{i=1}^\infty \int_{\phi_i(U_i)} 
+        \chi_i(\phi_i^{-1}(x)) f(\phi_i^{-1}(x)) 
+        \sqrt{\det G^{(i)}(\phi_i^{-1}(x))} dx.
+\end{align*}
+By introducing the integral as a Lebesgue integral w.r.t. the Riemannian 
+measure we inherit the theoretical framework of Lebesgue integration. 
+For example, we know that the the spaces $L^p(M,V)$ for $1\leq p < \infty$
+, i.e. the $p$-integrable 
+real-valued functions w.r.t. the Riemannian measure, are Banach spaces.
+
+\subsubsection{Integration of differential forms}
+
+Once again, we should first ask ourselfs what a measurable differential form 
+should be. We know that we can express our differential form locally 
+for $p \in U_i$ using the local coordinates as 
+\begin{align*}
+    \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
+        a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}.
+\end{align*}
+In the spirit of the above steps we call a $\omega \in \Lambda^k (M)$
+measurable if for every chart $\phi_i$ the coefficent functions 
+are measurable. This is once again independent of the chosen atlas. 
+This can be proven by identifying $\omega$ as a section of the vector bundle 
+of $k$-linear alternating maps over $M$. We did not define vector bundles
+however and will skip the proof.
+For now assume our manifold to be smooth and orientable, but not necessarily
+Riemannian.
+
 Next, we will define integration of an $n$-form over an $n$ dimensional 
 manifold. At first, we do so for an open set $U \subseteq \real^n$.
 This is the simplest example of an $n$-dimensional manifold where 
 we only have one chart which is the identify and the local coordinates are 
-just our standard coordinates. Let $\omega$ be an $n$-form on $U$ so we can 
+just our standard coordinates. Let $\omega$ be a measurable 
+$n$-form on $U$ so we can 
 write 
 \begin{align*}
     \omega_x = f(x) dx_1 \wedge dx_2 \wedge ... \wedge dx_n
 \end{align*}
-for $x \in U$. We can now simply define 
+for $x \in U$ with $f:U \rightarrow \real$ being measurable. 
+We can now simply define 
 \begin{align*}
     \int_U \omega = \int_U f(x) dx.
 \end{align*}
@@ -403,73 +604,132 @@ differential geometry we will work locally first and then extend this
 construction globally by using a partition of unity.
 
 Let $(U,\phi)$ be a chart on $M$ and assume $\supp \omega \subseteq U$. 
-Then $(\phi^{-1})^* \omega$ is a $n$-form on $\phi(U) \subseteq \real^n$ and 
+Then $(\phi^{-1})^* \omega$ {\color{red} Define the pullback}
+is a $n$-form on $\phi(U) \subseteq \real^n$ and 
 we can apply our prior definition. So now we just define 
 \begin{align*}
     \int_M \omega \vcentcolon= \int_{\phi(U)} (\phi^{-1})^* \omega.
 \end{align*}
-It can be shown that this definition does not depend on the chart if 
+Once again, it can be shown that this definition does not depend on the chart if 
 we choose the atlas corresponding to the orientation of the manifold. 
 
 Now let us move on to the global definition. Let $\{(U_i,\phi_i)\}_{i=1}^\infty$
-be a oriented atlas and let $\{ \xi_i \}_{i=1}^\infty$ be a partition 
-of unity subordinate to it. Then $\supp \xi_i \omega \subseteq U_i$ 
+be an oriented atlas and let $\{ \chi_i \}_{i=1}^\infty$ be a partition 
+of unity subordinate to it. 
+Then $\supp \chi_i \omega \subseteq U_i$ 
 and we define 
 \begin{align*}
-    \int_M \omega \vcentcolon= \sum_{i=1}^\infty \int_M \xi_i \omega.
+    \int_M \omega \vcentcolon= \sum_{i=1}^\infty \int_M \chi_i \omega.
 \end{align*} 
 This definition is also independent of the chosen chart and partition of 
 unity. We will omit the proof. 
-{\color{red} In Bredon this is defined only for differentiable functions 
-but Arnold uses this in a $L^2$ setting. So there must be a way to generalize 
-the ideas of integrability etc. }
 
-Now that we defined integration we will also introduce a natural way to 
-differentiate differential forms. Let $\omega \in \Lambda^k (M)$ be given 
-in local coordinates with some chart $(U,\phi)$ as above i.e.
+We will now have a look how the integration of functions and of 
+differential forms are related to each other. 
+We know that for $p \in U_i$ we can write the volume form as
 \begin{align*}
-    \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
-        a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+    \vol_p = \sqrt{ \det G^{(i)}(p)} 
+        dx_{(i)}^1 \wedge dx_{(i)}^2 \wedge ... \wedge dx_{(i)}^n.
 \end{align*}
-
-Then we define the exterior derivative $d: Lambda^{k}(M) \rightarrow 
-Lambda^{k+1}(M)$. By
+Because $(\phi_i^{-1})^* dx_{(i)}^k = dx^k$ i.e. the standard dual basis
+in $\real^n$ we have
 \begin{align*}
-    (d\omega)_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} \sum\limits_{i=1}^n
-    \frac{\partial {a_{i_1,...,i_k}} }{\partial x_i}(\phi(p)) 
-    dx^k \wedge dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
+    \big( (\phi_i^{-1})^* \vol)_x =  
+        \sqrt{ \det G^{(i)}(\phi_i^{-1}(x))} 
+        dx^1 \wedge dx^2 \wedge ... \wedge dx^n.
 \end{align*}
-As the other definitions above this is also independent of the chosen chart. 
+That means for a $n$-form $f \vol$ we can write the integral as
+\begin{align*}
+    \int_M f \vol = \sum_{i=1}^\infty \int_{\phi_i(U_i)} 
+    \chi_i(\phi_i^{-1}(x)) f(\phi_i^{-1}(x))
+        \sqrt{ \det G^{(i)}(\phi_i^{-1}(x))} dx^1 \wedge ... \wedge dx^n
+\end{align*} 
+and we see 
+\begin{align*}
+    \int_M f dV = \int_M f \vol
+\end{align*}
+with the two different notions of integration. So we see that the
+the two definitions are essentially equivalent.
+The big advantage of considering these two
+approaches is that we know the integration of 
+differential forms is within the framework of Lebesgue integration. 
+It is then also 
+clear how integrability for $n$-forms should be defined. We call an 
+$n$-form $f \vol$ integrable if $f$ is integrable w.r.t. the Riemannian measure.
 
-If the manifold is oriented and we have thus a Hodge star operator.
-Then we define the \textit{codifferential operator}
-$\delta \vcentcolon= (-1)^{n(k-1)+1} \star d \star$ which is then 
-an operator $\Lambda^{k}(M) \rightarrow 
-Lambda^{k-1}(M)$.
+\subsubsection{Stokes' theorem and integration by parts} 
 
-The exterior derivative and the codifferential both require the differential 
-form to be differentiable. Later we will extend this in weak sense so 
-classical differentiabilty is no longer required (see \ref{}).
+One of the most important results about the integration of differential forms
+is Stokes' theorem which we will state in this section. From it, we will 
+obtain a integration by parts formula.
+
+But before we do so we have to check how to define the restriction of a
+differential form to a submanifold $N \subseteq M$. 
+We have the inclusion $\iota: N \hookrightarrow M$. Then for a 
+smooth differential form $\omega \in C^\infty \Lambda^k (M)$ we define 
+the restriction just via the pullback of the inclusion operator i.e. 
+$\iota^* \omega \in C^\infty \Lambda^k(N)$. 
+
+For a $k$-dimensional submanifold $N$ we then denote the integration of an 
+$k$-form $\omega$ as
+\begin{align*}
+    \int_N \iota^*\omega = \int_N \omega.
+\end{align*} 
+
+\begin{theorem}[Stokes]
+    Let $M$ be a smooth oriented manifold with boundary 
+    $\partial M$. Let $\omega$ be 
+    a smooth compactly supported $(n-1)$-form. Then we have 
+    \begin{align*}
+        \int_M d\omega = \int_{\partial M} \omega.
+    \end{align*}
+\end{theorem}
+This theorem gives us a relation of the boundary and the exterior derivative 
+which will be crucial in the topological context of differential forms.
+We will investigate this in the section about homology (see Sec. \ref{}). 
+
+We can also derive a form of the integration by parts formula from it. 
+Let $\omega \in C_0^1 \Lambda^k (M)$ and $\mu \in C_0^1 \Lambda^{n-k-1}(M)$. 
+Then $\omega \wedge \mu \in C_0^1 \Lambda^{n-1} (M)$ and we have from 
+the Leibniz formula \ref{} 
+\begin{align*}
+    d(\omega \wedge \mu) = d\omega \wedge \mu + (-1)^k \omega \wedge d\mu. 
+\end{align*}
+By integrating both sides over $M$ and applying Stokes' theorem we obtain
+\begin{align*}
+    \int_{\partial M} \omega \wedge \mu 
+    = \int_M d\omega \wedge \mu + (-1)^k \int_M \omega \wedge d\mu.
+\end{align*}
+Using the codifferential $\delta$ and the Hodge star operator together 
+with the alternative expression of the Leibniz rule \ref{}
+we can obtain for $\nu \in C^1_0 \Lambda^{k+1} (M)$
+\begin{align*}
+    \int_M d\omega \wedge \star \nu 
+    = \int_M \omega \wedge \star \delta \nu  
+        + \int_{\partial M} \omega \wedge \star \nu.
+\end{align*}
+This integration by parts will be used in the next section to extend the 
+exterior derivative in the weak sense in analogy to the usual introduction 
+of the weak derivative,
+
+\subsubsection{Sobolev spaces of differential forms}
 
 Then
 we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
 \lVert \omega \rVert _{L_p^k(\Omega)}\vcentcolon=
-\left(\int_\Omega \lVert \omega(x) \rVert _{\text{Alt}^k}^p \,dx \right)^{1/p}
+\left(\int_\Omega \lVert \omega_x \rVert _{\text{Alt}^k T_x M}^p 
+    \,dV(x) \right)^{1/p}.
 \end{align*}
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
-and for $p=\infty$ as
-\begin{align*}
-\esssup_{x\in \Omega} \, \lVert \omega(x) \rVert _{\text{Alt}^k}.
-\end{align*}
 $L_p^k(\Omega)$ are the spaces of $k$-forms 
 s.t. the corresponding $L_p$-norm is finite.
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
 with the $L_2$ inner product  
 \begin{align}
     \langle \omega, \nu \rangle \vcentcolon= 
-    \int_\Omega \langle \omega(x), \nu(x) \rangle _{\text{Alt}^k} \,dx
+    \int_\Omega \langle \omega_x, \nu_x \rangle _{\text{Alt}^k T_x M} \,dx
     = \int_\Omega \omega \wedge \star \nu
     \label{eq:def_inner_product} 
 \end{align}
@@ -480,7 +740,7 @@ with the $L_2$ inner product
 \begin{proof}
     This follows directly from the definition of the inner product 
     (\refeq{eq:def_inner_product}) and the fact that $\star$ is an isometry 
-    when applied to alternating forms $\text{Alt}^k$.
+    when applied to alternating forms $\text{Alt}^k T_x M$.
 \end{proof}
 
 
@@ -523,13 +783,7 @@ For $\omega \in W^k_p(\Omega)$ for $p<\infty$ we define the norm
 \begin{align*}
 \lVert \omega \rVert _{W^k_p(\Omega)} &\vcentcolon= 
 \left( \norm{\omega}{L^k_p(\Omega)}^p 
-    + \norm{d\omega}{L^k_p(\Omega)}^p \right)^{1/p}
-\end{align*}
-and for $p=\infty$
-\begin{align*}
-    \lVert \omega \rVert _{W^k_\infty} &\vcentcolon= 
-    \max\left\{ \norm{\omega}{L^k_\infty},\, \norm{d\omega}{L^k_\infty}
-    \right\}.
+    + \norm{d\omega}{L^k_p(\Omega)}^p \right)^{1/p}.
 \end{align*}
 
 \begin{remark} \label{rem:identification_sobolev_spaces}
