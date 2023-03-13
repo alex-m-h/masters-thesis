@@ -1269,6 +1269,68 @@ algebraic background further. We can conclude from the exactness of the
 above short sequence that $\text{ker}\,\beta = 0$ and 
 $\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
 
+\subsection{De Rham's theorem} \label{sec:de_rhams_theorem}
+
+It turns out that the cochain cohomology is closely related to the cohomology 
+of differential forms (\ref{}). Let us recall Stokes' theorem first which said 
+that for a $k$-form $\omega \in \smoothcompforms{k}{M}$ 
+for a smooth $k$-dimensional oriented manifold $M$ we have 
+\begin{align*}
+    \int_M d\omega = \int_{\partial M} \omega.
+\end{align*}
+
+The following details are taken from Section V.5 and and V.9 from 
+\cite{topology_and_geometry}. We will only focus on the main ideas and avoid 
+dwelving into the technical details. The interested reader can find more 
+arguments in the given reference.
+
+Let now $\sigma$ be a smooth $k$-simplex i.e. $\sigma: \Delta_k \rightarrow 
+M$ is smooth. We now define 
+\begin{align*}
+    \int_\sigma \omega = \int_{\Delta_k} \sigma^* \omega
+\end{align*}
+and then we define the integral over a $k$-chain 
+$c = \sum_\sigma n_\sigma \sigma$
+\begin{align*}
+    \int_c \omega = \sum \limits_\sigma n_\sigma \int_\sigma \omega.
+\end{align*}
+This motivates us to introduce the homomorphism $I: C^\infty \Lambda^k (M) 
+\rightarrow \text{Hom}(C_k;\real)$ defined by 
+\begin{align*}
+    I(\omega)(c) = \int_c \omega.
+\end{align*}
+\begin{remark}
+    There are some technical details that we will not go into details here,
+    but that should be mentioned. First, $\Delta_k$ is not a manifold. 
+    The $(k-2)$ skeleton which are the corners for $k=2$ and the 
+    edges for $k=3$. If we remove these points then $\Delta_k$ is a manifold 
+    with boundary. But since this is a null-set w.r.t. the full simplex and 
+    the boundary as well, this does not matter. 
+    Second, Because we are integrating over the $\Delta_k$ their orientation is 
+    important and has to be chosen consistently.
+\end{remark}
+
+Using Stokes's theorem we observe
+\begin{align*}
+    I(d\omega)(c) &= \sum\limits_\sigma n_\sigma \int_\sigma d\omega 
+    = \sum\limits_\sigma n_\sigma \int_{\Delta_k} \sigma^* d\omega 
+    = \sum\limits_\sigma n_\sigma \int_{\Delta_k} d\sigma^* \omega
+    = \sum\limits_\sigma n_\sigma \int_{\partial \Delta_k} \sigma^* \omega
+    \\ &= \int_{\sum_\sigma n_\sigma \partial \sigma} \omega
+    = I(\omega)(\partial c) = \partial \big(I(\omega)\big) (c)
+\end{align*}
+so we obtain
+\begin{align*}
+    I(d\omega) = \partial \big(I(\omega)\big).
+\end{align*}
+This implies that $I$ induces a homomorphism on cohomology
+\begin{align*}
+    [I]:H^k_{dR}(M) \rightarrow H^k(M;\real).
+\end{align*}
+\textit{De Rham's theorem} now states that this homomorphism is in fact an
+isomorphism. 
+
+
 \subsection{Existence of uniqueness of cochain}
 
 
@@ -1394,424 +1456,45 @@ important lemma that will be needed later in Sec.\,\ref{}
 \end{proof}
 
 
-
-\section{Isomorphism of Cohomology}
-
-In order to show existence and uniqueness of solutions of the magnetostatic 
-problem we use a lot of results and tools from \cite{goldshtein}. 
-In the diploma thesis of Nikolai
-Nowaczyk \cite{nowaczyk}, which mostly is based on this paper, 
-many additional details can be found. The results which are important for 
-our progress will be presented in the
-next section. It should be noted that even though the results in 
-\cite{goldshtein} are
-proved explicitely for smooth manifolds without boundary the results can be 
-extended to Lipschitz manifolds with boundary (see the proof of Theorem 2 and 
-the remark at the end in \cite{goldshtein}). Therefore, we can apply the result
-to our case.
-
-In the first section we will introduce S-forms which can be seen as a
-intermediate object between differential forms and we will go over the 
-basic results from \cite{goldshtein} how these S-forms are connected with 
-cochains on our simplicial complex $K$. Then we will look at how S-forms 
-and differential forms are connected. At last, we will introduce two  
-operators and their properties which are introduced in \cite{goldshtein}
-and will prove to be very useful later on.
-
-Because $\omegabar$ from our problem is itself a polyhedron we can
-assume that $\omegabar$ and $|K|$ are equal as subsets of $\real^n$ and we can
-simply use the identity as triangulation.
-However, we will use different metrics on $|K|$ and $\omegabar$. 
-We use the Euclidian metric on 
-$\omegabar$ and we use the standard simplicial metric on $|K|$ (cf. 
-\cite[p.191]{goldshtein}). This metric is defined as follows:
-
-Choose some numbering of the vertices $\{ x_1,\, x_2, ... \}$ and
-take $f: |K| \rightarrow \ell^2$ where $\ell^2$ is the 
-Hilbert space of real-valued square-summable sequences s.t. $f(x_i) = e_i$ 
-with $e_i \in \ell^2$ being the standard unit vectors and $f$ is affine on 
-every simplex. This mapping is unique.%%%TBD: Proof uniqueness%%%%
-
-Then we define the metric on $|K|$ as the pullback $g_S = f^*g$ 
-where $g$ is the standard metric in $\ell^2$. Let $\langle \cdot , 
-\cdot \rangle$ be the standard scalar product on $\ell^2$. Then for $x \in |K|$ 
-and $\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, \; 
-\sum_{j=1}^n w_j \frac{\partial}{\partial x_j} \in T_x |K|$ we have 
-\begin{align*}
-g_S|_x\left(\sum_{i=1}^n v_i \frac{\partial}{\partial x_i}, 
-\sum_{j=1}^n w_j \frac{\partial}{\partial x_j}\right) &= 
-\left\langle \sum_{k=1}^\infty \sum_{i=1}^n v_i 
-\frac{\partial f_k}{\partial x_i} (x)
-\frac{\partial }{\partial y_k}, 
-\sum_{l=1}^\infty \sum_{j=1}^n w_j \frac{\partial f_l}{\partial x_j} (x)
-\frac{\partial }{\partial y_l} \right\rangle \\   
-&= \sum_{i,j=1}^n \sum_{k,l=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
-w_j \frac{\partial f_l}{\partial x_j} (x) 
-\left\langle \frac{\partial }{\partial y_k}, \frac{\partial }{\partial y_l} 
-\right\rangle\\
-&= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i \frac{\partial f_k}{\partial x_i} (x)
-w_j \frac{\partial f_k}{\partial x_j} (x)\\
-&= \sum_{i,j=1}^n \sum_{k=1}^\infty v_i w_j \left( Df(x)^T Df(x) \right)_{ij} \\
-&= v^T Df(x)^T Df(x) w = \left\langle Df(x) v, Df(x) w \right\rangle,
-\end{align*}
-where $D$ denotes the Jacobian. 
-{\color{red} (TBD: This Jacobian as written here would technically be in 
-$\real^{\infty \times n}$. Only finitely many lines are non-zero though, 
-but this is not quite rigorous yet. )}
-%%% TBD: This is only well-defined if x is in the interior of a full simplex.
-
-We have two crucial assumptions on the triangulation for the result to hold 
-(cf. \cite[p.194]{goldshtein}). We summarize them under 
-\textit{GKS-condition} named after the three authors of \cite{goldshtein}.
-
-\begin{assumption}[GKS-condition] \label{ass:gks_condition}
-    We will assume the following on the simplicial complex $K$ 
-    and the triangulation $\tau$:
-    \begin{enumerate}[(i)]
-    \item The star of every vertex in $K$ contains at most $N$ simplices.
-    \item For the differential of $\tau$ we have constants 
-        $C_1, C_2 > 0$ s.t.
-        \begin{align*}
-        \lVert d\tau|_x \rVert < C_1, \; 
-        \lVert d\tau^{-1}|_{\tau(x)} \rVert < C_2,
-        \end{align*}
-        where $d$ denotes the differential in the sense of differential 
-        geometry and the norm is the operator norm w.r.t. the metrics on $|K|$ 
-        and $\omegabar$.
-    \end{enumerate}
-\end{assumption}
-The first assumption is equivalent to every vertex being contained in
-at most $N$ simplices, which is fulfilled if we have a shape regular mesh.\par
-{\color{red} This has to be shown.}
-%%% TBD: Reference or proof or sth%%%
-
-Because $\tau$ is just the identity in our case 
-the second assumption says that for every 
-$x \in |K|$
-\begin{align*}
-\sup\limits_{v \neq 0} \frac{\lVert v \rVert}{\sqrt{g_S|_x(v,v)}} =
-\sup\limits_{v \neq 0} \frac{\lVert v \rVert}{\lVert Df(x)v\rVert} < C_1
-\end{align*}
-and analogously
-\begin{align*}
-    \sup\limits_{v \neq 0} \frac{\lVert Df(x)v\rVert}{\lVert v \rVert} < C_1.
-\end{align*}
-%%% TBD: Give more details and interpretation
-
-\subsection{S-forms}
-\begin{definition}[Induced map]
-    Let $V$ and $W$ be real vector spaces, $X \subseteq V$, $Y \subseteq W$ be 
-    subspaces. For a linear map $L: V \rightarrow W$ with $L(X) \subseteq Y$ 
-    we define the induced map
-    \begin{align*}
-        [L]: \faktor{V}{X} \rightarrow \faktor{W}{Y},\,
-        [v] \mapsto [Lv].
-    \end{align*}     
-\end{definition}
-It is easy to check that the induced map is well-defined using the
-definition of quotient space. %% Proven on the 27.11.2022
-
-
-The first isomorphism is induced from a linear mapping
-from the so called \textit{S-forms} 
-$S_p^k(K)$ to 
-\textit{p-summable $k$-cochains} $C_p^k(K)$ which will both 
-be defined next.
-
-\begin{definition}
-    We define the following norm of a $k$-cochain $f$
-    \begin{align*}
-        \norm{f}{C_p^k(K)} \vcentcolon= 
-        \left( \sum\limits_{\sigma \in K^{(k)}} |f(\sigma)|^p \right)^{1/p}.
-    \end{align*} % TBD: Define K^(k), this is a convenient notation
-    and the space of \textit{p-summable k-cochains}
-    \begin{align*}
-    C_p^k(K) \vcentcolon= \{f \in C^k(K) | \,  
-    \norm{f}{C_p^k(K)} < \infty \}.
-    \end{align*}
-\end{definition}
-Take $\tau, \sigma \in K$ s.t. $\tau$ is a face of $\sigma$ which we write as
-$\tau < \sigma$. We need a restriction operator 
-$j^*_{\tau,\sigma}:W_{\infty,loc}^k(\sigma) \rightarrow W_{\infty,loc}^k(\tau)$.
-This is done by extending $\omega \in W_{\infty,loc}^k(\sigma)$ first 
-to some $\tilde{\omega}\in W_{\infty,loc}^k(U)$ with 
-$U$ an open neighborhood of $\sigma$ in the affine hull of $\sigma$. Then 
-$\tau \subseteq U$ and we apply a restriction operator $j^*_{\tau,U}$
-and define $j^*_{\tau,\sigma} \omega \vcentcolon= j^*_{\tau,U}\tilde{\omega}$. 
-This restriction operator is then well defined, 
-bounded and independent of the chosen 
-extension $\tilde{\omega}$ (cf. \cite[p.191]{goldshtein}). It should be 
-emphasized that this restriction only works for $W^k_\infty$ and fails for 
-$W^k_p$, $p<\infty$. 
-
-\begin{definition}[S-forms]
-    Let 
-    \begin{align*}
-    \theta = \{ \theta(\sigma) \in W^k_\infty(\sigma) | \sigma \in K\}
-    \end{align*}
-    be a collection of differential $k$-forms. We call $\theta$ \textit{S-form 
-    of degree
-    $k$} if we have for all simplices
-    $\mu <\sigma$ 
-    \begin{align*}
-    j^*_{\sigma,\mu}\theta(\sigma) = \theta(\mu).
-    \end{align*}
-    We denote with $S^k(K)$ the space of all S-forms of degree $k$ 
-    over the chain complex $K$. 
-    For $\theta \in S^k(K)$ we define $d\theta \vcentcolon= \{ d\theta(\sigma) | 
-    \,\sigma \in K \} \in S^{k+1}(K)$. $S^*(K)$ is the resulting cochain complex.
-    % TBD: Did i define what a cochain complex is?
-\end{definition}
-For $\theta \in S^k(K)$ we now define the norm
-\begin{align*}
-\lVert \theta \rVert _{S_p(K)}  \vcentcolon= \left( \sum_{\sigma \in K} 
-\lVert \theta(\sigma) \rVert _{W^k_\infty(\sigma)}^p \right)^{1/p}.
-\end{align*} 
-$S^k_p(K)$ are the S-forms of degree $k$ s.t. this norm is finite.
-
-Let $L \subseteq K$ be a simplicial subcomplex. Then we define the 
-restriction operator 
-\begin{align*}
-    j^*_{K,L}: S^k(K) \rightarrow S^k(L),
-    \{ \theta(\sigma) \mid \sigma \in K \} 
-    \mapsto \{ \theta(\sigma) \mid \sigma \in L \}.
-\end{align*}
-Then we define $S^k(K,L) \vcentcolon= \ker j^*_{K,L}$ and analogously
-$S^k_p(K,L)$. So these are the S-forms that vanish on a simplicial subcomplex.
-As in the case of cochains (compare Sec.\,\ref{}) this generalizes 
-the first definition because we get $S^k(K,\emptyset) = S^k(K)$.
-
-The integration of an S-form $\theta \in S^k(K)$ over a chain
-$c = \sum n_\sigma \sigma \in C_k(K)$ is then simply defined as 
-\begin{align*}
-    \int_c \theta 
-    \vcentcolon= \sum\limits_\sigma n_\sigma \int_\sigma \theta(\sigma).
-\end{align*}
-We also write $I(\theta)(c) \vcentcolon= \int_c \theta$.
-Then the integration mapping 
-$I: S^k(K,L) \rightarrow C^k(K,L)$ is a homomorphism
-(see \cite[p.191]{goldshtein}).
-The reason why S-forms are a useful concept is because they provide an 
-intermediate step between differential forms and cochains.
-
-With the exterior derivative $d$ on S-forms as defined above we define 
-\begin{align*}
-    \mathscr{Z}^k(K,L) &\vcentcolon= \{ \theta \in S^k(K,L) 
-        | \, d\theta = 0 \} \\
-    \mathscr{B}^k(K,L) &\vcentcolon= dS^{k-1}(K,L)
-\end{align*}
-and then the resulting cohomology space
-\begin{align*}
-    \mathscr{H}^k(K,L) \vcentcolon= 
-    \faktor{\mathscr{Z}^k(K,L)}{\mathscr{B}^k(K,L)}.
-\end{align*}
-We also define the in the case of $p$-summable S-forms
-\begin{align*}
-    \mathscr{Z}_p^k(K,L) &\vcentcolon= \{ \theta \in S_p^k(K,L) | \, d\theta = 0 \} \\
-\end{align*}
-as well $\mathscr{B}_p^k(K,L)$ and $\mathscr{H}_p^k(K,L)$ analogously.
-
-Then we have that the integration mapping
-$I: S_p^k(K,L) \rightarrow C_p^k(K,L)$ 
-induces an isomorphism on the cohomologies i.e. 
-$[I]: \mathscr{H}_p^k(K,L) \rightarrow 
-\tilde{H}_p^k(K,L)$ is an isomorphism of vector 
-spaces (see \cite[Thm.\,1]{goldshtein} and the proof thereof).
-
-
-
-\subsection{Isomorphism between cohomologies of S-forms and $L^p$-cohomology}
-
-
-The next step is to obtain an isomorphism between the cohomology 
-of S-forms $\mathscr{H}_p^k(K)$ and the $L_p$ cohomology 
-$\lpcoho(\omegabar)$. {\color{red} Do I really do that?}
-
-In order to achieve that we need a some connection between differential forms
-and S-forms. Take $\omega \in W_{\infty,loc}^k(\omegabar)$. Using the analogous
-reasoning as above, we use the restriction operators $j^*_{\sigma,\tau}$ to 
-restrict $\omega$ to the simplices. Denote the resulting 
-forms as $\omega(\sigma) \in W^k_{\infty,loc}(\sigma)$. So we obtain an 
-S-form $\{ \omega(\sigma) | \, \sigma \in K \}$. This way we constructed 
-an operator 
-\begin{align}
-    \varphi: W_{\infty,loc}^k(\omegabar) \rightarrow S^k(K),\ \omega \mapsto 
-    \{ \omega(\sigma) | \, \sigma \in K \} \label{eq:forms_Sforms_isom}
-\end{align}
-This 
-operator $\varphi$ is an isomorphism \cite[Lemma~1]{goldshtein}. 
-To also obtain corresponding forms to the $p$-summable S-forms we simply 
-define $S^k_p(\omegabar) \vcentcolon= \varphi^{-1}S^k_p(K)$.
-It can be shown that $S^k_p(\omegabar) \subseteq W^k_p(\omegabar)$.
-Now if we have some $\omega \in S^k_p(\omegabar)$ then we can look at 
-two possible norms. From the inclusion we know that 
-$\norm{\omega}{W^k_p(\omegabar)} < \infty$. But we can also use the norm 
-induced by $\varphi$ denoted by 
-\begin{align}
-    \norm{\omega}{S^k_p(\omegabar)} 
-    \vcentcolon= \norm{\varphi \omega}{S^k_p(K)}. \label{eq:induced_norm}
-\end{align}
-Let us briefly show that this is indeed a norm.
-\begin{proposition}
-    Let $K$ be a simplicial complex and $\omegabar = |K|$. 
-    Then $\norm{\cdot}{S^k_p(\omegabar)}$ 
-    is a norm and $\varphi$ as defined at (\ref{eq:forms_Sforms_isom})  
-    is an isometry.
-\end{proposition}
-\begin{proof}
-    Subadditivity and absolute homogeneity follow directly from the linearity 
-    of $\varphi$ and the corresponding property of $\norm{\cdot}{S^k_p(K)}$.
-    For the positive definiteness 
-    \begin{align*}
-        \norm{\omega}{S^k_p(\omegabar)} = 0 
-        \Leftrightarrow \norm{\varphi \omega}{S^k_p(K)}
-        \Leftrightarrow \varphi \omega = 0
-        \stackrel{\varphi \text{ isom.}}{\Leftrightarrow} \omega = 0.
-    \end{align*}
-    $\varphi$ is an isometry by construction of the norm.
-\end{proof}
-We then also have that the inclusion operator $\iota: S^k_p(\omegabar) 
-\hookrightarrow W^k_p(\omegabar)$
-is bounded (\cite[Lemma\,4]{goldshtein}). 
-
-\begin{remark} \label{rem:local_construction_regularization}
-    In the paper \cite{goldshtein}, no difference is made between the spaces 
-    $S^k_p(\omegabar)$ and $S^k_p(K)$ because they can be identified with each 
-    other via $\varphi$. However, we will follow the approach from Nowaczyk's 
-    thesis \cite{nowaczyk} to treat them separately because it is more precise 
-    and less confusing.
-\end{remark}
-
-We can now extend our definition of integration on a simplex to any differential
-form $\omega \in W_{\infty,loc}^k(\omegabar)$ thanks to the 
-well-definedness of the restriction operators. We can do this by first 
-applying $\varphi$ which means nothing but applying these restrictions to obtain
-an S-form $\varphi \omega \in S^k(K)$ for which we have defined the integration 
-above. Note that this is exactly how integration is defined for continuous 
-differential forms. The only difference is that we had to give an additional 
-argument because the restriction can not be applied directly as in the 
-continuous case. We will sometimes just write $I(\omega) \vcentcolon= 
-I(\varphi\omega)$ or $\int_\sigma \omega = \int_\sigma (\varphi\omega)(\sigma)$
-for any simplex $\sigma \in K$.
-
-Now we also want to introduce a regularization operator in order to 
-obtain 
-a form in $S^k_p(\omegabar)$ from form $W^k_p(\omegabar)$. 
-This is done 
-using two operators $\rop: L^k_{1,loc}(\omegabar) \rightarrow 
-L^k_{1,loc}(\omegabar)$ and $\aop: L^k_{1,loc}(\omegabar) \rightarrow 
-L^{k-1}_{1,loc}(\omegabar)$.
-We will not go over their construction but instead we will only use
-some properties that we collect in the following theorem
-(cf. \cite[Thm.2]{goldshtein}).
-
-\begin{theorem}\label{thm:operators}
-    Assume that the triangulation $\tau$ fulfills the GKS-condition 
-    defined at Def.~\ref{def:GKS_condition}.
-    Then there exist linear mappings 
-    $\mathscr{R}: L^k_{1,loc}(\omegabar) \rightarrow 
-    L^k_{1,loc}(\omegabar)$, $\mathscr{A}: L^k_{1,loc}(\omegabar) 
-    \rightarrow L^{k-1}_{1,loc}(\omegabar)$ 
-    such that
-    \begin{enumerate}[(i)]
-        \item $\rop(W^k_{1,loc}(\omegabar)) \subseteq W^k_{1,loc}(\omegabar)$,
-            $\aop(W^k_{1,loc}(\omegabar)) \subseteq W^{k-1}_{1,loc}(\omegabar)$
-            and $\mathscr{R}\omega - \omega = 
-            d\mathscr{A}\omega + \mathscr{A}d\omega$ and 
-            $d\rop \omega  = \rop d \omega$ for 
-            $\omega \in W^k_{1,loc}(\omegabar)$
-        \item for any $1 \leq p \leq \infty$, 
-            $\rop(W^k_p(\omegabar)) \subseteq S^k_p(\omegabar)$ and
-            $\aop(S^k_p(\omegabar)) \subseteq S^{k-1}_p(\omegabar)$
-        \item $\rop: W^k_p(\omegabar) \rightarrow 
-            (S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ is bounded (here
-            we mean with $(S^k_p(\omegabar),\norm{\cdot}{S^k_p(\omegabar)})$ 
-            the space $S^k_p(\omegabar)$ endowed with the norm 
-            $\norm{\cdot}{S^k_p(\omegabar)}$))
-    \end{enumerate}
-\end{theorem}
-
-Let 
-$\iota: S^k_p(\omegabar) \hookrightarrow W^k_p(\omegabar)$ be the inclusion operator. 
-The inclusion induces an
-isomorphism on cohomology \cite[Lemma 4, Corollary]{goldshtein} i.e. 
-$[\iota \circ \varphi^{-1}]: \mathscr{H}_p^k(K) \rightarrow \lpcoho(\omegabar)$ is an isomorphism. 
-
-\begin{remark}
-    \color{red}
-    Let $L \subseteq K$ be a full-dimensional %TBD: Define that
-    simplicial subcomplex. Let $\rop_L$ be the regularization operator 
-    constructed for this simplicial subcomplex. The construction of the
-    regularization operator is done locally on the stars of the vertices. %TBD: Define stars
-    Therefore if we now look at a vertex $x_i \in L$ s.t. its star 
-    $\Sigma_i$ does not include any boundary vertices of $L$ then we have 
-    $\rop \omega = \rop_L(\omega|_{|L|})$ for any $\omega \in W^k_{1,loc}(|K|)$
-    if we choose the ordering of the vertices appropriately.
-    We will not prove this because it would require to go over the construction
-    of the operator which we want to avoid as it is quite technical. Thus, 
-    we refer to \cite[Sec.\,2]{goldshtein} for further details.
-\end{remark}
-
-
-% However, the question remains how we can go to the other direction i.e.
-
-% In conclusion, we get the following isomorphisms of cohomologies:
-% \begin{align*}
-%     \lpcoho(\omegabar) \xrightarrow{[\iota]^{-1}} \mathscr{H}_p^k(K) 
-%     \xrightarrow{[I]} H^k_p(K).
-% \end{align*}
-% This result will be crucial in the next section to obtain a unique solution
-% to our problem.
-
-% The idea is that for a $k$-form $\theta$ we have the cochain 
-% $I(\theta) \in C^k(K)$, $I(\theta)(\sigma) = \int_\sigma \theta$ for any
-% $k$-simplex $\sigma$. We want to show that this map induces a isomorphism on
-% cohomology. 
-
-% In the next step, we will use two operators $\rop$ and $\aop$ from 
-% \cite{goldshtein}.
-% The precise definition and details of their construction
-% are not relevant for our purposes because we will only use
-% the some properties that we collect in the following theorem
-% (cf. \cite[Thm.2]{goldshtein}). Let 
-% \begin{align*}
-%     S^k_p(\omegabar) = \{ \eta \in W^k_{\infty,loc} | \, 
-%     I\eta \in C^k_p(K)\}.
-% \end{align*}
-
-% Now define $\bar{I} \vcentcolon= I \circ \rop$. This gives a well-defined 
-% mapping from $W^k_p(\omegabar)$ to $C^k_p(K)$. Following the arguments of 
-% \cite{goldshtein} and using the properties of $\rop$ and $\aop$ one can show 
-% that the induced homomorphism of cohomologies 
-% $[\bar{I}]: H^k_{p,dR}(\omegabar) \rightarrow H^k_p(K)$ is an isomorphism.
-% This isomorphism will play a crucial part in the proof of uniqueness and 
-% existence of solutions in the next section.
-
-
 \section{Existence and uniqueness of solutions}
 
-We now return to the main problem that this thesis is about, the magnetostatic 
-problem. We exterior domain we mean that our domain $\Omega \subseteq \real^3$
+In this section, we will apply the developed theory of the preceding chapters
+to prove the existence and uniqueness of the magnetostatic problem 
+on exterior domains. With exterior domain we mean that our domain $\Omega \subseteq \real^3$
 is the complement of a compact set. The main motivation for this problem is 
-the when $\Omega$ complement of a torus. This is also the motivation behind the
-topological assumption that we will give. 
+the special case of $\Omega$ being the complement of a torus. 
+This is also the motivation behind the
+topological assumption that we will give. It might be useful to keep this
+example in mind.
+
+Recall the magnetostatic problem we are studying.
+
+\begin{problem}\label{prob:magnetostatic_problem}
+    Find $B \in H_0(\diver;\Omega)$ s.t.
+    \begin{align}
+        \curl \, B &= 0, \\ 
+        \diver \, B  &= 0 \text{ in } \Omega \text{ and }\\
+        \int_\gamma B \cdot dl &= C_0.
+    \end{align}
+\end{problem}
 
 Of course in order for the curve integral constraint to be well-defined 
 we need to check the regularity of solutions. Then using the tools we developed
 in the previous sections we will proof existence and uniqueness.
 
-\subsection{Regularity of solutions}
+\subsection{Regularity of solutions}\label{sec:regularity_of_solutions}
 
-We will rely heavily on standard regularity results about elliptic systems 
+We will rely on standard regularity results about elliptic systems 
 of the following form. Take $A_{ij}^{\alpha \beta} \in \real$
 for $i$, $j$, $\alpha$, $\beta = 1,2,3$ and 
-$A_{ij}^{\alpha \beta} = A_{ji}^{\beta \alpha}$. Then we have systems for the 
+$A_{ij}^{\alpha \beta} = A_{ji}^{\beta \alpha}$. Then we have systems of the 
 form 
-\begin{align*}
-    -\sum\limits_{\alpha \beta j} \partial_\alpha 
+\begin{align}
+    -\sum\limits_{\alpha, \beta, j} \partial_\alpha 
         (A_{ij}^{\alpha \beta} \partial_\beta B_j)
     = f_i - \sum\limits_\alpha \partial_\alpha F_i^\alpha
-\end{align*}
+    \label{eq:elliptic_system}
+\end{align}
 with data $f_i, F_i^\alpha \in L^2(\Omega)$. We call this system 
 \textit{elliptic} if $A$ satisfies the Legendre condition i.e.
 \begin{align}
@@ -1819,7 +1502,8 @@ with data $f_i, F_i^\alpha \in L^2(\Omega)$. We call this system
     \geq c |\xi|^2, \quad \forall \xi \in \real^{3 \times 3} 
     \label{eq:legendre_condition}
 \end{align}
-with $c > 0$.
+with $c > 0$. $|\xi|$ is here the Frobenius norm, but technically the chosen 
+norm is irrelevant due to all norms on $\real^{3 \times 3}$ being equivalent.
 We then call $B$ a weak solution
 of the problem if 
 \begin{align}
@@ -1830,7 +1514,7 @@ of the problem if
     \label{eq:weak_elliptic_system}
 \end{align}
 for all $\varphi \in C^1_0(\Omega;\real^3)$. This formulation is taken from 
-\cite[Sec. 1.3]{Lectures on PDE}. At first we will slightly modify
+\cite[Sec. 1.3]{lectures_on_elliptic_pdes}. At first we will slightly modify
 the notion of weak solution. 
 
 \begin{proposition}
@@ -1844,8 +1528,8 @@ the notion of weak solution.
     This follows by a simple density argument. Assume that 
     (\ref{eq:weak_elliptic_system}) is fulfilled for all test functions in 
     $C^\infty_0(\Omega;\real^3)$. Now take $\varphi \in C^1_0(\Omega;\real^3)$
-    arbitrary. Because $\varphi \in H^1(\Omega)^3$ and 
-    $C^\infty_0(\Omega;\real^3)$ is dense in $H^1(\Omega)^3$ we can find 
+    arbitrary. Because $\varphi \in H_0^1(\Omega)^3$ and 
+    $C^\infty_0(\Omega;\real^3)$ is dense in $H_0^1(\Omega)^3$ we can find 
     a sequence $(\varphi^{(l)})_{l \in \naturalnum} \subseteq 
     C^\infty_0(\Omega;\real^3)$ s.t. $\varphi^{(l)} \rightarrow \varphi$
     in $H^1(\Omega)^3$. Thus the partial derivatives converge in $L^2(\Omega)$
@@ -1874,10 +1558,10 @@ just smooth compactly supported functions as test functions.
 
 Next, we will state the crucial result about the regularity of elliptic systems
 which will give us the desired regularity. This is Theorem 2.13 and Remark 2.16 
-in \cite{Lectures on ellitic PDEs} in slightly less generality.
+in \cite{lectures_on_elliptic_pdes} in slightly less generality.
 \begin{theorem}
     Let $\Omega$ be an open domain in $\real^n$. Let $A$ be constant and 
-    satisfy the Legendre condition \ref{eq:legendre_condition}. Then for every 
+    satisfy the Legendre condition (\ref{eq:legendre_condition}). Then for every 
     $B \in H^1_{loc}(\Omega)^3$ weak solution in the sense of
     (\ref{eq:weak_elliptic_system}) with $f \in H^k_{loc}(\Omega)^3$ and 
     $F \in H^{k+1}_{loc}(\Omega;\real^{m\times n})$ 
@@ -1907,10 +1591,11 @@ Note that we did not assume $B$ to be a solution.
 \begin{proof}
     We know that for a function $u \in H_0(\curl;U) \cap H(\diver;U)$ 
     for some smooth domain $U$ we have $u \in H^1(U)^3$ 
-    (cf. \cite[Remark 3.48]{monk}). Our $\Omega$ is 
-    not assumed to be smooth so we can not apply this result directly.
+    (cf. \cite[Remark 3.48]{monk}). Our $\Omega$ is just assumed to be open 
+    so we can not apply this result directly.
 
-    Take $Q \subset\subset \Omega$ open. Then we can find an open 
+    Take $Q \subset\subset \Omega$ open and pre-compact. 
+    Then we can find an open 
     cover of $\overline{Q}$ with a finite set of open balls $\{K_i\}_{i=1}^N$
     s.t. $K_i \subseteq \Omega$ and 
     \begin{align*}
@@ -1921,8 +1606,9 @@ Note that we did not assume $B$ to be a solution.
     $(B \chi_i)|_{K_i} \in H_0(\curl;K_i) \cap H(\diver;K_i)$ and thus 
     $(B \chi_i)|_{K_i} \in H^1(K_i)^3$ by the above mentioned result. 
     Also because $B \chi_i$ has compact support in $K_i$ we can extend it by 
-    zero to obtain 
-    $B \chi_i \in H^1(\real^3)^3$. Whence,
+    zero to obtain
+    $B \chi_i \in H^1(\real^3)^3$ where we abused the notation by denoting 
+    the extension the same. Whence,
     \begin{align*}
         B|_Q = \large( \sum\limits_{i=1}^N \chi_i |_Q \large) B|_Q = 
         \sum\limits_{i=1}^N (\chi_i B)|_Q \in H^1(Q)
@@ -1934,7 +1620,7 @@ The following lemma is a reformulation of the differential operator
 $\grad \diver - \curl \curl$ which will be needed when we write our 
 magnetostatic problem in the above standard elliptic form.
 
-\begin{lemma}
+\begin{lemma}\label{lem:graddiv_curlcurl_equals_componentwise_laplacian}
     Let $F \in H^2_{loc}(\Omega)^3$. Then 
     \begin{align*}
         \grad \diver F - \curl \curl F 
@@ -1945,8 +1631,14 @@ magnetostatic problem in the above standard elliptic form.
 \begin{proof}
     By a simple calculation and changing the order of differentiation
     \begin{align*}
-        \grad \diver F = \begin{pmatrix} \partial_1^2 F_1 \\ \partial_1\partial_2 
-            F_2 \\ \partial_1 \partial_3 F_3  \end{pmatrix}    
+        \grad \diver F = 
+            \begin{pmatrix} \partial_1^2 F_1 + \partial_1 \partial_2 F_2
+                + \partial_1 \partial_3 F_3
+            \\ \partial_1\partial_2 F_2 + \partial_2^2 F_2 + 
+                \partial_2\partial_3 F_3
+            \\ \partial_1 \partial_3 F_1 + \partial_2\partial_3 F_2
+                + \partial_3^2 F_3
+            \end{pmatrix}
     \end{align*}
     and 
     \begin{align*}
@@ -1974,17 +1666,17 @@ magnetostatic problem in the above standard elliptic form.
     \begin{align*}
         \grad \diver F - \curl \curl F  
         = \begin{pmatrix}
-            \partial_1^2 B_1 + \partial_2^2 B_1 + \partial_3^2 B_1
-            \\ \partial_1^2 B_2 + \partial_2^2 B_2 + \partial_3^2 B_3
-            \\ \partial_1^2 B_3 + \partial_2^2 B_3 + \partial_3^2 B_3
+            \partial_1^2 F_1 + \partial_2^2 F_1 + \partial_3^2 F_1
+            \\ \partial_1^2 F_2 + \partial_2^2 F_2 + \partial_3^2 F_3
+            \\ \partial_1^2 F_3 + \partial_2^2 F_3 + \partial_3^2 F_3
         \end{pmatrix}
         = \begin{pmatrix}
-            \Delta B_1 \\ \Delta B_2 \\ \Delta B_3
+            \Delta F_1 \\ \Delta F_2 \\ \Delta F_3
         \end{pmatrix}.
     \end{align*}
 \end{proof}
 We want to rewrite this system in the expression of the elliptic system 
-\ref{}. We have the differential operator for $i = 1,2,3$
+(\ref{eq:elliptic_system}). We can rewrite the Laplacian
 \begin{align*}
     - \Delta F_i = - \sum\limits_{\alpha = 1}^3 
         \partial_\alpha \partial_\alpha F_i
@@ -2009,8 +1701,8 @@ is fulfilled and the resulting system is elliptic. The weak formulation
 is 
 \begin{align*}
     \int_\Omega \sum\limits_{\alpha,\beta,i,j} \delta_{ij} \delta_{\alpha\beta}
-        \partial_\beta B_j \partial_\alpha \phi_i dx 
-    = \sum\limits_{i=1}^3 \nabla B_i \cdot \nabla \varphi_i dx.
+        \partial_\beta B_j \partial_\alpha \varphi_i dx 
+    = \sum\limits_{i=1}^3 \int_\Omega \nabla B_i \cdot \nabla \varphi_i dx.
 \end{align*}
 Here we can assume $\varphi \in C_0^\infty (\Omega)^3$ because all coefficients
 are constant.
@@ -2029,14 +1721,16 @@ are constant.
     \begin{align*}
         0 &= \int_\Omega \diver B \diver \varphi + \curl B \cdot \curl \varphi dx
         = - \int_\Omega B \cdot (\grad \diver \varphi - \curl \curl \varphi) dx
-        \\ &\stackrel{Lemma \ref{lem:}}{=} - \int_\Omega B \cdot 
+        \\ &\stackrel{Lemma 
+            \ref{lem:graddiv_curlcurl_equals_componentwise_laplacian}}{=} 
+            - \int_\Omega B \cdot 
             \begin{pmatrix}
                 \Delta \varphi_1 \\ \Delta \varphi_2 \\ \Delta \varphi_3
             \end{pmatrix}
         = \sum\limits_{i=1}^3 \int_\Omega \nabla B_i \cdot \nabla \varphi_i dx.
     \end{align*}
     Note that the last integration by parts is well defined because 
-    $B \in H^1_{loc}(\Omega)$ according to \ref{thm:solution_in_H1loc}. 
+    $B \in H^1_{loc}(\Omega)$ according to Thm.\,\ref{thm:solution_in_H1loc}. 
     So $B$ is a weak solution 
     of the elliptic system given by 
     $A_{ij}^{\alpha \beta} = \delta_{ij} \delta_{\alpha\beta}$. Because 
@@ -2160,9 +1854,10 @@ uniqueness of this problem in the next section.
 
 \subsection{Existence and uniqueness}
 
-The curve integral condition is closely linked to the topology of our domain.
-This is why we have to link this condition with the topological stuff that we
-did in Sec.\,\ref{}. Because of this connection if we want the curve integral
+The curve integral condition is closely linked to the topology of our domain 
+which we will have to use in our proof.
+This will rely on the tools of homology from Sec.\,\ref{}. 
+Because of this connection if we want the curve integral
 to give us uniqueness of the solution we need to assume certain topological 
 properties. In our case, this will be the condition that our first 
 homology group is generated by the curve that we are integrating over i.e.
@@ -2170,7 +1865,8 @@ homology group is generated by the curve that we are integrating over i.e.
     H_1(\Omega) = \integers [\gamma].
 \end{align*}
 
-Then we get the following existence and uniqueness result on homology.
+Then we get the following existence and uniqueness result on the 
+level of homology.
 
 \begin{proposition}\label{prop:uniqueness_cochain}
     Assume that $H_1(\Omega) = \integers [\gamma]$ i.e. the homology 
@@ -2178,7 +1874,7 @@ Then we get the following existence and uniqueness result on homology.
     closed $1$-chain $\gamma$ is a generator of the first homology group.
     Then we have the following:
     \begin{enumerate}[(i)]
-        \item For any $C_0 \in \real$ there exists a closed $1$-chain 
+        \item For any $C_0 \in \real$ there exists a closed $1$-cochain 
             $F \in Z^1(\Omega)$ with $F(\gamma) = C_0$,
         \item any other $G \in Z^1(\Omega)$ with $G(\gamma) = C_0$ 
             is in the same cohomology class i.e. $[F] = [G]$
@@ -2188,17 +1884,18 @@ Then we get the following existence and uniqueness result on homology.
 \begin{proof}
     \textbf{Proof of (i)} %TBD: This could be wrong
     Because $[\gamma]$ is a generator of the homology group we  obtain a 
-    homomorphism $\hat{F} \in \text{Hom}(H_1(K,L),\real)$ by fixing
+    homomorphism $\hat{F} \in \text{Hom}(H_1(\Omega),\real)$ by fixing
     $\hat{F}([\gamma]) = C_0$. This determines the other values.
     Then we know from (\ref{eq:univeral_coefficient_theorem}) that there exists
-    a $[F] \in H^1(K,L)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
+    a $[F] \in H^1(\Omega)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
     isomorphism. So we obtain
     \begin{align*}
         F(\gamma) = \beta([F])([\gamma]) = \hat{F}([\gamma]) = C_0.
     \end{align*}
 
     \textbf{Proof of (ii)} %TBD: This could be wrong
-    Take $[c] \in H_1(K,L)$ arbitrary. Then there exists  $n \in \integers$ s.t.
+    Take $[c] \in H_1(\Omega)$ arbitrary. 
+    Then there exists  $n \in \integers$ s.t.
     $[c] = n [\gamma]$.
     Using $\beta$ from (\ref{eq:univeral_coefficient_theorem})
     We have
@@ -2211,9 +1908,10 @@ Then we get the following existence and uniqueness result on homology.
     we arrive at $[F] = [G]$.
 \end{proof}
 This abstract topological result can now be linked to the differential 
-forms via the de Rham isomorphism Thm.\,\ref{}. We will formulate it in a way 
-that demonstrates the paralellness of differential forms and cochains.
-\begin{corollary}
+forms via the de Rham isomorphism from Sec.\,\ref{sec:de_rhams_theorem}. 
+We will formulate it in a way 
+that demonstrates the connection of differential forms and cochains.
+\begin{corollary}\label{cor:existence_uniqueness_1form}
     Assume $H_1(\Omega) = \integers [\gamma]$ as above. Then
     \begin{enumerate}[(i)]
         \item For any $C_0 \in \real$ there exists a closed smooth $1$-form 
@@ -2225,19 +1923,20 @@ that demonstrates the paralellness of differential forms and cochains.
             \begin{align*}
                 I(\eta)(\gamma) = \int_\gamma \eta = C_0
             \end{align*}
-            is in the same cohomology class of $\mathfrak{H}^1(\Omega)$ 
+            is in the same cohomology class of $H_{dR}^1(\Omega)$ 
             i.e. $[\eta] = [\theta]$.
     \end{enumerate}
 \end{corollary}
 \begin{proof}
     \textbf{Proof of (i)}
-    Recall from Sec.\,\ref{} that the integration of differential forms 
+    Recall from Sec.\,\ref{sec:de_rhams_theorem} 
+    that the integration of differential forms 
     over chains induces an isomorphism on cohomology 
-    $[I]: \mathscr{H}^1(\Omega) \rightarrow H^1(\Omega)$ which we call 
+    $[I]: H_{dR}^1(\Omega) \rightarrow H^1(\Omega)$ which we call 
     de Rham isomorphism. We know from 
     Prop.\,\ref{prop:uniqueness_cochain} that there exists $F\in H^1(\Omega)$ 
     s.t. $F(\gamma) = C_0$. The surjectivity of the de Rham isomorphism 
-    now gives us $[\theta] \in \mathscr{H}^1(\Omega)$ s.t.
+    now gives us $[\theta] \in H^1(\Omega)$ s.t.
     \begin{align*}
         [I(\theta)] = [I](\theta) = [F]
     \end{align*}
@@ -2248,7 +1947,7 @@ that demonstrates the paralellness of differential forms and cochains.
     with $J \in C^0$. Then, 
     \begin{align*}
         I(\theta)(\gamma) = F(\gamma) + \partial^0 J(\gamma) 
-        = C_0 + J(\partial_0 \gamma) 
+        = C_0 + J(\partial_1 \gamma) 
         \stackrel{\text{$\gamma$ closed}}{=} C_0. 
     \end{align*}
     \textbf{Proof of (ii)}
@@ -2260,186 +1959,53 @@ that demonstrates the paralellness of differential forms and cochains.
     Because $[I]$ is an isomorphism we can conclude $[\eta] = [\theta]$.
 \end{proof}
 
-
-
-We start with the following
-
-\begin{proposition}\label{prop:integral_exact_form_zero}
-    Let $(\phi_i)_{i\in\mathbb{N}} \subseteq H^0(d)$ s.t. 
-    $(d\phi_i)_{i\in\mathbb{N}}$ 
-    is convergent and let $\gamma \in C_1(K)$ be a bounded closed $1$-chain.
-    Then
-    \begin{align*}
-        \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i)(\gamma) = 0.
-    \end{align*}
-\end{proposition}
-\begin{proof}
-    % Let $L \subseteq K$ be a bounded simplicial subcomplex 
-    % s.t. it is full dimensional and $\gamma \in C_1(L)$
-    % {\color{red} Make this more rigorous. We need to be able to restrict 
-    % $L^2$-functions without problems.}  That means there is
-    % $\phi_L \in H^0(d;|L|)$ s.t.
-    % $\lim\limits_{i\rightarrow \infty} d\phi_i = d\phi_L$. 
-    % We can now use the existence and properties of the operators from 
-    % Thm\,\ref{operators}, but on $L$ instead of $K$. We call the operators 
-    % $\rop_L$ and $\aop_L$. Then we have 
-    
-    Because 
-    $[\bar{I}]$ is an isomorphism of cohomology $\bar{I}$ has to send 
-    exact forms to exact cochains. Because $\gamma$ is a closed $1$-chain 
-    we obtain $\bar{I}(d\psi)(\gamma) = 0$ for every $\psi \in H^0(d)$. Because
-    $\rop$, $\phi$ and $I$ are all bounded
-    $\bar{I}$ is a continuous operator \ref{} and so we have 
-    $\bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) = 
-    \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i)$ with the limit of 
-    cochains taken w.r.t. the norm 
-    in $C^1_2(K)$. Now let $J_\gamma$ be the set of indices of simplices 
-    contained in $\gamma$ i.e.
-    \begin{align*}
-        \gamma = \sum\limits_{i \in J_\gamma} \sigma_i.
-    \end{align*}
-    Here we remind that we fixed the ordering and indices for our simplicial 
-    complex \ref{}. Let $N_\gamma \vcentcolon= |J_\gamma|$ which is finite. Then 
-
-    \begin{align*}
-        &\left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_j) 
-        \right) (\gamma) \right| 
-        \leq \left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
-        - \bar{I}(d\phi_j) 
-        \right) (\gamma) \right| \\
-        &\leq \sum\limits_{k \in J_\gamma} 
-        \left| \left( 
-            \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
-            - \bar{I}(d\phi_i) 
-        \right) (\sigma_k) \right| \\
-        &\leq N^{1/2}_\gamma \left(
-            \sum\limits_{k \in J_\gamma} 
-            \left| \left( 
-                    \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
-                    - \bar{I}(d\phi_j) 
-                \right) (\sigma_k) 
-            \right|^2
-        \right)^{1/2} \\
-        &\leq N^{1/2}_\gamma \lVert  
-            \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i)
-            - \bar{I}(d\phi_j)
-        \rVert _{C^{1}_2(K)} 
-        \leq N^{1/2}_\gamma \epsilon
-    \end{align*}
-    and thus 
-    \begin{align*}
-        \left| \left( \lim\limits_{i \rightarrow \infty} \bar{I}(d\phi_i) 
-        \right) (\gamma) \right| = 0
-    \end{align*}
-    because $\epsilon$ was arbitrarily small. {\color{red} This can be done 
-    more elegantly by identifying $C^1_2(K)$ with $\ell^2$. 
-    See notes from 28.12}
-    % For every closed $1$-form $\nu \in H^1(d)$ we have 
-    % \begin{align*}
-    %     \bar{I}(\rop \nu)(\gamma) = \int_\gamma \rop \rop \nu 
-    %     = \int_\gamma \rop \nu + d\aop\rop\nu + \aop d\rop \nu 
-    %     = \bar{I}(\nu)(\gamma)
-    % \end{align*}
-    % where we used the properties of $\rop$ from Thm\,\ref{operators}. 
-    % Let $\tilde{\Omega}$ be a bounded
-    % subdomain of $\Omega$.
-    % Because the image of $d$ is closed for every bounded domain 
-    % (cf. \cite[Lemma 7]{picard}) we have that for any convergent sequence 
-    % $(d\psi_i)_{i\in \mathbb{N}} \subseteq L^1_2(\Omega)$ 
-    % there exists a $\psi \in H^0(d;\tilde{\Omega})$ s.t.
-    % \begin{align*}
-    %     \lim\limits_{i \rightarrow \infty}d\psi_i| _{\tilde{\Omega}} 
-    %     = d\tilde{\psi}.
-    % \end{align*}
-    % Then we use the continuity of $\rop$
-    % \begin{align*}
-    %     \bar{I}(\lim\limits_{i \rightarrow \infty}d\phi_i) =
-    %     \bar{I}(\rop \lim\limits_{i \rightarrow \infty}d\phi_i) = 
-    %     \bar{I}(\lim\limits_{i \rightarrow \infty}d\rop \phi_i) =
-    %     \int_\gamma \rop \lim\limits_{i \rightarrow \infty}d\rop \phi_i =
-    %     \int_\gamma \rop d\tilde{\psi} = 0.
-    % \end{align*}
-\end{proof}
-
-\begin{lemma}\label{lem:extension_by_zero}
-    Let $\Omega$, $U$ be open and $U \subseteq \Omega$. 
-    Let $\nu \in \mathring{H}^k(d;U)$. Define $\bar{\nu}$ as the 
-    zero extension of $\nu$ in $\Omega \setminus U$. 
-    Then $\bar{\nu} \in \mathring{H}^k(d;\Omega)$ and 
-    $d\bar{\nu} = d\nu$ in $U$ and $d\bar{\nu} = 0$ in $\Omega \setminus U$.
-\end{lemma}
-\begin{proof}
-    The proof works exactly as in the standard Sobolev case. 
-    Take $\varphi \in \smoothcompforms{k}{\Omega}$ arbitrary. 
-    Define $\bar{\nu}' = d\nu$ in $U$ and $\bar{\nu}' = 0$ in 
-    $\Omega \setminus U$. We want to show that 
-    \begin{align*}
-        \int_\Omega \bar{\nu} \wedge *\delta \varphi 
-        = \int_\Omega \bar{\nu}' \wedge *\varphi
-    \end{align*}
-    which implies that $\bar{\nu}' = d\bar{\nu}$. If
-    $\text{supp}\, \varphi \subseteq U$ this follows by applying the definition 
-    of $d\nu$. If $\text{supp}\, \varphi \subseteq 
-    \text{int}(\Omega \setminus U)$ then it is also trivial since both 
-    $\bar{\nu}$ and $\bar{\nu}'$ are zero in $\Omega \setminus U$. 
-
-    Otherwise, we recognize $\varphi |_U \in C_c^\infty \Lambda^{k+1}(U)$. 
-    %Did I define that space?
-    Thus we get from the definition of the zero boundary condition 
-    (Def.~\ref{def:zero_boundary_condition})
-    \begin{align*}
-        \langle \bar{\nu}, \delta \varphi \rangle_{L^k_2(\Omega)}
-        = \langle \nu, \delta \varphi \rangle_{L^k_2(U)}
-        = \langle d\nu, \varphi \rangle_{L^{k+1}_2(U)}
-        = \langle \bar{\nu}', \varphi \rangle_{L^{k+1}_2(\Omega)}.
-    \end{align*}
-    Thus, $\bar{\nu}' = d\bar{\nu}$. Because $d\nu \in L^{k+1}_2(U)$,
-    $d\bar{\nu} \in L^{k+1}_2(\Omega)$ and the lemma is proven.
-\end{proof}
-
 \begin{theorem}[Existence of solution]\label{thm:existence}
     Let $\Omega \subseteq \real^3$ be such that $\real^3 \setminus \Omega$
-    is compact and $\interior \omegabar = \interior \Omega$. Assume there 
-    exists a simplicial complex $K$ s.t. $\omegabar = |K|$ and a simplicial
-    subcomplex $L \subseteq K$ s.t. $|L|$ is homeomorphic to the exterior 
-    of a ball with radius $R > 0$ and $K \setminus L$ is finite. Both 
-    $K$ and $L$ are assumed path-connected in the sense of simplicial complexes
-    (cf. \ref{}). 
-    For $K$ we require that $H_1(K) = \integers [\gamma]$ for a $1$-chain 
-    $\gamma$.
-    Assume that 
-    the GKS-condition \ref{ass:gks_condition} holds for $K$. 
+    is compact. 
+    For the topology, we require that $H_1(\Omega) = \integers [\gamma]$ 
+    for a $1$-chain 
+    $\gamma$. Assume further that there exists an $\epsilon$-neighborhood 
+    \begin{align*}
+        \Omega_\epsilon \vcentcolon= \{ x \in \real^3 \mid
+            d(x,\Omega) < \epsilon \} 
+    \end{align*}
+    s.t. $H_1(\Omega_\epsilon) = \integers [\gamma]$ as well.
     Then there exists a solution 
     to Problem \ref{prob:magnetostatic_reformulated}.
 \end{theorem}
+Let us say a view words about the topological assumption 
+regarding $\Omega_\epsilon$. This just means that we can slightly increase 
+the domain without changing the first homology group. As an example, 
+think again of a torus in $\real^3$. Assuming the torus has non-empty interior 
+we can slightly reduce the poloidal radius without changing the topology of its 
+the exterior domain.
 \begin{proof}
     At first we want to find a smooth differential $1$-form 
     $\theta \in \Lambda^1(\Omega)$ with the desired curve integral. 
     In order to do that we will increase the 
     domain slightly.
-    Take a non-empty compact set $K \subseteq \interior \Omega^c$. 
-    Denote $\tilde{\Omega} \vcentcolon= K^c$. Then we have 
-    $\tilde{\Omega} \supseteq \Omega$. 
-    We start by referring to Cor.\,\ref{} to get a smooth differential form 
-    $\tilde{\theta} \in \Lambda^1(\tilde{\Omega})$ with 
-    \begin{align*}
-        \int_\gamma \tilde{\theta} = C_0.
-    \end{align*}
+    We start by referring to Cor.\,\ref{cor:existence_uniqueness_1form} 
+    to get a smooth differential form 
+    $\tilde{\theta} \in \Lambda^1(\Omega_\epsilon)$ with 
+    \begin{align}
+        \int_\gamma \tilde{\theta} = C_0. \label{eq:integral_theta_tilde}
+    \end{align}
     We now refer back to \ref{} to change back to vector proxies. Let 
     $\tilde{\phi}$ be the vector proxy of $\tilde{\theta}$ 
     i.e. $\tilde{\phi} \in C^\infty(\tilde{\Omega})^3$.
-    From the properties of $\theta$ we obtain the corresponding properties 
+    Because $\tilde{\theta}$ is closed and (\ref{eq:integral_theta_tilde}) holds
+    we obtain the corresponding properties 
     of $\tilde{\phi}$ which are 
     \begin{align*}
         \int_\gamma \tilde{\phi} \cdot dl &= C_0 
-        \\ \curl \phi &= 0.
+        \\ \curl \tilde{\phi} &= 0.
     \end{align*}
     We define $\phi$ by restricting $\tilde{\phi}$ to $\Omega$. 
     Let now $K_R$ be the open ball around the origin with radius $R>0$ large
     enough s.t. $\Omega^c \subseteq K_R$ and $\gamma \subseteq K_R$. 
     We now restrict $\theta$ further to
     $\Omega_R \vcentcolon= \Omega \cap K_R$. We denote the restriction with 
-    $\phi_R$. 
+    $\phi_R \vcentcolon= \phi|_{\Omega_R}$. 
 
     We now need to construct a harmonic vector field with zero tangential trace
     s.t. we can extend it by zero. We do this by using the Hodge 
@@ -2452,26 +2018,31 @@ We start with the following
     \end{align*}
     We also know that $B_R$ is smooth because 
     it is curl and divergence free from the section about the 
-    smoothness of solutions (Sec. \ref{}). We want to check that the curve
+    smoothness of solutions (Sec. \ref{sec:regularity_of_solutions}). 
+    We want to check that the curve
     integral did not change. We know from \ref{} that the 
-    image of the exterior is closed on bounded domains. For vector proxies this
+    image of the exterior derivative is closed on bounded domains. 
+    Formulated in vector proxies, this
     means that $\nabla H^1(U)$ is closed in $L^2$ if $U$ is a bounded domain. 
     So we get that 
     \begin{align*}
         \lim\limits_{i\rightarrow \infty}\nabla \psi_i = \nabla \psi_R
     \end{align*}
     with $\psi_R \in H^1(\Omega_R)$. Because $B_R$ and $\phi_R$ are smooth
-    $\psi_R$ must be smooth as well and so we get from Stoke's theorem 
+    $\psi_R$ must be smooth as well and so we have   
     \begin{align*}
         \int_\gamma B_R\cdot dl = \int_\gamma \phi_R\cdot dl.
     \end{align*}
-    Now because because $B_R$ has zero tangential trace we can extend it by 
-    zero. Let $\overline{B}_R$ be that extension. 
-    That means of course that $B_R$ might not be smooth on $\partial K_R$ 
-    as it might have a jump. But the tangential part is zero and thus 
-    we have $\overline{B}_R \in H(\curl;\Omega)$. 
+    Now extend $B_R$ by zero onto $\real^3 \setminus K_R$.
+    Denote this extension as $\overline{B}_R$.
+    Because $B_R$ has tangential trace zero and is curl-free its extension 
+    $\overline{B}_R \in H(\curl;\Omega)$ and is also curl-free. 
     Here it is important to remember 
-    that $K^c_R \subseteq \Omega$. Now we can once again use the Hodge 
+    that $\real^3 \setminus K_R \subseteq \Omega$. 
+    That means of course that $\overline{B}_R$ 
+    might not be smooth on $\partial K_R$ 
+    as it might have a jump. 
+    Now we can once again use the Hodge 
     decomposition of two forms. This time on the whole domain $\Omega$ to find 
     a harmonic field $B$ and a sequence $(\rho_i)_{i\in \naturalnum}$
     s.t.
@@ -2480,7 +2051,8 @@ We start with the following
             +\lim\limits_{i\rightarrow \infty}\nabla \rho_i.
     \end{align*}
     Notice that because $B$ is a harmonic vector field 
-    and is the vector proxy of the harmonic $2$-form it already satisfies 
+    and because it is the vector 
+    proxy of a harmonic $2$-form it already satisfies 
     the Neumann boundary condition and it is divergence as well as curl free.
     That means $B$ is a solution if the curve integral condition is satisfied.
     In order to see this, note that we have on $K_R$
@@ -2492,94 +2064,32 @@ We start with the following
     \begin{align*}
         B_R = B|_{K_R} + \nabla \rho_R.
     \end{align*}
-    With the same argument as above, $\rho_R$ must be smooth and again with 
-    Stoke's theorem we get
+    With the same argument as above, $\rho_R$ must be smooth and so
     \begin{align*}
-        \int_\gamma B =  \int_\gamma B|_{K_R} =  \int_\gamma B_R = C_0
+        \int_\gamma B \cdot dl =  \int_\gamma B|_{K_R} \cdot dl 
+        =  \int_\gamma B_R \cdot dl = C_0
     \end{align*}
     and thus $B$ is indeed a solution.
 \end{proof}
 
-\begin{proof}
-    Under the given assumptions we know that we can find a 
-    $F \in \tilde{C}^1(K,L)$ (see Lemma \ref{lem:existence_vanishing_cochain})
-    with $F(\gamma) = C_0$. 
-    Because $K \setminus L$ is finite $F$ is obviously 2-summable 
-    i.e. $F \in  \tilde{C}_2^1(K,L)$
-    Then we use the fact that the integration mapping 
-    $I: S^1_2(K,L) \rightarrow \tilde{C}^1_2(K,L)$ induces an isomorphism 
-    on cohomology
-    $[I]: \mathscr{H}^1_2(K,L) \rightarrow \tilde{H}^1_2(K,L)$.
-    So there exists a 
-    S-form $\tilde{\theta} \in S^1_2(K,L)$
-    s.t. $[I(\tilde{\theta})] = [F] \in \tilde{H}_2^1(K,L)$. Thus 
-    we have some $J \in \tilde{C}^0_2(K,L)$ s.t. 
-    $I(\tilde{\theta}) = F + \partial J$ and thus 
-    \begin{align*}
-        I(\tilde{\theta})(\gamma) = F(\gamma) + J(\partial \gamma)
-        \stackrel{\gamma \text{ closed}}{=} F(\gamma) = C_0.      
-    \end{align*}
-    Now define $\theta \vcentcolon= \varphi^{-1} \tilde{\theta}$.
-    So we found already a $1$-form that has the desired curve integral.
-
-    $\tilde{\theta} \in S^1_2(K,L) \subseteq S^1_2(K)$ so 
-    $\theta \in S^1_2(\omegabar) \subseteq W^1_2(\omegabar)$.
-    We now use the fact that $\text{int}\,\omegabar = \text{int}\,\Omega$ and
-    remember the resulting identification of the Sobolev spaces 
-    $W^1_2(\omegabar)$ and $W^1_2(\Omega)$ 
-    (cf. Remark \ref{rem:identification_sobolev_spaces}) to obtain
-    $\theta \in H^1(d;\Omega)$.
-    Next, we will use the Hodge decomposition (\ref{hodge_decomposition}).
-    Now we project $\star \theta$ onto harmonic forms to get 
-    $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$. 
-    So because 
-    $\star\theta$ is co-closed we 
-    obtain a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^3(\delta)$ s.t.
-    \begin{align*}
-        \star\theta = \omega + \lim\limits_{i \rightarrow \infty}\delta \phi_i
-    \end{align*}
-    where the limit is in the $L^2$-sense.
-    Apply the Hodge star operator on 
-    both sides, use the fact that it is an isometry and thus continuous and then 
-    remember the definition of $\delta$ to get a sequence 
-    $(\psi_i)_{i \in \naturalnum} \subseteq H^0(d)$ s.t.
-    \begin{align*}
-        \theta = \star\omega + \lim\limits_{i \rightarrow \infty}d \psi_i.
-    \end{align*}    
-    Then we get
-    \begin{align*}
-        \int_\gamma \rop \star \omega 
-        =\int_\gamma \rop (\theta - 
-        \lim\limits_{i \rightarrow \infty}d \psi_i) 
-        \stackrel{  \text{Prop.\ref{prop:integral_exact_form_zero}}  }{=} 
-            \int_\gamma \rop \theta 
-        \stackrel{  \text{Prop.\ref{}}  }{=}  
-            \int_\gamma \theta = C_0.
-    \end{align*}
-    In the penultimate step equality we used the fact that 
-    $\rop$ does not change the integral because $\theta \in S^1(K)$ is closed.
-    Thus $\omega$ fulfills the integral condition. 
-    Because $\omega \in \mathring{H}^2_0(d,\delta;\Omega)$ all other conditions 
-    are satisfied as well and $\omega$ is a solution.
-\end{proof}
-
-
 In the proof of uniqueness we will use the following lemma. 
-We are now back in the realm of standard vector analysis so all the notation
-is to be seen in this light (e.g. $H^1$ is here the standard Sobolov space 
-and not a Sobolev space of differential forms).
-
 \begin{lemma}\label{lem:gradient_sequence}
-    Let $\phi \in L^2_{loc}(\Omega)$ with $\nabla \phi \in L^2(\Omega)$. Then 
+    Let $\phi \in L^2_{loc}(\Omega_\epsilon)$ 
+    with $\nabla \phi \in L^2(\Omega)^3$. Then 
     there exists a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^1(\Omega)$
     s.t. $\nabla \phi_i \rightarrow \nabla \phi$ in $L^2(\Omega)^3$.
 \end{lemma}
 \begin{proof}
-    Take $B_R$ with $R$ large enough s.t. $B_R^c \subseteq \Omega$. 
-    Define $\Omega_R \vcentcolon= B_R \cap \Omega$. Then 
-    $\overline{\Omega}_R \subseteq B_{R+1}$ and $\Omega_R$ is a Lipschitz 
-    domain and $B_{R+1}$ is pre-compact and
-    $\phi|_{\Omega_R} \in W^{1,2}(\Omega_R)$. Therefore we can find an extension
+    Take $K_R$ the open ball around the origin with $R$ large enough 
+    s.t. $(K_R)^c \subseteq \Omega$. 
+    Define $\Omega_R \vcentcolon= K_R \cap \Omega$. Then 
+    $\overline{\Omega}_R \subseteq K_{R+1}$, where $K_{R+1}$ is the open ball 
+    around the origin with radius $R+1$, $\Omega_R$ is a Lipschitz 
+    domain and $K_{R+1}$ is pre-compact and
+    $\phi|_{\Omega_R} \in W^{1,2}(\Omega_R)$. 
+    Note that here we need the fact that $\phi \in L^2_{loc}(\Omega_\epsilon)$
+    because then $\Omega_R$ is pre-compact in $\Omega_\epsilon$. 
+    Therefore we can find an extension
     $E\phi \in W_0^{1,2}(\Omega_{R+1}) \hookrightarrow W^{1,2}(\mathbb{R}^3)$
     (cf. \cite[Sec.\,1.5.1]{mazya}). So we can now define
     \begin{align*}
@@ -2601,99 +2111,23 @@ and not a Sobolev space of differential forms).
 
 \begin{theorem}
     Let the same assumptions hold as in Thm.\,\ref{thm:existence}.
-    Then solution of the problem is unique.
+    Then the solution of the problem is unique.
 \end{theorem}
-\begin{proof}
-    Let $\omega$ and $\tilde{\omega}$ both be solutions. Then $\star\omega$ is 
-    closed thus $\rop \star\omega \in S_2^1(\omegabar)$ is also closed because 
-    \begin{align*}
-        d \rop \star \omega = \rop d\star\omega = 0.
-    \end{align*}
-    The same 
-    holds for $\tilde{\omega}$. 
-    $I(\varphi \rop \star \omega)
-    , I(\varphi \rop \star \tilde{\omega}) \in C^1_2(K)$ 
-    are closed $1$-cochains with
-    $I(\varphi\rop \star \omega)(\gamma) 
-    = I(\varphi\rop \star \tilde{\omega})(\gamma)$. 
-    Thus Prop.\,\ref{prop:uniqueness_cochain} implies 
-    $[I(\varphi\rop \star \omega)] 
-    = [I(\varphi\rop \star \tilde{\omega})] \in H^1(K)$.
-    Because $[I]: \mathscr{H}^1(K) \rightarrow H^1(K)$ is an isomorphism
-    (see \ref{}) we have 
-    \begin{align*}
-        [\varphi\rop \star \omega] = [\varphi\rop \star \tilde{\omega}] 
-    \end{align*}
-    Here the cohomology classes are in the cohomology spaces of S-forms 
-    $\mathscr{H}^1(K)$. That means there is a S-form $\theta \in S^0(K)$ s.t.
-    \begin{align*}
-        &\varphi \rop \star\omega - \varphi \rop \star\omega = d\theta \\ 
-        &\Rightarrow \rop \star\omega -  \rop \star\omega = \varphi^{-1} d\theta 
-        = d\varphi^{-1}\theta =\vcentcolon d\tilde{\theta}.
-    \end{align*}
-    We have $\tilde{\theta} \in S^0(\omegabar) \subseteq 
-    W_{\infty,loc}^0(\omegabar)$ and $d \tilde{\theta} \in S_2^1(\omegabar)
-    \subseteq W_2^1(\omegabar)$.
 
-    Using the 
-    properties of $\rop$ there exists a $\eta \in L_{2,loc}^0(\Omega)$
-    with $d\eta \in L^1_2(\Omega)$ s.t. 
-    \begin{align*}
-        \star\omega - \star\tilde{\omega} 
-        = -d\aop(\star\omega - \star\tilde{\omega})
-        + d \theta = d\eta.
-    \end{align*}
-    By applying the Hodge star operator on both sides we find 
-    $\mu \in L_{2,loc}^3(\Omega)$ with $\delta \eta \in L^2_2(\Omega)$ s.t.
-    \begin{align}
-        \omega - \tilde{\omega} = \delta \mu. \label{difference_solutions}
-    \end{align}
-    But because $\mu$ is only in $L_{2,loc}^3(\Omega)$ 
-    we can not immediately conclude that $\delta \mu = 0$.
-
-    Let us briefly return to vector proxies. Let $B$ and $\tilde{B}$ be 
-    vector proxies of $\omega$ and $\tilde{\omega}$ respectively. 
-    (\refeq{difference_solutions}) then translates to 
-    $B, \tilde{B} \in \mathring{H}(\diver)$ %TBD: Not defined
-    and $B-\tilde{B} = \nabla \phi$ with $\phi \in L^2_{loc}(\Omega)$ and
-    $\nabla \phi \in L^2(\Omega)^3$.
-    Because $B$ and $\tilde{B}$ are both harmonic we have 
-    \begin{align*}
-        0 = \int_\Omega (B-\tilde{B}) \cdot \nabla f\, dx 
-        = \int_\Omega \nabla \phi \cdot \nabla f \,dx
-        \quad \forall 
-        f \in H^1(\Omega).
-    \end{align*}
-    % Let $\rho_\epsilon$ be a standard mollifier with compact support. 
-    % Then we have 
-    % \begin{align*}
-    %     \partial_{x_i} (\rho_\epsilon * \phi) = 
-    %     (\partial_{x_i} \rho_\epsilon) * \phi = 
-    %     \rho_\epsilon * (\partial_{x_i} \phi) 
-    %     \xrightarrow{\epsilon \rightarrow 0} 
-    %     \partial_{x_i} \phi \text{ in $L^2(\Omega)$}.
-    % \end{align*}
-    % In the last step it is crucial that $\partial_{x_i} \phi \in L^2(\Omega)$.
-    Thank to Lemma~\ref{lem:gradient_sequence} we know that 
-    $\nabla \phi \in \overline{\nabla H^1(\Omega)}$. 
-    Because $B$ and $\tilde{B}$ are harmonic we have 
-    $B - \tilde{B} \in 
-    \overline{\nabla H^1(\Omega)}^\perp$ and hence $\nabla \phi = 0$
-    and $B = \tilde{B}$. Because the corresponding vector proxies are equal we 
-    we obtain $\omega = \tilde{\omega}$.
-\end{proof}
 \begin{proof}
     Let $B$ and $\tilde{B}$ both be solutions and denote with $\omega$ 
     and $\tilde{\omega}$ the corresponding $1$-forms. 
     So we have $I(\omega)(\gamma) = I(\tilde{\omega})(\gamma) = C_0$.
-    Then we know from Cor.\,\ref{} that $\omega$ and $\tilde{\omega}$ are in the 
-    same cohomology in $\mathfrak{H}^1$. This is equivalent to saying that 
+    Then we know from Cor.\,\ref{cor:existence_uniqueness_1form} 
+    that $\omega$ and $\tilde{\omega}$ are in the 
+    same cohomology in $\mathcal{H}^1$. This is equivalent to saying that 
     there exists a smooth $\mu$ s.t. 
     \begin{align*}
         B - \tilde{B} = \grad \mu.
     \end{align*}
-    However, $\mu$ must of course not be in $L^2$ since $\Omega$ is unbounded.
-    But we know that $\grad \mu \in L^2(\Omega)^3$ and $\mu \in L^2_{loc}$. 
+    However, $\mu$ need not be in $L^2$ since $\Omega$ is unbounded.
+    But we know that $\grad \mu \in L^2(\Omega)^3$ and 
+    $\mu \in L^2_{loc}(\Omega)$. 
     Here we can now apply Lemma \ref{lem:gradient_sequence} and conclude
     \begin{align*}
         B - \tilde{B} \in \overline{\grad H^1(\Omega)}.
