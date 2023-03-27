@@ -29,6 +29,7 @@
 \theoremstyle{definition}
 \newtheorem{assumption}[lemma]{Assumption}
 \newtheorem{definition}[lemma]{Definition}
+\newtheorem{example}[lemma]{Example}
 \newtheorem{remark}[lemma]{Remark}
 \newtheorem{problem}[lemma]{Problem}
 
@@ -285,7 +286,7 @@ So in 3 dimensions, we can always relate the operations of alternating maps
 forms to the operations of the corresponding proxies. 
 
 
-\subsection{Differential forms}
+\subsection{Differential forms}\label{sec:differential_forms}
 
 Before we define differential forms, let us start by revising some basics
 from differential geometry. We follow the approach from 
@@ -967,276 +968,221 @@ and furthermore for the closed and coclosed forms respectively,
     \mathring{H}^k_0(d,\delta). \label{decomposition_coclosed_forms}
 \end{align}
 
-\section{Simplicial topology}
+\section{Singular homology}
 
-Before we can reformulate the boundary value problem in the language of 
-differential forms we have to 
-introduce some things from simplicial topology. This material is taken from
+The curve integral constraint from the magnetostatic problem is very topological % TBD: Reference
+in nature and strongly related to the topology of the domain. 
+In order to deal with this constraint and obtain the desired existence and
+uniqueness we require some tools from algebraic topology which we will introduce 
+in this section. 
+This material is taken from
 \cite{topology_and_geometry} where a lot more details and results can be found.
 
-\subsection{Simplicial complex}
+\subsection{Homology groups}
 
-\begin{definition}[Affine simplex]
-    Let $x_0$, $x_1$, ..., $x_k \in \real^n$ be affine independent. Then 
-    \begin{align*}
-    [x_0,x_1,...,x_k] \vcentcolon= \text{conv}\{x_0,...,x_k\}
-    \end{align*}
-    is called an affine $k$-simplex. With $\text{conv}$ we mean the 
-    convex combination.
-\end{definition}
-\noindent We will assume all simplices to be affine.
-%%% TBD: Question: In the book this is defined in infinite dimensions. Does this
-%%% lead to any problems?
-
-\begin{definition}[Simplicial complex]
-    A \textit{simplicial complex} $K$ is a collection of affine simplices s.t.
-    \begin{enumerate}
-        \item $\sigma \in K \Rightarrow$ any face of $\sigma$ is in $K$,
-        \item $\sigma,\, \tau \in K \Rightarrow \sigma \cap \tau$  
-                is either empty or a face of both $\sigma$ and $\tau$.
-    \end{enumerate}
-    We call $|K| \vcentcolon= \bigcup \{ \sigma | \sigma \in K\}$ the polyhedron of 
-    $K$ and we denote the set of all $k$-simplices as $K^{(k)}$.
-\end{definition}
-For any topological space $X$ a homeomorphism 
-$\tau: |K| \rightarrow X$ is called \textit{triangulation} of $X$.
-Let $\{x_1,\, x_2,...\}$ be the vertices in the simplicial complex $K$.
-We fix an ordering of the vertices for every simplex. 
-That means for any $k$ every $k$ simplex $\sigma$ has
-a designated representation in the form of
+Denote with $\real^\infty$ the vector space of all real-valued sequences. Let 
+$e_i \in \real^\infty$ for $i \in \naturalnum$ denote the sequences that 
+that are zero for every index 
+unequal to $i$ and $1$ for the index $i$. Note that in this thesis 
+the natural numbers start at zero. Then we define the standard $k$-simplex 
+$\Delta_k$ as
 \begin{align*}
-    \sigma = [x_{i_0},\, x_{i_1}, ...,x_{i_k}].
-\end{align*} 
-
-\begin{definition}[Star]
-    The \textit{star} of a vertex $x_i$ is the collection of all simplices 
-    $\sigma \in K$ s.t. $x_i$ is contained in $\sigma$. 
-    
-    We call a simplicial complex \textit{star-bounded} for some number $N$ 
-    if the star of any vertex contains at most $N$ simplices.
-\end{definition}
-{\color{red} Does this imply quasi-regularity?}
-Star-boundedness will be a crucial assumption later 
-(see Assumption \ref{ass:GKS-assumption}). Now we will introduce
-algebraic structures on the simplicial complex.
-
-\begin{definition}[$k$-chain]
-    Let $K$ be a simplicial complex. By $C_k(K)$ we will denote the 
-    free abelian group on the $k$-simplices
-    i.e. the abelian group of all formal finite sums
-    \begin{align*}
-        \sum_\sigma n_\sigma \sigma
-    \end{align*}
-    with $\sigma$ being $k$-simplices. The elements of $C_k(K)$
-    (i.e. sums of the above form) are called \textit{$k$-chains}.
-\end{definition}
-
-
-\begin{definition}[Boundary]
-    We have the 
-    \textit{boundary operator} $\partial_k: C_k(K) \rightarrow C_{k-1}(K)$.
-    We first define it
-    for any simplex $[x_{i_0},\, x_{i_1},...,\, x_{i_k}]$ 
-    \begin{align*}
-        \partial[x_{i_0},\, x_{i_1},...,\, x_{i_k}] \vcentcolon=
-        \sum\limits_{j=0}^k (-1)^j [x_{i_0},\, x_{i_1},...,\, 
-        \hat{x}_{i_j},...,\, x_{i_k}]
-    \end{align*}
-    where $[x_{i_0},\, x_{i_1},...,\, \hat{x}_{i_j},...,\, x_{i_k}]$ is the
-    simplex without vertex $x_{i_j}$. We then extend the definition
-    of the boundary operator linearly to $k$-chains 
-    $c = \sum_\sigma c_\sigma \sigma$ by
-    \begin{align*}
-        \partial c \vcentcolon= \sum\limits_\sigma c_\sigma \partial \sigma.
-    \end{align*}
-    By convention we define $\partial_0 = 0$. We will leave out the index $k$
-    if it is clear from the context or irrelevant.
-\end{definition}
-
-A crucial property of the chain operator is the following.
-
-\begin{proposition}
-    $\partial \circ \partial = 0$.
-\end{proposition}
-\begin{proof}
-    This can be proven by direct computation, analogous to 
-    \cite[Chap.~4, Lemma~1.6]{topology_and_geometry}
-\end{proof}
-
-We can now generalize the notions of the chain groups by using factor groups.
-Let $L \subseteq K$ be a simplicial complex which we will call simplicial
-subcomplex. Then we define the factor group
-
-\begin{align*}
-    C_k(K,L) \vcentcolon= \faktor{C_k(K)}{C_k(L)}.
+    \Delta_k \vcentcolon= \Big\{ \sum\limits_{i=1}^k  \lambda_i e_i \mid 
+    \sum\limits_{i=0}^k \lambda_i = 1 , \; 0\leq \lambda_i \leq 1\Big\}
+    = \text{conv} \{e_0,\,...,\, e_k\}.
 \end{align*}
-We denote the elements of $C_k(K,L)$ i.e. the equivalence class 
-by $\underline{c}$ for some $c \in C_k(K)$. 
-Because $L$ is a simplicial complex we have $\partial_k c \in C_{k-1}(L)$ for
-any $c \in C_k(L)$. Thus it induces a homomorphism on the factor groups denoted
-by
-\begin{align*}
-    \underline{\partial}_k: C_k(K,L) \rightarrow C_{k-1}(K,L),\,
-    \underline{\partial}_k \underline{c} \vcentcolon= \underline{\partial_k c}.
-\end{align*}
-Note that $C(K,L)$ generalizes the definition of $C_k(K,L)$ because we 
-can choose $L = \emptyset$. Then the abelian group on $\emptyset$ is just 
-$\{ 0 \}$ and thus $C_k(K,L) = C_k(K)$.
+where $\text{conv}$ is the usual convex combination. 
 
-\begin{remark}
-    The last equality is technically not precise of course. 
-    However, for any group 
-    $G$ with identity $\iota$ the resulting factor group
-    $\faktor{G}{\{\iota\}}$ every equivalence class $\underline{g}$ would 
-    only include $g$ itself so we can trivially identify $G$ with 
-    $\faktor{G}{\{\iota\}}$ and we will do so from now on.
-\end{remark}
-
-We want to investigate how we can understand $\underline{c}$.
-
-\begin{proposition}
-    Let $c \in C_k(K)$ be arbitrary. Then
-    \begin{align*}
-        \underline{c} = \underline{0} 
-        \leftrightarrow c = \sum\limits_{\tau \in L} n_\tau \tau.
-    \end{align*}
-    As usual the right hand side is a finite sum. 
-    So for two $k$-chains $c = \sum_\sigma n_\sigma \sigma \in C_k(K)$ 
-    and $c' =  \sum_\sigma n'_\sigma \sigma$ we have
-    \begin{align}
-        \underline{c} = \underbar{c}' 
-        \leftrightarrow n_\sigma = n'_\sigma 
-        \quad \forall \sigma \in K \setminus L. 
-        \label{eq:equivalence_class_relative_chain_group}
-    \end{align}
-\end{proposition}
-\begin{proof}
-    $c \in \underline{0}$ is just equivalent to saying that 
-    $c \in C_k(L)$ by definition of the factor group and thus we can write 
-    $c = \sum\limits_{\tau \in L} n_\tau \tau$.
-    (\ref{eq:equivalence_class_relative_chain_group}) follows from that 
-    because $\underline{c} = \underbar{c}'$ is equivalent to
-    $\underline{c - c'} = \underline{0}$.
-\end{proof}
-
-In this sense we can identify $C_k(K,L)$ with formal sums of 
-simplices in $K^{(k)}\setminus L^{(k)}$. 
-
-\subsection{Simplicial (Co-)Homology}
-
-We call a $k$-chain $\underline{c} \in C_k(K,L)$ a \textit{$k$-cycle} if 
-$\underline{\partial} \underline{c} = 0$ and we call $\underline{c}$ 
-a \textit{$k$-boundary} if there exists $\underline{d}$ s.t. 
-$\underline{c} = \underline{\partial} \underline{d}$. 
-Let $Z_k(K,L) = \text{ker}\,\underline{\partial_k}$ 
-and $B_k(K,L) = \text{im}\,\underline{\partial_{k-1}}$.
-We can now define the simplicial homology groups of our simplicial complex.
-
-\begin{definition}[Simplicial homology]
-    The relative homology groups $H_k(K,L)$ are defined as
-    \begin{align*}
-        H_k(K)\vcentcolon= \faktor{Z_k(K,L)}{B_k(K,L)}.
-    \end{align*}
+\begin{definition}[$k$-simplex]
+Let $X$ be a topological space. Then a \textit{singular $k$-simplex} is a continuous 
+map $\sigma_k: \Delta_k \rightarrow X$. We will frequently leave out the term 'singular'
+and refer to them just as $k$-simplices.
 \end{definition}
 
-\begin{remark}
-We call them relative homology group because define them on the 
-for $C_k(K,L)$.
-The standard homology groups $H_k(K)$ (i.e. taking $L = \emptyset$) 
-are independent of the chosen triangulation of $|K|$
-\cite[p.248]{topology_and_geometry} because they are isomorphic to the 
-singular homology groups which only depend on $|K|$ 
-\end{remark}
+As the term 'singular' implies these simplices can be degenerated. For example, $\sigma_k$ could 
+just be constant for any $k$, so the object in the topological space corresponding to the 
+$k$-simplex is just a point.
 
-Let $G$ be any abelian group. Then we define the group 
-of \textit{$k$-cochains} $C^k(K,L;G)$ by
+We can now introduce a algebraic structure by looking at finite formal sums of the form 
 \begin{align*}
-    C^k(K,L;G) \vcentcolon= \text{Hom}(C_k(K,L),\,G)
+    \sum_{\text{$\sigma$ $k$-simplex }} n_\sigma \sigma.
 \end{align*}
-i.e. the group of all homomorphisms from $C_k(K,L)$ to $G$. 
+These formal sums form an abelian group which we refer to as the 
+\textit{singular $k$-chain group} $C_k(X)$. 
+
+We will now introduce an important homomorphism between these groups called the \textit{boundary}.
+\begin{definition}
+    Let $v_0, ... , v_k \in \real^n$. 
+    We define \textit{affine singular $k$-simplex} as a special singular $k$-simplex denoted by
+    \begin{align*}
+        [v_0,...,v_k]: \Delta_k \rightarrow \real^n, \, 
+        \sum\limits_{i = 0}^k \lambda_i e_i \mapsto \sum\limits_{i = 0}^k \lambda_i v_i.
+    \end{align*}
+\end{definition}
+As in the general case, the image can be a degenerated simplex in $\real^n$ since the 
+$v_i$ are not assumed to be affine independent. 
+
+We call the affine singular simplex 
+$[e_0,...,\hat{e}_i,...,e_k]: \Delta_{k-1} \rightarrow \Delta_k$ the $i$-th face map. 
+The $\hat{ }$ means this vertex is left out. Here we tacitly used the 
+natural inclusion $\real^{k+1} \subseteq \real^\infty$ so we have 
+$\Delta_k \subseteq \real^{k+1}$. But this is just a way of representation.
+
+With the face map we can now define the boundary operator.
+\begin{definition}
+    For a singular $k$-simplex $\sigma: \Delta_k \rightarrow X$ we define its $i$-th face 
+    $\sigma^{(i)} \vcentcolon= \sigma \circ F_i^k$ which is a $(k-1)$-simplex. 
+    We then define the \textit{boundary} of $\sigma$ as 
+    $\partial_k \sigma \vcentcolon= \sum_{i=0}^k (-1)^i \sigma^{(i)}$. We extend this 
+    to a homomorphism between the chain groups
+    \begin{align*}
+        \partial_k: C_k(X) \rightarrow C_{k-1}(X), 
+        \sum_\sigma n_\sigma \sigma \mapsto \sum_\sigma n_\sigma \partial_k \sigma.
+    \end{align*}
+    In the case of $k=0$, we set $\partial_0 = 0$.
+\end{definition}
+We will frequently leave out the subscript and just write $\partial$ for the boundary 
+if it is clear from the context.
+
+A straightforward computation (cf. \cite[Lemma 1.6]{topology_and_geometry}) shows the 
+important property 
+\begin{align*}
+    \partial_k \circ \partial_{k+1} = 0.
+\end{align*}
+This property implies that $\ker \partial_{k-1} \subseteq \Ima \partial_k$ is 
+a subgroup. We call a chain $c \in C_k(X)$ \textit{$k$-cycle} if $\partial_k c = 0$ and 
+we call it \textit{$k$-boundary} if $c \in \Ima \partial_{k+1}$. 
+Denote the group of $k$-cycles as $Z_k(X)$ and the $k$-boundaries as $B_k(X)$.
+Since we are in the abelian setting this motivates us to define 
+the resulting factor groups.
+\begin{definition}[Homology groups]
+    We define the \textit{$k$-th homology group} of the topological space $X$ as
+    \begin{align*}
+        H_k(X) \vcentcolon= \faktor{Z_k(X)}{B_k(X)}.
+    \end{align*} 
+\end{definition}
+We denote the elements of the homology groups i.e. the equivalence classes of a 
+$k$-cycle $c$ as $[c] \in H_k(X)$.
+
+If the $k$-th homology groups is finitely generated then we 
+call the rank i.e. the number of generators the \textit{$k$-th Betti number}. 
+These Betti numbers are fundamental properties of the topological space. 
+For example, the zeroth Betti number corresponds to the number of 
+path-components of the space. In 3 dimensions, the first Betti number of 
+a compact domain
+corresponds to the number of "holes", the second Betti number to 
+number of enclosed "voids" in the domain. E.g. a filled torus 
+has the zeroth Betti number one, the first Betti number also equal to one
+and the second equal to zero which can be proven using the Meyer-Vietoris sequence
+(see \cite[Sec.\,IV.18]{topology_and_geometry}). We will not go into this in further
+since we do not want to focus too much on algebraic topology.
+
+This construction can be put in an abstract algebraic framework in the following 
+way. We call a collection of abelian groups $C_i$, $i\in \integers$ a graded group.                                                   
+Together with a collection of homomorphims $\partial_i: C_i \rightarrow C_{i-1}$ 
+called \textit{differentials}
+s.t. $\partial_{i-1} \circ \partial_i$ this is called a \textit{chain complex} which 
+we will denote by $C_*$. 
+
+\begin{example}
+    If we set $C_k(X) = {0}$ for $k < 0$ this gives us a chain complex together with 
+    the boundary operator. 
+\end{example}
+
+Completely analogous to above, we can define the homology groups 
+\begin{align*}
+    H_k(C_*) \vcentcolon= \faktor{\ker \partial_k}{\Ima \partial_{k+1}}.
+\end{align*}
+
+\begin{definition}[Chain map]
+    Let $A_*$ and $B_*$ be chain complexes. With a slight abuse of notation
+    let us denote the differentials of 
+    both chain complexes just by $\partial$.
+    Then a \textit{chain map} $f: A^* \rightarrow B^*$ is a collection 
+    of homomorphisms $f_i: A_i \rightarrow B_i$ s.t. 
+    $f_{i-1} \circ \partial = \partial \circ f_i$.
+\end{definition}
+{\color{red} Include commuting diagram.} We will most times leave out the 
+indices if it is clear what we mean.
+The crucial property of these chain maps is that they induce homomorphisms of
+the homology groups denoted as
+\begin{align*}
+    [f_i]: H_i(A_*) \rightarrow H_i(B_*), \, [f_i]([a]) = [f_i([a])]
+\end{align*}
+
+
+Let $\{ C^i \}_{i\in \naturalnum}$ be a collection of abelian groups
+and homomorphisms $\partial^i: C^i \rightarrow C^{i+1}$ with 
+$\partial^{i+1} \circ \partial^i = 0$ called \textit{codifferentials}. 
+Then we call this sequence a 
+\textit{cochain complex}. The only difference to chain complexes
+is that the index 
+increases when applying the codifferential. Hence, they are 
+basically the same from an algebraic point of view.
+By convention, 
+we use superindices for anything that is related to cochain complexes.
+
+We define \textit{cochain maps} completely analogous to chain maps 
+i.e. cochain maps commute with the codifferential.
+
+The main motivation for cochain complexes comes from the 
+\textit{singular cochain complexes} which we will define in the next 
+section.
+
+\begin{example}[De Rham complex]
+    Smooth differential forms provide us with another very important example. 
+    Let $M$ be a smooth manifold.
+    We will use the the notation introduced in 
+    Sec.\,\ref{sec:differential_forms}. Then the smooth 
+    differential forms $C^\infty \Lambda^k (M)$ together 
+    with the exterior derivative give us a cochain complex which we call 
+    \textit{de Rham complex}. Note that we have slightly more structure here
+    since the $C^\infty \Lambda^k (M)$ are vector spaces and the exterior
+    derivative a linear map i.e. a vector space homomorphism.
+\end{example}
+It turns out that the de Rham complex is closely related with the 
+singular cochain complex. This relation will be investigated later in 
+Sec.\,\ref{sec:de_rhams_theorem}. %TBD: Example Hilbert complex
+
+\subsection{Cohomology groups}
+
+Let $G$ be any abelian group and $X$ be a topological space as before. 
+Then we define the group 
+of \textit{$k$-cochains} $C^k(X;G)$ by
+\begin{align*}
+    C^k(X;G) \vcentcolon= \text{Hom}(C_k(X),\,G)
+\end{align*}
+i.e. the group of all homomorphisms from $k$-chains $C_k(X)$ to $G$. 
 We generally use the superindex $^k$ if something is related to 
 cochains and the subindex $_k$ if it is related to chains. 
-We now introduce an operator between the groups of cochains.
-
-$C^k(K,L;G)$ can be identified with the cochains that vanish on $L$.
-
-\begin{proposition}\label{prop:relative_cochains_vanish}
-    Define
+Just as for chains we now introduce a homomorphism between the groups of cochains
+which transforms this into a cochain complex.
+\begin{definition}[Coboundary ]
+    We define the operator $\partial^k: C^k(X;G) \rightarrow C^{k+1}(X;G)$ via
     \begin{align*}
-        \tilde{C}^k(K,L;G) \vcentcolon= \{ F \in C^k(K;G) 
-        \mid F(c) = 0 \quad \forall c \in C_k(L) \}.
-    \end{align*}
-    Then any $F \in \tilde{C}^k(K,L;G)$ induces and homomorphism
-    $\underline{F} \in C^k(K,L;G)$ and $j:\tilde{C}^k(K,L;G) 
-    \rightarrow C^k(K,L;G), \, F \mapsto \underline{F}$ is an isomorphism.
-\end{proposition}
-\begin{proof}
-    Because $C_k(L) \subseteq \ker F$ is a subgroup we get the 
-    induced homomorphism
-    \begin{align*}
-        \underline{F}: C_k(K,L) = \faktor{C_k(K)}{C_k(L)} \rightarrow
-        \faktor{G}{{0}} = G.
-    \end{align*}
-    \textbf{$j$ is injective.} Let $\underline{F}(\underline{c})=0$ for every 
-    $c \in C_k(K)$. Then $F(c) = \underline{F}(\underline{c}) = 0$ so $F = 0$.
-    \textbf{$j$ is surjective.} Let $\varphi \in C^k(K,L;G)$ be arbitrary. 
-    Then define $F \in C^k(K)$, $F(c) \vcentcolon= \varphi(\underline{c})$.
-    We first have to show that $F \in \tilde{C}^k(K,L)$. For any $d \in C_k(L)$
-    we get $\underline{d} = 0 \in C_k(K,L)$ and $F(d) = 0$.
-    Then we have for any $\underline{c} \in C_k(K,L)$, 
-    $\underline{F}(\underline{c}) = F(c) = \varphi(\underline{c})$ i.e. 
-    $\underline{F} = \varphi$ which proves surjectivity.
-\end{proof}
-
-\begin{proposition}
-    $j$ as defined in Prop.\,\ref{prop:relative_cochains_vanish} is a chain 
-    map.
-\end{proposition}
-\begin{proof}
-    Let $F \in \tilde{C}^k(K,L)$ be arbitrary. Then
-    \begin{align*}
-        \underline{\partial^k F}(\underline{c})
-        = \partial^k F (c) = F(\partial_k F) 
-        = \underline{F}(\underline{\partial_k c})
-        = \underline{F}(\underline{\partial}_k \underline{c})
-        = \underline{\partial}^k \underline{F} (\underline{c})
-        %TBD: We need here that \tilde(C)^k is also a cochain complex
-    \end{align*}
-    i.e. $j \circ \partial^k = \underline{\partial}^k\circ j$ and $j$ is a 
-    chain map.
-\end{proof}
-
-\begin{corollary}
-    The induced map $[j]: H^k(K,L;G) \rightarrow \tilde{H}^k(K,L;G)$ is an 
-    isomorphism.
-\end{corollary}
-
-\begin{definition}
-    We define the operator $\delta: C^k(K;G) \rightarrow C^{k+1}(K;G)$ via
-    \begin{align*}
-        (\delta f) (c) \vcentcolon= f(\partial c).
+        (\partial^k f) (c) \vcentcolon= f(\partial_{k+1} c).
     \end{align*}
     for a $(k+1)$-chain $c$.
-    We call a cochain $f \in C^k(K;G)$ \textit{closed} if $\delta f = 0$ 
+    We call a cochain $f \in C^k(K;G)$ \textit{closed} if $\partial^k f = 0$ 
     and we call $f$
-    \textit{exact} if there is a $g \in C^{k+1}(K;G)$ s.t. $f = \delta g$.
+    \textit{exact} if there is a $g \in C^{k-1}(K;G)$ s.t. $f = \partial^{k-1} g$.
+    As for the boundary map we will frequently leave away the superscript if
+    the context is clear.
 \end{definition}
-\noindent We define the cohomology spaces analogous to homology spaces above.
-\begin{definition}[Simplicial cohomology]
-    Denote the closed $k$-cochains as $Z^k(K;G)$ and the 
-    exact ones with $B^k(K;G)$. 
-    We then define the \textit{simplicial cohomology groups}
-    $H^k(K)$ as
+From the definition it is obvious that $\partial^{k+1} \circ \partial^{k} = 0$ 
+and thus we have indeed a cochain complex which we call \textit{singular cochain 
+complex}. If there is no confusion with the general notion of cochain complex
+we will leave away the term 'singular'.
+\begin{definition}[Cochain cohomology]
+    Denote the closed $k$-cochains as $Z^k(X;G)$ and the 
+    exact ones with $B^k(X;G)$. 
+    We then define the \textit{cochain cohomology groups}
+    $H^k(X;G)$ as
     \begin{align*}
-        H^k(K;G) \vcentcolon= \faktor{Z^k(K;G)}{B^k(K;G)}.
+        H^k(X;G) \vcentcolon= \faktor{Z^k(X;G)}{B^k(X;G)}.
     \end{align*}
 \end{definition}
 Note that in the case of $G = \real$ this becomes a vector space.
-We will later show that if we consider certain subspaces of cochains so called
-\textit{p-summable} cochains (see Def.\,\ref{def:p_summable_cochains}) 
-that the $L_p$-cohomology defined above and the
-cohomology spaces of these $p$-summable cochains are isomorphic.
-
 
 Now of course there is the question how the homology and cohomology groups 
 are related to each other. This question is answered by the
@@ -1257,17 +1203,23 @@ that the sequence
     \rightarrow 0 \label{eq:univeral_coefficient_theorem}
 \end{align}
 is exact. 
-$\beta$ is defined via $\beta([F])([c]) \vcentcolon= F(c)$.
+$\beta$ is defined via 
+\begin{align}
+    \beta([F])([c]) \vcentcolon= F(c).
+    \label{eq:isomorphism_from_universal_coefficent_theorem}
+\end{align}
 The definition of Ext can be found in \cite{topology_and_geometry},
 but it does not matter for our purpose because from now on we will assume
 $G = \real$ and
-$\text{Ext}(H_{k-1}(K),\real) = 0$. This follows from the fact that 
-$\real$ is a divisible and hence injective abelian group. The definition 
+$\text{Ext}(H_{k-1}(X),\real) = 0$. This follows from the fact that 
+$\real$ is a divisible and hence injective abelian group. The definition of
 these terms and the connections used can also be found in 
 \cite[Sec.\,V.6]{topology_and_geometry}. However, we will not dwelve into the 
-algebraic background further. We can conclude from the exactness of the 
+algebraic background further. In the case of $G = \real$, 
+we can conclude from the exactness of the 
 above short sequence that $\text{ker}\,\beta = 0$ and 
-$\text{im}\,\beta = \text{Hom}(H_k(K),\real)$. So $\beta$ is a isomorphism.
+$\text{im}\,\beta = \text{Hom}(H_k(X),\real)$. So $\beta$ is an isomorphism.
+
 
 \subsection{De Rham's theorem} \label{sec:de_rhams_theorem}
 
@@ -1292,7 +1244,7 @@ M$ is smooth. We now define
 and then we define the integral over a $k$-chain 
 $c = \sum_\sigma n_\sigma \sigma$
 \begin{align*}
-    \int_c \omega = \sum \limits_\sigma n_\sigma \int_\sigma \omega.
+    \int_c \omega \vcentcolon= \sum \limits_\sigma n_\sigma \int_\sigma \omega.
 \end{align*}
 This motivates us to introduce the homomorphism $I: C^\infty \Lambda^k (M) 
 \rightarrow \text{Hom}(C_k;\real)$ defined by 
@@ -1300,17 +1252,21 @@ This motivates us to introduce the homomorphism $I: C^\infty \Lambda^k (M)
     I(\omega)(c) = \int_c \omega.
 \end{align*}
 \begin{remark}
-    There are some technical details that we will not go into details here,
+    There are some technical details that we will not discuss in details here,
     but that should be mentioned. First, $\Delta_k$ is not a manifold. 
-    The $(k-2)$ skeleton which are the corners for $k=2$ and the 
-    edges for $k=3$. If we remove these points then $\Delta_k$ is a manifold 
+    The $(k-2)$ skeleton are, simply speaking, 
+    the simplices of dimension $(k-2)$ i.e. the corners for $k=2$ and the 
+    edges for $k=3$. If we remove the $(k-2)$ skeleton 
+    then $\Delta_k$ is a manifold 
     with boundary. But since this is a null-set w.r.t. the full simplex and 
-    the boundary as well, this does not matter. 
+    the boundary as well, this does not matter for our arguments. 
     Second, Because we are integrating over the $\Delta_k$ their orientation is 
-    important and has to be chosen consistently.
+    important and has to be chosen consistently. We will not present here 
+    how this is done and will just assume it from now on.
 \end{remark}
 
-Using Stokes's theorem we observe
+Using Stokes's theorem and the fact that the exterior derivative commutes with 
+the pullback we observe
 \begin{align*}
     I(d\omega)(c) &= \sum\limits_\sigma n_\sigma \int_\sigma d\omega 
     = \sum\limits_\sigma n_\sigma \int_{\Delta_k} \sigma^* d\omega 
@@ -1323,140 +1279,21 @@ so we obtain
 \begin{align*}
     I(d\omega) = \partial \big(I(\omega)\big).
 \end{align*}
-This implies that $I$ induces a homomorphism on cohomology
+We see that $I$ is a cochain map and thus 
+induces a homomorphism on cohomology
 \begin{align*}
     [I]:H^k_{dR}(M) \rightarrow H^k(M;\real).
 \end{align*}
-\textit{De Rham's theorem} now states that this homomorphism is in fact an
-isomorphism. 
+
+Using the notation and the definition of this map we can now formulate 
+de Rham's theorem which will become very important later when proving
+existence and uniqueness in Sec.\,\ref{sec:existence_and_uniqueness}.
+\begin{theorem}[De Rham's theorem]
+    $[I]$ is an isomorphism.
+\end{theorem}
 
 
-\subsection{Existence of uniqueness of cochain}
-
-
-
-As an application, we will show the following proposition which will be used
-later to show existence and uniqueness of a 
-solution of the magnetostatic problem.
-
-\begin{proposition}
-    Assume that $H_1(K,L) = \integers [\gamma]$ i.e. the homology class of the 
-    closed $1$-chain $\gamma$ is a generator of the first homology group.
-    Then we have the following:
-    \begin{enumerate}[(i)]
-        \item For any $C_0 \in \real$ there exists a closed $1$-chain 
-            $F \in Z^1(K,L)$ with $F(\gamma) = C_0$,
-        \item any other $G \in Z^1(K,L)$ with $G(\gamma) = C_0$ 
-            is in the same cohomology class i.e. $[F] = [G]$.
-    \end{enumerate}
-\end{proposition}
-\begin{proof}
-    \textbf{Proof of (i)} %TBD: This could be wrong
-    Because $[\gamma]$ is a generator of the homology group we  obtain a 
-    homomorphism $\hat{F} \in \text{Hom}(H_1(K,L),\real)$ by fixing
-    $\hat{F}([\gamma]) = C_0$. This determines the other values.
-    Then we know from (\ref{eq:univeral_coefficient_theorem}) that there exists
-    a $[F] \in H^1(K,L)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
-    isomorphism. So we obtain
-    \begin{align*}
-        F(\gamma) = \beta([F])([\gamma]) = \hat{F}([\gamma]) = C_0.
-    \end{align*}
-
-    \textbf{Proof of (ii)} %TBD: This could be wrong
-    Take $[c] \in H_1(K,L)$ arbitrary. Then there exists  $n \in \integers$ s.t.
-    $[c] = n [\gamma]$.
-    Using $\beta$ from (\ref{eq:univeral_coefficient_theorem})
-    We have
-    \begin{align*}
-        \beta([F])([c]) = \beta([F])(n [\gamma]) 
-        = n \beta([F])([\gamma]) = n \, F(\gamma) = n \, G(\gamma) = 
-        \beta([G])([c])
-    \end{align*}
-    and thus $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism
-    we arrive at $[F] = [G]$.
-\end{proof}
-
-The following lemma will be needed later in Sec.\,\ref{} to prove existence 
-and uniqueness of a solution of the magnetostatic problem. It is now 
-useful to think of $K$ as a triangulation of an exterior domain and $L$ 
-be the triangulation of the exterior of some ball $\real^3\setminus B_R$ with 
-$R > 0$ large enough. Then we assume for the simplicial subcomplex $L$
-that its geometric realization $|L|$ is homeomorphic to $\real^3\setminus B_R$.
-
-First we need to understand how the zero-th homology group looks like. 
-When we say path-connected we mean in the sense of simplicial topology i.e. 
-we can connect all vertices with a $1$-chain.
-
-\begin{lemma}\label{lem:zeroth_homology_group}
-    Let $K$ be a path-connected simplicial complex. Then the homology class 
-    of every vertex $[x_i] \in H_0(K)$ is a generator of the homology group.  
-\end{lemma}
-\begin{proof}
-    The proof works exactly as the proof of Theorem IV.2.1 in 
-    \cite{topology_and_geometry} where we use the notion of path-connected
-    on simplicial complexes.
-\end{proof}
-
-\begin{lemma}\label{lem:inclusion_zeroth_homology}
-    Let $K$, $L$ be simplicial complexes with $L \subseteq K$ and 
-    assume they are path-connected  Then
-    the inclusion $\iota: C_0(L) \hookrightarrow C_0(K)$ induces an isomorphism
-    on homology.
-\end{lemma}
-\begin{proof}
-    This follows immediately from Lemma \ref{lem:zeroth_homology_group}.
-\end{proof}
-
-
-\begin{lemma}\label{lem:isom_chains_and_relative_chains}
-    Let $K$ and $L$ be as in the previous lemma. Assume additionally
-    that $|L|$ is homeomorphic to $\real^3 \setminus B_R$.
-    Then the natural surjection
-    $j: C_1(K) \rightarrow C_1(K,L)$ induces an isomorphism on homology.
-\end{lemma}
-\begin{proof}
-    We have the exact sequence 
-    \begin{align*}
-        &H_1(L) \xrightarrow{[\iota_1]} H_1(K) \xrightarrow{[j_1]} H_1(K,L) \\
-        \xrightarrow{[\partial_1]} &H_0(L) \xrightarrow{[\iota_0]} H_0(K) 
-            \xrightarrow{[j_0]} H_0(K,L).
-    \end{align*}
-    We know that $H_1(L) \cong H_1(|L|) \cong H_1(\mathbb{S}^2) = 0$. 
-    Because $[\iota_0]$ is an isomorphism due to 
-    Lemma\,\ref{lem:inclusion_zeroth_homology} $\Ima [\partial_1] = 0$. 
-    Thus, we get the exact sequence 
-    \begin{align*}
-        0 \xrightarrow{[\iota_1]} H_1(K) \xrightarrow{[j_1]} H_1(K,L)
-        \xrightarrow{[\partial_1]} 0
-    \end{align*}
-    and so $[j_1]$ is a isomorphism.
-\end{proof}
-
-Now using all these lemmas and results we can now prove the following
-important lemma that will be needed later in Sec.\,\ref{}
-
-\begin{lemma}\label{lem:existence_vanishing_cochain}
-    Let $K$ and $L$ be as in the previous lemma and assume that 
-    $H_1(K) = \integers [\gamma]$. Then there exists a cochain 
-    $F \in \tilde{C}^1(K,L)$ s.t. $F(\gamma) = C_0$.
-\end{lemma}
-\begin{proof}
-    We know from Lemma\,\ref{lem:isom_chains_and_relative_chains}
-    that $[j]:H_1(K) \rightarrow H_1(K,L)$ is a isomorphism. Thus, we have
-    $[j]([\gamma]) = [\underline{\gamma}] \in H_1(K,L)$ is a generator. 
-    We can now apply Prop.\,\ref{prop:uniqueness_cochain} to get a 
-    $\tilde{F} \in C^1(K,L)$ s.t. $\tilde{F}(\underline{\gamma}) = C_0$.
-    Now we continue with Prop.\,\ref{prop:relative_cochains_vanish} to 
-    get that there exists a unique $F \in \tilde{C}^1(K,L)$ s.t. 
-    $jF = \underline{F} = \tilde{F}$ and we arrive at 
-    \begin{align*}
-        F(\gamma) = \underline{F}(\underline{\gamma}) 
-        = \tilde{F}(\underline{\gamma}) = C_0.
-    \end{align*}
-\end{proof}
-
-
-\section{Existence and uniqueness of solutions}
+\section{Existence and uniqueness of solutions}\label{sec:existence_and_uniqueness}
 
 In this section, we will apply the developed theory of the preceding chapters
 to prove the existence and uniqueness of the magnetostatic problem 
