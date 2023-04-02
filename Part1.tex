@@ -290,7 +290,35 @@ forms to the operations of the corresponding proxies.
 
 Before we define differential forms, let us start by revising some basics
 from differential geometry. We follow the approach from 
-\cite[Sec. II.5]{topology_and_geometry}. 
+\cite[Sec. II]{topology_and_geometry}. 
+
+Let us denote $\real_- \vcentcolon= \{ x \in \real \mid x \leq 0 \}$. 
+Let us in the following equip $\real_- \times \real^{n-1} \subseteq \real^n$ with the 
+subspace topology i.e. we call a set $V \subseteq \real_- \times \real^{n-1}$ 
+open iif. there exists an open set $V' \subseteq \real^n$ s.t. 
+$V = V' \cap \real_- \times \real^{n-1}$. 
+\begin{definition}[Manifold with boundary]
+    A smooth $n$-dimensional manifold with boundary is a countable Hausdorff 
+    space $M$ with an open cover $\{ U_i \} _{i\in I}$ with some index set $I$ 
+    and a collection of maps called \textit{charts} $\phi_i$ s.t.
+    \begin{itemize}
+        \item $\phi_i: U_i \rightarrow V_i \subseteq \real_- \times \real^{n-1}$
+            are homeomorphisms
+        \item for two charts $\phi_i$, $\phi_j$ the 
+            \textit{change of coordinates} $\phi_j \circ \phi_i^{-1}: 
+            \phi_i(U_i \cap U_j) \rightarrow \phi_j(U_i \cap U_j)$ 
+            is a $C^\infty$ diffeomorphism.
+    \end{itemize}
+\end{definition}
+% TBD: I am not entirely sure about maximality
+
+\begin{definition}[Orientation of a manifold]
+    We call an atlas \textit{oriented} if the Jacobian of the coordinate
+    changes has positive determinant. A manifold that can be equipped with 
+    an oriented atlas is called \textit{orientable}.
+\end{definition}
+
+
 It should be noted that there are different definitions of tangent space, but
 these lead to isomorphic notions 
 (see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
