@@ -51,6 +51,7 @@
 \newcommand{\naturalnum}{\mathbb{N}}
 \newcommand{\norm}[2]{\lVert #1 \rVert_{#2}}
 \newcommand{\omegabar}{\overline{\Omega}}
+\newcommand{\rational}{\mathbb{Q}}
 \newcommand{\real}{\mathbb{R}}
 \newcommand{\rop}{\mathscr{R}} % short for R operator
 
@@ -88,7 +89,12 @@ simplicial topology {\color{red} among other things...}
 
 For the introduction of alternating maps we follow
 the short section in Arnold's book
-\cite[Sec. 6.1.]{arnold}.
+\cite[Sec. 6.1.]{arnold} combine it 
+with material from \cite[Sec.\,V.1]{topology_and_geometry}.
+However, more arguments and additional details are provided especially  
+in the the part about scalar and vector proxies.
+
+
 Let $V$ be a real vector space with $\text{dim}\,V = n$.
 Then $k$-linear maps are of the form
 \begin{align*}
@@ -102,13 +108,19 @@ that are linear in every component. We call a $k$-linear form
     = - \omega(v_1,...,v_j,...,v_i,...,v_k), \text{ for } 1\leq i < j \leq k,
     \quad v_1,...,v_k \in V.
 \end{align*}
+The sign $\sgn(\pi)$ of a permutation 
+$\pi: \{ 1,2,...,n\} \rightarrow \{ 1,2, ..., n\}$ is equal to $(-1)^p$ where 
+$p \in \naturalnum$ is the number of transpositions required to achieve the 
+permutation. For example, the permutation $(1,2,3,4) \mapsto (2,3,1,4)$ 
+can be built by performing the transpositions $(1,2)$ and $(1,3)$ so the 
+sign of this permutation would be $1$. 
 This also means for any permutation 
 $\pi: \{1,2,...,k\} \rightarrow \{1,2,...,k\}$
 \begin{align*}
     \omega(v_{\pi(1)},v_{\pi(2)},...,v_{\pi(k)})
-    = \sgn(\pi)\, \omega(v_1, v_2,..., v_k)
+    = \sgn(\pi)\, \omega(v_1, v_2,..., v_k).
 \end{align*}
-Denote the space of alternating maps by $\text{Alt}^k\,V$.
+Denote the space of alternating maps by $\text{Alt}^k\,V$. 
 
 For $\omega \in 
 \alternating{k}{V}$, $\mu \in 
@@ -126,6 +138,23 @@ s.t. $\pi(1) < ... < \pi(k)$ and $\pi(k+1) < ... < \pi(k+l)$.
 This definition is not very intuitive.
 {\color{red} TBD: Examples in 3D}.
 
+Let us mention some important properties of the wedge product. It is 
+associative, but not commutative. But we 
+have for $\omega \in 
+\alternating{k}{V}$, $\mu \in 
+\alternating{l}{V}$
+\begin{align*}
+    \omega \wedge \mu = (-1)^{kl} \mu \wedge \omega.
+\end{align*}
+Recalling the definition of the sign of a permutation $\pi \in \mathcal{S}_k$ 
+we get for linear forms $\omega_1, \omega_2, ..., \omega_k \in V'$
+\begin{align*}
+    \omega_{\pi(1)} \wedge \omega_{\pi(2)} \wedge ... \wedge \omega_{\pi(k)}
+    = \sgn(\pi) \, \omega_1 \wedge \omega_2 \wedge ... \wedge \omega_k
+\end{align*}
+and if a linear form appears twice then the expression is zero.
+
+There is a useful formula for computing the wedge product of linear forms.
 For $1$-forms i.e. linear functionals $\omega_1,...,\omega_k$ 
 , $k \leq n$ we have the formula (\cite[p.260]{topology_and_geometry})
 \begin{align}
@@ -134,11 +163,11 @@ For $1$-forms i.e. linear functionals $\omega_1,...,\omega_k$
     \label{eq:wedge_product_of_one_forms}
 \end{align}
 
-Let $\{ u_i\}_{i=1}^n$ be any basis of $V$ and $\{ u^i\}_{i=1}^n$ the 
+Let $\{ b_i\}_{i=1}^n$ be any basis of $V$ and $\{ b^i\}_{i=1}^n$ the 
 correspoding dual basis i.e. 
-$u^i \in V'$, $u^i(u_j) = \delta_{ij}$ for $i,j = 1,2,..., n$. Then 
+$b^i \in V'$, $b^i(u_j) = \delta_{ij}$ for $i,j = 1,2,..., n$. Then 
 \begin{align*}
-    \{u^{i_1} \wedge u^{i_2} \wedge ... \wedge u^{i_k} | \, 
+    \{b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k} | \, 
     1 \leq i_1 < ... < i_k \leq n \}
 \end{align*}
 is a basis of $\alternating{k}{V}$. In particular, 
@@ -151,29 +180,31 @@ product on the dual space $V'$ by using the Riesz isomorphism $\Phi$
 \end{align*}
 Now we can define an inner product on $\alternating{k}{V}$ by defining
 \begin{align*}
-    \langle u^{i_1} \wedge u^{i_2} \wedge... \wedge u^{i_k}, 
-    u^{j_1} \wedge... \wedge u^{j_k} \rangle_{\alternating{k}{V}} 
-    \vcentcolon= \det \left[ ( \langle u^{i_k}, u^{i_l} \rangle_V )_
-    {1\leq k,l \leq n} \right] 
+    \langle b^{i_1} \wedge b^{i_2} \wedge... \wedge b^{i_k}, 
+    b^{j_1} \wedge... \wedge b^{j_k} \rangle_{\alternating{k}{V}} 
+    \vcentcolon= \det  ( \langle b^{i_k}, b^{i_l} \rangle_V )_
+    {1\leq k,l \leq n} 
 \end{align*}
 which is then extended to all of $\alternating{k}{V}$ by linearity. 
 We denote with $\lvert \cdot \rvert _\alternating{k}{V}$ the induced norm.
 For an orthonormal basis 
-$b_1$, ..., $b_n$ the corresponding basis 
-$b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}$, 
+$u_1$, ..., $u_n$ the corresponding basis 
+$u^{i_1} \wedge v^{i_2} \wedge ... \wedge u^{i_k}$, 
 $1\leq i_1 < ... < i_k \leq n$ is an orthonormal basis of $\alternating{k}{V}$.
 
 
 Next, we want to introduce the \textit{pullback} as the most natural 
 mapping between alternating maps. Let $V$ and $W$ be finite-dimensional real
-vector spaces with ordered bases $\{ b_i \}_{i=1}^n$ and $\{c_j\}_{j=1}^m$ 
-respectively. Let $L \in \mathcal{L}(V,W)$ where $\mathcal{L}(V,W)$ is the 
+vector spaces with ordered bases $(b_i)_{i=1}^n$ and $(c_j)_{j=1}^m$ 
+respectively. We write a basis in standard brackets $(\cdot)$ if the basis is 
+ordered. Let $L \in \mathcal{L}(V,W)$ where $\mathcal{L}(V,W)$ is the 
 space of linear mappings from $V$ to $W$. For $\omega \in \alternating{k}{W}$
 we define the pullback $L^* \omega$ via 
 \begin{align*}
-    (L^* \omega)(u_1,...,u_k) = \omega(L\,u_1,...,L\,u_k).
+    (L^* \omega)(v_1,...,v_k) = \omega(L\,v_1,...,L\,v_k).
 \end{align*}
-Hence, $L^*$ is a linear mapping from $\alternating{k}{W}$ to 
+It is then easy to see that 
+$L^*$ is a linear mapping from $\alternating{k}{W}$ to 
 $\alternating{k}{V}$. 
 
 It is obvious from the definitions of the exterior product and 
@@ -184,42 +215,60 @@ the pullback that we have
 \end{align*}
 
 Let $A \in \real^{m\times n}$ be the matrix representation of $L$ in the 
-above bases. Then let us compute the pullback in terms of the corresponding 
-bases of alternating maps. Let $1 \leq j_1 < ... <j_k \leq m$. 
-Then we know from \ref{}
-\begin{align*}
+above bases. Because $\{ b^{i_1}\wedge b^{i_2}\wedge ... \wedge b^{i_k} 
+ \mid 1 \leq i_1 < ... < i_k  \leq n \}$ and 
+ $\{ c^{j_1}\wedge c^{j_2}\wedge ... \wedge c^{j_k} 
+ \mid 1 \leq j_1 < ... < j_k  \leq m \}$ are bases for $\alternating{k}{V}$ 
+and $\alternating{k}{W}$ respectively, we can find $\lambda_{i_1 ... i_k}$ s.t.
+\begin{align}
     L^* (c^{j_1} \wedge c^{j_2} \wedge ... \wedge c^{j_k})
     = \sum\limits_{1 \leq i_1 < ... < i_k \leq n} 
     \lambda_{i_1 ... i_k} b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}
-\end{align*}
+    \label{eq:basis_representation_pullback_unspecified_coefficents}
+\end{align}
 Now recall the formula for the wedge product of $1$-forms 
 $\nu_i \in \alternating{1}{V} = V'$
 \begin{align*}
     \nu_1 \wedge ... \wedge \nu_k (v_1,...,v_k) = 
-    \det \big( \nu_k(v_l) \big) 1 \leq k,l \leq n.
+    \det \big( \nu_s(v_t) \big)_{1 \leq s,t \leq n}.
 \end{align*}
 Fix now $1 \leq l_1 < ... <  l_k \leq n$. Then we get from this formula
 $b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k} ( b_{l_1},...,b_{l_k}) = 1$ 
 iif. $(i_1,...,i_k) = (l_1,...,l_k)$. Here it is important to remember that 
-these indices are ordered. Plugging this in \ref{} gives us 
+these indices are ordered. Plugging this in 
+(\ref{eq:basis_representation_pullback_unspecified_coefficents}) gives us 
 \begin{align*}
     \lambda_{i_1 ... i_k}  &= 
         L^* (c^{j_1} \wedge c^{j_2} \wedge ... \wedge c^{j_k})
         (b_{l_1},...,b_{l_k})
     \\ &= c^{j_1} \wedge c^{j_2} \wedge ... \wedge c^{j_k} 
         (L\,b_{l_1},...,L\,b_{l_k})
-    \\ &= \det \big( c^{j_s}(\sum_l A_{l,j_t}c_l) \big) 1 \leq s,t \leq k
-    \\ &= \det A_{(i_1,...,i_k),(j_1,...,j_k)}
+    \\ &= \det \big( c^{j_s}(\sum_{r_t = 1}^m A_{r_t,l_t}c_{r_t}) 
+        \big)_{1 \leq s,t \leq k}
+    \\ &= \det \big( \sum_{r_t = 1}^m A_{r_t,l_t} \delta_{j_s,r_t}
+        \big)_{1 \leq s,t \leq k}
+    \\ &= \det \big( A_{j_s,l_t} \big)_{1 \leq s,t \leq k}
+    \\ &= \det A_{(j_1,...,j_k),(i_1,...,i_k)}
 \end{align*}
 where $A_{(j_1,...,j_k),(i_1,...,i_k)}$ is the matrix we get 
-by choosing the rows $i_1$, ... , $i_k$ and the columns $j_1,...,j_k$.
+by choosing the rows $j_1,...,j_k$  and the columns $i_1$, ... , $i_k$. 
+Plugging this in (\ref{eq:basis_representation_pullback_unspecified_coefficents}) 
+we arrive 
+at the basis representation of the pullback 
+\begin{align*}
+    L^* (c^{j_1} \wedge c^{j_2} \wedge ... \wedge c^{j_k})
+    = \sum\limits_{1 \leq i_1 < ... < i_k \leq n} 
+        \det A_{(j_1,...,j_k),(i_1,...,i_k)} \,
+        b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k}
+\end{align*}
 
-We want to emphasize the special case of the pullback of a $m$-linear map 
+We want to emphasize the special case of the pullback of a $n$-linear map 
 with $m = n$. So take $\omega \in \alternating{n}{W}$. Then we know that 
 $\omega = \lambda\, c^1 \wedge ... \wedge c^n$. The above forumla becomes
-\begin{align*}
-    L^* \omega = c\, \det A \, b^1 \wedge ... \wedge b^n. 
-\end{align*}
+\begin{align}
+    L^* \omega = \lambda \, \det A \, b^1 \wedge ... \wedge b^n
+    \label{eq:pullback_alternating_nlinear_map}
+\end{align}
 
 We want to examine $\alternating{n}{V}$ a bit closer. 
 $\alternating{n}{V}$ is one-dimensional and so we can choose a basis by fixing 
@@ -236,33 +285,38 @@ We choose one of these classes and call these bases positively
 oriented. In $\real^n$, the convention is to define the class as 
 positively oriented which includes the standard orthonormal basis.
 
-Let $\{ b_i \}_{i=1}^n$ be any positively oriented
-basis. Let $M$ be the Gramian matrix i.e. $M_{ij} = \langle b_i, b_j \rangle$ 
+Let $(b_i )_{i=1}^n$ be any positively oriented
+basis. Let $G$ be the Gramian matrix i.e. $G_{ij} = \langle b_i, b_j \rangle$ 
 which is always a symmetric positive definite matrix.
 Then we define the \textit{volume form}
 \begin{align*}
-    \vol \vcentcolon= \sqrt{\det M} \, v^1 \wedge v^2 \wedge ... \wedge v^n.
+    \vol \vcentcolon= \sqrt{\det G} \, b^1 \wedge b^2 \wedge ... \wedge b^n.
 \end{align*}
-The claim is now that for any positively oriented 
+The claim is now that for any
 orthonormal basis $\{u_i\}_{i=1}^n$ we have 
 \begin{align*}
-    \vol (u_1,\,u_2,...,\,u_n) = 1.
+    \vol (u_1,\,u_2,...,\,u_n) = (-1)^s.
 \end{align*}
+with $s=0$ if $(u_1,...,u_n)$ has the same orientation as $(b_i)_{i=1}^n$ 
+and $s=1$ otherwise.
 Let us define the matrix $B \in \real^{n\times n}$, $B_{k,i} = \langle b_i, u_k
-\rangle_V$ which is just the change of basis matrix from the $\{ b_i \}$ 
-to $\{ u_i \}$. 
+\rangle_V$ which is just the change of basis matrix from $( b_i )_{i=1}^n$ 
+to $( u_i )_{i=1}^n$. 
 Then using basic linear algebra we get
-$ M = B^\top B$ and because both bases are positively oriented 
-$\sqrt{\det M} = \det B$. Let now $\Psi$ be the linear map with 
-$\Psi b_i = u_i$. In the basis $\{ b_i \}$ this has the matrix 
-representation $B^{-1}$ and so by using \ref{} we get
+$ G = B^\top B$ and 
+$\sqrt{\det G} = (-1)^s \det B$. Let now $\Psi$ be the linear map with 
+$\Psi b_i = u_i$. In the basis $( b_i )_{i=1}^n$ this has the matrix 
+representation $B^{-1}$ and so by using 
+(\ref{eq:pullback_alternating_nlinear_map}) we get
 \begin{align*}
-    \vol (u_1,\,u_2,...,\,u_n) &= \sqrt{ \det M} b^1 \wedge ... \wedge b^n 
+    \vol (u_1,\,u_2,...,\,u_n) &= \sqrt{ \det G} \, b^1 \wedge ... \wedge b^n 
     ( \Psi b_1,..., \Psi b_n )
-    \\ &= \det B \Psi^* (b^1 \wedge ... \wedge b^n )( b_1,..., b_n) 
-    \\ &= \det B \, \det B^{-1} \, (b^1 \wedge ... \wedge b^n )( b_1,..., b_n)
-    = 1.
+    \\ &= (-1)^s \det B \, \Psi^* (b^1 \wedge ... \wedge b^n )( b_1,..., b_n) 
+    \\ &= (-1)^s \det B \, \det B^{-1} \, (b^1 \wedge ... \wedge b^n )( b_1,..., b_n)
+    = (-1)^s.
 \end{align*}
+In particular, $\vol (u_1,\,u_2,...,\,u_n) = 1$ for any positively oriented 
+ONB $(u_i)_{i=1}^n$.
 This property also defines the volume form uniquely so it is independent of the 
 chosen basis. It only depends on the orientation.
 It also shows that $\vol$ is non-zero and thus 
@@ -294,10 +348,11 @@ $\star \omega$ as the Riesz representative of this linear form that means we
 have $\vol'(\omega \wedge \mu) = 
 \langle \star \omega, \mu \rangle_{\alternating{k}{V}}$ for all 
 $\mu \in \alternating{n-k}{V}$ i.e.
-\begin{align*}
+\begin{align}
     \omega \wedge \mu = \langle \star \omega, \mu \rangle_{\alternating{k}{V}}
     \vol \quad \forall \mu \in \alternating{n-k}{V}.
-\end{align*}
+    \label{eq:hodge_star_definition}
+\end{align}
 It is also clear from the uniqueness of the Riesz representative that 
 the $\star\omega$ is uniquely determined by the above condition.
 
@@ -309,7 +364,9 @@ of alternating forms which are
     = \sgn(i_1,i_2,...,i_n) u^{i_{k+1}} \wedge ... \wedge u^{i_{n}}
     \label{eq:hodge_star_orthonormal_basis}
 \end{align}
-with $\{i_1, i_2 , ... , i_n\} = \{1,2,...,n\}$. For a three dimensional 
+with $\{i_1, i_2 , ... , i_n\} = \{1,2,...,n\}$ and $\sgn(i_1,i_2,...,i_n)$ 
+is the sign of the permutation $j \mapsto i_j$.
+For a three dimensional 
 space this gives us
 \begin{align*}
     \star u^1 = u^2 \wedge u^3, \; \star u^2 = - u^1 \wedge u^3
@@ -328,14 +385,48 @@ for $\omega \in \alternating{k}{V}$ and
 In particular in $\real^3$, we have 
 $\star\star = \text{Id}$ i.e. $\star$ is self-inverse.
 
+Let us quickly derive the expression in a basis 
+for the Hodge star applied to linear 
+forms which we will need later. Let $\omega = \sum_i \omega_i b^i \in 
+\alternating{1}{V} = V'$. Let us denote $g^{ij} = \langle b^i, b^j \rangle$.
+Then we claim
+\begin{align}
+    \star \omega = \sqrt{\det G} \sum_{i,j=1}^n \omega_i (-1)^{j-1} 
+        g^{ij} b^1 \wedge
+        b^2 \wedge ... \wedge \widehat{b^j} \wedge b^n 
+\end{align}
+where $\widehat{b^j}$ means that this term is left. The proof is very 
+simple in this case. For any $1 \leq l \leq n$ we get
+\begin{align*}
+    &\left( \sqrt{\det G} \sum_{i,j=1}^n \omega_i (-1)^{j-1} g^{ij} b^1 \wedge
+        b^2 \wedge ... \wedge \widehat{b^j} \wedge b^n\right) \wedge b^l 
+    \\ &= \sqrt{\det G} \sum_{j=1}^n \langle b^j,\sum_{i=1}^n \omega_i  b^i\rangle
+        (-1)^{j-1}  b^1 \wedge
+        b^2 \wedge ... \wedge \widehat{b^j} \wedge b^n \wedge b^l
+    \\ &= \sqrt{\det G} \langle b^l,\omega \rangle
+        (-1)^{2(l-1)}  b^1 \wedge
+        b^2 \wedge ... \wedge b^l  \wedge ... \wedge b^n 
+    \\ &= \langle b^l,\omega \rangle \vol.
+\end{align*}
+In the second step, we used that if $j\neq l$ then one basis element must 
+appear twice in the wedge product which is then zero. If $j=l$ then 
+$\sgn (1,2, ..., \hat{l},...,n,l) = (-1)^{l-1}$ because we need $(l-1)$
+transpostions to bring the indices into order.
+
+Then by linearity we obtain (\ref{eq:hodge_star_definition}) and thus 
+the given expression is indeed equal to $\star b^i$ as claimed.
+
+
+\subsection{Scalar and Vector proxies}
 Now we want to relate alternating maps to elements of the 
-vector space $V$ itself or to scalar objects. Let us start with the easiest 
+vector space $V$ itself or to scalars. Let us start with the easiest 
 case. $\alternating{0}{V}$ are already scalars by definition. Now we can use 
 the Hodge star operator which is an isometry 
 $\star: \alternating{0}{V} \rightarrow \alternating{n}{V}$ with
 $\star (c) = c \vol$. 
 We call the real number that is associated with an element of 
-$\alternating{n}{V}$ \textit{scalar proxy}. 
+$\alternating{n}{V}$ \textit{scalar proxy} i.e. the scalar proxy of 
+$c \in \real$ is just $c \vol \in \alternating{n}{V}$.
 
 Next, we will move on to $\alternating{1}{V}$ and $\alternating{n-1}{V}$. 
 Let $\Phi: V \rightarrow V'$ denote the Riesz isomorphism which is an isometry.
@@ -351,11 +442,11 @@ and vectors.
 
 Let us look at the wedge product. We have for $v,w \in V$
 \begin{align*}
-    \Phi v \wedge \star \Phi w = \langle \Phi v , \Phi w \rangle_{V'} 
-    = \langle v , w \rangle_{V}
+    \Phi v \wedge \star \Phi w = \langle \Phi v , \Phi w \rangle_{V'} \vol
+    = \langle v , w \rangle_{V} \vol
 \end{align*}
 which means that the wedge product of a linear from and an alternating $(n-1)$-
-linear map corresponds in vector proxies to the inner product.
+linear map corresponds in proxies to the inner product.
 
 Note that for $n=2$ the situation 
 is slightly ambiguous, see \cite[p.67]{arnold}. But this case will not be
@@ -366,7 +457,7 @@ vectors $e_1$, $e_2$ and $e_3$. Denote the resulting elements
 of the dual basis with $e^1$, $e^2$ and $e^3$ respectively. 
 Take $v = v_1 e_1 + v_2 e_2 + v_3 e_3 \in \real^3$ 
 and recall that for a orthonormal basis the Riesz isomorphism maps basis 
-elements to their dual basis elements i.e. $\Phi e_i = e_i$. Hence, 
+elements to their dual basis elements i.e. $\Phi e_i = e^i$. Hence, 
 we get $\Phi v = v_1 e^1 + v_2 e^2 + v_3 e^3$. Take another $w \in \real^3$.
 Then using the $e^i \wedge e^j = - e^j \wedge e^i$ we get 
 \begin{align}
@@ -378,27 +469,40 @@ of two linear forms corresponds to the cross product. Note that
 (\ref{eq:cross_product_as_wedge_product}) is formulated without using a 
 specific basis and can therefore be computed using any basis i.e. 
 if we have $v = \tilde{v}_1 b_1 + \tilde{v}_2 b_2 + \tilde{v}_3 b_3$ 
-and analogous for $w$ we could still calculate the wedge product directly as 
+and analogous for $w$ we could still calculate the cross product directly as 
 \begin{align*}
-    v \wedge w = \Phi^{-1} \star \big(\Phi v \times \Phi w \big).
+    v \times w = \Phi^{-1} \star^{-1} \big(\Phi v \wedge \Phi w \big).
 \end{align*}
+One has to take care though because if the basis is not orthonormal 
+the Riesz isomorphism does not map basis elements $b_i$ to their respective 
+dual basis elements $b^i$. We have 
+\begin{align*}
+    \Phi b_i = \sum_{i=1}^{n} \langle b_j, b_i \rangle b^j
+\end{align*}
+i.e. it has the gramian matrix $G$ as basis representation. 
+This is easy to 
+see. Let $\Phi b_i = \sum_j \lambda_j b^j$. Then
+\begin{align*}
+    \lambda_j = \Phi b_i (b_j) = \langle b_i, b_j \rangle.
+\end{align*}
+As derived above, the Hodge star is not as trivial to compute either.
+
 This illustrates the idea of a coordinate free description which is a important
-notion in differential geometry (see \cite{}).
+notion in differential geometry (see \cite{}). 
 
 Similarly, we want to explore the pullback in terms of vector proxies as well. 
 These will be important in the next section when we talk about the pullback 
 of differential forms and apply these to the tranformation of integrals.
-We will stick to orthonormal bases because it simplifies the computation, 
-but all this can be done for non-orthonormal bases as well. But one has to be 
-careful when computing the Riesz isomorphism and the Hodge star operator. 
-
-So assume that $\{ b_i \}_{i=1}^n$ is an ONB of $V$ and 
-$\{ c_j \}_{j=1}^m$ is an ONB of $W$. Let $L : V \rightarrow W$ 
+In order to avoid complicated computations we will stick to orthonormal bases.
+Let $\{ b_i \}_{i=1}^n$ be an ONB of $V$ and 
+$\{ c_j \}_{j=1}^m$ be an ONB of $W$. Let $L : V \rightarrow W$ 
 again be a linear map and $A$ be the basis representation of it w.r.t. 
-the two bases given. Then we get the pullback of linear forms in terms 
+the two bases given i.e. $L b_i = \sum_j A_{ji} c_j$. 
+Then we get the pullback of linear forms in terms 
 of vector proxies 
 as $\Phi_V^{-1} L^* \Phi : W \rightarrow V$. Let us apply 
-formula \ref{} to compute it
+formula (\ref{eq:pullback_alternating_nlinear_map}) to compute the basis 
+representation of it in the corresponding dual bases.
 \begin{align*}
     \Phi_V^{-1} L^* \Phi c_j = \Phi_V^{-1} L^* c^j 
     = \Phi_V^{-1} \sum_{i=1}^n A_{j,i} b^i = \sum_{i=1}^n A_{j,i} b_i
@@ -416,13 +520,13 @@ $\text{ad}(A)$ defined as
     \text{ad}(A)_{ij} = (-1)^{i+j} \det A_{-j,-i}
 \end{align*} 
 where $A_{-j,-i}$ is the matrix without the $j$-th row and $i$-th column.
-If $A$ is invertible then $A^{-1} = (\det A)^{-1} \text{ad}(A)$. 
+If $A$ is invertible then $(\det A)\,A^{-1} =  \text{ad}(A)$. 
 
 The pullback of $n$-linear mappings in terms of vector proxies is 
 $\star^{-1} L^* \star$. Again n the case of $n=m$ we get for $c \in \real$
 \begin{align*}
     \star^{-1} L^* \star c = \star^{-1} L^* c \vol 
-    = \star^{-1} \det L \vol = \det L.
+    = \star^{-1} c\,\det L \,\vol = \det L.
 \end{align*}
 
 \subsection{Differential forms}\label{sec:differential_forms}
@@ -431,15 +535,50 @@ Before we define differential forms, let us start by revising some basics
 from differential geometry. We follow the approach from 
 \cite[Sec. II]{topology_and_geometry}. 
 
+In order to formulate the definition of a manifold, let us recall the 
+definition of a topological space.
+\begin{definition}[Topological space]
+    A topological space is a set $X$ together with collection of subsets of 
+    $X$ denoted by $\mathcal{T}$ s.t.
+    \begin{itemize}
+        \item $U,V \in \mathcal{T} \Rightarrow U \cap V \in \mathcal{T}$
+        \item for $\{ U_i \in \mathcal{T} \mid i \in \mathcal{I} \}$
+            for any index set $\mathcal{I}$, 
+            $\bigcup_{i\in \mathcal{I}} U_i \in \mathcal{T}$ and
+        \item $\emptyset, X \in \mathcal{T}$.
+    \end{itemize}
+    The sets contained in $\mathcal{T}$ are called \textit{open}.
+\end{definition}
+For example, a metric space together with its usual open sets is a topological
+space. Another well known example of topologies which do not arise from a metric
+are the weak and weak-$\star$ topology on infinite dimensional spaces.
+
+\begin{definition}[Second countable topological space]
+    Let $(X,\mathcal{T})$ be a topological space. Then we call 
+    $\mathcal{B}\subseteq \mathcal{T}$ a basis for the topology of $X$ if 
+    every open set (i.e. every set in $\mathcal{T})$ is a union of sets 
+    in $\mathcal{B}$. If a topological space has a countable basis it is called
+    \textit{second countable}.
+\end{definition}
+$\real^n$ is an example of a second countable topological space. Consider 
+the countable set of balls $\{ B_r(x) \mid r \in \rational, x \in \rational^n\}$
+where $ B_r(x)$ are the balls with center $x$ and radius $r$.
+Then it is trivial to show that any open set in $\real^n$ is a union of 
+of these balls. Hence, $\real^n$ is second countable.
+
 Let us denote $\real_- \vcentcolon= \{ x \in \real \mid x \leq 0 \}$. 
 Let us in the following equip $\real_- \times \real^{n-1} \subseteq \real^n$ with the 
 subspace topology i.e. we call a set $V \subseteq \real_- \times \real^{n-1}$ 
 open iif. there exists an open set $V' \subseteq \real^n$ s.t. 
-$V = V' \cap \real_- \times \real^{n-1}$. 
+$V = V' \cap \real_- \times \real^{n-1}$. This means e.g. that 
+$B_1(0) \cap \real_- \times \real^{n-1}$ is open which is not an open set 
+in the standard topology of $\real^n$.
+
 \begin{definition}[Manifold with boundary]
-    A smooth $n$-dimensional manifold with boundary is a countable Hausdorff 
+    A smooth $n$-dimensional manifold with boundary is a second 
+    countable Hausdorff 
     space $M$ with an open cover $\{ U_i \} _{i\in I}$ with some index set $I$ 
-    and a collection of maps called \textit{charts} $\phi_i$ s.t.
+    and a collection of maps called \textit{charts} $\phi_i$, $i\in I$ s.t.
     \begin{itemize}
         \item $\phi_i: U_i \rightarrow V_i \subseteq \real_- \times \real^{n-1}$
             are homeomorphisms
@@ -448,6 +587,7 @@ $V = V' \cap \real_- \times \real^{n-1}$.
             \phi_i(U_i \cap U_j) \rightarrow \phi_j(U_i \cap U_j)$ 
             is a $C^\infty$ diffeomorphism.
     \end{itemize}
+    When we write $(U_i, \phi_i)$ we mean the chart $\phi_i$ has domain $U_i$.
 \end{definition}
 % TBD: I am not entirely sure about maximality, Definition of boundary
 
@@ -461,7 +601,7 @@ The next important concept we will recall are tangent spaces.
 It should be noted that there are different definitions of tangent space, but
 these lead to isomorphic notions 
 (see e.g. \cite[Sec.\,1.B]{riemannian_geometry}).
-Let $M$ be an $n$-dimensional smooth manifold with or without boundary.
+Let $M$ be an $n$-dimensional smooth manifold with boundary.
 For a point $p \in M$ and a neighorhood $U$ we call a function 
 $f: U \rightarrow \real$ differentiable at $p$ if for a local chart 
 $\phi: U \rightarrow \real^k$ we have that $f \circ \phi^{-1}$ is differentiable
@@ -484,7 +624,8 @@ For a differentiable $f: U \rightarrow \real$
 we define the the directional derivative 
 $D_\gamma(f) \vcentcolon= \frac{d}{dt} f(\gamma(t)) |_{t=0}$.
 We call the functional $D_\gamma: C^1(U) \rightarrow \real$ 
-tangent vector. 
+tangent vector. The vector space of all tangent vectors is called the 
+\textit{tangent space} and denoted by $T_p M$
 
 We define 
 \begin{align}
@@ -492,8 +633,7 @@ We define
     = \frac{\partial (f \circ \phi^{-1})}{\partial x_i}(\phi(p)).
     \label{eq:derivative_on_manifold}
 \end{align}
-Let us emphasize that this value is obviously not independent of the chosen 
-chart.
+Let us emphasize that this depends on the chosen chart.
 
 We can now 
 express a tangent vector $D_\gamma$ by 
@@ -505,6 +645,8 @@ express a tangent vector $D_\gamma$ by
         \, (\phi_i\circ \gamma)'(0)
     = (\sum\limits_{i=1}^k v_i  \frac{\partial}{\partial x_i}\Big|_p )(f).
 \end{align}
+Here $\phi_i$ is the $i$-th component of the chart $\phi$.
+
 Thus we can express 
 \begin{align*}
     D_\gamma = \sum\limits_{i=1}^k 
@@ -529,14 +671,27 @@ so $\frac{\partial}{\partial x_i}|_p $ are
 linearly independent and thus a basis of $T_p M$. From now on we will often 
 leave out the reference to the specific point $p$ if the context allows it.
 
-This way we obtain a $n$-dimensional vector space at every point $p$. A 
-\textit{vector field} $X$ maps every point $p$ to a tangent vector 
+If we now take a different chart $\psi$ and let us denote the resulting 
+basis of $T_p M$ by $\frac{\partial}{\partial y_j}$. Then the question arises 
+what the change of basis is between these bases. Using the chain rule 
+we can easily compute that 
+\begin{align*}
+    \frac{\partial (f \circ \phi^{-1})}{\partial x_i} (\phi(p))
+    =\sum_{j=1}^n \frac{\partial (f \circ \psi^{-1})}{\partial y_j} (\psi(p))
+        \frac{\partial (\psi \circ \phi^{-1})_j}{\partial x_i}(\phi(p)) 
+\end{align*}
+and we recognize that the change of basis matrix is the Jacobian of 
+the chart transition $D(\psi \circ \phi^{-1})(\phi(p))$.
+
+A \textit{vector field} $X$ maps every point $p$ to a tangent vector 
 in the corresponding tangent space i.e. by using local coordinates
 \begin{align*}
     X(p) = \sum_{i=1}^n X_i(p) \frac{\partial}{\partial x_i}
 \end{align*}
 with $X_i(p) \in \real$. We call a vector field differentiable if 
-the $X_i$ are differentiable.
+the $X_i$ are differentiable. Using the change of basis above we see that 
+for a smooth manifold we the notion of differentiable is well-defined because
+the Jacobian of the chart transition $D(\psi\circ \phi^{-1})$ is smooth.
 
 \begin{definition}[Differential forms]
     A differential $k$-form $\omega$ maps any point $p \in M$ to a 
@@ -560,13 +715,17 @@ with $a_{i_1,...,i_k}(p) \in \real$. The regularity of differential forms
 is then defined via the regularity of these coefficents i.e. we call 
 a differential form smooth if all the $a_{i_1,...,i_k}$ are smooth 
 and we call a differential form differentiable if all the $a_{i_1,...,i_k}$
-are differentiable and so on. We denote the space $C^\infty \Lambda^k M$ the 
+are differentiable and so on.
+
+Here we can now apply the result \ref{eq:pull}
+
+We denote the space $C^\infty \Lambda^k M$ the 
 space of smooth differential $k$-forms and analogous for other regularity.
 
 $\smoothcompforms{k}{M}$ are the smooth differential forms
 with compact support contained in $M$ i.e. 
 $\supp \omega = \overline{\{ p \in M \mid \omega_p \neq 0  \}} 
-\subseteq \interior M$ where the closure and the interior are w.r.t. 
+\subseteq M \setminus \partial M$ where the closure is w.r.t. 
 the topology on $M$.
 These will become very crucial later when we discuss Sobolev spaces 
 of differential forms (see Sec. \ref{}). 
@@ -574,29 +733,41 @@ of differential forms (see Sec. \ref{}).
 In order to define the Hodge star and an inner product on differential forms
 we need that 
 $T_p M$ is an inner product space.
-
 A Riemannian metric gives us at every point $p \in M$ 
 a symmetric, positive definite bilinear form 
 $g_p: T_p M \times T_p M \rightarrow \real$. Additionally, a Riemannian metric 
 is assumed to be smooth in the sense that for smooth vector fields 
-$X$ and $Y$ we have $p \mapsto g_p(X,Y)$ is a smooth function. The degree 
+$X$ and $Y$ we have $p \mapsto g_p(X(p),Y(p))$ is a smooth function. The degree 
 of smoothness depends on the smoothness of the manifold. 
 {\color{red} More details... }
 Manifolds on which a Riemannian metric is defined are called 
 \textit{Riemannian manifolds}. The Riemannian metric provides us with the 
 inner product on every tangent space $T_p M$. 
 
-Now we will move on to differential forms on a smooth, oriented, Riemannian 
-manifold $M$ of dimension $n$ 
-with or without boundary. We denote the Riemannian metric by $g$.
+We will from now on assume that $M$ is a Riemannian manifold. 
+We denote the Riemannian metric by $g$.
 %TBD: Lipschitz
 Let $p \in M$ and $T_p M$ be the tangent space at the point $p$. 
 Due to our assumptions on $M$, this is an inner product space of 
 dimension $n$ and we can apply 
-all of the constructions from the previous chapter
-{\color{red} Check this!}. We have a volume form vol on $M$ so the 
-previous constructions using the Hodge star operator are well-defined.  
-\cite[2.7]{riemannian_geometry}. 
+all of the constructions from the previous chapter. 
+Let us go through them one by one. 
+Let us fix a point $p$ and a chart $\phi$ 
+at this point with local coordinates denoted by $x_i$, $i=1,...,n$. 
+First, we have to check that we choose a orientation on $T_p M$.
+We can do so by only considering charts with the same orientation then 
+we know that the change for the resulting basis of the tangent space 
+the change of basis -- the Jacobian of the chart transition -- 
+has positive determinant so all these bases have the same orientation.
+
+The resulting gramian matrix is
+$(G_p)_{ij} = g_p(\frac{\partial}{\partial x_i},\frac{\partial}{\partial x_j})$.
+So we have a volume form vol on $M$ 
+\begin{align*}
+    \vol_p = \sqrt{\det G_p} dx^1 \wedge ... \wedge dx^n.
+\end{align*}
+Because we only consider charts that have the same orientation the volume form 
+will be the same independent of the chart.
 
 Let $\{(U_i,\phi_i)\}_{i=1}^\infty$ be an oriented atlas of $M$.
 For $p \in U_i$ we can define using local coordinates
@@ -716,7 +887,7 @@ apply the result from Sec.\,\ref{sec:alternating_maps} to get
 i.e. the matrix representation of the the pullback at point $p$
 is given as the $DF(p)^\top$.
 
-In an analogous way by using the correspoding result assuming $n = m$ 
+In an analogous way by using the corresponding result assuming $n = m$ 
 we get that the 
 matrix representation of the pullback of the corresponding $(n-1)$-form 
 is $\text{ad}(DF(p))$. If $F$ is a diffeomorphism then we can write the
@@ -726,8 +897,8 @@ $\mathbf{X} = (X_1, X_2, ..., X_n)^\top$ i.e. the vector of the coefficents
 of $X$. This is widely known as the Piola transformation \cite{Ern Guermond}.
 
 Now let us move on to scalar proxies. So let $\rho: N \rightarrow \real$ be 
-just a scalar field. $0$-forms are just scalar fields and so 
-in this case $F^* \rho = \rho \circ F$. 
+just a scalar field i.e. a $0$-form. In this case, we 
+have the simple expression for the pullback $F^* \rho = \rho \circ F$. 
 
 But $\rho$ could also be the scalar proxy of the $n$-form 
 $\star \rho = \rho \vol_N$ (we assume once again 
@@ -783,14 +954,16 @@ $X$ is the vector proxy
 of an $(n-1)$-form. The hat symbol used for
 $\widehat{dx^i}$ means that this term is left out.
 \begin{align*}
-    \star^{-1} d\star X^\flat = \star^{-1} d\star \sum_{i=1}^n \mathbf{X}_i dx^i
-    = \star^{-1} d \sum_{i=1}^n \mathbf{X}_i (-1)^i 
+    \star^{-1} d\star X^\flat &= \star^{-1} d\star \sum_{i=1}^n \mathbf{X}_i dx^i
+    = \star^{-1} d \sum_{i=1}^n \mathbf{X}_i (-1)^{i-1} 
         dx^1 \wedge ... \wedge \widehat{dx^i} 
         \wedge ... 
         \wedge dx^n
-    = \star^{-1} \sum_{i=1}^n \frac{\mathbf{X}_i}{\partial x_i} dx^i \wedge 
+    \\ &= \star^{-1} \sum_{i=1}^n \frac{\mathbf{X}_i}{\partial x_i} (-1)^{i-1} 
+        dx^i \wedge 
         dx^1 \wedge ... \wedge \widehat{dx^i} \wedge ... \wedge dx^n
-    = \star^{-1} \vol \sum_{i=1}^n \frac{\mathbf{X}_i}{\partial x_i} (-1)^{2i}
+    \\ &= \star^{-1} \vol \sum_{i=1}^n \frac{\mathbf{X}_i}{\partial x_i} 
+        (-1)^{2(i-1)}
     = \sum_{i=1}^n \frac{\mathbf{X}_i}{\partial x_i}
     = \diver \mathbf{X}.
 \end{align*}
@@ -809,7 +982,58 @@ we can use any coordinate system we want and can then compute e.g. the
 divergence in any coordinates we need. Note however that the computations are
 more cumbersome when the bases are not orthonormal.
 
-Let us mention two important properties of the exterior derivative. 
+Let us give an application of this fact. This example is not taken from the 
+references. We will derive the divergence for arbitrary coordinates. 
+So let $\mathbf{X}: U \rightarrow \real^n$ be a usual vector field. By 
+identifying this with the vector field $\sum_i X_i \frac{\partial}{\partial x_i}
+$ we know computed above that 
+\begin{align*}
+    \diver \mathbf{X} \vol = d \star X^\flat.
+\end{align*}
+Now let us express $\mathbf{X}$ using different coordinates. 
+Let $\phi: U \rightarrow V$ be a diffeomorphism. Then we can write 
+\begin{align*}
+    \mathbf{X} = \sum_{j=1}^n \tilde{X}_j 
+        \frac{\partial \phi^{-1}}{\partial y_j}.
+\end{align*}
+In terms of differential geometry, we get representation of the vector field 
+$X = \sum_j \tilde{X}_j \frac{\partial}{\partial y_j}$. 
+Let $\tilde{\mathbf{X}} = (\tilde{X}_1, \tilde{X}_2, ..., \tilde{X}_n)^\top$ 
+and 
+\begin{align*}
+    G_{kl} = g(\frac{\partial}{\partial y_k}, \frac{\partial}{\partial y_l})
+        = \frac{\partial \phi^{-1}}{\partial y_k} \cdot 
+            \frac{\partial \phi^{-1}}{\partial y_l}
+\end{align*}
+Then we compute 
+\begin{align*}
+    (\diver \mathbf{X}) \vol 
+    &= d \star X^\flat 
+    = d \star \sum_{j=1}^n (G \tilde{\mathbf{X}})_j dy^j 
+    \\ &= d \sum_{j=1}^n \sum_{k=1}^n (G \tilde{X})_j 
+        \sqrt{ |\det G| } g^{jk} (-1)^{k} dy^1 \wedge dy^2 \wedge ... \wedge 
+        \widehat{dy^k} \wedge ... \wedge dy^n 
+    \\ &= \sum_{k=1}^n \frac{\partial
+        (\sqrt{ |\det G|} \sum_{j=1}^n g^{jk} (G \tilde{X})_j )}
+        {\partial y_k} (-1)^k dy^k \wedge dy^1 \wedge dy^2 \wedge ... \wedge 
+        \widehat{dy^k} \wedge ... \wedge dy^n 
+    \\ &= \sum_{k=1}^n \frac{\partial (\sqrt{ |\det G|}  \tilde{\mathbf{X}})_k }
+        {\partial y_k} (-1)^{2k} dy^1 \wedge dy^2 \wedge ... \wedge 
+        \widehat{dy^k} \wedge ... \wedge dy^n
+    \\ &= \left[ \frac{1}{\sqrt{ |\det G|}} \sum_{k=1}^n 
+        \frac{\partial (\sqrt{ |\det G|}  \tilde{\mathbf{X}})_k }{\partial y_k}
+        \right] \vol
+\end{align*}
+and we find the well-known expression for the divergence in general coordinates
+(cf. e.g. \cite{})
+\begin{align*}
+    \diver \mathbf{X} = \frac{1}{\sqrt{ |\det G|}} \sum_{k=1}^n 
+        \frac{\partial (\sqrt{ |\det G|} \, \tilde{X}_k )}{\partial y_k}.
+\end{align*}
+% TBD: Some stuff I used here was not introduced before
+
+
+Let us mention three important properties of the exterior derivative. 
 At first, we have $d\circ d = 0$ which will be important later on 
 when we talk about cochain complexes in Section \ref{}. This corresponds in 
 $3D$ to $\diver \curl= 0$ and $\curl \grad = 0$.
@@ -819,40 +1043,56 @@ for manifolds $M$ and $N$ a differentiable mapping $F:M \rightarrow N$
 and $\omega \in \Lambda^k N$ we have $dF^* \omega = F^* d\omega$. 
 In terms of proxies this is related to very interesting results. 
 
+Let $F: \widehat{\Omega} \rightarrow \Omega$ be a diffeomorphism with 
+$\widehat{\Omega}, \Omega \in \real^n$. Let us again consider Euclidian 
+coordinates on the domain and codomain. Then observe
+\begin{align*}
+    & (\diver \mathbf{X})(F(\hat{x}))  \det DF(\hat{x}) \widehat{\vol}_{\hat{x}} 
+    = ( F^* (\diver \mathbf{X}))_{\hat{x}} \wedge (F^* \vol)_{\hat{x}}
+    \\ &= \left( F^* \big( (\diver \mathbf{X}) \vol \big) \right)_{\hat{x}}
+    \\ &= \left( F^* d \star X^\flat  \right)_{\hat{x}}
+    = \left( d F^* \star X^\flat  \right)_{\hat{x}}.
+\end{align*}
+and then 
+\begin{align*}
+    d F^* \star X^\flat = d \star \star^{-1} F^* \star X\flat 
+    = d \star \hat{X}^\flat = \widehat{\diver} \mathbf{\widehat{X}}
+\end{align*}
+by defining 
+\begin{align*}
+    ( \star^{-1} F^* \star X^\flat)^\sharp 
+    =\vcentcolon \hat{X} = \sum_i \mathbf{\hat{X}}_i(\hat{x})  
+     \frac{\partial}{\partial \hat{x_i}}
+\end{align*}
+which we identify with the vector field 
+$\mathbf{\widehat{X}}(\hat{x}) = (\widehat{X}_1(\hat{x}), \widehat{X}_2(\hat{x})
+, ..., \widehat{X}_n(\hat{x}) )^\top$.
+We then know from Sec.\,\ref{sec:alternating_maps} and because we assume
+that we use orthonormal coordinates that 
+\begin{align*}
+    \hat{X}(\hat{x}) 
+    &= ( \star^{-1} F^* \star X\flat)^\sharp (\hat{x})
+    = \sum_{i,j=1}^n \text{ad}(DF(\hat{x}))_{ij} X_j(F(x)) 
+        \frac{\partial}{\partial \hat{x}_i}
+    \\ &= \sum_{i,j=1}^n \det DF(\hat{x}) \big( DF(\hat{x})^{-1}\big)_{ij} X_j(F(x)) 
+        \frac{\partial}{\partial \hat{x}_i}
+\end{align*}
+and so we identify this with the vector field
+\begin{align*}
+    \mathbf{\widehat{X}} = \det DF(\hat{x}) DF(\hat{x})^{-1} \mathbf{X}.
+\end{align*}
+and recognize the widely known Piola transformation (cf. \cite{Ern, Guermond}).
+
 If the manifold is oriented and we have thus a Hodge star operator.
 Then we define the \textit{codifferential operator}
 $\delta \vcentcolon= (-1)^{n(k-1)+1} \star d \star$ which is then 
 an operator $\Lambda^{k}(M) \rightarrow 
 \Lambda^{k-1}(M)$.
 
+
 The exterior derivative and the codifferential both require the differential 
 form to be differentiable. Later we will extend this in weak sense so 
 classical differentiabilty is no longer required (see \ref{}).
-
-Let us have a closer look at this in the simplest situation of $M$ being a 
-domain $U \subseteq \real^3$. Let $\rho \in C^1(U)$ be a scalar
-and $F \in C^1(U;\real^3)$ be a vector field. Then we can view 
-$\rho$ as a $0$-form $\rho \in C^1\Lambda^0 U$. 
-In this case, we can simply take the identity as a chart 
-and $g_x(\partial / \partial x_i, \partial / \partial x_j) = \delta_{ij}$.
-Then we obtain 
-\begin{align*}
-    (d\rho)_x = \sum\limits_{i=1}^3 \frac{\partial \rho}{\partial x_i} dx^i. 
-\end{align*}
-Because $\partial / \partial x_i$ are orthonormal using the Riesz isomorphism
-we can identfy $d\rho$ with the vector field
-\begin{align*}
-    \sum\limits_{i=1}^3 \frac{\partial \rho}{\partial x_i} 
-    \frac{\partial }{\partial x_i} 
-    \leftrightarrow \grad \rho.
-\end{align*}
-So the exterior derivative of zero forms corresponds to the gradient.
-In an analgous way using vector proxies one can show that for 
-$1$-forms it corresponds to the $\curl$ and for $2$-forms to the divergence.
-This also shows the usefulness of the exterior derivative because it 
-provides a way to unify these differential operators
-and generalize them 
-to smooth manifolds.
 
 
 \subsection{Sobolev spaces of differential forms}
