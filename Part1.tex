@@ -143,9 +143,9 @@ associative, but not commutative. But we
 have for $\omega \in 
 \alternating{k}{V}$, $\mu \in 
 \alternating{l}{V}$
-\begin{align*}
-    \omega \wedge \mu = (-1)^{kl} \mu \wedge \omega.
-\end{align*}
+\begin{align}
+    \omega \wedge \mu = (-1)^{kl} \mu \wedge \omega. \label{eq:commutativity_wedge_product}
+\end{align}
 Recalling the definition of the sign of a permutation $\pi \in \mathcal{S}_k$ 
 we get for linear forms $\omega_1, \omega_2, ..., \omega_k \in V'$
 \begin{align*}
@@ -1033,10 +1033,17 @@ and we find the well-known expression for the divergence in general coordinates
 % TBD: Some stuff I used here was not introduced before
 
 
-Let us mention three important properties of the exterior derivative. 
+Let us mention some important properties of the exterior derivative. 
 At first, we have $d\circ d = 0$ which will be important later on 
 when we talk about cochain complexes in Section \ref{}. This corresponds in 
 $3D$ to $\diver \curl= 0$ and $\curl \grad = 0$.
+
+The relation to the wedge product is described by a Leibniz formula. 
+Let $\omega \in C^1 \Lambda^k M$ and $\nu \in C^1 \Lambda^l M$. Then
+\begin{align}
+    d (\omega \wedge \nu) = d\omega \wedge \nu + (-1)^l \omega \wedge d\nu.
+    \label{eq:leibniz_formula}
+\end{align}
 
 The second property is that the exterior derivative commutes with pullback i.e. 
 for manifolds $M$ and $N$ a differentiable mapping $F:M \rightarrow N$ 
@@ -1124,7 +1131,7 @@ requirements for the manifold. We need a countable basis. Or does any
 Riemannian orientable manifold have that?}  Then we define the 
 \textit{Riemannian measure} for any $E \in \mathcal{B}(M)$
 \begin{align*}
-    V(E) \vcentcolon= \sum\limits_{i=1}^\infty \int_{\phi_i(U_i)}
+    V(E) \vcentcolon= \sum\limits_{i=1}^\infty \int_{\phi_i(U_i) \cap E}
         \chi_i(\phi_i^{-1}(x)) \sqrt{\det G^{(i)}(\phi_i^{-1}(x))} dx 
         \in [0,\infty]
 \end{align*}
@@ -1270,13 +1277,13 @@ $k$-form $\omega$ as
     \end{align*}
 \end{theorem}
 This theorem gives us a relation of the boundary and the exterior derivative 
-which will be crucial in the topological context of differential forms.
-We will investigate this in the section about homology (see Sec. \ref{}). 
+which will be crucial in the topological context of differential forms 
+which we will investigate in Sec.\,\ref{sec:de_rhams_theorem}. 
 
 We can also derive a form of the integration by parts formula from it. 
-Let $\omega \in C_0^1 \Lambda^k (M)$ and $\mu \in C_0^1 \Lambda^{n-k-1}(M)$. 
-Then $\omega \wedge \mu \in C_0^1 \Lambda^{n-1} (M)$ and we have from 
-the Leibniz formula \ref{} 
+Let $\omega \in C^1 \Lambda^k (M)$ and $\mu \in C^1 \Lambda^{n-k-1}(M)$. 
+Then $\omega \wedge \mu \in C^1 \Lambda^{n-1} (M)$. Recall the 
+Leibniz rule for the exterior derivative 
 \begin{align*}
     d(\omega \wedge \mu) = d\omega \wedge \mu + (-1)^k \omega \wedge d\mu. 
 \end{align*}
@@ -1285,39 +1292,117 @@ By integrating both sides over $M$ and applying Stokes' theorem we obtain
     \int_{\partial M} \omega \wedge \mu 
     = \int_M d\omega \wedge \mu + (-1)^k \int_M \omega \wedge d\mu.
 \end{align*}
-Using the codifferential $\delta$ and the Hodge star operator together 
-with the alternative expression of the Leibniz rule \ref{}
-we can obtain for $\nu \in C^1_0 \Lambda^{k+1} (M)$
+
+The integration by parts motivates the definition of another differential
+operator. Let $\omega \in C^1 \Lambda^k (M)$ be integrable. 
+We define the \textit{codifferential operator} or simply 
+codifferential 
 \begin{align*}
-    \int_M d\omega \wedge \star \nu 
-    = \int_M \omega \wedge \star \delta \nu  
-        + \int_{\partial M} \omega \wedge \star \nu.
+    \delta \omega \vcentcolon= 
+    (-1)^{n(k-1)+1} \star d \star \omega \in C^0 \Lambda^{k-1} M.
 \end{align*}
+By using the Leibniz rule and \ref{} we compute for $\omega \in 
+C^1 \Lambda^k (M), \nu \in C^1 \Lambda^{k+1} (M)$
+\begin{align*}
+    d(\omega \wedge \star \nu) 
+    &= d\omega \wedge \star \nu + 
+        (-1)^k \omega \wedge d \star \nu 
+    \\ &= d\omega \wedge \star \nu + (-1)^k (-1)^{(n-k)k} 
+        \omega \wedge \star \star d \star \nu 
+    \\ &= d\omega \wedge \star \nu + (-1)^k (-1)^{(n-k)k} (-1)^{nk + 1}
+        \omega \wedge \star \delta \nu 
+    \\ &= d\omega \wedge \star \nu -
+        \omega \wedge \star \delta \nu.
+\end{align*}
+In the last step, we used 
+\begin{align*}
+    (-1)^k (-1)^{(n-k)k} (-1)^{nk + 1} 
+    = (-1)^{2kn - k(k-1)+1} = -1
+\end{align*}
+because $2kn - k(k-1)$ is always even. 
+Now we once again integrate on both sides assuming $\omega$ and $\nu$ are 
+integrable
+\begin{align*}
+    \int_M \langle d\omega_p , \nu_p \rangle_{\alternating{k+1}{T_p M}} \,\vol_p
+    &= \int_M d\omega \wedge \star \nu 
+    = \int_M \omega \wedge \star \delta \nu  
+        + \int_{\partial M} \omega \wedge \star \nu
+    \\ &= \int_M \langle \omega_p , \delta \nu_p \rangle
+        _{\alternating{k}{T_p M}} \, \vol
+        + \int_{\partial M} \langle \omega , \delta \nu 
+        \rangle_{\alternating{k}{T_p \partial M}} \, \vol_{\partial M}.
+\end{align*}
+Some clarification on the notation used. In the first integral we integrate 
+the $n$-form $p \mapsto 
+\langle d\omega_p , \nu_p \rangle_{\alternating{k+1}{T_p M}} \, \vol_p$
+with the inner product of alternating maps introduced in 
+Sec.\,\ref{sec:alternating_maps} and analogous in the last line. 
+From now on, we will leave out the reference to the space of the inner product
+when it is clear from the context.
+
 This integration by parts will be used in the next section to extend the 
 exterior derivative in the weak sense in analogy to the usual introduction 
-of the weak derivative,
+of the weak derivative.
 
 \subsubsection{Sobolev spaces of differential forms}
 
-Then
-we define the $L_p$-norm of a $k$-form $\omega$ for $1\leq p < \infty$
+So far, we used $p$ to refer to a point on the manifold and to emphasize 
+the fact that it is not in $\real^n$. However, this causes a collision of 
+notation when we talk about $L^p$-spaces. So from now on, $x$ will denote 
+a point on a manifold $M$.
+
+We define the $L_p$-norm of a measurable $k$-form $\omega$ for 
+$1\leq p < \infty$
 as (cf. \cite{goldshtein})
 \begin{align*}
-\lVert \omega \rVert _{L_p^k(\Omega)}\vcentcolon=
-\left(\int_\Omega \lVert \omega_x \rVert _{\text{Alt}^k T_x M}^p 
-    \,dV(x) \right)^{1/p}.
+\lVert \omega \rVert _{L_p^k(M)}\vcentcolon=
+\left(\int_M \lVert \omega_x \rVert _{\text{Alt}^k T_x M}^p 
+    \,\vol_x \right)^{1/p}.
 \end{align*}
+Let us briefly argue, why $\lVert \omega_x \rVert _{\text{Alt}^k T_x M}$ 
+is measurable. Since $\omega$ is measurable we have 
+\begin{align*}
+    \omega_x = \sum_{1 \leq i_1 < ... < i_k \leq n}
+        a_{i_1...i_k}(x) dx^{i_1} \wedge ... \wedge dx^{i_k}.
+\end{align*}
+with $a_{i_1...i_k}: M \rightarrow \real$ measurable. Then the expression 
+for the norm is
+\begin{align*}
+    &\lVert \omega_x \rVert^2 _{\text{Alt}^k T_x M}
+    \\ &= \langle \sum_{1 \leq i_1 < ... < i_k \leq n} 
+        a_{i_1...i_k}(x) dx^{i_1} \wedge ... \wedge dx^{i_k},
+        \sum_{1 \leq j_1 < ... < j_k \leq n} 
+        a_{j_1...j_k}(x) dx^{j_1} \wedge ... \wedge dx^{j_k} \rangle
+        _{\text{Alt}^k T_x M}
+    \\ &= \sum_{\substack{1 \leq i_1 < ... < i_k \leq n \\ 
+            1 \leq j_1 < ... < j_k \leq n}}
+        a_{i_1...i_k}(x)\,a_{j_1...j_k}(x) 
+        \langle  dx^{i_1} \wedge ... \wedge dx^{i_k},
+         dx^{j_1} \wedge ... \wedge dx^{j_k} \rangle _{\text{Alt}^k T_x M}
+    \\ &= \sum_{\substack{1 \leq i_1 < ... < i_k \leq n \\ 
+        1 \leq j_1 < ... < j_k \leq n}}
+        a_{i_1...i_k}(x)\,a_{j_1...j_k}(x) 
+        \det \big(\langle dx^{i_s},dx^{i_t}\rangle_{T^*_x M})_{1\leq s,t \leq k}.
+\end{align*}
+Now $\langle dx^i, dx^j\rangle _{T^*_x M} = g^{ij} = \big( G^{-1} \big)_{ij}$
+is measurable because we assume the Riemannian metric to be at least 
+differentiable. So the pointwise norm is indeed a measurable function 
+on $M$.
+
 %%% TBD: Is this independent of coordinates i.e. does this notation make sense?
-$L_p^k(\Omega)$ are the spaces of $k$-forms 
+$L_p^k(M)$ is the spaces of measurable $k$-forms 
 s.t. the corresponding $L_p$-norm is finite.
 For $p=2$ we obtain a Hilbert space (cf. \cite[Sec. 6.2.6]{arnold}) 
 with the $L_2$ inner product  
 \begin{align}
-    \langle \omega, \nu \rangle \vcentcolon= 
-    \int_\Omega \langle \omega_x, \nu_x \rangle _{\text{Alt}^k T_x M} \,dx
+    \langle \omega, \nu \rangle_{L_2^k(M)} \vcentcolon= 
+    \int_M \langle \omega_x, \nu_x \rangle _{\text{Alt}^k T_x M} \,dx
     = \int_\Omega \omega \wedge \star \nu
     \label{eq:def_inner_product} 
 \end{align}
+We will leave out the reference to the $L_2$-space at the inner product from now 
+on.
+
 \begin{proposition}
     The Hodge star operator $\star:L^k_2(\Omega) \rightarrow L^{n-k}_2(\Omega)$ is a
     Hilbert space isometry.
