@@ -41,6 +41,7 @@
 \DeclareMathOperator{\interior}{int}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\vol}{vol}
 
 \newcommand{\aop}{\mathscr{A}}
@@ -1959,6 +1960,462 @@ de Rham's theorem which will become very important later when proving
 existence and uniqueness in Sec.\,\ref{sec:existence_and_uniqueness}.
 \begin{theorem}[De Rham's theorem]
     $[I]$ is an isomorphism.
+\end{theorem}
+
+\section{Hilbert complexes}
+
+Another crucial tool for the proof will be the \textit{Hodge decomposition} 
+in 3D which relies on unbounded operators and Hilbert complexes. These 
+will be introduces in this section. This section is essentially a 
+recollection of the parts of chapter 3 and 4 of Arnold's book \cite{arnold}
+which we will need. We will stay close to this source. At certain parts, 
+some additional arguments and steps will be added, but the reference is 
+already very detailed so there is not much to add. Throughout this section 
+it will be assumed that the reader is familiar with the basic theory of 
+Hilbert spaces and bounded linear operators. We will focus on real spaces 
+exclusively.
+
+\subsection{Unbounded operators}
+
+\begin{definition}[Unbounded operators]
+    Let $X$ and $Y$ be Hilbert spaces. Then we call a linear mapping 
+    $T: D(T) \rightarrow Y$ with a subspace $D(T) \subseteq Y$ an 
+    \textit{unbounded 
+    operator} from $X$ to $Y$. We call $D(T)$ the \textit{domain} of $T$.
+\end{definition}
+We will write sometimes talk about an unbounded operator $T:X \rightarrow Y$ 
+which means that $T$ is not necessarily defined on all of $X$. 
+
+Note that this definition generalizes the standard operator. In particular, 
+it includes the case when $T$ is in fact bounded which can be 
+slightly confusing, but we will stick to this common naming convention. 
+
+The domain is a crucial property of unbounded operators. We will sometimes 
+denote the unbounded operator as the tuple $(T,D(T))$.
+If $D(T)$ is dense in $X$ we call $T$ \textit{densely defined}. 
+We say that two unbounded operators $T$ and $S$ from $X$ to $Y$ are equal 
+if $D(T) = D(S)$ and $Tx = Sx$ for all $x\in D(T)$.
+
+The standard
+example of an unbounded densely defined operator is the classical gradient with 
+the domain $C_0^1(\Omega) \subseteq L^2 (\Omega)$ 
+with $\Omega \subseteq \real^n$ i.e. here we have $X=L^2(\Omega)$ and 
+$Y=L^2(\Omega;\real^n)$.
+In short, $\grad$ is an unbounded operator from $L^2(\Omega)$ to 
+$L^2(\Omega;\real^n)$ with domain $C_0^1(\Omega)$.
+We could then denote it as $(\grad, C_0^1(\Omega))$. This also shows that 
+the choice of domain is not unique. We could have instead chosen e.g. the 
+different unbounded operator $(\grad, C_0^\infty (\Omega))$. 
+Another example is the weak gradient with domain $H^1(\Omega)$ i.e.
+$(\grad, H^1(\Omega))$.
+
+As for bounded operators we define the kernel or null space of an unbounded
+operator 
+\begin{align*}
+    \ker T = \{ x \in D(T) \mid Tx = 0\}
+\end{align*}
+and the image or range
+\begin{align*}
+    \Ima T = \{ Tx \mid x \in D(T)\}.
+\end{align*}
+The only difference is to keep in mind that the unbounded operators are not 
+defined on the whole $X$ in general.
+
+Recall that the graph of a function $f: X \rightarrow Y$ is defined 
+as $\{ (x,f(x)) \in X \times Y \mid x \in X\}$. 
+Analogously, the graph of an unbounded operator $T$ is 
+\begin{align*}
+    \Gamma(T) \vcentcolon= \{ (x,Tx) \mid x \in D(T) \}
+\end{align*}
+which is obviously a subspace of $X\times Y$.
+
+We define the \textit{graph inner product} on $D(T)$ as 
+\begin{align*}
+    \langle x,z \rangle _{D(T)} 
+    \vcentcolon= \langle x,z \rangle _X + \langle Tx, Tz \rangle _Y,
+    \quad x,z \in D(T).
+\end{align*}
+It is easy to show that this is indeed an inner product. We will call its 
+induced norm the \textit{graph norm}
+\begin{align*}
+    \lVert x \rVert _{D(T)} = \sqrt{ \lVert x \rVert^2 _X + \lVert Tx \rVert ^2 _Y}
+    , \quad x\in D(T).
+\end{align*}
+Even though this defines a norm, $D(T)$ might not be a Hilbert space 
+because it is in general not complete w.r.t. this norm. Consider for example 
+the unbounded operator $\grad: L^2(\Omega) \rightarrow L^2(\Omega;\real^n)$ with 
+domain $C_0^\infty(\Omega)$ and a $\Omega \subseteq \real^n$.
+The graph norm is then
+\begin{align*}
+    \lVert \phi \rVert _{D(\grad)} 
+    = \sqrt{ \lVert \phi \rVert^2 _{L^2(\Omega)} + \lVert \grad \phi \rVert^2 
+        _{L^2(\Omega)}}
+        , \quad \phi \in C_0^\infty(\Omega)
+\end{align*}
+which is just the standard $H^1$-norm.
+But it is well-known that $C_0^\infty(\Omega)$ is in fact not closed 
+w.r.t. this norm and thus not complete 
+since the completion of it is the space $H^1_0(\Omega)$ i.e. 
+the Sobolev space with zero trace on the boundary. 
+Below in Prop.\,\ref{prop:closed_operator_graph_norm} we will provide a
+sufficient and necessary condition for the domain to be a Hilbert space 
+when the graph norm is used. 
+
+The well-known closed graph theorem for bounded operators says that 
+a linear operator from $X$ to $Y$ defined on all of $X$ 
+(in contrast to unbounded operators in general) is bounded i.i.f. 
+its graph is closed in $X\times Y$ w.r.t. the norm 
+$\lVert (x,y) \rVert _{X\times Y} 
+= \sqrt{\lVert x \rVert^2 _{X} + \lVert y \rVert^2 _{Y}}$. 
+This motivates the following definition.
+
+\begin{definition}[Closed operator]
+    We call an unbounded operator $T:X \rightarrow Y$ \textit{closed} if 
+    its graph $\Gamma(T)$ is closed w.r.t. the norm 
+    $\lVert \cdot \rVert _{X\times Y}$.
+\end{definition}
+That means if we have a closed operator $T$ and
+take a sequence $(x_n)_{n\in \naturalnum} \subseteq D(T)$
+s.t. $x_n \xrightarrow{X} x$ and $Tx_n \xrightarrow{Y} y$ for some 
+$x \in X$ and $y \in Y$. Then $(x_n,Tx_n) \xrightarrow{X\times Y} (x,y)$ and 
+since $T$ is closed
+$(x,y) \in \Gamma(T)$ i.e. $x \in D(T)$ and $Tx = y$. This is just 
+a rephrasing of the definition essentially so this characterizes closed
+operators equivalently.
+
+\begin{proposition}\label{prop:closed_operator_graph_norm}
+    An unbounded operator $T$ is closed i.i.f. its domain $D(T)$, endowed with the 
+    graph inner product, is a Hilbert space.
+\end{proposition}
+\begin{proof}
+    As mentioned above, the graph inner product is in fact an inner product 
+    on $D(T)$. So we have to show completeness.
+    Assume that $T$ is closed and take a sequence $(x_n)_{n \in \naturalnum} 
+    \subseteq D(T)$ that is Cauchy w.r.t. the graph norm. That implies 
+    that $(x_n)$ must be Cauchy w.r.t. the $X$-norm and $(Tx_n)$ must be 
+    Cauchy w.r.t. the $Y$-norm. Because $X$ and $Y$ are Hilbert spaces 
+    there exists $x \in X$ s.t. $x_n \rightarrow x$ and $y \in Y$ s.t. 
+    $Tx_n \rightarrow y$. Because $T$ is closed we know 
+    $x \in D(T)$ so $D(T)$ is complete.
+
+    For the other direction, assume $D(T)$ is complete and take a sequence 
+    $(x_n)_{n \in \naturalnum} \subseteq D(T)$ s.t. $x_n \rightarrow x \in X$ 
+    and $Tx_n \rightarrow y$ for some $y \in Y$. Because both sequences are 
+    convergent they are both Cauchy and thus $(x_n)$ is Cauchy w.r.t. the
+    graph norm. Due to the completeness of $D(T)$ that implies that $x \in D(T)$
+    and $x_n \xrightarrow{D(T)} x$ and 
+    \begin{align*}
+        \lVert x_n - x \rVert^2 _{D(T)} 
+        = \lVert x_n - x \rVert^2 _X + \lVert Tx_n - Tx \rVert^2 _Y 
+        \rightarrow 0
+    \end{align*}
+    so $T x_n \rightarrow T x$ and thus $Tx = y$ which proves that 
+    $T$ is closed.
+\end{proof}
+
+As an example, take the unbounded operator $(\grad, H^1(\Omega))$
+i.e. the weak gradient as an unbounded operator 
+from $L^2(\Omega)$ to $L^2(\Omega;\real^n)$ with 
+domain $D(\grad) = H^1(\Omega)$. Then we described above that the 
+graph norm here is just the $H^1$-norm. It is well-known that 
+$H^1(\Omega)$ is a Hilbert space. Therefore the 
+Prop.\,\ref{prop:closed_operator_graph_norm} tells us that 
+$(\grad, H^1(\Omega))$ is a closed operator in contrast to 
+$(\grad, C_0^\infty(\Omega))$ as described above.
+
+The adjoint of bounded operators can be generalized to unbounded operators 
+as well. Let us derive this step by step. 
+
+Assume $T: X \rightarrow Y$ is a densely defined unbounded operator. 
+Let us fix a $y \in Y$ and 
+look at the linear functional $l:D(T) \rightarrow \real$ given by
+\begin{align*}
+    l(x) = \langle y, Tx \rangle_Y.
+\end{align*}
+This functional is not necessarily bounded. But if it is i.e. if $l \in D(T)'$ 
+then because $D(T)$ is dense in $X$ we can extend it to a
+$\bar{l} \in X'$. Let $v \in X$ be its Riesz representative. That means we have
+\begin{align*}
+    \langle v, x \rangle_X = l(x) = \langle y, Tx \rangle_Y 
+        \quad \forall x \in D(T).
+\end{align*}
+Then when we define $v = T^* y$ and we 
+recognize this as the defining property of the adjoint and define 
+\begin{align*}
+    D(T^*) \vcentcolon= \{ y \in Y \mid \exists c_y \in \real:
+        \,\langle y, Tx \rangle_Y \leq c_y \lVert x \rVert _X \forall x \in X\}
+\end{align*}
+
+We would like to proof whether $T^*$ is itself densely defined or closed. 
+This can be done in an elegant way by invstigating the graphs of $T$ and 
+$T^*$. In order to do so, we have the following lemma.
+\begin{lemma}\label{lem:rotated_graph}
+    Let $T$ be a densely defined unbounded operator from $X$ to $Y$. 
+    Define the rotated graph of $T^*$ as
+    \begin{align*}
+        \tilde{\Gamma}(T^*) \vcentcolon= \{ (-x,y) \mid (y,x) \in \Gamma(T^*) \}
+        = \{ (-T^*y, y) \mid y \in D(T^*) \} \subseteq X \times Y.
+    \end{align*}
+    Then we have 
+    \begin{align*}
+        & \Gamma(T)^\perp = \tilde{\Gamma}(T^*) \text{ and}
+        \\ &\overline{\Gamma(T)} = \tilde{\Gamma}(T^*)^\perp.
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    $(x,y) \in \Gamma(T)^\perp$ holds i.i.f. 
+    \begin{align*}
+        0 = \langle (x,y), (v,Tv) \rangle _{X\times Y}
+        = \langle x, v \rangle _X + \langle y, Tv \rangle _Y
+            \quad \forall v \in D(T).
+    \end{align*}
+    i.e. 
+    \begin{align*}
+        \langle -x, v \rangle _X = \langle y, Tv \rangle _Y,
+            \quad \forall v \in D(T).
+    \end{align*}
+    This is just equivalent to saying that $-x = T^*y$ i.e.
+    \begin{align*}
+        (x,y) = (-T^*y,y) \in \tilde{\Gamma}(T^*)
+    \end{align*}
+    which proves the first equality.
+
+    For the second equivalence recall the basic fact from Hilbert space theory
+    that for any subspace of a Hilbert space $V$,
+    $(V^\perp)^\perp = \overline{V}$. Hence, applying the orthogonal 
+    complement to both sides of the first equality gives us the second one.
+\end{proof}
+
+\begin{corollary}\label{cor:adjoint_of_densely_defined}
+    The adjoint $T^*$ of a densely defined operator $T$ is closed. 
+\end{corollary}
+\begin{proof}
+    Recall another basic fact from Hilbert space theory that the 
+    orthogonal complement of a space is always closed. 
+    So we know from the first equality that $\tilde{\Gamma}(T^*)$ is closed.
+    It is then trivial to see from the definition of $\tilde{\Gamma}(T^*)$
+    that $\Gamma(T^*)$ is closed and 
+    thus $T^*$ a closed unbounded operator.
+\end{proof}
+
+\begin{proposition}\label{prop:adjoint_of_densely_defined_closed}
+    Let $T$ be a densely defined and closed unbounded operator.
+    Then $T^*$ is also densely defined and closed.
+\end{proposition}
+\begin{proof}
+    We know from the previous corollary that $T^*$ is closed. 
+    In order to prove density, once again recall a fact from Hilbert space
+    theory that a subspace is dense i.i.f. its orthogonal complement 
+    is zero. So take $y \in D(T^*)^\perp$ arbitrary. We now have to show that 
+    $y=0$ to complete the proof.
+    \begin{align*}
+        0 = \langle y, w \rangle_Y 
+        = \langle 0, -T^*w \rangle _X + \langle y, w \rangle _Y
+        = \langle (0,y), (-T^*w,w) \rangle _{X\times Y} \quad \forall w \in D(T^*)
+    \end{align*}
+    which just means
+    \begin{align*}
+        (0,y) \in \tilde{\Gamma}(T^*)^\perp 
+        \stackrel{\text{Lemma\,\ref{lem:rotated_graph}} }{=} \overline{\Gamma(T)}
+        = \Gamma(T).
+    \end{align*}
+    In the last line we used the fact, that $T$ is closed. 
+    Thus $y = T0 = 0$ which concludes the proof.
+\end{proof}
+
+We will now take a closer look at the kernels and images of unbounded operators.
+Let us first notice a very clear result. If $T$ is a closed unbounded operator 
+then its kernel $\ker T$ is closed. This follows indeed from the definition. 
+But this is not true for the image $\Ima T$. Let us take
+$(y_n)_{n \in \naturalnum} \subseteq \Ima T$ with $y_n \rightarrow y$.
+However if we now take the sequence $(x_n)_{n \in \naturalnum} \subseteq D(T)$
+s.t. $Tx_n = y_n$ we do not know if $(x_n)$ converges or 
+whether the limit is in $D(T)$ if it does converge. 
+A very simple example is the inclusion operator
+$\iota: H^1(\Omega) \rightarrow L^2(\Omega)$. This is actually a bounded 
+operator and hence closed since 
+\begin{align*}
+    \lVert \iota f \rVert _{L^2(\Omega)} 
+    = \lVert f \rVert _{L^2(\Omega)} 
+    \leq \lVert f \rVert _{H^1(\Omega)},
+\end{align*}
+but its range $H^1(\Omega)$ is not closed in $L^2(\Omega)$.
+
+Let us summarize the following relationships between the images and kernels 
+of closed densely defined operators and their adjoints.
+
+\begin{proposition}
+    Let $T: X \rightarrow Y$ be a closed densely defined operator. Then
+    \begin{itemize}
+        \item $(\Ima T)^\perp = \ker T^*$
+        \item $(\ker T)^\perp = \overline{\Ima(T^*)}$
+        \item $(\Ima T^*)^\perp = \ker T$
+        \item $(\ker T^*)^\perp = \overline{\Ima(T)}$
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    We will once again rely on Lemma\,\ref{lem:rotated_graph} about the 
+    rotated graph. We will start with (iii)
+    \begin{align*}
+        x \in \ker T \Leftrightarrow (x,0) \in \Gamma(T) 
+        \stackrel{\text{$T$ closed}}{=} \overline{\Gamma(T)} 
+        = \tilde{\Gamma}(T^*)^\perp 
+    \end{align*}
+    The last statement is equivalent to saying that for any $y \in D(T^*)$ 
+    we have 
+    \begin{align*}
+        0 = \langle (x,0), (-T^*y,y) \rangle_{X \times Y}
+        = \langle x, -T^*y \rangle_X
+    \end{align*}
+    which just means $x \in (\Ima T^*)^\perp$ and we proved (iii).
+
+    (ii) follows from that immediately by taking the orthogonal complement 
+    on both sides.
+
+    From Prop.\,\ref{prop:adjoint_of_densely_defined_closed} 
+    we know that $T^*$ is closed and densely defined because $T$
+    is. So the completely analogous reasoning with the roles of $T$ and $T^*$
+    exchanged gives us (i) and taking the orthogonal complement again 
+    proves (iv).
+\end{proof}
+
+Let us investigate the situation in 3D with the common differential 
+operators $\curl$, $\grad$ and $\diver$ on a domain $\Omega$. Throughout the 
+following, all function spaces will always be over an open domain 
+$\Omega \subseteq \real^3$ unless specified otherwise.
+Take the unbounded operator 
+$\diver: L^2(\Omega;\real^3) \rightarrow L^2(\Omega)$ with domain 
+$C_0^\infty$ i.e. $(\diver, C_0^\infty)$. 
+When we take the adjoint of it then we know for $v \in 
+D((\diver, C_0^\infty)^*)$
+\begin{align*}
+    \int_\Omega \diver ^* v \cdot \mathbf{u} \, dx
+    = \int_\Omega v \, \diver \mathbf{u} \, dx \quad \forall 
+    \mathbf{u} \in C_0^\infty(\Omega;\real^3)
+\end{align*}
+Now if we take $\mathbf{u} = (\mathbf{u}_1,0,0)^\top$ then recognize 
+\begin{align}
+    \int_\Omega (\diver ^* v)_1 \, \mathbf{u}_1 \, dx
+    = \int_\Omega v \, \partial_1 \mathbf{u}_1 \, dx \quad 
+        \forall \mathbf{u}_1 \in C_0^\infty
+    \label{eq:adjoint_gradient_c0inf}
+\end{align}
+so we recognize that $-(\diver ^* v)_1$ is the weak derivative of w.r.t. the 
+first coordinate i.e. $-\partial_1 v$ and analogous for the other coordinates 
+so we recognize $\diver^* = -\grad$. We further see that the
+domain s.t. (\ref{eq:adjoint_gradient_c0inf}) is fulfilled is $H^1(\Omega)$ 
+by definition. That means we showed 
+\begin{align*}
+    (\diver, C_0^\infty)^* = (-\grad, H^1).     
+\end{align*}
+
+Because $C_0^\infty$ is dense in $L^2$ i.e. 
+$(\diver, C_0^\infty)$ is densely defined. 
+We know from Cor.\,\ref{cor:adjoint_of_densely_defined} 
+that its adjoint $(-\grad, H^1)$ is closed and 
+we can conclude from Prop.\,\ref{prop:closed_operator_graph_norm} 
+that $H^1(\Omega)$ is in fact a Hilbert space 
+when using the graph norm which is the $H^1$-norm here.
+
+By interchanging $\diver$ and $\grad$ in the above arguments we can conclude 
+\begin{align*}
+    (-\grad, C_0^\infty)^* = (\diver, H(\diver))
+\end{align*}
+where $H(\diver)$ is the domain of the adjoint which is equivalent to saying
+that for $\mathbf{u} \in H(\diver)$ there exists a $\tilde{v} \in L^2$ s.t.
+\begin{align*}
+    \int_\Omega \tilde{v} \phi \, dx = -\int_\Omega \mathbf{v} 
+        \cdot \grad \phi \, dx \quad \forall \phi \in C_0^\infty
+\end{align*}
+where we denote $\tilde{v} = \diver \mathbf{v}$ i.e. the weak divergence.
+
+We know that $H^1$ contains all smooth functions 
+$C^\infty(\overline{\Omega})$ which are dense in $L^2$. 
+Analogously, it can be shown that $H(\diver)$ includes all smooth 
+vector valued functions $C^\infty(\overline{\Omega};\real^3)$. Hence, 
+both of $(\grad,H^1)$ and $(\diver,H(\diver))$ are densely defined.
+
+That begs the question what in turn the adjoints of 
+$(\grad,H^1)$ and $(\diver, H(\diver))$ are. 
+In order to answer it, we take a look at the standard 
+integration-by-parts formula assuming $\Omega$ is a Lipschitz domain
+\begin{align}
+    \int_\Omega u \, \diver \mathbf{w} \, dx 
+        + \int_\Omega \grad u \cdot \mathbf{w} \, dx
+    = \int_{\partial \Omega} u \, \mathbf{w}\cdot n \, ds
+    \label{eq:integration_by_parts}
+\end{align}
+where $n$ is the outward unit normal of $\Omega$. If we want 
+$u \in D(\diver)$ then the boundary integral on the right hand side must 
+vanish which would be the case if $u$ is zero on the boundary. 
+
+We can now take two approaches. The first one follows \cite{picard} by 
+saying a $u\in H^1$ has \textit{zero boundary conditions} 
+i.i.f. the right hand side vanishes for any $\mathbf{w} \in H(\diver)$. 
+This has the advantage that this 
+definition makes sense on any domain $\Omega$ independent of the regularity of 
+the boundary. 
+
+The other approach followed by Arnold defines the trace operators. 
+For $H^1$ this is very basic and leads to the classic trace operator 
+$\tr : H^1(\Omega) \rightarrow H^{1/2}(\Omega)$ assuming $\Omega$ has a 
+Lipschitz boundary. Then we find 
+$(\diver, H(\diver))^* = H^1_0(\Omega)$ where $H^1_0(\Omega)$ is the 
+space of $H^1$-functions with zero trace. Then we obtain 
+\begin{align*}
+    (\diver, H(\diver))^* = (-\grad, H^1_0).
+\end{align*}
+
+Vice versa, we see that if $u$ is non-zero on the boundary then 
+$\mathbf{w}\cdot n$ has to vanish. We can give mean to this for functions 
+in $H(\diver)$ by defining a operator $\gamma_n: H(\div) \rightarrow H^{-1/2}$ 
+s.t. if $\mathbf{w}$ is differentiable then 
+$\gamma_n(\mathbf{w}) = \mathbf{w} \cdot n$. Then we would define 
+\begin{align*}
+    \mathring{H}(\div) = \{ \mathbf{w} \in H(\diver) \mid \gamma_n\, \mathbf{w} 
+        = 0 \}
+\end{align*}
+and we get
+\begin{align*}
+    (\grad, H^1)^* = (\diver, \mathring{H}(\diver)).
+\end{align*}
+
+Now let us turn our attention to the remaining fundamenta differential operator 
+$\curl$. Recall that we have for 
+$\mathbf{u}, \mathbf{v} \in C^1(\overline{\Omega})$ the integration-by-parts 
+formula
+\begin{align*}
+    \int_\Omega \mathbf{v} \cdot \curl \mathbf{u} \, dx 
+    = \int_\Omega \curl \mathbf{v} \cdot \mathbf{u} \, dx 
+        + \int_{\partial \Omega} \mathbf{v} \times n \cdot \mathbf{u} \, ds 
+\end{align*}
+if $\Omega$ is bounded. Based on this formula
+we obtain the weak $\curl$ as
+\begin{align*}
+    (\curl, H(\curl)) = (\curl, C_0^\infty)^*.
+\end{align*}
+Then one is able to define an operator $\gamma_\tau: H(\curl) \rightarrow 
+H^{-1/2}(\partial \Omega; \real^3)$ s.t. 
+$\gamma_\tau \, \mathbf{w} = \mathbf{w}\times n$ for $\mathbf{w} \in 
+C^1(\overline{\Omega};\real^3)$ and then define 
+$\mathring{H}(\curl) = \{ \mathbf{w} \in H(\curl) 
+\mid \gamma_\tau \, \mathbf{w} = 0 \}$. 
+It can be shown that $C^\infty(\overline{\Omega})$ is dense in $H(\curl)$.
+Then we end up with
+\begin{align*}
+    (\curl, H(\curl))^* = (\curl, \mathring{H}(\curl)).
+\end{align*}
+
+It can be shown that $C^\infty(\overline{\Omega})$ is dense in $H(\curl)$.
+From Prop.\,\ref{} we then know that $(\grad, H^1)$, $(\diver, H(\diver))$ 
+and $(\curl, H(\curl))$ as well as the corresponding spaces with homogeneous 
+boundary condition are closed and densely defined. To summarize:
+
+\begin{theorem}
+    Let $\Omega$ be a bounded
+    \begin{itemize}
+        \item 
+    \end{itemize}
 \end{theorem}
 
 
