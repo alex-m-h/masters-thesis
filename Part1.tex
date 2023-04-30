@@ -2498,7 +2498,7 @@ the indices of the spaces decrease. We call this complex the
 Now we can formulate the most important 
 result of this chapter. 
 
-\begin{theorem}[Hodge decomposition]
+\begin{theorem}[Hodge decomposition]\label{thm:hodge_decomposition}
     Let $d^k: W^k \rightarrow W^{k+1}$ form a Hilbert complex. 
     Then we have
     \begin{align*}
@@ -2575,7 +2575,14 @@ for any $u \in H^1$ and $\mathbf{v} \in C^\infty_0(\Omega;\real^3)$
 \end{align*}
 which implies that $\curl \grad u = 0$. $\diver \curl = 0$ is proven 
 completely analogously. So (\ref{eq:primal_de_rham_complex_3d}) is indeed a 
-Hilbert complex. The resulting dual domain complex is 
+Hilbert complex. 
+
+If $\Omega$ is bounded then the complex is closed i.e. all images 
+are closed subspaces which should not be confused with being a closed operator
+as explained in the section about unbounded operators. The proof can be found 
+in Sec.\,4.3 of the main reference for this section \cite{arnold}.
+
+The resulting dual domain complex is 
 \begin{align*}
     0 \leftarrow L^2 \xleftarrow{-\diver} \mathring{H}(\diver)
         \xleftarrow{\curl} \mathring{H}(\curl) 
@@ -2604,6 +2611,46 @@ trace $\gamma_\tau \mathbf{u}$ is zero. If $\mathbf{u}  \in \mathfrak{H}^1
 \subseteq \mathring{H}(\diver)$ 
 then the 
 generalized normal trace $\gamma_n \mathbf{u}$ vanishes.
+
+This gives us the Hodge decomposition in the 3D case.
+
+\begin{theorem}[Hodge decomposition in 3D]
+    Let $\Omega \subseteq \real^3$ be a Lipschitz domain. Then we have the 
+    following decompositions of the kernels
+    \begin{align*}
+        \{ \mathbf{u} \in H(\curl) \mid \curl \mathbf{u} = 0\}
+        &= \overline{\grad H^1} \stackrel{\perp}{\oplus} 
+            \mathfrak{H}^1
+        \\ \{ \mathbf{u} \in H(\diver) \mid \diver \mathbf{u} = 0\}
+        &= \overline{\curl H(\curl)} \stackrel{\perp}{\oplus} 
+            \mathfrak{H}^2
+        \\ \{ \mathbf{u} \in \mathring{H}(\diver) \mid \diver \mathbf{u} = 0\}
+        &= \overline{\curl \mathring{H}(\curl)} \stackrel{\perp}{\oplus} 
+            \mathfrak{H}^1
+        \\ \{ \mathbf{u} \in \mathring{H}(\curl) \mid \curl \mathbf{u} = 0\}
+        &= \overline{\diver \mathring{H}(\diver)} \stackrel{\perp}{\oplus} 
+            \mathfrak{H}^2.
+    \end{align*}
+    We can express $L^2$ as
+    \begin{align*}
+        L^2 &= \overline{\diver \mathring{H}(\diver)} \stackrel{\perp}{\oplus} 
+            \{ v \in H^1 \mid \grad v = 0 \}
+        \\ &= \overline{\diver H(\diver)}.
+    \end{align*}
+    and for vector valued functions
+    \begin{align*}
+        L^2(\Omega;\real^3) &= \overline{\grad H(\grad)} 
+            \stackrel{\perp}{\oplus} \mathfrak{H}^1 
+            \stackrel{\perp}{\oplus} \overline{\curl \mathring{H}(\curl)} 
+        \\ &= \overline{\curl H(\curl)}
+            \stackrel{\perp}{\oplus} \mathfrak{H}^2
+            \stackrel{\perp}{\oplus} \overline{\grad H^1_0}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    This is just an application of the general Hodge decomposition 
+    Thm.\,\ref{thm:hodge_decomposition} combined with what we derived above.
+\end{proof}
 
 
 \begin{remark}
