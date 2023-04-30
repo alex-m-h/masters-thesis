@@ -1638,7 +1638,7 @@ and furthermore for the closed and coclosed forms respectively,
     \mathring{H}^k_0(d,\delta). \label{decomposition_coclosed_forms}
 \end{align}
 
-\section{Singular homology}
+\section{Singular homology}\label{sec:singular_homology}
 
 The curve integral constraint from the magnetostatic problem is very topological % TBD: Reference
 in nature and strongly related to the topology of the domain. 
@@ -1975,7 +1975,7 @@ it will be assumed that the reader is familiar with the basic theory of
 Hilbert spaces and bounded linear operators. We will focus on real spaces 
 exclusively.
 
-\subsection{Unbounded operators}
+\subsection{Unbounded operators}\label{sec:unbounded_operators}
 
 \begin{definition}[Unbounded operators]
     Let $X$ and $Y$ be Hilbert spaces. Then we call a linear mapping 
@@ -2244,7 +2244,7 @@ but its range $H^1(\Omega)$ is not closed in $L^2(\Omega)$.
 Let us summarize the following relationships between the images and kernels 
 of closed densely defined operators and their adjoints.
 
-\begin{proposition}
+\begin{proposition}\label{prop:kernel_image_adjoint}
     Let $T: X \rightarrow Y$ be a closed densely defined operator. Then
     \begin{itemize}
         \item $(\Ima T)^\perp = \ker T^*$
@@ -2417,6 +2417,211 @@ boundary condition are closed and densely defined. To summarize:
         \item 
     \end{itemize}
 \end{theorem}
+
+\subsection{Hilbert complexes}
+
+Now we will combine the idea of cochain complexes from Section 
+\ref{sec:singular_homology} 
+with unbounded operators. Recall that a cochain complex 
+is in full generality a sequence of groups $(G^i)_{i\in \integers}$ 
+and group homomorphims $f^i: G^i \rightarrow G^{i+1}$ s.t. 
+$f^{i+1} \circ f^{i} = 0$.
+
+\begin{definition}[Hilbert complex]
+    A Hilbert complex is a sequence of real Hilbert spaces $(W^k)_{k\in \integers}$
+    and a sequence of closed, densely defined 
+    unbounded operators $d^k: W^k \rightarrow W^{k+1}$ with domain
+    $V^k \subseteq W^k$ s.t. $d^{k+1} \circ d^k = 0$.
+\end{definition}
+\noindent We denote $\mathfrak{Z}^k  \vcentcolon= \ker d^k$ and $\mathfrak{B}^k 
+\vcentcolon= \Ima d^{k-1}$. Then it follows from the definition that
+$\mathfrak{B}^k \subseteq \mathfrak{Z}^k$.
+
+We know from \ref{} that unbounded operators are bounded w.r.t. the graph norm
+which means here that the restriction of the operators to their domain 
+$d^k: V^k \rightarrow V^{k+1}$ are bounded operators when we use the graph norm
+on $V^k$. Note that $\mathfrak{B}^{k+1} \subseteq \mathfrak{Z}^{k+1} 
+\subseteq V^{k+1}$
+so this is well-defined. Because we assume $d^k$ to be 
+closed we know from Prop.\,\ref{prop:closed_operator_graph_norm}
+that $V^k$ are Hilbert spaces w.r.t. the graph norm $\lVert \cdot \rVert _{V^k}$.
+So we see that $d^k$ together with $V^k$ is also a Hilbert complex which 
+we call \textit{domain complex}. In this Hilbert complex all operators are 
+bounded. Notice because the operators are defined on the whole Hilbert space 
+$d^k$ this fits the definition of a cochain complex since vector spaces 
+with summation
+are groups and the $d^k$ are linear mappings and hence group homomorphisms.
+
+Now let us investigate the adjoints of the operators in a Hilbert complex.
+Since we assume the operators to be closed and densely defined the adjoints 
+exist and we denote with $d_k^*:W^k \rightarrow W^{k-1}$ the adjoint of $d^k$.
+Due to Prop.\,\ref{prop:adjoint_of_densely_defined_closed} we know that the 
+adjoints are also closed and densely defined. We denote 
+$V_k^* \vcentcolon= D(d_k^*)$, $\mathfrak{Z}^*_k \vcentcolon= \ker d^*_k$ 
+and $\mathfrak{B}^*_k \vcentcolon= \Ima d^*_k$. We will frequently leave out 
+the indices from now on.
+
+We can now apply Prop.\,\ref{prop:kernel_image_adjoint} to this construction. 
+Then we observe 
+\begin{align*}
+    \mathfrak{B}^\perp &= \mathfrak{Z}^*,
+    \\ \mathfrak{Z}^\perp &= \overline{\mathfrak{B}^*},
+    \\ \mathfrak{B^*}^\perp &= \mathfrak{Z} \text{ and}
+    \\ \mathfrak{Z^*}^\perp &= \overline{\mathfrak{B}^*}.
+\end{align*}
+Now recall the basic fact from Hilbert space theory that 
+in any Hilbert space if we have any two subspaces $V \subseteq W$ then taking the 
+orthogonal complements reverses the inclusion i.e.
+$V^\perp \supseteq W^\perp$. Then we get 
+\begin{align}
+    \mathfrak{B}^* \subseteq \overline{\mathfrak{B}^*} 
+    = \mathfrak{Z}^\perp  \subseteq \mathfrak{B}^\perp 
+    = \mathfrak{Z}^*. \label{eq:image_kernel_of_adjoint_in_hilbert_complex}
+\end{align}
+So we recognize that $d_k^*:W^k \rightarrow W^{k-1}$ form a structure 
+very similar to a Hilbert complex with the only difference being that 
+the indices of the spaces decrease. We call this complex the 
+\textit{dual complex} of the Hilbert complex.
+
+\begin{definition}
+    We call a $v \in V^k \cap V^*_k$ harmonic if $d^k v = 0$ and 
+    $d^*_k v = 0$. Denote the space of harmonic elements as 
+    $\mathfrak{H}^k$.
+\end{definition}
+\noindent We can rewrite this as $\mathfrak{H}^k = \mathfrak{Z}^k 
+\cap \mathfrak{Z}^*_k$. Using 
+(\ref{eq:image_kernel_of_adjoint_in_hilbert_complex}) we can write this as
+\begin{align*}
+    \mathfrak{H}^k = \mathfrak{Z}^k \cap \mathfrak{B}^{*,\perp}_k
+         = \mathfrak{B}^{k,\perp} \cap \mathfrak{Z}^*_k.
+\end{align*}
+Now we can formulate the most important 
+result of this chapter. 
+
+\begin{theorem}[Hodge decomposition]
+    Let $d^k: W^k \rightarrow W^{k+1}$ form a Hilbert complex. 
+    Then we have
+    \begin{align*}
+        \mathfrak{Z}^k &= \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus}
+            \mathfrak{H}^k \text{ and}
+        \\ \mathfrak{Z}^*_k &= 
+            \overline{\mathfrak{B}^*_k} \stackrel{\perp}{\oplus}
+            \mathfrak{H}^k.
+    \end{align*}
+    We obtain the Hodge decomposition of the space $W^k$
+    \begin{align*}
+        W^k = \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus}
+            \mathfrak{H}^k \stackrel{\perp}{\oplus} \overline{\mathfrak{B}^*_k}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    Let us first prove $\mathfrak{Z}^k \subseteq 
+    \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus} \mathfrak{H}^k$.
+    Take $z \in \mathfrak{Z}^k$ arbitrary. 
+    From basic Hilbert theory we know that 
+    $W^k = \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus} 
+    \mathfrak{B}^{k,\perp}$. So we find $z = z_1 + z_2$ with
+    $z_1 \in \overline{\mathfrak{B}^k}$ and $z_2 \in 
+    \mathfrak{B}^{k,\perp}$. 
+    Because $\mathfrak{Z}^k$ is closed 
+    $z_1 \in \overline{\mathfrak{B}^k} \subseteq \mathfrak{Z}^k$ 
+    and thus $z_2 = z - z_1 \in \mathfrak{Z}^k$ as well i.e. $z_2 \in \mathfrak{Z}^k 
+    \cap \mathfrak{B}^{k,\perp} = \mathfrak{H}^k$ and so 
+    $z \in \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus}
+    \mathfrak{H}^k$. The other inclusion is obvious since 
+    $\mathfrak{H} = \mathfrak{B}^{k,\perp} \cap \mathfrak{Z}^k$.
+    The proof for the second equality is completely analogous. 
+
+    For the Hodge decomposition, since $\mathfrak{Z}^k$ is closed 
+    \begin{align*}
+        W^k = \mathfrak{Z}^k \stackrel{\perp}{\oplus} \mathfrak{Z}^{k,\perp}
+        =  \overline{\mathfrak{B}^k} \stackrel{\perp}{\oplus}
+            \mathfrak{H}^k \stackrel{\perp}{\oplus} \overline{\mathfrak{B}^*_k}.
+    \end{align*}
+\end{proof}
+The Hodge decomposition is a very powerful tool whenever deal with Hilbert
+complexes.
+
+\subsubsection{$L^2$ de Rham complex in 3D}
+Let us investigate the situation for the differential operators 
+$\grad$, $\diver$ and $\curl$. All the necessary ingredients were already 
+proven at the end of Sec.\,\ref{sec:unbounded_operators}. 
+Let $\Omega$ be a Lipschitz domain of 
+$\real^3$. % TBD: Do we really need Lipschitz boundary?
+
+We take $W^0 = W^3 = L^2(\Omega)$ and $W^1 = W^2 = L^2(\Omega;\real^3)$ 
+and we set all other $W^k$ to zero in order to obtain a sequence.
+Then we choose the operators $d^0 = \grad$, $d^1 = \curl$, $d^2 = \diver$ and
+for the domains we choose $V^0 = H^1(\Omega)$, $V^1 = H(\curl;\Omega)$, 
+$V^2 = H(\diver;\Omega)$ and $V^3 = L^2(\Omega) = W^3$. 
+As before, we will leave out the refernence to the domain $\Omega$ now.
+All other 
+$d^k$ are just zero. The resulting domain complex is then
+\begin{align}
+    0 \rightarrow H^1 \xrightarrow{\grad} H(\curl)
+        \xrightarrow{\curl} H(\diver) \xrightarrow{\diver} L^2 \rightarrow 0
+    \label{eq:primal_de_rham_complex_3d}
+\end{align}
+
+All these operators are closed and densely defined. It remains to show that 
+$d^{k+1} \circ d^k = 0$. If $k < 0$ or $k>2$ this is clear from the definition. 
+Then we have from the definition of these operators 
+for any $u \in H^1$ and $\mathbf{v} \in C^\infty_0(\Omega;\real^3)$  
+\begin{align*}
+    \int_\Omega \curl \grad u \cdot \mathbf{v} \, dx 
+    = \int_\Omega \grad u \cdot \curl \mathbf{v} \, dx 
+    = \int_\Omega u \, \diver \curl \mathbf{v} \, dx
+    = 0
+\end{align*}
+which implies that $\curl \grad u = 0$. $\diver \curl = 0$ is proven 
+completely analogously. So (\ref{eq:primal_de_rham_complex_3d}) is indeed a 
+Hilbert complex. The resulting dual domain complex is 
+\begin{align*}
+    0 \leftarrow L^2 \xleftarrow{-\diver} \mathring{H}(\diver)
+        \xleftarrow{\curl} \mathring{H}(\curl) 
+        \xleftarrow{-\grad} H^1_0 \leftarrow 0.
+\end{align*}
+
+For the harmonic elements -- which are scalar and vector fields here -- 
+we obtain
+\begin{align*}
+    \mathfrak{H}^0 &= \{ u \in H^1 \mid \grad u = 0\},
+    \\ \mathfrak{H}^1 &= \{ \mathbf{u} \in H(\curl) \cap \mathring{H}(\diver)
+        \mid \curl \mathbf{u} = 0, \diver \mathbf{u} = 0\},
+    \\ \mathfrak{H}^2 &= \{ \mathbf{u} \in \mathring{H}(\curl) \cap H(\diver)
+        \mid \curl \mathbf{u} = 0, \diver \mathbf{u} = 0\} \text{ and}
+    \\ \mathfrak{H}^3 &= \{ u \in H^1_0
+       \mid \grad u = 0\} = \{0\}.
+\end{align*}
+For the last equality we used the fact that $\grad u = 0$ implies that 
+$u$ is constant almost everywhere with possibly different constants for 
+different path components of $\Omega$. But because we have homogeneous boundary 
+conditions we get $u=0$. Note that $\mathfrak{H}^1$ and $\mathfrak{H}^2$ 
+are very similar. The only difference are the boundary conditions. 
+$\mathbf{u} \in \mathfrak{H}^2 \subseteq \mathring{H}(\curl)$ 
+means that the generalized tangential 
+trace $\gamma_\tau \mathbf{u}$ is zero. If $\mathbf{u}  \in \mathfrak{H}^1 
+\subseteq \mathring{H}(\diver)$ 
+then the 
+generalized normal trace $\gamma_n \mathbf{u}$ vanishes.
+
+
+\begin{remark}
+    Alternatively, we could have chosen the sequence with zero boundary conditions
+    as the primal sequence i.e. 
+    \begin{align*}
+        0 \rightarrow H^1_0 \xrightarrow{\grad} \mathring{H}(\curl)
+        \xrightarrow{\curl} \mathring{H}(\diver) 
+        \xrightarrow{\diver} L^2 \rightarrow 0
+    \end{align*}
+    Then we can follow the exact same arguments to get the dual sequence 
+
+    \begin{align*}
+        0 \leftarrow L^2 \xleftarrow{-\diver} H(\diver)
+            \xleftarrow{\curl} H(\curl) 
+            \xleftarrow{-\grad} H^1 \leftarrow 0.
+    \end{align*}
+\end{remark}
 
 
 \section{Existence and uniqueness of solutions}\label{sec:existence_and_uniqueness}
