@@ -2887,7 +2887,7 @@ is
 Here we can assume $\varphi \in C_0^\infty (\Omega)^3$
 due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
 
-\begin{theorem}[Smoothness of solutions]
+\begin{theorem}[Smoothness of solutions]\label{thm:smoothness_of_solutions}
     Let $\Omega \subseteq \real^3$ open and 
     $B \in H(\diver;\Omega) \cup H(\curl;\Omega)$ and 
     \begin{align*}
@@ -2932,7 +2932,7 @@ due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
 
 The curve integral condition is closely linked to the topology of our domain 
 which we will have to use in our proof.
-This will rely on the tools of homology from Sec.\,\ref{}. 
+This will rely on the tools of homology from Sec.\,\ref{sec:singular_homology}. 
 Because of this connection if we want the curve integral
 to give us uniqueness of the solution we need to assume certain topological 
 properties. In our case, this will be the condition that our first 
@@ -2961,8 +2961,17 @@ level of homology.
     \textbf{Proof of (i)} %TBD: This could be wrong
     Because $[\gamma]$ is a generator of the homology group we  obtain a 
     homomorphism $\hat{F} \in \text{Hom}(H_1(\Omega),\real)$ by fixing
-    $\hat{F}([\gamma]) = C_0$. This determines the other values.
-    Then we know from (\ref{eq:univeral_coefficient_theorem}) that there exists
+    $\hat{F}([\gamma]) = C_0$. Note that $H^1(\Omega)$ is an abuse of notation 
+    because we mean here the first cohomology group of $\Omega$ and not the 
+    Sobolev space. In the context of singular homology this will always be the
+    case.
+    
+    This determines the other values.
+    Recall the isomorphism $\beta : H^1(\Omega) \rightarrow 
+    \text{Hom}(H_1(\Omega);\real)$ from the universal coefficent theorem 
+    (\ref{eq:univeral_coefficient_theorem}), $\beta([F]) = \tilde{F}$ 
+    where $F$ and $\tilde{F}$ are in the same cohomology class.
+    Then we know that there exists
     a $[F] \in H^1(\Omega)$ with $\beta([F]) = \hat{F}$ because $\beta$ is a 
     isomorphism. So we obtain
     \begin{align*}
@@ -3003,6 +3012,8 @@ that demonstrates the connection of differential forms and cochains.
             i.e. $[\eta] = [\theta]$.
     \end{enumerate}
 \end{corollary}
+
+% TBD: Define de Rham cohomology
 \begin{proof}
     \textbf{Proof of (i)}
     Recall from Sec.\,\ref{sec:de_rhams_theorem} 
@@ -3014,7 +3025,7 @@ that demonstrates the connection of differential forms and cochains.
     s.t. $F(\gamma) = C_0$. The surjectivity of the de Rham isomorphism 
     now gives us $[\theta] \in H^1(\Omega)$ s.t.
     \begin{align*}
-        [I(\theta)] = [I](\theta) = [F]
+        [I(\theta)] = [I]([\theta]) = [F]
     \end{align*}
     i.e.
     \begin{align*}
@@ -3047,17 +3058,17 @@ that demonstrates the connection of differential forms and cochains.
     \end{align*}
     s.t. $H_1(\Omega_\epsilon) = \integers [\gamma]$ as well.
     Then there exists a solution 
-    to Problem \ref{prob:magnetostatic_reformulated}.
+    to Problem \ref{prob:magnetostatic_problem}.
 \end{theorem}
 Let us say a view words about the topological assumption 
 regarding $\Omega_\epsilon$. This just means that we can slightly increase 
 the domain without changing the first homology group. As an example, 
 think again of a torus in $\real^3$. Assuming the torus has non-empty interior 
 we can slightly reduce the poloidal radius without changing the topology of its 
-the exterior domain.
+ exterior domain.
 \begin{proof}
     At first we want to find a smooth differential $1$-form 
-    $\theta \in \Lambda^1(\Omega)$ with the desired curve integral. 
+    $\theta \in C^\infty\Lambda^1(\Omega)$ with the desired curve integral. 
     In order to do that we will increase the 
     domain slightly.
     We start by referring to Cor.\,\ref{cor:existence_uniqueness_1form} 
@@ -3066,9 +3077,11 @@ the exterior domain.
     \begin{align}
         \int_\gamma \tilde{\theta} = C_0. \label{eq:integral_theta_tilde}
     \end{align}
-    We now refer back to \ref{} to change back to vector proxies. Let 
+    We now refer back to Sec.\,\ref{sec:differential_forms} 
+    and change back to vector proxies. Let 
     $\tilde{\phi}$ be the vector proxy of $\tilde{\theta}$ 
-    i.e. $\tilde{\phi} \in C^\infty(\tilde{\Omega})^3$.
+    i.e. by recalling the musical isomorphism \ref{}
+     $\tilde{\theta}^\sharp = \tilde{\phi} \in C^\infty(\tilde{\Omega})^3$.
     Because $\tilde{\theta}$ is closed and (\ref{eq:integral_theta_tilde}) holds
     we obtain the corresponding properties 
     of $\tilde{\phi}$ which are 
@@ -3093,8 +3106,7 @@ the exterior domain.
         B_R = \phi_R - \lim\limits_{i\rightarrow \infty}\nabla \psi_i
     \end{align*}
     We also know that $B_R$ is smooth because 
-    it is curl and divergence free from the section about the 
-    smoothness of solutions (Sec. \ref{sec:regularity_of_solutions}). 
+    it is curl and divergence free from Thm.\ref{thm:smoothness_of_solutions}. 
     We want to check that the curve
     integral did not change. We know from \ref{} that the 
     image of the exterior derivative is closed on bounded domains. 
@@ -3124,8 +3136,9 @@ the exterior domain.
     s.t.
     \begin{align*}
         \overline{B_R} = B 
-            +\lim\limits_{i\rightarrow \infty}\nabla \rho_i.
+            +\lim\limits_{i\rightarrow \infty}\nabla \rho_i
     \end{align*}
+    since $\curl \overline{B_R} = 0$.
     Notice that because $B$ is a harmonic vector field 
     and because it is the vector 
     proxy of a harmonic $2$-form it already satisfies 
@@ -3192,14 +3205,25 @@ In the proof of uniqueness we will use the following lemma.
 
 \begin{proof}
     Let $B$ and $\tilde{B}$ both be solutions and denote with $\omega$ 
-    and $\tilde{\omega}$ the corresponding $1$-forms. 
-    So we have $I(\omega)(\gamma) = I(\tilde{\omega})(\gamma) = C_0$.
+    and $\tilde{\omega}$ the corresponding $1$-forms i.e. $\omega =
+    B^\flat$ and $\tilde{\omega} = \tilde{B}^\flat$. 
+    So we have $I(\omega)(\gamma) = I(\tilde{\omega})(\gamma) = C_0$
+    since 
+    \begin{align*}
+        \int_\gamma \omega = \int_\gamma B^\flat = 
+        \int_\gamma B \cdot dl = \int_\gamma \tilde{B}\cdot dl 
+        = \int_\gamma \tilde{B}^\flat = \int_\gamma \tilde{\omega}
+    \end{align*}
+
     Then we know from Cor.\,\ref{cor:existence_uniqueness_1form} 
     that $\omega$ and $\tilde{\omega}$ are in the 
-    same cohomology in $\mathcal{H}^1$. This is equivalent to saying that 
-    there exists a smooth $\mu$ s.t. 
+    same cohomology class in $H^1_{dR}$. So there exists a $0$-form i.e. 
+    $\mu \in C^\infty(\Omega)$ s.t. $\omega - \tilde{\omega} = d\mu$.
+    By applying $^\sharp$ on both sides
     \begin{align*}
-        B - \tilde{B} = \grad \mu.
+        B - \tilde{B} 
+        = \omega^\sharp - \tilde{\omega}^\sharp
+        = (d\mu)^\sharp = \grad \mu.
     \end{align*}
     However, $\mu$ need not be in $L^2$ since $\Omega$ is unbounded.
     But we know that $\grad \mu \in L^2(\Omega)^3$ and 
