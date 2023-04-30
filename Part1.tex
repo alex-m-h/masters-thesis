@@ -2672,8 +2672,8 @@ with data $f_i, F_i^\alpha \in L^2(\Omega)$. We call this system
 \end{align}
 with $c > 0$. $|\xi|$ is here the Frobenius norm, but technically the chosen 
 norm is irrelevant due to all norms on $\real^{3 \times 3}$ being equivalent.
-We then call $B$ a weak solution
-of the problem if 
+We then call $B \in H^1_{loc}(\Omega)^3$ a weak solution
+of (\ref{eq:elliptic_system}) if 
 \begin{align}
     \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
         A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx
@@ -2685,7 +2685,7 @@ for all $\varphi \in C^1_0(\Omega;\real^3)$. This formulation is taken from
 \cite[Sec. 1.3]{lectures_on_elliptic_pdes}. At first we will slightly modify
 the notion of weak solution. 
 
-\begin{proposition}
+\begin{proposition}\label{prop:weak_solution_smooth_test_functions}
     Assume that we have an elliptic system with constant coefficients i.e. 
     $A$ is constant. Then
     (\ref{eq:weak_elliptic_system}) is fulfilled for all 
@@ -2727,8 +2727,8 @@ just smooth compactly supported functions as test functions.
 Next, we will state the crucial result about the regularity of elliptic systems
 which will give us the desired regularity. This is Theorem 2.13 and Remark 2.16 
 in \cite{lectures_on_elliptic_pdes} in slightly less generality.
-\begin{theorem}
-    Let $\Omega$ be an open domain in $\real^n$. Let $A$ be constant and 
+\begin{theorem}\label{thm:regularity_elliptic_systems}
+    Let $\Omega$ be an open domain in $\real^n$. Let $A$ 
     satisfy the Legendre condition (\ref{eq:legendre_condition}). Then for every 
     $B \in H^1_{loc}(\Omega)^3$ weak solution in the sense of
     (\ref{eq:weak_elliptic_system}) with $f \in H^k_{loc}(\Omega)^3$ and 
@@ -2743,8 +2743,19 @@ in \cite{lectures_on_elliptic_pdes} in slightly less generality.
         \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
         A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx =0
     \end{align*}
-    for all $\phi \in C^\infty_0(\Omega;\real^3)$, then $B$ is smooth.   
+    for all $\varphi \in C^\infty_0(\Omega;\real^3)$, then $B\in C^\infty(\Omega)$.
 \end{corollary}
+\begin{proof}
+    Here we have $F= 0$ and $f = 0$. Thus, $f \in H^k_{loc}(\Omega)^3$ 
+    for any $k \in \naturalnum$. 
+    Take any $Q \subseteq \Omega$ pre-compact. Then we know from 
+    Thm.\,\ref{thm:regularity_elliptic_systems}.
+    that $B \in H_{loc}^{k+2}(\Omega)^3$ and thus $B \in H^{k+2}(Q)^3$.
+    Therefore, we can apply the 
+    standard Sobolev embedding theorem locally to get $B \in C^l(Q)$ for any 
+    $l \in \naturalnum$ and hence $B \in C^\infty(\Omega)$ since $Q$ pre-compact
+    was arbitrary. 
+\end{proof}
 It should be noted that this does not guarantee us any regularity on the 
 boundary. 
 
@@ -2755,12 +2766,13 @@ problem $B$ is actually in $H^1_{loc}(\Omega)^3$.
     Assume $B \in H(\diver;\Omega) \cap H(\curl;\Omega)$. Then 
     $B \in H^1_{loc}(\Omega)^3$.
 \end{theorem}
-Note that we did not assume $B$ to be a solution.
+\noindent Note that we did not assume $B$ to be a solution.
 \begin{proof}
     We know that for a function $u \in H_0(\curl;U) \cap H(\diver;U)$ 
     for some smooth domain $U$ we have $u \in H^1(U)^3$ 
     (cf. \cite[Remark 3.48]{monk}). Our $\Omega$ is just assumed to be open 
-    so we can not apply this result directly.
+    so we can not apply this result directly because we have no information
+    about the regularity of the boundary $\partial \Omega$.
 
     Take $Q \subset\subset \Omega$ open and pre-compact. 
     Then we can find an open 
@@ -2872,8 +2884,8 @@ is
         \partial_\beta B_j \partial_\alpha \varphi_i dx 
     = \sum\limits_{i=1}^3 \int_\Omega \nabla B_i \cdot \nabla \varphi_i dx.
 \end{align*}
-Here we can assume $\varphi \in C_0^\infty (\Omega)^3$ because all coefficients
-are constant.
+Here we can assume $\varphi \in C_0^\infty (\Omega)^3$
+due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
 
 \begin{theorem}[Smoothness of solutions]
     Let $\Omega \subseteq \real^3$ open and 
@@ -2914,110 +2926,6 @@ are constant.
     {\color{red} How much regularity? Source?}
 \end{remark}
 
-
-\subsection{Reformulation of the problem} 
-
-We will return now to the magnetostatic problem. In order to use the results
-above we will reformulate the problem in the notation of differential forms.
-From now on we assume $n=3$ i.e. we are in three dimensional space.
-There are two ways to identify a vector field with a differential form 
-(cf. \cite[Table 6.1 and p.70]{arnold}) either as a 1-form or a 2-form. 
-For a vector field $B$ we define
-\begin{align*}
-    F^1\, B &\vcentcolon= B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3 \text{ and}\\
-    F^2\, B &\vcentcolon= B_2 \, dx_2 \wedge dx_3 - B_2 \, dx_1 \wedge dx_3
-        + B_3 \, dx_1 \wedge dx_2
-\end{align*} 
-as the corresponding 1-form and 2-form. 
-Then the exterior derivative is $dF^2\,\omega$ corresponds to the divergence,
-the codifferential $\delta F^2\,\omega$ 
-corresponds to the curl and the normal component
-being zero on the boundary corresponds 
-to $\omega \in \mathring{H}^2(d)$.\cite{}. 
-
-If we then use the association of
-3-forms with scalars we have the corresponding boundary value problem without
-the integral condition for 
-2-forms: Find $\omega \in \mathring{H}^2(d)$ s.t.
-\begin{align}
-    \delta \omega &= 0, \\ 
-    d\omega  &= 0 \text{ in } \Omega.
-\end{align}
-Next, we have to add the integral condition. 
-We remind the reader that we are in three dimensions so
-$**= \text{Id}$ 
-and observe
-\begin{align*}
-    *F^2 \, B  &= B_1 \, **dx_1 + B_2 \, **dx_2 + B_3\, **dx_3 
-        = B_1 \, dx_1 + B_2 \, dx_2 + B_3\, dx_3\\ 
-    &= F^1 \, B.
-\end{align*}
-{\color{red}: Actually, we already use the Hodge star to define the vector 
-proxies. So of course the vector proxy of the Hodge star will be the same.}
-Then we have 
-\begin{align*}
-    \int_\gamma * F^2\, B = \int_\gamma F   ^1\, B = \int_\gamma B \cdot \text{d}l.
-\end{align*}
-In the last step we used the fact that the integration of a 1-form over a
-curve is equivalent to the curve integral of the associated vector field
-(cf. \cite[Sec. 6.2.3]{arnold}). Hence, we can add the integral condition 
-\begin{align}
-    \int_\gamma *\omega = C_0 \label{integral_condition}.
-\end{align}
-However, we have  only $\omega \in \mathring{H}_0^2(d,\delta)$ so 
-$*\omega \in H^1(d)$ so this integral might not be well defined. In order 
-to deal with this, we will again use the operator $\rop$ from 
-Sec.\,\ref{sec:isomorphism_cohomology}. 
-
-We know from Thm.~\ref{thm:operators} that $\rop *\omega \in S^1_2(\omegabar)$.
-Using the operator $\varphi$ from \ref{eq:} we obtain 
-$\varphi \rop *\omega \in S^1_2(K)$. Now we know from Sec.~\ref{sec:} that 
-the integration mapping $I: S^1_2(K) \rightarrow C^1_2(K)$ is well-defined.
-Denote $\bar{I} \vcentcolon= I\circ \varphi \circ \rop$ and 
-let us replace the integral condition (\ref{eq:integral_condition}) with 
-\begin{align*}
-    \bar{I}(*\omega)(\gamma) = C_0.
-\end{align*}
-
-Of course, we have to justify why this is reasonable. 
-So let us take $\eta \in S^1_2(\omegabar)$. That means we can integrate it 
-directly using the definition from \ref{}. 
-Let us also assume that $\eta$ is closed and 
-$\int_\gamma \eta = C_0$. %TBD: Define the integral on S^k_p(\omegabar)
-Then we know from Thm.~\ref{thm:operators}
-\begin{align*}
-    \rop \eta = \eta + d\aop \eta + \aop d\eta 
-    \stackrel{\eta \text{ closed}}{=} \eta + d\aop \eta.
-\end{align*}
-We know further that $\aop \eta \in S^0_2(\omegabar)$. 
-Apply $\varphi$ on both sides and use that fact that it commutes 
-\ref{} with the 
-exterior derivative to get
-\begin{align*}
-    \varphi \rop \eta = \varphi\eta + d \varphi\aop \eta.
-\end{align*}
-$[I]$ is an isomorphism of cohomology and thus sends exact S-forms to exact 
-cochains. $\gamma$ is closed so $I(d \varphi\aop \eta)(\gamma) = 0$ and 
-we conclude 
-\begin{align*}
-    \bar{I}(\eta)(\gamma) = I(\varphi \rop \eta)(\gamma) = I(\varphi \eta)
-    \stackrel{\text{by def.}}{=} I(\eta),
-\end{align*}
-i.e. the integral remains unchanged if we integrate closed forms over 
-closed chains. Because $*\omega$ is closed we thus do not change the integral 
-if the curve integral $*\omega$ would already have been well defined before.
-
-To summarize we obtain the following problem.
-\begin{problem} \label{prob:magnetostatic_reformulated}
-    Find $\omega \in \mathring{H}^2(d;\Omega)$ s.t.
-    \begin{align*}
-        d \omega &= 0, \\
-        \delta \omega &= 0 \text{ in $\Omega$}, \\
-        \bar{I}(*\omega)(\gamma)  &= C_0.
-    \end{align*}
-\end{problem}
-\noindent We will examine existence and 
-uniqueness of this problem in the next section.
 
 
 \subsection{Existence and uniqueness}
