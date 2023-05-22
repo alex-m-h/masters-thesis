@@ -37,6 +37,7 @@
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\diver}{div}
 \DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\Ima}{im}
 \DeclareMathOperator{\interior}{int}
 \DeclareMathOperator{\sgn}{sgn}
@@ -1753,7 +1754,7 @@ obtain a integration by parts formula.
 
 But before we do so we have to check how to define the restriction of a
 differential form to a submanifold $N \subseteq M$. 
-We have the inclusion $\iota: N \hookrightarrow M$. Then for a 
+We do that with the inclusion $\iota: N \hookrightarrow M$. Then for a 
 smooth differential form $\omega \in C^\infty \Lambda^k (M)$ we define 
 the restriction just via the pullback of the inclusion operator i.e. 
 $\iota^* \omega \in C^\infty \Lambda^k(N)$. 
@@ -1761,8 +1762,52 @@ $\iota^* \omega \in C^\infty \Lambda^k(N)$.
 For a $k$-dimensional submanifold $N$ we then denote the integration of an 
 $k$-form $\omega$ as
 \begin{align*}
-    \int_N \iota^*\omega = \int_N \omega.
+    \int_N \iota^*\omega =\vcentcolon \int_N \omega.
 \end{align*} 
+
+\begin{example}
+    Let us investigate the integral of a $1$-form over a curve. 
+    Let $\gamma: (0,1) \rightarrow \Omega$ be a smooth curve in the domain $\Omega 
+    \subseteq \real^n$. Denote $\Gamma = \gamma((0,1))$ and assume that 
+    $\gamma' \neq 0$ and $\gamma: (0,1) \rightarrow \Gamma$ is bijective.
+    That means especially that $\Gamma$ does not intersect itself.
+    Then $\Gamma$ is a manifold with boundary and the chart is $\gamma^{-1}$.
+    Then let us calculate the Jacobian of the inclusion $\iota$ using the 
+    definition from (\ref{eq:derivative_on_manifold}). 
+    Since it is the most convenient, we take the 
+    identity as chart on $\Omega$. Take $\gamma(t) \in \Gamma$. Then
+    \begin{align*}
+        D\iota(p)_{i,1} = D(\Id \circ \iota \circ \gamma)_{i,1}(t)
+        = \frac{\partial \gamma_i}{\partial t}(t)
+        = \gamma'(t).
+    \end{align*} 
+    This is then the matrix representation of the differential $\iota_*$ at 
+    $\gamma(t)$.
+    Now take a at least continuous $1$-form $\omega = \sum_{i=1}^n \omega_i dz^i$ 
+    on $\Omega$. Then we know from the matrix representation of the 
+    pullback derived in Sec.\,\ref{sec:differential_forms} that 
+    \begin{align*}
+        \iota^*\omega (t) = \sum_{i=1}^n \gamma'_i(t) \, \omega_i(\gamma(t)) \,dt
+    \end{align*}
+    and so
+    \begin{align*}
+        \int_\Gamma \omega = \int_0^1\sum_{i=1}^n \gamma'_i(t) \, \omega_i(\gamma(t)) \,dt.
+    \end{align*}
+    Let us now look at this in terms of vector proxies. Take a vector field 
+    $X = \sum_{i=1}^n X_i \frac{\partial}{\partial z_i}$ on $\Omega$.
+    Because we are using Euclidian coordinates we get
+    \begin{align*}
+        X^\flat = \sum_{i=1}^n X_i dz^i
+    \end{align*}
+    and thus by denoting $\mathbf{X} = (X_1, X_2, ..., X_n)$ we get
+    \begin{align*}
+        \int_\Gamma X^\flat = \int_\Gamma \mathbf{X}\cdot dl
+    \end{align*}
+    where the right hand side is the notation for the standard curve integral 
+    in $\real^n$. So we can conclude that, interpreted in vector proxies for 
+    a domain of $\real^n$, the integral of a $1$-form corresponds to the usual 
+    curve integral.
+\end{example}
 
 \begin{theorem}[Stokes]
     Let $M$ be a smooth oriented manifold with boundary 
