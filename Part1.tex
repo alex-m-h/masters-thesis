@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{bm}
 \usepackage{xcolor}
 \usepackage{csquotes}
 \usepackage{enumerate}
@@ -2486,6 +2487,24 @@ $T^*$. In order to do so, we have the following lemma.
     Thus $y = T0 = 0$ which concludes the proof.
 \end{proof}
 
+\begin{proposition}\label{prop:T_starstar_equals_T}
+    If $T$ is a closed and densely defined operator, 
+    then $T^{**} = T$
+\end{proposition}
+\begin{proof}
+    This is another application of Lemma \ref{lem:rotated_graph}. 
+    Because $T$ is closed, $\Gamma(T) = \tilde{\Gamma}(T^*)^\perp$. 
+    From the previous proposition we know that $T^*$ is closed and 
+    densely defined operator as well and so $\Gamma(T*) = \tilde{\Gamma}(T^{**})^\perp$.
+    $T^{**}$ is closed and hence its graph as well, so
+    \begin{align*}
+        \Gamma(T^{**}) = \overline{\Gamma(T^{**})} 
+        = \Gamma(T^{**})^{\perp \perp} = \Gamma(T*)^\perp 
+        = \Gamma(T).
+    \end{align*}
+    Thus $T$ and $T^{**}$ have the same graph, which means that they are equal.
+\end{proof}
+
 We will now take a closer look at the kernels and images of unbounded operators.
 Let us first notice a very clear result. If $T$ is a closed unbounded operator 
 then its kernel $\ker T$ is closed. This follows indeed from the definition. 
@@ -2542,13 +2561,16 @@ of closed densely defined operators and their adjoints.
     proves (iv).
 \end{proof}
 
+\subsubsection{Differential operators in 3D}
+
 Let us investigate the situation in 3D with the common differential 
 operators $\curl$, $\grad$ and $\diver$ on a domain $\Omega$. Throughout the 
 following, all function spaces will always be over an open domain 
 $\Omega \subseteq \real^3$ unless specified otherwise.
 Take the unbounded operator 
 $\diver: L^2(\Omega;\real^3) \rightarrow L^2(\Omega)$ with domain 
-$C_0^\infty$ i.e. $(\diver, C_0^\infty)$. 
+$C_0^\infty$ i.e. $(\diver, C_0^\infty)$. At first we recognize that 
+the operator $(\diver, C_0^\infty(\Omega;\real^3))$ is densely defined and thus the the adjoint exists.
 When we take the adjoint of it then we know for $v \in 
 D((\diver, C_0^\infty)^*)$
 \begin{align*}
@@ -2560,43 +2582,46 @@ Now if we take $\mathbf{u} = (\mathbf{u}_1,0,0)^\top$ then recognize
 \begin{align}
     \int_\Omega (\diver ^* v)_1 \, \mathbf{u}_1 \, dx
     = \int_\Omega v \, \partial_1 \mathbf{u}_1 \, dx \quad 
-        \forall \mathbf{u}_1 \in C_0^\infty
-    \label{eq:adjoint_gradient_c0inf}
+        \forall \mathbf{u}_1 \in C_0^\infty \label{eq:adjoint_gradient_c0inf_components}
 \end{align}
 so we recognize that $-(\diver ^* v)_1$ is the weak derivative of w.r.t. the 
 first coordinate i.e. $-\partial_1 v$ and analogous for the other coordinates 
 so we recognize $\diver^* = -\grad$. We further see that the
-domain s.t. (\ref{eq:adjoint_gradient_c0inf}) is fulfilled is $H^1(\Omega)$ 
+domain s.t. (\ref{eq:adjoint_gradient_c0inf_components}) is fulfilled is $H^1(\Omega)$ 
 by definition. That means we showed 
-\begin{align*}
-    (\diver, C_0^\infty)^* = (-\grad, H^1).     
-\end{align*}
+\begin{align}
+    (\diver, C_0^\infty)^* = (-\grad, H^1). \label{eq:adjoint_gradient_c0inf} 
+\end{align}
 
-Because $C_0^\infty$ is dense in $L^2$ i.e. 
-$(\diver, C_0^\infty)$ is densely defined. 
 We know from Cor.\,\ref{cor:adjoint_of_densely_defined} 
 that its adjoint $(-\grad, H^1)$ is closed and 
 we can conclude from Prop.\,\ref{prop:closed_operator_graph_norm} 
 that $H^1(\Omega)$ is in fact a Hilbert space 
 when using the graph norm which is the $H^1$-norm here.
 
-Assume from now on that $\partial \Omega$ is compact. $\Omega \subseteq \real^3$ 
-can be unbounded.
+Assume from now on that our domain $\Omega$ is a Lipschitz domain 
+with compact boundary $\partial \Omega$. Note that $\Omega \subseteq \real^3$ 
+can be unbounded. In the case of an exterior domain, i.e. when $\Omega$ is 
+the complement of a compact set, this condition is trivially fulfilled.
+
 Let us denote the $C^k_b(\overline{\Omega})$ the space of $k$ times continuously
 differentiable functions with bounded support in $\overline{\Omega}$. 
 In contrast to $C^k_0(\Omega)$ these functions are not necessarily zero on the 
 boundary.
 For $u \in C_b^1(\Omega)$ $\mathbf{v} \in C_b^1(\Omega;\real^3)^3$ we 
 have the integration-by-parts formula
-\begin{align*}
+\begin{align}
     \int_\Omega u \, \diver \mathbf{v} \, dx
     = - \int_\Omega \grad u \cdot \mathbf{v} \, dx
         + \int_{\partial \Omega} u|_{\partial \Omega} \mathbf{v}\cdot\mathbf{n} \, ds
-\end{align*}
+        \label{eq:integration_by_parts_C1}
+\end{align}
 where $\mathbf{n}$ is the unit normal which exists almost everywhere on the boundary of a 
-Lipschitz domain (see \cite{}). This formula is usually stated only for 
-bounded domains, but when $\partial \Omega$ we can simply reduce the domain 
-because the supports of $u$ and $\mathbf{v}$ are both bounded. 
+Lipschitz domain. This formula is usually stated only for 
+bounded domains (see \cite[Cor.\,3.20]{monk}), but when $\partial \Omega$ is compact 
+we can simply reduce the domain 
+because the supports of $u$ and $\mathbf{v}$ are both bounded. This is done using 
+a standard cut-off argument.
 To be precise, $B_R \subseteq \real^3$ be the open ball around the origin 
 with radius $R$ large enought s.t. $\partial \Omega \subseteq B_R$ and 
 $\supp u \subseteq B_R$, $\supp \mathbf{v} \subseteq B_R$.
@@ -2604,11 +2629,11 @@ Define the reduced domain $\Omega_R \vcentcolon= \Omega \cap B_R$.
 Then because $u$ and $\mathbf{v}$ are both zero on $\partial B_R$
 \begin{align*}
     \int_\Omega u \, \diver \mathbf{v} \, dx
-    = \int_{\Omega_R} u \, \diver \mathbf{v} \, dx
-    = - \int_{\Omega_R} \grad u \cdot \mathbf{v} \, dx
+    &= \int_{\Omega_R} u \, \diver \mathbf{v} \, dx
+    \\ &= - \int_{\Omega_R} \grad u \cdot \mathbf{v} \, dx
         + \int_{\partial \Omega} u|_{\partial \Omega} \mathbf{v}\cdot\mathbf{n} \, ds
         + \int_{\partial B_R} u|_{\partial B_R} \mathbf{v}|_{\partial B_R} \cdot\mathbf{n} \, ds
-    = - \int_\Omega \grad u \cdot \mathbf{v} \, dx
+    \\ &= - \int_\Omega \grad u \cdot \mathbf{v} \, dx
         + \int_{\partial \Omega} u|_{\partial \Omega} \mathbf{v}\cdot\mathbf{n} \, ds
 \end{align*}
 as claimed. This formula motivates us to define the divergence in a
@@ -2620,47 +2645,83 @@ weak sense.
     \begin{align*}
         H(\diver;\Omega) = \left\{ \mathbf{v} \in L^2(\Omega)^3 \mid
             \exists \sigma \in L^2(\Omega)\, \forall \phi \in C_0^\infty(\Omega) :  
-            \int_\Omega \sigma \, \phi \, dx = \int_\Omega \diver \mathbf{v} \cdot \grad \phi \, dx \right\}
+            \int_\Omega \sigma \, \phi \, dx = -\int_\Omega \mathbf{v} \cdot \grad \phi \, dx \right\}
     \end{align*}
     Then we call the $\sigma$ in the definition the \textit{weak divergence of $\mathbf{v}$}
     denoted by $\diver \mathbf{v}$.
 \end{definition}
 We will frequently leave out the reference to the domain in the space definition.
 We can immediately recognize from the definition that 
-\begin{align*}
-    (\diver, H(\diver)) = (\grad, C_0^\infty)^*.
-\end{align*}
+\begin{align}
+    (\diver, H(\diver)) = (-\grad, C_0^\infty)^*. \label{eq:adjoint_grad_c0inf}
+\end{align}
 
-The next thing we want to talk about is the trace of $H(\diver)$. It 
-is well-known that $H^1(\Omega)$ has the trace operator 
-$\tr: H^1(\Omega) \rightarrow H^{1/2}(\partial \Omega)$ which is surjective.
+The next thing we want to talk about is the trace of $H(\diver)$. 
+We will use the well-known properties of the trace in $H^1$. 
+Let us recall 
+quickly the definition of fractional order Sobolev spaces. Let 
+$U \subseteq \real^n$ be a domain and take $m \in \naturalnum$ and 
+$s \in [0, 1)$ and $1 < p < \infty$. For a multiindex $\boldsymbol{\alpha} = 
+(\alpha_1, \alpha_2, ..., \alpha_n)$ we define $|\boldsymbol{\alpha}| = \sum_{i=1}^n \alpha_i$ 
+and denote 
+\begin{align}
+    \partial^{\bm{\alpha}} \phi = 
+    \partial_{\alpha_1} \partial_{\alpha_2} \dot \partial_{\alpha_n} \phi.
+\end{align}
+Then we define fractional Sobolev norm
+\begin{align}
+    \lVert u \rVert _W^{m+s, p} = \left\{ \lVert u \rVert ^p_{W^{m, p}} + 
+        \sum_{|\bm{\alpha}|=m} \int_U \int_U 
+        \frac{|\partial^{\bm{\alpha}} u(x) - \partial^{\bm{\alpha}} u(y)|^p}
+        {|x - y|^{n+sp}} \, dx dy\right\}^{1/p}\label{eq:fractional_sobolev_norm}
+\end{align}
+and the corresponding space $W^{m+s, p}(U) = \{ u \in W^m \mid \lVert u \rVert _W^{m+s, p} < \infty \}$ 
+which is a Banach space \cite[p.42]{monk}. We denote 
+$H^{m+s}(U) = W^{m+s, 2}(U)$ as in the integer case. We will need the 
+fractional Sobolev space over the boundary of a Lipschitz domain $U$. We assume 
+again that the boundary is compact.
+which is defined by taking the integrals of (\ref{eq:fractional_sobolev_norm}) 
+over the boundary instead i.e. for $m = 0$
+\begin{align*}
+    \lVert u \rVert _W^{s, p}(\partial \Omega) = \left\{ \int_{\partial\Omega} |u|^p \, ds + 
+        \int_{\partial\Omega} \int_{\partial\Omega}
+        \frac{|u(x) - u(y)|^p}
+        {|x - y|^{n-1+sp}} \, ds(x) ds(y)\right\}^{1/p}.
+\end{align*}
+Then it 
+is a well-known result that $H^1(\Omega)$ has the trace operator 
+$\tr: H^1(\Omega) \rightarrow H^{1/2}(\partial \Omega)$ which is surjective \cite{arnold}.
 We are trying to find something analogous for $H(\diver)$.
 
 \begin{remark}
     The $H^1$ trace operator is usually defined only for bounded domains 
-    (see \cite{}), but it can be extended easily to unbounded Lipschitz domains with 
+    (see \cite[Thm.\,3.9]{monk}), but it can be extended easily to unbounded Lipschitz domains with 
     compact boundary considering only values in some bounded subdomain. 
-    To make this precise take open balls $B_r$ and 
+    To make this precise take open balls centered at the origin $B_r$ and 
     $B_R$ s.t. $r < R$ and $\partial \Omega \subseteq B_r$. Choose 
-    a smooth cut-off function $\chi_R$ s.t. $chi_R \equiv 1$ in $B_r$, 
-    $\supp \chi_R \subseteq B_R$ and $\chi_R \leq 1$ 
-    and define the trace of a function $u \in H^1(\Omega)$
-    as $\tr_{\Omega\cap B_R} \chi_R u$ restricted to $\partial \Omega$. 
+    a smooth cut-off function $\chi_R$ s.t. $\chi_R \equiv 1$ in $B_r$, 
+    $\supp \chi_R \subseteq B_R$ and $0 \leq \chi_R \leq 1$. Let us denote 
+    $\Omega_R \vcentcolon=  \Omega \cap B_R$
+    To define the trace of a function $u \in H^1(\Omega)$ take the trace 
+    $\chi_R u$ -- which has compact support in $B_R$ -- 
+    on $\Omega_R$ and restrict it to $\partial \Omega$ 
+    i.e. $\tr u = \big( \tr_{\Omega_R} u\chi_R \big)|_{\partial \Omega}$.
     Then $tr: H^1(\Omega) \rightarrow H^{1/2}(\partial \Omega)$ is 
     surjective and
     \begin{align*}
         \lVert \tr u \rVert _{H^{1/2}(\partial \Omega)}
-        = \lVert \tr_{\Omega_R} u\,\chi_R  \rVert _{H^{1/2}(\partial \Omega_R)}
+        &= \lVert \tr_{\Omega_R} u\,\chi_R  \rVert _{H^{1/2}(\partial \Omega_R)}
         \leq C_R \lVert u\,\chi_R  \rVert _{H^1(\Omega_R)}
         = C_R \lVert u\,\chi_R  \rVert _{H^1(\Omega)}
-        \leq C_R \lVert u  \rVert _{H^1(\Omega)}
+        \\ &\leq C_R \lVert u  \rVert _{H^1(\Omega)}
     \end{align*}
     and thus the trace is bounded as well.
 \end{remark}
 
-We will start with the following abstract lemma.
+We will start with the following abstract lemma. As is standard, for a bounded linear 
+functional $l$ on a normed space $V$ we write $\langle l, v \rangle = l(v)$. 
 
-\begin{lemma}
+\begin{lemma}\label{lem:dual_map_of_surjective_operator}
     Let $X, Y$ be normed spaces and let $\gamma: X \rightarrow Y$ be a 
     linear bounded surjection with kernel $Z$. Then the dual map is defined as
     \begin{align*}
@@ -2704,34 +2765,60 @@ We will start with the following abstract lemma.
         $\gamma'l = h$, but how that $l$ is bounded}
 \end{proof}
 We now want to apply this lemma to the trace. 
-\begin{proposition}
-    Let $l: \in H^1(\Omega)'$ s.t. $\langle l, \sigma \rangle_{H^1(\Omega)'} = 0$
+We follow the standard notation and write $H^{-1/2}$ for the dual space of 
+$H^{1/2}$
+\begin{proposition}\label{prop:existence_gl_in_H12}
+    Let $l \in H^1(\Omega)'$ s.t. $\langle l, \sigma \rangle_{H^1(\Omega)'} = 0$
     for all $\sigma \in H^1_0(\Omega)$. Then there exists a unique
-    $g_l \in H^{-1/2}(\Omega)$ s.t.
+    $g_l \in H^{-1/2}(\partial \Omega)$ s.t.
     \begin{align}
-        \langle l, u \rangle_{H^1(\Omega)'} = \langle g, \tr u \rangle_{H^{1/2}(\Omega)'}, 
+        \langle l, u \rangle_{H^1(\Omega)'} = \langle g_l, \tr u \rangle_{H^{1/2}(\partial \Omega)'}, 
             \quad \forall u \in H^1(\Omega). \label{eq:functional_as_trace_inner_product}
     \end{align}
     Also,
-    $\lVert g_l \rVert _{H^{-1/2}(\partial \Omega)} = \lVert g_l \rVert _{H^1(\Omega)'}$.
+    $\lVert g_l \rVert _{H^{-1/2}(\partial \Omega)} = \lVert l \rVert _{H^1(\Omega)'}$.
 \end{proposition}
 \begin{proof}
     Let us check the conditions of the lemma. We have the trace operator 
     $\tr: H^1(\Omega) \rightarrow H^{1/2}(\partial \Omega)$ as a 
-    linear bounded surjection. So the conditions of Lemma \ref{} are fulfilled 
+    linear bounded surjection. So the conditions of 
+    Lemma \ref{lem:dual_map_of_surjective_operator} are fulfilled 
     and (\ref{eq:functional_as_trace_inner_product}) follows.
-
-    Using the trace inequality \ref{} we can estimate 
+    Using the trace inequality  we can estimate 
     \begin{align*}
         |\langle l, u \rangle_{H^1(\Omega)'}| = \langle g_l, \tr u \rangle_{H^{1/2}(\Omega)'}
         \leq \lVert g_l \rVert _{H^-1/2} \, \lVert u \rVert _{H^1} 
     \end{align*}
-    and thus $\lVert l \rVert \leq \lVert g_l \rVert$. For the inverse inequality
-    we take some $\mu \in H^{1/2}$. Then we 
+    and thus $\lVert l \rVert _{H^(\Omega)'} \leq \lVert g_l \rVert _{H^-1/2}$. For the inverse inequality
+    we take some $\mu \in H^{1/2}$. Then we can find a $f \in H^1$ s.t. $\tr f = \mu$ and 
+    \begin{align}
+        \lVert f \rVert _{H^1} \leq \lVert \mu \rVert _{H^{1/2}}\label{eq:existence_gl_bound_f}
+    \end{align}
+    holds.
+    We have to show that such an $f$ exists. Take a open ball $B_R$ centered at the 
+    origin with radius $R$ large enough s.t. $\partial \Omega \subseteq B_R$ (remember 
+    that we assume $\partial \Omega$ to be compact). Then define 
+    $\Omega_R = \Omega \cap B_R$.
+    Then we can take $f$ as the solution of the boundary value problem on 
+    \begin{align*}
+        -\Delta f + f = 0 \text{ in $\Omega$}
+        f = \mu \text{ on $\partial \Omega$ and $f = 0$ on $\partial B_R$}
+    \end{align*}
+    This problem has a unique solution \cite[Thm.3.12]{monk} and 
+    (\ref{eq:existence_gl_bound_f}) is fulfilled. Because 
+    $f= 0$ on $\partial B_R$ we can extend define $\bar{f} \in H^1(\Omega)$ by 
+    extending $f$ by zero outside of $B_R$ and then 
+    $\lVert \bar{f} \rVert _{H^1(\Omega)} =  \lVert f \rVert _{H^1(\Omega_R)}$.
+    \begin{align*}
+        \langle g_l, \mu \rangle \leq \langle l, f \rangle 
+        \leq \lVert l \rVert _{H^1(\Omega)'} \lVert  f \rVert _{H^1}
+        \leq \lVert l \rVert _{H^1(\Omega)'} \lVert  \mu \rVert _{H^{1/2}}
+    \end{align*}
+    and thus $\lVert g_l \rVert _{H^{-1/2}} \leq \lVert l \rVert _{H^1(\Omega)'}$.
 \end{proof}
 
 We can now define a trace operator for $H(\diver)$.
-\begin{theorem}[Trace of $H(\diver)$]
+\begin{theorem}[Trace of $H(\diver)$]\label{thm:trace_of_hdiv}
     The operator $\mathbf{v} \mapsto \mathbf{v}|_{\partial \Omega} \cdot \mathbf{n}$
     on $C^1_b(\overline{\Omega})$ can be extended to an operator 
     $\gamma_n: H(\diver;\Omega) \rightarrow H^{-1/2}$ s.t.
@@ -2750,10 +2837,11 @@ We can now define a trace operator for $H(\diver)$.
     Now let us come back to the integration by parts formula. Let us take 
     $u \in H^1(\Omega)$ and due to density find a sequence $(u^k)_{k \in \naturalnum} \subseteq C_b^\infty(\Omega)$ 
     s.t. $u^k \xrightarrow{H^1} u$.
-    Then taking the limit on both sides of \ref{} using the fact that 
+    Then taking the limit on both sides of the integration by parts formula 
+    (\ref{eq:integration_by_parts_C1}) using the fact that 
     that the trace operator is continuous and we see that 
     integration by parts formula stays valid if $u \in H^1(\Omega)$. Let us define 
-    the linear functional on $H^1$ for a fixed $\mathbf{v} \in C^1(\Omega;\real^3)$
+    the linear functional on $H^1$ for a fixed $\mathbf{v} \in C_b^1(\Omega;\real^3)$
     \begin{align*}
         \langle l_\mathbf{v}, u \rangle _{H^1}' \vcentcolon= u \mapsto \int_\Omega u \, \diver \mathbf{v} \, dx 
          + \int_\Omega \grad u \cdot \mathbf{v} \, dx.
@@ -2768,11 +2856,12 @@ We can now define a trace operator for $H(\diver)$.
     Take $u \in H^1_0(\Omega)$. 
     Let $(u^k)_{k\in \naturalnum} \subseteq C^\infty_0$ s.t. 
     $u^k \xrightarrow{H^1} u$ which is possible due to density. 
-    $\langle l_\mathbf{v}, u^k \rangle _{H^1}' = 0$  due to the 
-    definition of the weak divergence and thus $\langle l_\mathbf{v}, u \rangle _{H^1}' = 0$
+    $\langle l_\mathbf{v}, u^k \rangle  = 0$  due to the 
+    definition of the weak divergence and thus $\langle l_\mathbf{v}, u \rangle = 0$
     by continuity.
 
-    We are in the situation of Prop.\ref{} and we find $g_{l_\mathbf{v}} \in H^{-1/2}(\partial \Omega)$ 
+    We are in the situation of Prop.\ref{prop:existence_gl_in_H12} 
+    and we find $g_{l_\mathbf{v}} \in H^{-1/2}(\partial \Omega)$ 
     s.t. 
     \begin{align*}
         \int_\Omega u \, \diver \mathbf{v} \, dx 
@@ -2795,7 +2884,7 @@ We can now define a trace operator for $H(\diver)$.
 
     Let us now prove the case when $\mathbf{v} \in C_b^1(\overline{\Omega}; \real^3)$.
     We know for all the integration-by-parts formula holds for all $u \in H^1$ as 
-    shown above. We have
+    explained above. We have
     \begin{align*}
         \langle \gamma_n \mathbf{v}, \tr u \rangle = 
         \int_\Omega u \, \diver \mathbf{v} \, dx 
@@ -2804,9 +2893,8 @@ We can now define a trace operator for $H(\diver)$.
     \end{align*}
     Due to the surjectivity of the trace of $H^1$ we get 
     \begin{align*}
-        \langle \gamma_n \mathbf{v}, \cdot \rangle = \langle \mathbf{v} \cdot n, \cdot \rangle.
+        \langle \gamma_n \mathbf{v}, \cdot \rangle = \langle \mathbf{v} \cdot n, \cdot \rangle_{L^2(\partial\Omega)}.
     \end{align*}
-    We see that $\mathbf{v} \cdot n$ is the Riesz representative of $\gamma_n \mathbf{v}$.
     So in this sense the operator $\mathbf{v} \mapsto \langle \mathbf{v} \cdot n, \cdot \rangle 
     \in H^{-1/2}$ extends to the bounded operator $\gamma_n: H(\diver) \rightarrow H^{-1/2}$.
 \end{proof}
@@ -2816,46 +2904,47 @@ on $H(\diver)$. Now we can define
     H_0(\diver;\Omega) \vcentcolon= \{ \mathbf{v} \in H(\diver) \mid \gamma_n \mathbf{v}=0 \}.
 \end{align*}
 
-\begin{proposition}
-    Under the given assumptions on the domain we have
-    \begin{align}
-        (\diver, H(\diver)) &= (\grad, H^1_0) \\
-        (\grad, H^1) &= (\diver, H^1_0)
-    \end{align}
-\end{proposition}
-\begin{proof}
-    We know from \ref{} that 
-    \begin{align*}
-        (\diver, H(\diver)) = (\grad, C_0^ \infty).
-    \end{align*}
-    Take $\mathbf{v} \in H(\diver)$, $u \in H^1_0$ arbitrary and 
-    a sequence $(u^k)_{k\in \naturalnum} \subseteq C_0^\infty$ with 
-    $u^k \xrightarrow{H^1} u$. Then we know that 
-    \begin{align*}
-        \langle \diver \mathbf{v}, u^k \rangle = \langle \mathbf{v}, \grad u^k \rangle
-    \end{align*}
-    Taking the limit on both sides shows $\mathbf{v} \in D((\grad, H^1_0)^*)$ 
-    and $\grad^* \mathbf{v} = \diver \mathbf{v}$. 
-    Since $D((\grad,H^1_0)^*) \subseteq D((\grad,C_0^\infty)^*) = H(\diver)$ 
-    we get the other inclusion and the first equality follows.
+% \begin{proposition}
+%     Under the given assumptions on the domain we have
+%     \begin{align}
+%         (\diver, H(\diver)) &= (\grad, H^1_0) \label{eq:adjoint_grad_h10}\\
+%         (\grad, H^1) &= (\diver, H^1_0)\label{eq:adjoint_div_hdiv0}
+%     \end{align}
+% \end{proposition}
+% \begin{proof}
+%     We know from \ref{eq:adjoint_grad_c0inf} that 
+%     \begin{align*}
+%         (\diver, H(\diver)) = (\grad, C_0^ \infty).
+%     \end{align*}
+%     Take $\mathbf{v} \in H(\diver)$, $u \in H^1_0$ arbitrary and 
+%     a sequence $(u^k)_{k\in \naturalnum} \subseteq C_0^\infty$ with 
+%     $u^k \xrightarrow{H^1} u$. When we leave out the reference to the space of the 
+%     inner product we mean the $L^2$ inner product. Then we know that 
+%     \begin{align*}
+%         \langle \diver \mathbf{v}, u^k \rangle = \langle \mathbf{v}, \grad u^k \rangle
+%     \end{align*}
+%     Taking the limit on both sides shows $\mathbf{v} \in D((\grad, H^1_0)^*)$ 
+%     and $\grad^* \mathbf{v} = \diver \mathbf{v}$. 
+%     Since $D((\grad,H^1_0)^*) \subseteq D((\grad,C_0^\infty)^*) = H(\diver)$ 
+%     we get the other inclusion and the first equality follows.
 
     
-    At first, note that $H^1_0$ is densely defined so we can define the adjoint.
-    Since $(\diver, H(\diver)) = (\grad, C_0^\infty)^*$ and 
-    we know $D((\grad, H^1_0)^*) \subseteq H(\diver)$. 
-    If we now take 
-    $\mathbf{v} \in H(\diver)$ arbitrary, then we know from the 
-    extension of the integration-by-parts formula (\ref{})
-    \begin{align*}
-        \langle -\diver \mathbf{v}, u \rangle 
-        = \langle \mathbf{v}, \grad u \rangle + \langle \gamma_n \mathbf{v}, \tr u \rangle
-        = \langle \mathbf{v}, \grad u \rangle
-    \end{align*}
-    and thus $D((\grad, H^1_0)^*) \supseteq H(\diver)$. That shows \ref{}.
+%     At first, note that $H^1_0$ is densely defined so we can define the adjoint.
+%     Since $(\diver, H(\diver)) = (\grad, C_0^\infty)^*$ and 
+%     we know $D((\grad, H^1_0)^*) \subseteq H(\diver)$. 
+%     If we now take 
+%     $\mathbf{v} \in H(\diver)$ arbitrary, then we know from the 
+%     extension of the integration-by-parts formula from Thm. \ref{thm:trace_of_hdiv}
+%     \begin{align*}
+%         \langle -\diver \mathbf{v}, u \rangle 
+%         = \langle \mathbf{v}, \grad u \rangle + \langle \gamma_n \mathbf{v}, \tr u \rangle
+%         = \langle \mathbf{v}, \grad u \rangle
+%     \end{align*}
+%     and thus $D((\grad, H^1_0)^*) \supseteq H(\diver)$. That shows \ref{}.
 
-    For the second claim the proof is completely analogous. We just use 
-    $\gamma_n \mathbf{v} = 0$ instead of $\tr u = 0$.
-\end{proof}
+%     For the second claim the proof is completely analogous. We just use 
+%     $\gamma_n \mathbf{v} = 0$ instead of $\tr u = 0$.
+% \end{proof}
 
 % By interchanging $\diver$ and $\grad$ in the above arguments we can conclude 
 % \begin{align*}
@@ -2896,29 +2985,29 @@ we need the following theorem.
     \end{align*}
     which reads in variational formulation
     \begin{align*}
-        \int_{\Omega_R} \grad u \cdot \grad \phi \, dx + \int_{\Omega_R} u \, v \,dx 
+        \int_{\Omega_R} \grad u \cdot \grad \phi \, dx + \int_{\Omega_R} u \, \phi \,dx 
         = \langle g, \tr \phi \rangle_{H^{-1/2}(\Omega)} \quad \forall \phi \in H^1(\Omega_R).
     \end{align*}
-    This problem has a unique solution since $\Omega_R$ is bounded (see \cite{}).
+    This problem has a unique solution since $\Omega_R$ is bounded (see \cite[Thm. 3.12]{monk}).
     Take $\mathbf{v} \vcentcolon= \grad u_R$. Then we see from the variational 
     formulation by choosing $\phi \in C_0^\infty(\Omega_R)$ that $u_R = \diver \mathbf{v}$.
     And then define $\bar{u}_R$ as the extension by zero outside of $B_R$ which is in $H^1$ 
     because $u_R = 0$ on $\partial B_R$. Then for any $\phi \in H^1(\Omega)$
     \begin{align*}
-        \langle \gamma_n \mathbf{v}, \phi \rangle 
-        = \int_\Omega \mathbf{v} \cdot \grad \phi \, dx 
+        \langle \gamma_n \mathbf{v}, \tr \phi \rangle 
+        &= \int_\Omega \mathbf{v} \cdot \grad \phi \, dx 
             + \int_\Omega \diver \mathbf{v} \, \phi \, dx
-        = \int_\Omega \grad \bar{u}_R \cdot \grad \phi dx
-            + \int_\Omega \bar{u}_R \cdot \grad \phi dx 
-        = \int_{\Omega_R} \grad u_R \cdot \grad \phi dx
-            + \int_{\Omega_R} u_R \cdot \grad \phi dx 
-        = \langle g, \tr \phi \rangle.
+        \\ &= \int_\Omega \grad \bar{u}_R \cdot \grad \phi dx
+            + \int_\Omega \bar{u}_R \, \phi dx 
+        \\ &= \int_{\Omega_R} \grad u_R \cdot \grad \phi dx
+            + \int_{\Omega_R} u_R \, \phi dx 
+        \\ &= \langle g, \tr \phi \rangle.
     \end{align*}
     Since the trace on $H^1$ is surjective we get $\gamma_n \mathbf{v} = g$.
 \end{proof}
 Now we can prove the adjoints of the operators without boundary conditions.
 
-\begin{theorem}
+\begin{theorem}\label{thm:adjoints_grad_div_without_bc}
     \begin{align}
         (\diver, H_0(\diver)) &= (\grad, H^1) \\
         (\grad, H_0^1) &= (\diver, H(\diver))
@@ -2930,7 +3019,7 @@ Now we can prove the adjoints of the operators without boundary conditions.
     \begin{align*}
         \langle \diver mathbf{v}, u \rangle = \langle \mathbf{v}, \grad u \rangle.
     \end{align*}
-    and so $\mathbf{v} \in D((\grad, H^1)^*)$ and $\grad^* \mathbf{v} = \diver \mathbf{v}$.
+    and so $\mathbf{v} \in D((\grad, H^1)^*)$ and $\grad^* \mathbf{v} = -\diver \mathbf{v}$.
     Vice versa, take $\mathbf{v} \in D((\grad, H^1)^*)$. Then there exists 
     $\sigma \in L^2$ s.t.
     \begin{align*}
@@ -2945,7 +3034,7 @@ Now we can prove the adjoints of the operators without boundary conditions.
         \int_\Omega \diver^*u \cdot \mathbf{\phi} \, dx
         = \int_\Omega u \diver \mathbf{\phi} \, dx \quad \forall \mathbf{\phi} \in C_0^\infty(\Omega;\real^3)
     \end{align*}
-    and we can conclude as in \ref{} that $u \in H^1$ and
+    and we can conclude due to (\ref{eq:adjoint_gradient_c0inf}) that $u \in H^1$ and
     $\diver^*u = -\grad u$. Then 
     \begin{align*}
         0 = \langle \grad u, \mathbf{v} \rangle
@@ -2957,6 +3046,26 @@ Now we can prove the adjoints of the operators without boundary conditions.
     implies $\tr u = 0$ and thus $u \in H^1_0$. The other direction follows again 
     from the integration by parts formula immediately and we get 
     $D((\diver, H(\diver))^*) = H^1_0$ and the claim follows.
+\end{proof}
+This theorem provides us with an easy computation of the adjoints 
+of the $\grad$ and $\diver$ with homogeneous boundary conditions.
+
+\begin{corollary}
+    \begin{align}
+        (-\diver, H(\diver)) &= (\grad, H^1_0)^* \\
+        (-\grad, H^1) &= (\diver, H_0(\diver))^*
+    \end{align}
+\end{corollary}
+\begin{proof}
+    $(\diver, H(\diver))$ is the adjoint of the densely defined operator 
+    $(-\grad, C_0^\infty)$ and hence a closed operator. It is 
+    obviously densely defined and thus we can use previous results,
+    \begin{align*}
+        (\diver, H(\diver)) 
+        \stackrel{Prop.\,\ref{prop:T_starstar_equals_T}}{=}(\diver, H(\diver))^{**} 
+        \stackrel{Thm.\,\ref{thm:adjoints_grad_div_without_bc}}{=}(-\grad, H^1_0)^*.
+    \end{align*}
+    The adjoint of $(\diver, H_0(\diver))$ is computed completely analogously.
 \end{proof}
 
 % That begs the question what in turn the adjoints of 
@@ -3014,22 +3123,24 @@ Now let us turn our attention to the remaining fundamenta differential operator
 $\curl$. Recall that we have for 
 $\mathbf{u}, \mathbf{v} \in C^1(\overline{\Omega})$ the integration-by-parts 
 formula
-\begin{align*}
+\begin{align}
     \int_\Omega \mathbf{v} \cdot \curl \mathbf{u} \, dx 
     = \int_\Omega \curl \mathbf{v} \cdot \mathbf{u} \, dx 
         + \int_{\partial \Omega} \mathbf{v} \times n \cdot \mathbf{u} \, ds 
-\end{align*}
+        \label{eq:integration_by_parts_curl_C1} 
+\end{align}
 if $\Omega$ is bounded. Just as before this integration by parts formula can 
 be extended to $\Omega$ unbounded when $\partial \Omega$ is compact. 
 Therefore we define as before 
 \begin{definition}
-    Let $\Omega$ be any domain in $\real^3$. Then we define 
+    Let $\Omega \subseteq \real^3$ be a Lipschitz domain with compact boundary $\partial \Omega$. 
+    Then we define 
     \begin{align*}
         H(\curl;\Omega) \vcentcolon= \{ \mathbf{v} \in L^2(\Omega;\real^3)
         \mid \exists \mathbf{w} \in L^2(\Omega; \real^3) 
-        \forall \mathbf{\phi} \in C_0^\infty(\Omega;\real^3)
-        \int_\Omega \mathbf{w} \cdot \mathbf{\phi} \, dx 
-        = \int_\Omega \mathbf{v} \cdot \curl \mathbf{\phi} \, dx \}
+        \forall \boldsymbol{\phi} \in C_0^\infty(\Omega;\real^3)
+        \int_\Omega \mathbf{w} \cdot \boldsymbol{\phi} \, dx 
+        = \int_\Omega \mathbf{v} \cdot \curl \boldsymbol{\phi} \, dx \}
     \end{align*}
     andd we denote $\mathbf{w} = \curl \mathbf{v}$.
 \end{definition}
@@ -3044,7 +3155,14 @@ Following analogous arguments as above, obbtain the following
     Then the operator $\mathbf{v} \mapsto \mathbf{v}|_{\partial \Omega} \times \mathbf{n}$ 
     from $C^1_b(\overline{\Omega})$ extends to a bounded linear operator 
     $\gamma_\tau: H(\curl) \rightarrow H^{-1/2}(\partial \Omega; \real^3)$ 
-    s.t. the integration-byy-parts formula \ref{} is satisfied and 
+    s.t. the integration-by-parts formula 
+    \begin{align*}
+        \int_\Omega \curl \mathbf{v} \cdot \mathbf{u} \, dx = 
+            \int_\Omega \mathbf{v} \cdot \curl \mathbf{u} \, dx
+            + \langle \gamma_\tau \boldsymbol{v}, \boldsymbol{u} \rangle
+    \end{align*}
+    for all $\boldsymbol{v} \in H(curl), \boldsymbol{u} \in H^1(\Omega;\real^3)$
+    is satisfied and 
     $\lVert \gamma_\tau \mathbf{v} \rVert _{H^{-1/2}(\partial \Omega; \real^3)} 
     \leq \lVert \mathbf{v} \rVert _{H(\curl)}$. 
 \end{theorem}
@@ -3063,15 +3181,15 @@ Using this definition we can compute the adjoint.
 \begin{proof}
     Take $\mathbf{v} \in D((\curl, H(\curl))^*)$. 
     \begin{align*}
-        \int_\Omega \curl^*\mathbf{v} \cdot \mathbf{\phi} \, dx
-        = \int_\Omega \mathbf{v} \cdot \curl \mathbf{\phi} \, dx
-            \quad \forall \mathbf{\phi} \in C_0^\infty(\Omega;\real^3)
+        \int_\Omega \curl^*\mathbf{v} \cdot \boldsymbol{\phi} \, dx
+        = \int_\Omega \mathbf{v} \cdot \curl \boldsymbol{\phi} \, dx
+            \quad \forall \boldsymbol{\phi} \in C_0^\infty(\Omega;\real^3)
     \end{align*}
     and thus $\mathbf{v} \in H(\curl)$ and we have 
-    \begin{align*}
+    \begin{align}
         \langle \curl \mathbf{v}, \mathbf{w} \rangle
-        = \langle \mathbf{v}, \curl \mathbf{w} \rangle
-    \end{align*}
+        = \langle \mathbf{v}, \curl \mathbf{w} \rangle \label{eq:adjoint_curl_equation}
+    \end{align}
     for all $\mathbf{w} \in H(\curl)$. That means that for $\mathbf{w} \in H^1(\Omega;\real^3)$
     \begin{align*}
         \langle \gamma_\tau \mathbf{v}, \mathbf{w} \rangle 
@@ -3079,13 +3197,15 @@ Using this definition we can compute the adjoint.
         = 0
     \end{align*}
     and thus $\gamma_\tau \mathbf{v} = 0$ i.e. $\mathbf{v} \in H_0(\curl)$.
+
     Vice versa, take $\mathbf{v} \in H_0(\curl)$. Then we need to show that 
-    \ref{} is fulfilled and we would like to use the integration-by-parts formula 
-    for that. However, this formula only holds for $\mathbf{w} \in H^1(\Omega)$. 
-    We need to use the fact that $C_b^\infty(\overline{\Omega})$ is 
+    \ref{eq:adjoint_curl_equation} is fulfilled and we would like to use the integration-by-parts formula 
+    for that. However, this formula only holds for $\mathbf{w} \in H^1(\Omega;\real^3)$. 
+    We need to use the fact that $C_b^\infty(\overline{\Omega};\real^3)$ is 
     dense in $H(\curl)$. The argument follows easily from the fact that 
-    for bounded domains $U$ $C^\infty(\overline{U})$ is dense in $H(\curl;U)$. 
-    The statement for bounded domains is proven in \cite{}. The proof is quite technical 
+    for bounded domains $U$ $C^\infty(\overline{U};\real^3)$ is dense in $H(\curl;U)$. 
+    The statement for bounded domains is proven in \cite[Lemma 3.27]{monk}. 
+    The proof is quite technical 
     and we will not present it here. But using the density it is clear that 
     $H^1(\Omega)$ is also dense in $H(\curl)$ since it contains all smooth functions 
     with bounded support. Take $\mathbf{w} \in H(\curl)$ arbitrary and 
