@@ -89,17 +89,48 @@ in terms of the correct Sobolev spaces which will be explained later.
 We want to prove existence and uniqueness of 
 solutions. 
 
-\section{Differential forms}
+We will first spend a lot of work in properly introducing the tools needed for the proof.
+In Section \ref{sec:differential_forms} will introduce differential forms with 
+all necessary operations on them. Section \ref{sec:singular_homology} is then a very short
+introduction to  
+singular homology from algebraic topology. This will be needed to properly formulate and treat the
+curve integral condition described above. It will culminate in de Rham's theorem 
+which can be seen as the connection between differential forms and singular homology.
+In Section \ref{sec:hilbert_complexes}, the focus lies on introducing 
+unbounded operators and the concept of a Hilbert complex which will be 
+fundamental tool in our proof of existence and uniqueness. At last, we will 
+use the developed tools in Section \ref{sec:existence_and_uniqueness} 
+to formulate the problem rigorously and proof existence and uniqueness under 
+reasonable assumptions. Throughout the first chapters, we will provide the 
+definitions, basic results and we will show the proofs of many of them if they are not too 
+long or trivial. Since all the presented topics are vast these sections should be 
+seen as a very basic introduction.
 
+\section{Differential forms}\label{sec:differential_forms}
 
-\subsection{Alternating maps} \label{sec:alternating_maps}
+We will introduce differential forms on manifolds. We start with the abstract 
+formulation of alternating forms on finite dimensional real vector spaces 
+in Section \ref{sec:alternating_maps}. After a short introduction of 
+the essential notions from differential geometry in Section \ref{sec:differential_geometry}
+we will finally define differential forms and operations on them 
+in Section \ref{sec:differential_forms_subsection}. The integration 
+of differential forms will be developed in its own section \ref{sec:integration_of_differential_forms} 
+at the end.
 
-For the introduction of alternating maps we follow
+\subsection{Alternating forms} \label{sec:alternating_maps}
+
+Understanding alternating forms is essential in understanding differential forms 
+since these provide us with an alternating form at any point of a manifold. 
+That is the reason why we will properly introduce the concept in this 
+secion first.
+For the introduction of alternating forms we follow
 the short section in Arnold's book
 \cite[Sec. 6.1.]{arnold} combine it 
 with material from \cite[Sec.\,V.1]{topology_and_geometry}.
 However, more arguments and additional details are provided especially  
 in Sec.\,\ref{sec:scalar_and_vector_proxies} about scalar and vector proxies.
+
+\subsubsection{Basic definitions}
 
 \begin{definition}[Alternating $k$-linear form]
     Let $V$ be a real vector space with $\text{dim}\,V = n$.
@@ -233,7 +264,7 @@ mapping between spaces of alternating forms.
 \begin{definition}
     Let $V$ and $W$ be finite-dimensional real
     vector spaces with ordered bases $(b_i)_{i=1}^n$ and $(c_j)_{j=1}^m$ 
-    respectively. We write a basis in round brackets $(\cdot)$ if the basis is 
+    respectively. We write a basis in round brackets $(\cdot)$ if it is 
     ordered. Let $L \in \mathcal{L}(V,W)$ where $\mathcal{L}(V,W)$ is the 
     space of linear mappings from $V$ to $W$. For $\omega \in \alternating{k}{W}$
     we define the pullback $L^* \omega \in \alternating{k}{V}$ via 
@@ -287,7 +318,7 @@ the pullback that we have
     \end{align*}
     Fix now $1 \leq l_1 < ... <  l_k \leq n$. Then we get from this formula
     $b^{i_1} \wedge b^{i_2} \wedge ... \wedge b^{i_k} ( b_{l_1},...,b_{l_k}) = 1$ 
-    iif. $(i_1,...,i_k) = (l_1,...,l_k)$. Here it is important to remember that 
+    i.i.f. $(i_1,...,i_k) = (l_1,...,l_k)$. Here it is important to remember that 
     these indices are ordered. Plugging this in 
     (\ref{eq:basis_representation_pullback_unspecified_coefficents}) gives us 
     \begin{align*}
@@ -306,7 +337,7 @@ the pullback that we have
 \end{proof}
 
 
-We want to emphasize the special case of the pullback of an alternating $n$-linear map 
+We want to emphasize the special case of the pullback of an alternating $n$-linear form 
 with $m = n$. So take $\omega \in \alternating{n}{W}$. Then we know that 
 dim$\,\alternating{n}{W} = {n\choose n} = 1$ and so
 $\omega = \lambda\, c^1 \wedge ... \wedge c^n$ for some $\lambda \in \real$. 
@@ -326,9 +357,9 @@ We also need it to
 define the Hodge star operator below.
 
 The choice of this volume form will depend on the orientation. 
-We say that two bases of $V$ 
+We say that two ordered bases of $V$ 
 have the same orientation if the change of basis has positive determinant. 
-That divides the bases into two classes with different orientation.
+That divides the ordered bases into two classes with different orientation.
 We choose one of these classes and call these bases positively
 oriented. In $\real^n$, the convention is to define the class as 
 positively oriented which includes the standard orthonormal basis.
@@ -388,7 +419,7 @@ dual basis as $\{ e^i \}_{i=1}^n$ then
     \vol = e^1 \wedge ... \wedge e^n.
 \end{align*}
 
-We will from now on assume that we fixed a orientation on $V$ and with it 
+We will from now on assume that we fixed an orientation on $V$ and with it 
 the volume form vol. 
 Using the resulting volume form on $V$
 we can now define the \textit{Hodge star operator} with the following 
@@ -404,7 +435,7 @@ proposition.
     We call this isomorphism the \textit{Hodge star operator}.
 \end{proposition}
 \begin{proof}
-    Let denote with $\vol'$ the dual basis of $V'$ corresponding of $\vol$ i.e.
+    Let us denote with $\vol'$ the dual basis of $V'$ corresponding of $\vol$ i.e.
     $\vol'(\vol) = 1$. Let us fix $\omega \in \alternating{k}{V}$. 
     Then we can define the following linear form on $
     \alternating{n-k}{V}$
@@ -414,7 +445,7 @@ proposition.
     Then we define
     $\star \omega$ as the Riesz representative of this linear form that means we 
     have $\vol'(\omega \wedge \mu) = 
-    \langle \star \omega, \mu \rangle_{\alternating{k}{V}}$ for all 
+    \langle \star \omega, \mu \rangle_{\alternating{n-k}{V}}$ for all 
     $\mu \in \alternating{n-k}{V}$ which is equivalent (\ref{eq:hodge_star_definition}).
     Checking linearity is trivial and will be omitted.
 
@@ -458,7 +489,7 @@ Let us collect some important properties of the Hodge star operator.
     In the last step we used the fact that $u^i$ are orthonormal since $u_i$ 
     are. Now observe due to the ordering that 
     $\det \big( \delta_{i_s,j_t} \big)_{k+1 \leq s,t \leq n} = 1$ i.i.f.
-    $i_s = j_s$ for $s = k+1,...,n$ an is zero otherwise.
+    $i_s = j_s$ for $s = k+1,...,n$ and is zero otherwise.
 
     For the wedge product we get
     \begin{align*}
@@ -547,7 +578,7 @@ This shows also that the explicit expression of the Hodge star becomes much more
 complicated if the basis is not orthonormal.
 
 
-\subsection{Scalar and Vector proxies} \label{sec:scalar_and_vector_proxies}
+\subsubsection{Scalar and Vector proxies} \label{sec:scalar_and_vector_proxies}
 Now we want to relate alternating maps to elements of the 
 vector space $V$ itself or to scalars. Let us start with the easiest 
 case. $\alternating{0}{V}$ are already scalars by definition. Now we can use 
@@ -563,20 +594,19 @@ Let $\Phi: V \rightarrow V'$ denote the Riesz isomorphism which is an isometry.
 Because $V' = \alternating{1}{V}$ this gives us the correspondence of 
 vectors and linear forms. Now we can once again use the Hodge star and obtain 
 the isometry $\star \Phi: V \rightarrow \alternating{n-1}{V}$. We call 
-the vectors associated with an alternating $1$- or $(n-1)$-linear map 
+the vectors associated with an alternating $1$- or $(n-1)$-linear form 
 \textit{vector proxy}.
 
-These way to identfy alternating maps with scalars and vectors gives us the 
+These ways to identify alternating forms with scalars and vectors gives us the 
 ability to look at the notions defined above in the context of scalars 
 and vectors.
-
 Let us look at the wedge product. We have for $v,w \in V$
 \begin{align*}
     \Phi v \wedge \star \Phi w = \langle \Phi v , \Phi w \rangle_{V'} \vol
     = \langle v , w \rangle_{V} \vol
 \end{align*}
-which means that the wedge product of a linear from and an alternating $(n-1)$-
-linear map corresponds in proxies to the inner product.
+which means that the wedge product of a linear form and an alternating $(n-1)$-
+linear form corresponds in proxies to the inner product.
 
 In the case of $V= \real^3$ with the standard basis
 vectors $e_1$, $e_2$ and $e_3$. Denote the resulting elements 
@@ -601,7 +631,7 @@ and analogous for $w$ we could still calculate the cross product directly as
 \end{align*}
 One has to take care though because if the basis is not orthonormal 
 the Riesz isomorphism does not map basis elements $b_i$ to their respective 
-dual basis elements $b^i$. Insteaad we have 
+dual basis elements $b^i$. Instead we have 
 \begin{align*}
     \Phi b_i = \sum_{i=1}^{n} \langle b_j, b_i \rangle b^j
 \end{align*}
@@ -648,8 +678,8 @@ $\text{ad}(A)$ defined as
 where $A_{-j,-i}$ is the matrix without the $j$-th row and $i$-th column.
 If $A$ is invertible then $(\det A)\,A^{-1} =  \text{ad}(A)$. 
 
-The pullback of $n$-linear alternating forms in terms of vector proxies is 
-$\star^{-1} L^* \star$. Again n the case of $n=m$ and an 
+The pullback of $n$-linear alternating forms in terms of scalar proxies is 
+$\star^{-1} L^* \star$. Again in the case of $n=m$ and an 
 orthonormal basis we get for $c \in \real$
 \begin{align*}
     \star^{-1} L^* \star c = \star^{-1} L^* (c \; c^1 \wedge c^2 \wedge ... \wedge c^n)
@@ -667,19 +697,19 @@ from differential geometry. We follow the approach from
 In order to formulate the definition of a manifold, let us recall the 
 definition of a topological space.
 \begin{definition}[Topological space]
-    A topological space is a set $X$ together with collection of subsets of 
+    A topological space is a set $X$ together with a collection of subsets of 
     $X$ denoted by $\mathcal{T}$ s.t.
     \begin{itemize}
         \item $U,V \in \mathcal{T} \Rightarrow U \cap V \in \mathcal{T}$
-        \item for $\{ U_i \in \mathcal{T} \mid i \in \mathcal{I} \}$
-            for any index set $\mathcal{I}$, 
+        \item For $\{ U_i \in \mathcal{T} \mid i \in \mathcal{I} \}$
+            with any index set $\mathcal{I}$, 
             $\bigcup_{i\in \mathcal{I}} U_i \in \mathcal{T}$ and
         \item $\emptyset, X \in \mathcal{T}$.
     \end{itemize}
     The sets contained in $\mathcal{T}$ are called \textit{open}.
 \end{definition}
 For example, a metric space together with its usual open sets is a topological
-space. Another well known example of topologies which do not arise from a metric
+space. A well known example of topologies which do not arise from a metric
 are the weak and weak-$\star$ topology on infinite dimensional spaces
 (see \cite[Ch.\,3]{brezis}).
 
@@ -690,13 +720,13 @@ are the weak and weak-$\star$ topology on infinite dimensional spaces
     in $\mathcal{B}$. If a topological space has a countable basis it is called
     \textit{second countable}.
 \end{definition}
-$\real^n$ is an example of a second countable topological space. Consider 
+$\real^n$ with the standard norm is an example of a second countable topological space. Consider 
 the countable set of balls $\{ B_r(x) \mid 0 < r \in \rational, x \in \rational^n\}$
 where $ B_r(x)$ are the balls with center $x$ and radius $r$.
 Then it is trivial to show that any open set in $\real^n$ is a union of 
 of these balls. Hence, $\real^n$ is second countable.
 
-\begin{definition}[Hausdorff] space
+\begin{definition}[Hausdorff space]
     Let $(X, \mathcal{T})$ be a topological space. We call $(X, \mathcal{T})$
     \textit{Hausdorff} if we can separate any two different points of $X$
     with disjoint neighborhoods. That means for any $x,y \in X$, 
@@ -714,7 +744,8 @@ of these balls. Hence, $\real^n$ is second countable.
 \end{example}
 
 \begin{definition}[Manifold]
-    A $n$-dimensional $C^\alpha$ manifold $M$, $\alpha \in \naturalnum$, 
+    A $n$-dimensional $C^\alpha$ manifold $M$, $\alpha \in \naturalnum$ (in this thesis 
+    the natural numbers start with zero), 
     is a second countable Hausdorff 
     space $M$ with an open cover $\{ U_i \} _{i\in I}$
     and a collection of maps called \textit{charts} $\boldsymbol{\phi}_i$, $i\in I$ for 
@@ -728,9 +759,9 @@ of these balls. Hence, $\real^n$ is second countable.
             \boldsymbol{\phi}_i(U_i \cap U_j) \rightarrow \boldsymbol{\phi}_j(U_i \cap U_j)$ 
             is a $C^\alpha$ diffeomorphism. If $\alpha=0$ it is a homeomorphism.
     \end{itemize}
-    When we write $(U_i, \phi_i)$ we mean the chart $\phi_i$ with domain $U_i$.
+    When we write $(U_i, \bm{\phi}_i)$ we mean the chart $\bm{\phi}_i$ with domain $U_i$.
 \end{definition}
-Vector valued quantities like charts will be denoted in bold symbols throughout this thesis
+Vector valued quantities like charts will be denoted in bold symbols throughout this thesis.
 The charts provide us with \textit{local coordinates} $x_k: U_i \rightarrow \real^n$,
 $k = 1, ..., n$ with $\mathbf{x}(p) = (x_1(p),...,x_n(p))^\top = \boldsymbol{\phi}(p) \in \real^n$.
 Let us take a look at an example. Take any open domain 
@@ -749,14 +780,14 @@ $n$-dimensional $C^\infty$ manifold.
     a open cover which is easily checked. Define 
     $\mathcal{A} = \{ k \in \naturalnum \mid B_k \subseteq U_i \text{ for some 
     $i \in I$} \}$. Then for every $k \in \mathcal{A}$ choose 
-    $i_k \in I$ s.t. $B_k \subseteq U_{i_k}$. Then ${U_{i_k}}_{k\in \mathcal{A}}$ 
+    $i_k \in I$ s.t. $B_k \subseteq U_{i_k}$. Then $\{U_{i_k}\}_{k\in \mathcal{A}}$ 
     is an open cover and thus $\{ (U_{i_k}, \boldsymbol{\phi}_{i_k}) \}_{k \in \mathcal{A}}$
-    is countable atlas.
+    is a countable atlas.
 \end{proof}
-Due to this proposition we will from now on assume that all the chosen atlas
-is countable.
+Due to this proposition we will from now on assume that all the chosen atlases
+are countable.
 Note that here the second countability is essential. Some authors do not 
-require this in the defintion of a manifold and then this proposition might fail 
+require this in the defintion of a manifold and then this proposition might not hold 
 (cf. \cite[1.A.2]{gallot_hulin_lafontaine}).
 Another important property is the existence of a partition of unity on $M$ 
 assuming $M$ is smooth which we will not prove.
@@ -774,7 +805,7 @@ is done locally to the entire manifold as we will see later.
 
 Let us denote $\real_- \vcentcolon= \{ x \in \real \mid x \leq 0 \}$. 
 Let us for the following equip $\real_- \times \real^{n-1} \subseteq \real^n$ with the 
-subspace topology i.e. we a set $V \subseteq \real_- \times \real^{n-1}$ is
+subspace topology i.e. a set $V \subseteq \real_- \times \real^{n-1}$ is
 open i.i.f. there exists an open set $V' \subseteq \real^n$ s.t. 
 $V = V' \cap \real_- \times \real^{n-1}$. This means e.g. that 
 $B_1(0) \cap \real_- \times \real^{n-1}$ is open which is not an open set 
@@ -783,13 +814,13 @@ in the standard topology of $\real^n$.
     We call $M$ a \textit{manifold with boundary} if the charts $\boldsymbol{\phi}_i$, 
     $i\in I$ are homeomorphism from $M$ into $\real_- \times \real^{n-1}$ 
     endowed with the subspace topology. The \textit{boundary} 
-    $\partial M$ are the points that get mapped to ${0} \times \real^{n-1}$ 
-    by the charts i.e. $\partial M = \bigcup_{i\in I} \boldsymbol{\phi}_i^{-1}({0} \times \real^{n-1})$.
+    $\partial M$ are the points that get mapped to $\{0\} \times \real^{n-1}$ 
+    by the charts i.e. $\partial M = \bigcup_{i\in I} \boldsymbol{\phi}_i^{-1}(\{0\} \times \real^{n-1})$.
 \end{definition}
 
 \begin{remark}
     We should note the relationship between the boundary in the usual topological sense 
-    and the above definition of a boundary. Let $\Omega \subseteq \real^n$ be 
+    and the above definition of a boundary of a manifold. Let $\Omega \subseteq \real^n$ be 
     an open $C^1$ domain. Then $\partial \Omega$ in the usual topological sense 
     is $\overline{\Omega} \setminus \Omega$. However, if we see $\Omega$ 
     as a manifold with boundary then the boundary $\partial \Omega$ in the sense of 
@@ -800,6 +831,7 @@ in the standard topology of $\real^n$.
     point $\{ x \} \subseteq \real^n$ then $\partial \{x \} = \{ x \}$.   
 \end{remark}
 
+\subsubsection{Tangent spaces}\label{sec:tangent_spaces}
 
 From now on we want to investigate certain structures on a manifold 
 that require some regularity to be defined. Therefore, 
@@ -818,7 +850,6 @@ differentiable.
     an oriented atlas is called \textit{orientable}.
 \end{definition}
 
-\subsubsection{Tangent spaces}\label{sec:tangent_spaces}
 
 The next important concept we will recall are tangent spaces. 
 It should be noted that there are different definitions of tangent space, but
@@ -838,14 +869,14 @@ these lead to isomorphic notions
     on the chosen local coordinates.
 \end{definition}
 
-For a point $p \in M$ and a neighorhood $U \subseteq M$ of $p$ and 
-a $V \subseteq N$ a neighborhood of $F(p)$ with local coordinate charts 
+For a point $p \in M$ and neighorhoods $U \subseteq M$ of $p$ and 
+$V \subseteq N$ of $F(p)$ with local coordinate charts 
 $(\boldsymbol{\phi}, U)$ and $(\boldsymbol{\psi}, V)$  and resulting local coordinates 
 $\{x_i\}_{i=1}^m$ and $\{ y_j\}_{j=1}^n$ respectively and assume 
 $M$ and $N$ to be at least $C^1$. We call a function 
 $F: U \rightarrow N$ differentiable at $p$ if the expression in local coordinates
 is differentiable i.e. if 
-$\boldsymbol{\psi} \circ f \circ \boldsymbol{\phi}^{-1}$ is differentiable
+$\boldsymbol{\psi} \circ F \circ \boldsymbol{\phi}^{-1}$ is differentiable
 at $\boldsymbol{\phi}(p)$.
 We define its Jacobian $DF(p) \vcentcolon= D(\boldsymbol{\psi} \circ F \circ 
 \boldsymbol{\phi}^{-1})(\boldsymbol{\phi}(p))$ 
@@ -857,20 +888,19 @@ and we denote
 \end{align}
 It is important to notice, that the values of the Jacobian 
 and the derivatives depend on the chosen representation.
-
-The definition of differentiabilty is independent of the chart. 
+However, the definition of differentiability is independent of the chart. 
 Let $(\tilde{U},\boldsymbol{\tilde{\phi}})$ with $p \in \tilde{U}$ be 
 another chart and analogous $(\tilde{V},\boldsymbol{\tilde{\psi}})$ be local coordinate 
 at $F(p)$.
 Then 
 \begin{align*}
     \boldsymbol{\tilde{\psi}} \circ F \circ \boldsymbol{\tilde{\phi}}^{-1} 
-    = \boldsymbol{\tilde{\psi}} \circ \psi^{-1} \circ \psi \circ F \circ \phi^{-1} 
-        \circ \phi \circ \boldsymbol{\tilde{\phi}}^{-1}
+    = \boldsymbol{\tilde{\psi}} \circ \bm{\psi}^{-1} \circ \bm{\psi} \circ F \circ \bm{\phi}^{-1} 
+        \circ \bm{\phi} \circ \boldsymbol{\tilde{\phi}}^{-1}
 \end{align*}
 and since the chart transitions are at least $C^1$-diffeomorphisms by definition
 $\boldsymbol{\tilde{\psi}} \circ F \circ \boldsymbol{\tilde{\phi}}^{-1} $ is differentiable as well.
-These type of definitions via local charts on a manifold are frequent in
+These types of definitions via local charts on a manifold are frequent in
 differential geometry. This is a proper definition if it is independent of the 
 chosen chart. Because we do not want to bother with the technicalities of 
 differential geometry too much we will very often leave out these types of
@@ -910,7 +940,7 @@ We will now leave out the reference to $p$ in the partial derivative.
 For the other direction take $\mathbf{v} = (v_1, v_2, ..., v_n)^\top \in \real^n$. 
 We now want to find a differentiable curve $\gamma$ s.t. $\gamma(0) = p$ 
 and $D_\gamma = \sum_{i=1}^n v_i \frac{\partial}{\partial x_i}$.
-For that define $\gamma \vcentcolon= \boldsymbol{\phi}^{-1} (\boldsymbol{\phi}(p) + \mathbf{v}t)$.
+For that define $\gamma(t) \vcentcolon= \boldsymbol{\phi}^{-1} (\boldsymbol{\phi}(p) + \mathbf{v}t)$.
 Then
 \begin{align*}
     D_\gamma = \sum_{i=1}^n (x_i\circ \gamma)'(0) \frac{\partial}{\partial x_i}
@@ -925,7 +955,7 @@ This shows that $T_p M$ is a linear space and
 
 In order to show that this is a basis we have to prove linear independence.
 Assume we have $\sum_{i=1}^n \lambda_i \, \partial/\partial x_i|_p = 0$
-Then because $x_j \circ \phi^{-1} (x) = x_j$ for $x \in \phi(U)$ and 
+Then because $x_j \circ \bm{\phi}^{-1} (x) = x_j$ for $\mathbf{x} \in \bm{\phi}(U)$ and 
 $1 \leq j \leq n$. Note $x_j$ denote here the variable of 
 $\real^n$ and the local coordinate $x_j:U \rightarrow \real$. Of course, 
 this is a slight abuse of notation, but this a standard convention in 
@@ -934,7 +964,7 @@ Then we have
 \begin{align*}
     0 = \left( \sum\limits_{i=1}^n \lambda_i \frac{\partial}{\partial x_i}
         \right) (x_j)
-    = \sum\limits_{i=1}^n \lambda_i \frac{\partial (x_j \circ \phi^{-1}}{\partial x_i}(\phi(p))
+    = \sum\limits_{i=1}^n \lambda_i \frac{\partial (x_j \circ \bm{\phi}^{-1})}{\partial x_i}(\bm{\phi}(p))
     = \lambda_j
 \end{align*}
 so $\frac{\partial}{\partial x_i}$ are
@@ -962,7 +992,7 @@ mapping between them.
 
 \begin{proposition}
     Let $\{x_i\}_{i=1}^m$ and $\{y_j\}_{j=1}^n$ be local coordinates at 
-    $p$ and $F(p)$ of the charts $\phi$ and $\psi$ and let $\frac{\partial}{\partial x_i}|_p$ and 
+    $p$ and $F(p)$ of the charts $\bm{\phi}$ and $\bm{\psi}$ and let $\frac{\partial}{\partial x_i}|_p$ and 
     $\frac{\partial}{\partial y_j}|_{F(p)}$ be the resulting bases for the 
     tangent spaces at $T_p M$ and $T_{F(p)} N$ respectively. Then 
     the resulting matrix representation of the differential 
@@ -1011,7 +1041,7 @@ we can easily compute that
         \frac{\partial (\tilde{\boldsymbol{\phi}} \circ \boldsymbol{\phi}^{-1})_j}{\partial x_i}(\boldsymbol{\phi}(p)) 
 \end{align*}
 and we recognize that the change of basis matrix is the Jacobian of 
-the chart transition $D(\psi \circ \boldsymbol{\phi}^{-1})(\boldsymbol{\phi}(p))$.
+the chart transition $D(\bm{\psi} \circ \boldsymbol{\phi}^{-1})(\boldsymbol{\phi}(p))$.
 
 A \textit{vector field} $X$ maps every point $p$ to a tangent vector 
 in the corresponding tangent space i.e. by using local coordinates
@@ -1023,7 +1053,7 @@ regularity of its coefficent e.g. a vector field is differentiable if
 all its coefficents are. We must be careful though since we require higher 
 regularity of the manifold for this to be well-defined. 
 Assume $X$ is differentiable i.e. $X_i$ are differentiable. 
-Let $(\tilde{U}, \tilde{\phi})$ 
+Let $(\tilde{U}, \tilde{\bm{\phi}})$ 
 be another local chart.
 From the 
 change of basis of the tangent space we know that 
@@ -1058,9 +1088,10 @@ basis is the Jacobian of the chart transition. But the Jacobian of the
 chart transition has positive determinant by definition and so the basis 
 $\frac{\partial}{\partial y_j}$ is positively oriented as well.
 
-\subsection{Differential forms}\label{sec:differential_forms}
+\subsection{Differential forms}\label{sec:differential_forms_subsection}
 Now that we introduced the necessary objects from differential geometry, 
-we can finally define differential forms.
+we can finally define differential forms on manifolds.
+
 \begin{definition}[Differential forms]
     A differential $k$-form $\omega$ maps any point $p \in M$ to a 
     alternating $k$-linear form $\omega_p \in \alternating{k}{T_p M}$.
@@ -1085,15 +1116,15 @@ with $a_{i_1,...,i_k}(p) \in \real$. The regularity of differential forms
 is then defined via the regularity of these coefficents i.e. we call 
 a differential form smooth if all the $a_{i_1,...,i_k}$ are smooth 
 and we call a differential form differentiable if all the $a_{i_1,...,i_k}$
-are differentiable and so on. These definition of regularity again require 
+are differentiable and so on. These definitions of regularity again require 
 the manifold to be sufficiently regular as well.
 
 We denote the space $C^\infty \Lambda^k M$ the 
 space of smooth differential $k$-forms and analogous for other regularity.
 $\smoothcompforms{k}{M}$ are the smooth differential forms
 with compact support where the closure is w.r.t. 
-the topology on $M$. Note that this means that for a manifold with boundary 
-an $\omega \in \smoothcompforms{k}{M}$ are not necessarily zero on the boundary.
+the topology on $M$. Note that for a manifold with boundary 
+$\omega \in \smoothcompforms{k}{M}$ are not necessarily zero on the boundary.
 
 In order to define the Hodge star and an inner product on differential forms
 we need that 
@@ -1109,7 +1140,7 @@ $g_p: T_p M \times T_p M \rightarrow \real$.
     We also require that for $C^\alpha$ vector fields $X$ and $Y$ the map 
     $g(X,Y)$ is also $C^\alpha$ . 
     A manifold with a Riemannian metric is called 
-    \textit{Riemannian manifolds}.
+    \textit{Riemannian manifold}.
 \end{definition}
 From now on, we will leave out the reference to the point $p$ where appropriate.
 The Riemannian metric provides us with the 
@@ -1134,9 +1165,6 @@ of differential forms.
 
 Let us fix a point $p$ and a chart $\boldsymbol{\phi}$ 
 at this point with local coordinates denoted by $x_i$, $i=1,...,n$. 
-First, we have to check that we choose a orientation on $T_p M$ as explained 
-above.
-
 The resulting gramian matrix is
 $(G_p)_{ij} = g_p(\frac{\partial}{\partial x_i},\frac{\partial}{\partial x_j})$.
 So we have a volume form vol on $M$ 
@@ -1206,7 +1234,7 @@ ways to identify a vector $v\in V$ with an alternating map. Either as a
 linear form $\Phi v$ where $\Phi$ is the Riesz isomorphism or as a 
 $(n-1)$-linear alternating map $\star \Phi v$. 
 
-We can now identfy every vector field with a $1$-form or 
+We can now identify every vector field with a $1$-form or 
 a $(n-1)$-form. $p \mapsto \Phi_{T_p M} X(p)$ defines a $1$-form and  
 $p \mapsto \star \Phi_{T_p M} X(p)$ gives us a $(n-1)$-form. In differential 
 geometry, the usual notation is
@@ -1216,7 +1244,7 @@ are fittingly called \textit{musical isomorphisms}.
 With these musical isomorphisms we can identify $X$ with the $1$-form 
 $X^\flat$ or the $(n-1)$-form $\star X^\flat$. Vice versa, we find 
 for $\omega \in \Lambda^1 M$ the \textit{vector proxy} $\omega ^\sharp$ and for 
-and $(n-1)$-form $\nu \in \Lambda^{n-1} M$ we get $(\star^{-1} \nu)^\sharp$.
+an $(n-1)$-form $\nu \in \Lambda^{n-1} M$ we get $(\star^{-1} \nu)^\sharp$.
 
 Recall that the matrix representation of the Riesz isomorphism is the 
 Gramian matrix $G = (g_{ij})_{1\leq i,j \leq n} $. So if we have a vector field 
@@ -1236,7 +1264,7 @@ because the Riesz isomorphism maps basis elements to their dual basis elements
 in this case.
 
 Next, let us have a look at how we can extend pullbacks to differential forms.
-Recall again, that a linear map $L: V \rightarrow W$ with an 
+Recall again that for a linear map $L: V \rightarrow W$ with an 
 $n$-dimensional real vector space $V$ and an 
 $m$-dimensional real vector space $W$ we define its pullback 
 $L^*: \alternating{k}{W} \rightarrow \alternating{k}{V}$ via 
@@ -1273,12 +1301,12 @@ for alternating maps above.
     are orthonormal w.r.t. the Riemannian metrics
     on $M$ and $N$ respectively. 
     Then we can write $X = \sum_{j=1}^m X_i \frac{\partial}{\partial x_i}$
-    and denote $\mathbf{X} = (X_1,..., X_n)^\top$.
+    and define $\mathbf{X} = (X_1,..., X_n)^\top$.
     Then we obtain for the pullback in terms of
     vector proxies of $1$-forms
     \begin{align*}
-        (F^* X^\flat)^\sharp 
-        = \sum_{j=1}^n (DF(p)^\top \mathbf{X})_j \frac{\partial}{\partial y_j}.
+        (F^* X^\flat)^\sharp(p)
+        = \sum_{j=1}^n (DF(p)^\top \mathbf{X}(F(p)))_j \frac{\partial}{\partial y_j}.
     \end{align*}
 
     If we assume $m=n$ additionally, then 
@@ -1358,19 +1386,18 @@ concerned with introducing a derivative for differential forms
         \frac{\partial a_{i_1,...,i_k}}{\partial x_i}(p) 
         dx^i \wedge dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
     \end{align*}
-    We remind of that the derivative of $a_{i_1,...,i_k}$ is meant w.r.t. 
+    We remind that the derivative of $a_{i_1,...,i_k}$ is meant w.r.t. 
     to local coordinates as defined at (\ref{eq:derivative_on_manifold}).
 \end{definition}
 It can be shown that $d\omega$ is independent of the chosen coordinates. 
 Let us mention some important properties of the exterior derivative. 
-At first, we have $d\circ d = 0$ which will be important later on 
-when we talk about cochain complexes in Section \ref{}.
 
 We call a differential form $\omega \in \Lambda^k M$ 
 \textit{closed} if $d\omega = 0$ and \textit{exact}
 if there exists $\nu \in \Lambda^{k-1}$ s.t. $d\nu = \omega$.
 We denote the closed $k$-forms as $\mathfrak{Z}^k$ and the exact 
-$k$-forms as $\mathfrak{B}^k$.
+$k$-forms as $\mathfrak{B}^k$. We have $d\circ d = 0$ and thus 
+$\mathfrak{B}^k \subseteq \mathfrak{Z}^k$.
 
 The relation to the wedge product is described by a Leibniz-type formula. 
 Let $\omega \in C^1 \Lambda^k M$ and $\nu \in C^1 \Lambda^l M$. Then
@@ -1400,8 +1427,8 @@ $f$ is a $0$-form. Then
         \right)^\sharp
     = \sum_{i=1}^n \frac{\partial f}{\partial x_i} \frac{\partial}{\partial x_i}
 \end{align*}
-which we identify with  $\grad f$. In other words, 
-the exterior derivative is just the gradient in vector proxies.
+which we identify with  $\grad f$. In other words, the vector proxy of the 
+exterior derivative of a $0$-form corresponds to the gradient.
 
 Let $\mathbf{X}$ be a differentiable vector field on $\Omega$ 
 with components $X_i$. This corresponds to the vector field 
@@ -1423,7 +1450,8 @@ of the $(n-1)$-form $\star X^\flat$. Then
     = \diver \mathbf{X}.
 \end{align*}
 The hat symbol used for
-$\widehat{dx^i}$ means that this term is left out. 
+$\widehat{dx^i}$ means that this term is left out. So in the case of a $(n-1)$-form
+it corresponds to the divergence.
 
 In the case $n=3$ if we identify $\mathbf{X}$ with a $1$-form then 
 we obtain using similiar computations
@@ -1446,40 +1474,40 @@ $ we computed above that
     \diver \mathbf{X} \vol = d \star X^\flat.
 \end{align*}
 Now let us express $\mathbf{X}$ using different coordinates. 
-Let $\phi: \Omega \rightarrow \hat{\Omega}$ be a diffeomorphism. 
+Let $\bm{\phi}: \Omega \rightarrow \hat{\Omega} \subseteq \real^n$ be a diffeomorphism. 
 This defines our local coordinates. Then the expression of $\mathbf{X}$ is
 these curvilinear coordinates is
 \begin{align*}
     \mathbf{X} = \sum_{j=1}^n \tilde{X}_j 
-        \frac{\partial \phi^{-1}}{\partial y_j}.
+        \frac{\partial \bm{\phi}^{-1}}{\partial \hat{x}_j}.
 \end{align*}
 In terms of differential geometry, this corresponds to the representation of the vector field 
-$X = \sum_j \tilde{X}_j \frac{\partial}{\partial y_j}$. 
+$X = \sum_j \tilde{X}_j \frac{\partial}{\partial \hat{x}_j}$. 
 Let $\tilde{\mathbf{X}} = (\tilde{X}_1, \tilde{X}_2, ..., \tilde{X}_n)^\top$ 
 and 
 \begin{align*}
-    G_{kl} = g(\frac{\partial}{\partial y_k}, \frac{\partial}{\partial y_l})
-        = \frac{\partial \phi^{-1}}{\partial y_k} \cdot 
-            \frac{\partial \phi^{-1}}{\partial y_l}
+    G_{kl} = g(\frac{\partial}{\partial \hat{x}_k}, \frac{\partial}{\partial \hat{x}_l})
+        = \frac{\partial \bm{\phi}^{-1}}{\partial \hat{x}_k} \cdot 
+            \frac{\partial \bm{\phi}^{-1}}{\partial \hat{x}_l}
 \end{align*}
 Then we compute use the expression of the Hodge star operator 
 for one forms (\ref{eq:hodge_star_one_forms}) to compute
 \begin{align*}
     (\diver \mathbf{X}) \vol 
     &= d \star X^\flat 
-    = d \star \sum_{j=1}^n (G \tilde{\mathbf{X}})_j dy^j 
-    \\ &= d \sum_{j=1}^n \sum_{k=1}^n (G \tilde{X})_j 
-        \sqrt{ \det G} g^{jk} (-1)^{k-1} dy^1 \wedge dy^2 \wedge ... \wedge 
-        \widehat{dy^k} \wedge ... \wedge dy^n 
+    = d \star \sum_{j=1}^n (G \tilde{\mathbf{X}})_j d\hat{x}^j 
+    \\ &= d \sum_{j=1}^n \sum_{k=1}^n (G \tilde{\mathbf{X}})_j 
+        \sqrt{ \det G} g^{jk} (-1)^{k-1} d\hat{x}^1 \wedge d\hat{x}^2 \wedge ... \wedge 
+        \widehat{d\hat{x}^k} \wedge ... \wedge d\hat{x}^n 
     \\ &= \sum_{k=1}^n \frac{\partial
-        (\sqrt{ \det G} \sum_{j=1}^n g^{jk} (G \tilde{X})_j )}
-        {\partial y_k} (-1)^{k-1} dy^k \wedge dy^1 \wedge dy^2 \wedge ... \wedge 
-        \widehat{dy^k} \wedge ... \wedge dy^n 
+        (\sqrt{ \det G} \sum_{j=1}^n g^{jk} (G \tilde{\mathbf{X}})_j )}
+        {\partial \hat{x}_k} (-1)^{k-1} d\hat{x}^k \wedge d\hat{x}^1 \wedge d\hat{x}^2 \wedge ... \wedge 
+        \widehat{d\hat{x}^k} \wedge ... \wedge d\hat{x}^n 
     \\ &= \sum_{k=1}^n \frac{\partial (\sqrt{ \det G}  \tilde{\mathbf{X}})_k }
-        {\partial y_k} (-1)^{2(k-1)} dy^1 \wedge dy^2 \wedge ... \wedge 
-        dy^k \wedge ... \wedge dy^n
+        {\partial \hat{x}_k} (-1)^{2(k-1)} d\hat{x}^1 \wedge d\hat{x}^2 \wedge ... \wedge 
+        d\hat{x}^k \wedge ... \wedge d\hat{x}^n
     \\ &= \left[ \frac{1}{\sqrt{ \det G}} \sum_{k=1}^n 
-        \frac{\partial (\sqrt{ \det G}  \tilde{\mathbf{X}})_k }{\partial y_k}
+        \frac{\partial (\sqrt{ \det G}  \tilde{\mathbf{X}})_k }{\partial \hat{x}_k}
         \right] \vol
 \end{align*}
 where we used that $(G^{-1})_{ij} = \langle dx^i, dx^j \rangle_{T^*_p M} = g^{ij}$\
@@ -1513,12 +1541,12 @@ Then we know from Prop.\,\ref{prop:pullback_vector_fields} and (\ref{eq:piola_tr
 by defining $(\hat{X}_1, \hat{X}_2, ..., \hat{X}_n)^\top = \mathbf{\hat{X}} = \mathcal{P}^{n-1}_F \mathbf{X}$
 and $\hat{X} = \sum_{i=1}^n \hat{X}_i \frac{\partial}{\partial \hat{x}_i}$
 \begin{align*}
-    d F^* \star X^\flat = d \star \star^{-1} F^* \star X\flat 
+    d F^* \star X^\flat = d \star \star^{-1} F^* \star X^\flat 
     = d \star \hat{X}^\flat = \widehat{\diver} \mathbf{\widehat{X}} \, \widehat{\vol}
 \end{align*}
 and we recognize 
 \begin{align*}
-    \mathcal{P}^{n}_F \diver \mathbf{X} = \widehat{\diver} \mathcal{P}^{n-1}_F \mathbf{X}.
+    \mathcal{P}^{n}_F (\diver \mathbf{X}) = \widehat{\diver} \mathcal{P}^{n-1}_F \mathbf{X}.
 \end{align*}
 To summarize the situation in 3D,
 \begin{proposition}
@@ -1557,10 +1585,17 @@ These commuting properties are useful for applications in finite elements
 
 \subsection{Integration of differential forms}\label{sec:integration_of_differential_forms}
 
-% In order to rigorously define Sobolev spaces we have to define $L^p$-spaces 
-% of differential forms first. But before we can do that we should have a look
-% how integration of a function can be defined on a smooth orientable 
-% Riemannian manifold $M$. 
+Differential $k$-forms can be integrated over $k$-dimensional manifolds and 
+the properties of this operation, in particular Stokes' theorem, are one main motivation for working with differential 
+forms. In many books, integration is only defined for 
+smooth and compactly supported forms (see e.g. \cite[Sec.\,V.3]{topology_and_geometry}). This approach is easier, 
+but slightly unsatisfying since then we can not put the integration of forms 
+into the framework of standard Lebesgue integration theory and it is not possible 
+to define $L^p$ and Sobolev spaces of differential forms properly. Thus, even though we will
+actually only integrate smooth differential forms over compact manifolds in the proofs
+of existence and uniqueness,
+we want to introduce the integration more generally. For details about the 
+more general theory of functional spaces on manifolds, see \cite[Sec.\,10.2.4]{nicolaescu}.
 
 Throughout this chapter we assume that $M$ is a smooth orientable Riemannian 
 manifold of dimension $n$. We assume that we have chosen a 
@@ -1587,7 +1622,7 @@ $\boldsymbol{\phi}_i(E \cap U_i) \subseteq \real^n$ is Borel-measurable.
 Now, we need to define a measure on the manifold. 
 The following motivation is taken from \cite[3.H.2]{gallot_hulin_lafontaine}.
 In Euclidian space $\real^n$ we use the standard Lebesgue measure that gives 
-vvolume one to the unit cube. If we now take any vectors $v_1, v_2, ..., v_n 
+volume one to the unit cube. If we now take any vectors $v_1, v_2, ..., v_n 
 \in \real^n$ then the parallelepiped spanned by these vectors has 
 volume $\det (v_1 \mid v_2 \mid \dots \mid v_n) 
 = \sqrt{ \det \big( \langle v_i , v_j \rangle \big)_{1\leq i,j \leq n} }$ where 
@@ -1595,8 +1630,8 @@ we used the standard inner product on $\real^n$.
 
 If we now extend this idea to Riemannian manifolds then we are interested 
 in the parallelepiped spanned by the tangent vectors $\frac{\partial}{\partial x_i}$
-in the tangent space $T_p M$ with $p \in M$.
-which would then be $ \sqrt{\det \big( g_p(\frac{\partial}{\partial x_i}, 
+in the tangent space $T_p M$ with $p \in M$
+which would then have volume $ \sqrt{\det \big( g_p(\frac{\partial}{\partial x_i}, 
 \frac{\partial}{\partial x_j}) \big)_{1\leq i,j \leq n} } = 
 \sqrt{ \det G_p }$. Then we define for a Borel-measurable $E \subseteq U$ where $U$ is 
 the domain a chart $\boldsymbol{\phi}: U \rightarrow \real^n$ the measure 
@@ -1609,11 +1644,11 @@ to our open cover.
 Let $\{ \chi_i \}_{i=1}^N$, $N \leq \infty$, be the partition of unity 
 subordinate to the open cover given by the atlas $\{U_i\}_{i = 0}^N$ . Then we define the 
 \textit{Riemannian measure} for any $E \in \mathcal{B}(M)$
-\begin{align*}
+\begin{align}
     V(E) \vcentcolon= \sum\limits_{i=1}^\infty \int_{\boldsymbol{\phi}_i(U_i \cap E)}
         \chi_i(\boldsymbol{\phi}_i^{-1}(x)) \sqrt{\det G^{(i)}(\boldsymbol{\phi}_i^{-1}(x))} dx 
-        \in [0,\infty]
-\end{align*}
+        \in [0,\infty] \label{eq:riemannian_measure}
+\end{align}
 It can be shown that it is independent of the chosen oriented atlas 
 using the transformation behaviour of $G^{(i)}$. But the orientation is 
 crucial for it to be well-defined. 
@@ -1625,7 +1660,8 @@ crucial for it to be well-defined.
 \begin{proof}
     Let $\{(V_j, \boldsymbol{\psi}_j)\}_{j=0}^\infty$ 
     be a different atlas with the same orientation and 
-    $\{\rho_j\}_{j=0}^\infty$ be the partition of unity subordinate to it.
+    $\{\rho_j\}_{j=0}^\infty$ be a partition of unity subordinate to it. If we now 
+    define the Riemannian measure (\ref{eq:riemannian_measure}) using this atlas, then
     \begin{align}
         &\sum_{j=0}^\infty \int_{\boldsymbol{\psi}_j(E\cap V_j)} \rho_j(\boldsymbol{\psi}_j^{-1}(y))
             \sqrt{\det G^{(j)}_{\boldsymbol{\psi}^{-1}(y)}} \, dy \nonumber
@@ -1653,7 +1689,7 @@ crucial for it to be well-defined.
         &= \det G^{(i)}_{\boldsymbol{\phi}_i^{-1}(x)} \,
             \bigg(\det D\big(\boldsymbol{\phi}_i \circ \boldsymbol{\psi}_j^{-1}\big)\big(\boldsymbol{\psi}(\boldsymbol{\phi}^{-1}(x))\big)\bigg)^2
         \\ &= \det G^{(i)}_{\boldsymbol{\phi}_i^{-1}(x)} \,
-            \left( \det D(\boldsymbol{\psi}_j \circ \phi_i^{-1})(x)^{-1}\right)^2.
+            \left( \det D(\boldsymbol{\psi}_j \circ \bm{\phi}_i^{-1})(x)^{-1}\right)^2.
     \end{align*}
     Plugging this into (\ref{eq:double_sum_riemannian_measure}) the determinant 
     of the chart transition cancels out because $\det D(\boldsymbol{\psi}_j \circ \boldsymbol{\phi}_i^{-1})(x)^{-1} > 0$.
@@ -1687,7 +1723,7 @@ For example, we know that the the spaces $L^p(M,V)$ for $1\leq p < \infty$
 , i.e. the $p$-integrable 
 real-valued functions w.r.t. the Riemannian measure, are Banach spaces.
 
-\subsubsection{Integration of differential forms}\label{sec:integration_differential_forms}
+\subsubsection{Integration of differential forms}\label{sec:integration_differential_forms_subsection}
 
 Once again, we should first ask ourselfs what a measurable differential form 
 should be. We know that we can express our differential form locally 
@@ -1696,7 +1732,7 @@ for $p \in U_i$ using the local coordinates as
     \omega_p = \sum\limits_{1\leq i_1 < ... < i_k \leq n} 
         a_{i_1,...,i_k}(p) dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}.
 \end{align*}
-In the spirit of the the definition of differentiability 
+In the spirit of the definition of differentiability 
 in Sec.\,\ref{sec:tangent_spaces} we call a $\omega \in \Lambda^k (M)$
 measurable if for every chart $\boldsymbol{\phi}_i$ the coefficent functions of the 
 differential form expressed in local coordinates 
@@ -1706,19 +1742,19 @@ coordinates.
 Next, we will define integration of an $n$-form over an $n$ dimensional 
 manifold. At first, we do so for an open set $U \subseteq \real^n$.
 This is the simplest example of an $n$-dimensional manifold where 
-we only have one chart which is the identify and the local coordinates are 
+we only have one chart which is the identity and the local coordinates are 
 just our standard coordinates which we denote by $z_i$, $i=1,...,n$ and the 
 resulting basis of the tangent space $\frac{\partial}{\partial z_i}$. 
 Let $\omega$ be a measurable 
 $n$-form on $U$ so we can 
 write 
 \begin{align*}
-    \omega_z = f(z)\, dz_1 \wedge dz_2 \wedge ... \wedge dz_n
+    \omega_z = f(z)\, dz^1 \wedge dz^2 \wedge ... \wedge dz^n
 \end{align*}
 for $z \in U$ with $f:U \rightarrow \real$ being Borel-measurable. 
 We can now simply define 
 \begin{align*}
-    \int_U \omega = \int_U f(z) \, dz_1 dz_2 ... dz_n.
+    \int_U \omega = \int_U f(z) \, dz^1 dz^2 ... dz^n.
 \end{align*}
 
 With this definition at hand we can now extend this definition to 
@@ -1755,7 +1791,7 @@ We know that for $p \in U_i$ we can write the volume form as
     \vol_p = \sqrt{ \det G^{(i)}(p)} \,
         dx_{(i)}^1 \wedge dx_{(i)}^2 \wedge ... \wedge dx_{(i)}^n.
 \end{align*}
-where $G^(i)_{kl} = g(\frac{\partial}{\partial x^{(i)}_k},\frac{\partial}{\partial x^{(i)}_l} )$.
+where $G^{(i)}_{kl} = g(\frac{\partial}{\partial x^{(i)}_k},\frac{\partial}{\partial x^{(i)}_l} )$.
 
 Because $(\boldsymbol{\phi}_i^{-1})^* dx_{(i)}^k = dz^k$ -- which follows directly from the 
 definition -- and the pullback commutes with the wedge product we have
@@ -1792,17 +1828,16 @@ is Stokes' theorem which we will state in this section. From it, we will
 obtain a integration by parts formula.
 
 But before we do so we have to check how to define the restriction of a
-differential form to a submanifold $N \subseteq M$. A submanifold is $N$ 
+differential form to a submanifold $N \subseteq M$. A submanifold $N$ 
 is just a manifold contained in $M$. As a further restriction, we always assume
 that we use the subspace topology on a submanifold i.e. a set $U \subseteq N$ 
 is open i.i.f. there exists an open $U' \subseteq M$ s.t. $U = U' \cap N$.
 
-We now define the restricth with the inclusion $\iota: N \hookrightarrow M$. Then for a 
+We now define the restriction with the inclusion $\iota: N \hookrightarrow M$. Then for a 
 smooth differential form $\omega \in C^\infty \Lambda^k (M)$ we define 
 the restriction just via the pullback of the inclusion operator i.e. 
 $\iota^* \omega \in C^\infty \Lambda^k(N)$. 
-
-For a $k$-dimensional submanifold $N$ we then denote the integration of an 
+For a $k$-dimensional submanifold $N$ we then denote the integration over $N$ of a 
 $k$-form $\omega$ as
 \begin{align*}
     \int_N \iota^*\omega =\vcentcolon \int_N \omega.
@@ -1829,9 +1864,9 @@ $k$-form $\omega$ as
     \end{align*}
     This is then the matrix representation of the differential $\iota_*$ at 
     $\gamma(t)$.
-    Now take a at least continuous $1$-form $\omega = \sum_{i=1}^n \omega_i dz^i$ 
+    Now take an at least continuous $1$-form $\omega = \sum_{i=1}^n \omega_i dz^i$ 
     on $\Omega$. Then we know from the matrix representation of the 
-    pullback derived in Sec.\,\ref{sec:differential_forms} that 
+    pullback derived in Sec.\,\ref{sec:differential_forms_subsection} that 
     \begin{align*}
         \iota^*\omega (t) = \sum_{i=1}^n \gamma'_i(t) \, \omega_i(\gamma(t)) \,dt
     \end{align*}
@@ -1845,7 +1880,7 @@ $k$-form $\omega$ as
     \begin{align*}
         X^\flat = \sum_{i=1}^n X_i dz^i
     \end{align*}
-    and thus by denoting $\mathbf{X} = (X_1, X_2, ..., X_n)$ we get
+    and thus by denoting $\mathbf{X} = (X_1, X_2, ..., X_n)^\top$ we get
     \begin{align*}
         \int_\Gamma X^\flat = \int_\Gamma \mathbf{X}\cdot dl
     \end{align*}
@@ -1881,16 +1916,17 @@ By integrating both sides over $M$ and applying Stokes' theorem we obtain
     \int_{\partial M} \omega \wedge \mu 
     = \int_M d\omega \wedge \mu + (-1)^k \int_M \omega \wedge d\mu.
 \end{align*}
-By using vector and scalar proxies as in Sec.\,\ref{sec:differential_forms}
-we this can be used to prove the well-known formula
+By using vector and scalar proxies as in Sec.\,\ref{sec:differential_forms_subsection}
+this can be used along with the expression of the restriction of a $(n-1)$-form to 
+prove the well-known formula
 \begin{align*}
     \int_\Omega u\,\diver \mathbf{F} \, dx 
     =  - \int_\Omega \grad u \cdot \mathbf{F} \, dx + 
         \int_{\partial \Omega } u \, \mathbf{F}\cdot \mathbf{n} \, ds
 \end{align*}
-where $\mathbf{n}$ is the unit normal, assuming $\Omega$ is a bounded Lipschitz domain
-and $\mathbf{F}$ and $u$ are continuously differentiable 
-or 
+where $\mathbf{n}$ is the unit normal, assuming $\Omega \subseteq \real^n$ is a bounded Lipschitz domain
+and $\mathbf{F}$ and $u$ are continuously differentiable.
+In 3D, using the restriction of a $1$-form, one can show
 \begin{align*}
     \int_\Omega \mathbf{v} \cdot \mathbf{\curl} \mathbf{F} \, dx
     = \int_\Omega \mathbf{\curl} \mathbf{v} \cdot \ \mathbf{F} \, dx
@@ -1964,10 +2000,10 @@ This material is taken from
 \subsection{Homology groups}
 
 Denote with $\real^\infty$ the vector space of all real-valued sequences. Let 
-$e_i \in \real^\infty$ for $i \in \naturalnum$ denote the sequences that 
+$e_i \in \real^\infty$ for $i \in \naturalnum$ denote the sequences 
 that are zero for every index 
-unequal to $i$ and $1$ for the index $i$. Note that in this thesis 
-the natural numbers start at zero. Then we define the standard $k$-simplex 
+unequal to $i$ and $1$ for the index $i$. Note that 
+the natural numbers start at zero in this thesis. Then we define the standard $k$-simplex 
 $\Delta_k$ as
 \begin{align*}
     \Delta_k \vcentcolon= \Big\{ \sum\limits_{i=0}^k  \lambda_i e_i \mid 
@@ -1998,27 +2034,27 @@ These formal sums form an abelian group which we refer to as the
 
 We will now introduce an important homomorphism between these groups called the \textit{boundary}.
 \begin{definition}
-    Let $v_0, ... , v_k \in \real^n$. 
+    Let $\mathbf{v}_0, ... , \mathbf{v}_k \in \real^n$. 
     We define \textit{affine singular $k$-simplex} as a special singular $k$-simplex denoted by
     \begin{align*}
-        [v_0,...,v_k]: \Delta_k \rightarrow \real^n, \, 
-        \sum\limits_{i = 0}^k \lambda_i e_i \mapsto \sum\limits_{i = 0}^k \lambda_i v_i.
+        [\mathbf{v}_0,...,\mathbf{v}_k]: \Delta_k \rightarrow \real^n, \, 
+        \sum\limits_{i = 0}^k \lambda_i e_i \mapsto \sum\limits_{i = 0}^k \lambda_i \mathbf{v}_i.
     \end{align*}
 \end{definition}
 As in the general case, the image can be a degenerated simplex in $\real^n$ since the 
-$v_i$ are not assumed to be affine independent. 
+$\mathbf{v}_i$ are not assumed to be affine independent. 
 
 We call the affine singular simplex 
 \begin{align}
     [e_0,...,\hat{e}_i,...,e_k]: \Delta_{k-1} \rightarrow \Delta_k \label{eq:face_map}
 \end{align}
-the $i$-th face map which we denote by $F^k_i$ and sometimes the $^k$ will be left out. 
+the \textit{$i$-th face map} which we denote by $F^k_i$ and sometimes the $^k$ will be left out. 
 The $\hat{ }$ means this vertex is left out. Here we tacitly used the 
 natural inclusion $\real^{k+1} \subseteq \real^\infty$ so we have 
 $\Delta_k \subseteq \real^{k+1}$. But this is just a way of representation.
 
 With the face map we can now define the boundary operator.
-\begin{definition}
+\begin{definition}[Boundary]
     For a singular $k$-simplex $\sigma: \Delta_k \rightarrow X$ we define its $i$-th face 
     $\sigma^{(i)} \vcentcolon= \sigma \circ F_i^k$ which is a $(k-1)$-simplex. 
     We then define the \textit{boundary} of $\sigma$ as 
@@ -2044,7 +2080,7 @@ Denote the group of $k$-cycles as $Z_k(X)$ and the $k$-boundaries as $B_k(X)$.
 Since we are in the abelian setting this motivates us to define 
 the resulting factor groups.
 \begin{definition}[Homology groups]
-    We define the \textit{$k$-th homology group} of the topological space $X$ as
+    We define the \textit{$k$-th homology group} of the topological space $X$ as the factor group
     \begin{align*}
         H_k(X) \vcentcolon= \faktor{Z_k(X)}{B_k(X)}.
     \end{align*} 
@@ -2073,8 +2109,8 @@ s.t. $\partial_{i-1} \circ \partial_i = 0$ this is called a \textit{chain comple
 we will denote by $C_*$. 
 
 \begin{example}
-    If we set $C_k(X) = {0}$ for $k < 0$ then the groups of $k$-chains are a chain complex together with 
-    the boundary operator. 
+    If we set $C_k(X) = {0}$ for $k < 0$ then the groups of $k$-chains with 
+    the boundary operator form a chain complex . 
 \end{example}
 
 Completely analogous to above, we can define the homology groups 
@@ -2089,7 +2125,7 @@ of a abstract chain complex
     both chain complexes just by $\partial$.
     Then a \textit{chain map} $f: A^* \rightarrow B^*$ is a collection 
     of homomorphisms $f_i: A_i \rightarrow B_i$ s.t. 
-    $f_{i-1} \circ \partial = \partial \circ f_i$ i.e. the following diagram is commutative
+    $\partial \circ f_{i-1} = f_i \circ \partial$ i.e. the following diagram is commutative
     \begin{equation*}
         \begin{tikzcd}
             ... \arrow[r, "\partial"] 
@@ -2112,7 +2148,7 @@ the homology groups denoted as
 \subsection{Cohomology groups}
 
 Let us start with the abstract definition of a cochain complex.
-Let now $\{ C^i \}_{i\in \naturalnum}$ be a collection of abelian groups
+Let $\{ C^i \}_{i\in \naturalnum}$ be a collection of abelian groups
 and homomorphisms $\partial^i: C^i \rightarrow C^{i+1}$ with 
 $\partial^{i+1} \circ \partial^i = 0$ called \textit{codifferentials}. 
 Then we call this sequence a 
@@ -2135,8 +2171,6 @@ of \textit{$k$-cochains} $C^k(X;G)$ by
     C^k(X;G) \vcentcolon= \text{Hom}(C_k(X),\,G)
 \end{align*}
 i.e. the group of all homomorphisms from $k$-chains $C_k(X)$ to $G$. 
-We generally use the superindex $^k$ if something is related to 
-cochains and the subindex $_k$ if it is related to chains. 
 Just as for chains we now introduce a homomorphism between the groups of cochains
 which transforms this into a cochain complex.
 \begin{definition}[Coboundary ]
@@ -2212,7 +2246,7 @@ of differential forms, the \textit{de Rham cohomology} which is introduced next.
 
 Let $M$ be a smooth $n$-dimensional manifold.
 We will use the the notation introduced in 
-Sec.\,\ref{sec:differential_forms}. Then the smooth 
+Sec.\,\ref{sec:differential_forms_subsection}. Then the smooth 
 differential forms $C^\infty \Lambda^k (M)$ together 
 with the exterior derivative give us a cochain complex which we call 
 \textit{de Rham complex} due to the property $d \circ d = 0$. 
@@ -2273,8 +2307,8 @@ This motivates us to introduce the homomorphism $I: C^\infty \Lambda^k (M)
 \begin{remark}
     There are some technical details that we will not discuss in details here,
     but that should be mentioned. First, $\Delta_k$ is not a manifold. 
-    The $(k-2)$ skeleton are the boundaries of the faces i.e. the corners for $k=2$ and the 
-    edges for $k=3$. If we remove the $(k-2)$ skeleton 
+    The $(k-2)$-skeleton are the boundaries of the faces i.e. the corners for $k=2$ and the 
+    edges for $k=3$. If we remove the $(k-2)$-skeleton 
     then $\Delta_k$ is a manifold 
     with boundary. But since this is a null-set w.r.t. the full simplex and 
     the boundary as well, this does not matter for our arguments. 
@@ -2291,8 +2325,6 @@ This motivates us to introduce the homomorphism $I: C^\infty \Lambda^k (M)
     details.
 \end{remark}
 
-Using Stokes's theorem and the fact that the exterior derivative commutes with 
-the pullback we observe for a singular $k$-simplex $\sigma$ in $M$.
 Now, 
 we have to remember the definition of the boundary of a singular simplex 
 and the face map $F^k_i$ which serves as a chart 
@@ -2304,7 +2336,7 @@ Then using Stokes' theorem
     = \int_{\Delta_k} d\sigma^* \omega
     = \int_{\partial \Delta_k} \sigma^* \omega
     \\ &= \sum_{i=0}^k \int_{[e_0,...,\widehat{e_i}, ..., e_k]} \sigma^* \omega
-    \stackrel{\ref{eq:integral_boundary_face}}{=} \sum_{i=0}^{k} (-1)^i \int_{\Delta_{k-1}} F_i^*\sigma^* \omega
+    \stackrel{(\ref{eq:integral_boundary_face})}{=} \sum_{i=0}^{k} (-1)^i \int_{\Delta_{k-1}} F_i^*\sigma^* \omega
     = \sum_{i=0}^{k} (-1)^i \int_{\Delta_{k-1}} (\sigma\circ F_i)^* \omega
     \\ &= \sum_{i=0}^{k} (-1)^i \int_{\sigma\circ F_i} \omega
     = I(\omega)(\partial \sigma) = \partial \big(I(\omega)\big) (\sigma).
@@ -2325,17 +2357,28 @@ existence and uniqueness in Sec.\,\ref{sec:existence_and_uniqueness}.
 \begin{theorem}[De Rham's theorem]\label{thm:de_rhams_theorem}
     Let $M$ be a smooth orientable manifold. Then $[I]: H^k_{dR}(M) \rightarrow H^k(M;\real)$ is an isomorphism.
 \end{theorem}
-This is quite a deep result that requires more results than we introduced ...
+This is quite a deep result that requires more tools than we introduced and is
+difficult to prove so we will just state it here. Even though it is a very short 
+statement it has very deep implications. It implies that the de Rham isomorphism
+reflects fundamental topological properties of the manifold.
 
-\section{Hilbert complexes}
-
-Another crucial tool for the proof will be the \textit{Hodge decomposition} 
+\section{Hilbert complexes}\label{sec:hilbert_complexes}
+In this section, we move away from geometry and topology to functional analysis.
+A crucial tool for the proof will be the \textit{Hodge decomposition} 
 in 3D which relies on unbounded operators and Hilbert complexes. These 
-will be introduces in this section. This section is essentially a 
+will be introduced in this section. This section is essentially a 
 recollection of the parts of chapter 3 and 4 of Arnold's book \cite{arnold}
-which we will need. We will stay close to this source. At certain parts, 
-some additional arguments and steps will be added, but the reference is 
-already very detailed so there is not much to add. Throughout this section 
+which we will need. 
+
+We start by introducing the concept of unbounded operators on real Hilbert spaces and 
+introduce the adjoint for these. Then we will apply this theory to 
+the differential operators $\grad$, $\curl$ and $\diver$ in 3D. In the 
+second part we will introduce Hilbert complexes which combines the idea 
+of cochain complexes and unbounded operators on Hilbert spaces. This will lead to the 
+Hodge decomposition which is an important tool that we will need in the proof of 
+existence and uniqueness.
+
+Throughout this section 
 it will be assumed that the reader is familiar with basics of functional analysis, 
 especially Hilbert spaces, 
 and basic knowledge about Sobolev spaces. We will focus on real spaces 
@@ -2343,13 +2386,18 @@ exclusively.
 
 \subsection{Unbounded operators}\label{sec:unbounded_operators}
 
+We will provide the basic definitions about unbounded operators and propositions 
+about those. After defining unbounded operators we will talk about closed and 
+densely defined operators mainly and the adjoint. 
+Most of the proofs are very short and will be provided in detail. 
+
 \begin{definition}[Unbounded operators]
     Let $X$ and $Y$ be Hilbert spaces. Then we call a linear mapping 
     $T: D(T) \rightarrow Y$ with a subspace $D(T) \subseteq Y$ an 
     \textit{unbounded 
     operator} from $X$ to $Y$. We call $D(T)$ the \textit{domain} of $T$.
 \end{definition}
-We will write sometimes talk about an unbounded operator $T:X \rightarrow Y$ 
+We will talk about an unbounded operator $T:X \rightarrow Y$ 
 which means that $T$ is not necessarily defined on all of $X$. 
 
 Note that this definition generalizes the standard operator. In particular, 
@@ -2384,7 +2432,7 @@ and the image or range
 \begin{align*}
     \Ima T = \{ Tx \mid x \in D(T)\}.
 \end{align*}
-The only difference is to keep in mind that the unbounded operators are not 
+The only difference to keep in mind is that the unbounded operators are not 
 defined on the whole $X$ in general.
 
 Recall that the graph of a function $f: X \rightarrow Y$ is defined 
@@ -2410,8 +2458,8 @@ induced norm the \textit{graph norm}
 Even though this defines a norm, $D(T)$ might not be a Hilbert space 
 because it is in general not complete w.r.t. this norm. Consider for example 
 the unbounded operator $\grad: L^2(\Omega) \rightarrow L^2(\Omega;\real^n)$ with 
-domain $C_0^\infty(\Omega)$ and a $\Omega \subseteq \real^n$.
-The graph norm is then
+domain $C_0^\infty(\Omega)$ and a $\Omega \subseteq \real^n$ open.
+The graph norm is then 
 \begin{align*}
     \lVert \phi \rVert _{D(\grad)} 
     = \sqrt{ \lVert \phi \rVert^2 _{L^2(\Omega)} + \lVert \grad \phi \rVert^2 
@@ -2484,7 +2532,7 @@ i.e. the weak gradient as an unbounded operator
 from $L^2(\Omega)$ to $L^2(\Omega;\real^n)$ with 
 domain $D(\grad) = H^1(\Omega)$. Then we described above that the 
 graph norm here is just the $H^1$-norm. It is well-known that 
-$H^1(\Omega)$ is a Hilbert space. Therefore the 
+$H^1(\Omega)$ is a Hilbert space. Therefore 
 Prop.\,\ref{prop:closed_operator_graph_norm} tells us that 
 $(\grad, H^1(\Omega))$ is a closed operator in contrast to 
 $(\grad, C_0^\infty(\Omega))$ as described above.
@@ -2498,7 +2546,7 @@ look at the linear functional $l:D(T) \rightarrow \real$ given by
 \begin{align*}
     l(x) = \langle y, Tx \rangle_Y.
 \end{align*}
-This functional is not necessarily bounded. But if it is i.e. if $l \in D(T)'$ 
+This functional is not necessarily bounded w.r.t. the norm on $X$. But if it is i.e. if $l \in D(T)'$ 
 then because $D(T)$ is dense in $X$ we can extend it to a
 $\bar{l} \in X'$. Let $v \in X$ be its Riesz representative. That means we have
 \begin{align*}
@@ -2507,7 +2555,7 @@ $\bar{l} \in X'$. Let $v \in X$ be its Riesz representative. That means we have
 \end{align*}
 $\langle l, x \rangle_{X'\times X}$ is the usual duality pairing and we will 
 frequenty just write $\langle l, x \rangle$.
-Then when we define $v = T^* y$ and we 
+Then we define $v = T^* y$ and 
 recognize this as the defining property of the adjoint and define 
 \begin{align*}
     D(T^*) \vcentcolon= \{ y \in Y \mid \exists c_y \in \real:
@@ -2536,7 +2584,7 @@ It is easy to check that this is a linear subspace of $Y$.
 \end{proof}
 
 We would like to proof whether $T^*$ is itself densely defined or closed. 
-This can be done in an elegant way by invstigating the graphs of $T$ and 
+This can be done in an elegant way by investigating the graphs of $T$ and 
 $T^*$. But $\Gamma(T)$ is a subspace of $X\times Y$ and 
 $\Gamma(T^*)$ of $Y\times X$. To compare the two, we introduce a rotation operator. 
 For any real vector spaces $V$ and $W$ we define the rotation operator 
@@ -2548,7 +2596,6 @@ and we have $R_{W,V}R_{V,W}Z = Z$ for any subspace $Z\subseteq V\times W$.
 Using this rotation operator we can formulate the following lemma.
 \begin{lemma}\label{lem:rotated_graph}
     Let $T$ be a densely defined unbounded operator from $X$ to $Y$. 
-    We define the 
     Then we have 
     \begin{align*}
         & \Gamma(T)^\perp = R_{Y,X}\Gamma(T^*) \text{ and}
@@ -2625,13 +2672,13 @@ Using this rotation operator we can formulate the following lemma.
     From the previous proposition we know that $T^*$ is closed and 
     densely defined operator as well and so $\Gamma(T^*) = \big( R_{X,Y}\Gamma(T^{**})\big)^\perp$.
     $T^{**}$ is closed and hence its graph as well, so
-    From the properties of the rotation we know that
+    from the properties of the rotation we know that
     \begin{align*}
         \Gamma(T^{**}) 
         &= \overline{\Gamma(T^{**})} 
         = \Gamma(T^{**})^{\perp \perp}
         = \big( R_{Y,X} R_{X,Y}\Gamma(T^{**})   \big)^{\perp \perp}
-        \\ &= \Big( R_{Y,X}\big(R_{X,Y}\Gamma(T^{**})\big)^{\perp} \Big)^\perp=
+        \\ &= \Big( R_{Y,X}\big(R_{X,Y}\Gamma(T^{**})\big)^{\perp} \Big)^\perp
         = \Big( R_{Y,X} \Gamma(T^*) \Big)^\perp
         = \Gamma(T)
     \end{align*}
@@ -2643,7 +2690,7 @@ Let us first notice a very clear result. If $T$ is a closed unbounded operator
 then its kernel $\ker T$ is closed. This follows indeed from the definition. 
 But this is not true for the image $\Ima T$. Let us take
 $(y_n)_{n \in \naturalnum} \subseteq \Ima T$ with $y_n \rightarrow y$.
-However if we now take the sequence $(x_n)_{n \in \naturalnum} \subseteq D(T)$
+If we now take the sequence $(x_n)_{n \in \naturalnum} \subseteq D(T)$
 s.t. $Tx_n = y_n$ we do not know if $(x_n)$ converges or 
 whether the limit is in $D(T)$ if it does converge. 
 A very simple example is the inclusion operator
@@ -2697,14 +2744,21 @@ of closed densely defined operators and their adjoints.
 \subsubsection{Differential operators in 3D}\label{sec:adjoints_differential_operators_3d}
 
 Let us investigate the situation in 3D with the common differential 
-operators $\curl$, $\grad$ and $\diver$ on an open domain $\Omega$. We will later 
-introduce some assumptions on the boundary of it. Throughout the 
-following, all function spaces will always be over an open domain 
-$\Omega \subseteq \real^3$ unless specified otherwise.
+operators $\curl$, $\grad$ and $\diver$ on a domain $\Omega \subseteq \real^3$. 
+At first, we only assume  $\Omega$ to be open, but we will later 
+introduce some assumptions on the boundary of it. 
+
+
+We will follow \cite[Sec.\,3.4]{arnold} for the most part. However, all the results in Arnold's book 
+are provided for bounded domains only which is insufficient for our situation since 
+we want to cover the case where $\Omega$ is unbounded with compact boundary. Thus, 
+we will generalize the proofs provided in the reference to this case which always involves 
+applying some additional cut-off type argument.
+
 Take the unbounded operator 
-$\diver: L^2(\Omega;\real^3) \rightarrow L^2(\Omega)$ with domain the smooth compactly supported 
+$\diver: L^2(\Omega;\real^3) \rightarrow L^2(\Omega)$ with the smooth compactly supported 
 vector valued functions
-$C_0^\infty(\Omega;\real^3)$ i.e. $(\diver, C_0^\infty(\Omega;\real^3))$ which 
+$C_0^\infty(\Omega;\real^3)$ as domain i.e. $(\diver, C_0^\infty(\Omega;\real^3))$ which 
 we will from now on denote as $(\diver, C_0^\infty)$. At first we recognize that 
 the operator $(\diver, C_0^\infty(\Omega;\real^3))$ is densely defined and thus the the adjoint exists.
 When we take the adjoint of it then we know for $v \in 
@@ -2715,11 +2769,11 @@ D((\diver, C_0^\infty)^*)$
     \mathbf{u} \in C_0^\infty(\Omega;\real^3)
 \end{align*}
 As before, vector valued quantites are written in bold.
-Now if we take $\mathbf{u} = (\mathbf{u}_1,0,0)^\top$ then recognize 
+Now if we take $\mathbf{u} = (u_1,0,0)^\top$ then 
 \begin{align}
-    \int_\Omega (\diver ^* v)_1 \, \mathbf{u}_1 \, dx
-    = \int_\Omega v \, \partial_1 \mathbf{u}_1 \, dx \quad 
-        \forall \mathbf{u}_1 \in C_0^\infty \label{eq:adjoint_gradient_c0inf_components}
+    \int_\Omega (\diver ^* v)_1 \, u_1 \, dx
+    = \int_\Omega v \, \partial_1 u_1 \, dx \quad 
+        \forall u_1 \in C_0^\infty \label{eq:adjoint_gradient_c0inf_components}
 \end{align}
 so we recognize that $-(\diver ^* v)_1$ is the weak derivative of w.r.t. the 
 first coordinate i.e. $-\partial_1 v$ and analogous for the other coordinates 
@@ -2734,7 +2788,8 @@ We know from Cor.\,\ref{cor:adjoint_of_densely_defined}
 that its adjoint $(-\grad, H^1)$ is closed and 
 we can conclude from Prop.\,\ref{prop:closed_operator_graph_norm} 
 that $H^1(\Omega)$ is in fact a Hilbert space 
-when using the graph norm which is the $H^1$-norm here.
+when using the graph norm which is the $H^1$-norm here. This provides an alternative 
+way to derive this basic result.
 
 Assume from now on that our domain $\Omega$ is a Lipschitz domain 
 with compact boundary $\partial \Omega$. Note that $\Omega \subseteq \real^3$ 
@@ -2745,7 +2800,7 @@ Let us denote the $C^k_b(\overline{\Omega})$ the space of $k$ times continuously
 differentiable functions with bounded support in $\overline{\Omega}$. 
 In contrast to $C^k_0(\Omega)$ these functions are not necessarily zero on the 
 boundary.
-For $u \in C_b^1(\Omega)$ $\mathbf{v} \in C_b^1(\Omega;\real^3)^3$ we 
+For $u \in C_b^1(\Omega)$, $\mathbf{v} \in C_b^1(\Omega;\real^3)$ we 
 have the integration-by-parts formula
 \begin{align}
     \int_\Omega u \, \diver \mathbf{v} \, dx
@@ -2759,7 +2814,7 @@ bounded domains (see \cite[Cor.\,3.20]{monk}), but when $\partial \Omega$ is com
 we can simply reduce the domain 
 because the supports of $u$ and $\mathbf{v}$ are both bounded. This is done using 
 a standard cut-off argument.
-To be precise, $B_R \subseteq \real^3$ be the open ball around the origin 
+To be precise, let $B_R \subseteq \real^3$ be the open ball around the origin 
 with radius $R$ large enought s.t. $\partial \Omega \subseteq B_R$ and 
 $\supp u \subseteq B_R$, $\supp \mathbf{v} \subseteq B_R$.
 Define the reduced domain $\Omega_R \vcentcolon= \Omega \cap B_R$. 
@@ -2777,8 +2832,8 @@ as claimed. This formula motivates us to define the divergence in a
 weak sense.
 
 \begin{definition}[Weak divergence]
-    Let $\Omega \subseteq \real^3$ be open. For $\mathbf{v} \in L^2(\Omega)^3$ we the  
-    Define the space
+    Let $\Omega \subseteq \real^3$ be open. For $\mathbf{v} \in L^2(\Omega)^3$ we  
+    define the space
     \begin{align*}
         H(\diver;\Omega) = \left\{ \mathbf{v} \in L^2(\Omega)^3 \mid
             \exists \sigma \in L^2(\Omega)\, \forall \phi \in C_0^\infty(\Omega) :  
@@ -2800,7 +2855,7 @@ We can immediately recognize from the definition that
 The next thing we want to talk about is the trace of $H(\diver)$. 
 We will use the well-known properties of the trace in $H^1$. 
 Let us recall 
-quickly the definition of fractional order Sobolev spaces. Let 
+quickly the definition of fractional order Sobolev spaces (cf. \cite{}). Let 
 $U \subseteq \real^n$ be an open domain and take $m \in \naturalnum$ and 
 $s \in [0, 1)$ and $1 < p < \infty$. For a multiindex $\boldsymbol{\alpha} = 
 (\alpha_1, \alpha_2, ..., \alpha_n)$ we define $|\boldsymbol{\alpha}| = \sum_{i=1}^n \alpha_i$ 
@@ -2852,12 +2907,12 @@ We are trying to find something analogous for $H(\diver)$.
     \end{align*}
     Let us denote 
     $\Omega_{R+1} \vcentcolon=  \Omega \cap B_{R+1}$
-    To define the trace of a function $u \in H^1(\Omega)$ take the trace 
-    $\chi_R u$ -- which has compact support in $B_R$ -- 
+    To define the trace of a function $u \in H^1(\Omega)$ take the trace of
+    $\chi_R u$ -- which has compact support in $\overline{B}_{R+1}$ -- 
     on $\Omega_R$ and restrict it to $\partial \Omega$ 
     i.e. $\tr u = \big( \tr_{\Omega_R} u\chi_R \big)|_{\partial \Omega}$.
     Then $tr: H^1(\Omega) \rightarrow H^{1/2}(\partial \Omega)$ is 
-    surjective and
+    surjective and with $C_R$ being the continuity constant of the trace on $\Omega_R$
     \begin{align*}
         \lVert \tr u \rVert _{H^{1/2}(\partial \Omega)}
         &= \lVert \tr_{\Omega_R} u\,\chi_R  \rVert _{H^{1/2}(\partial \Omega_R)}
@@ -2879,7 +2934,7 @@ or just $\langle l, v \rangle$.
     \begin{align*}
         \gamma': Y' \rightarrow X', l \mapsto l \circ \gamma
     \end{align*}
-    or inner product notation
+    or with product notation
     \begin{align*}
         \langle \gamma' \, l, x \rangle_{X' \times X} = \langle l, \gamma\,x \rangle_{Y'\times Y}.
     \end{align*}
@@ -2892,7 +2947,7 @@ or just $\langle l, v \rangle$.
 \begin{proof}
     Since $\gamma$ is bounded it is obviously a closed and densely defined 
     unbounded operator. Then we know from \cite[Thm.\,2.20]{brezis} that 
-    $\gamma$ is $\gamma'$ is injective. Thm.\,2.19 in the same reference 
+    $\gamma'$ is injective. Thm.\,2.19 in the same reference 
     then gives us that $\Ima \gamma'$ is the annihilator of $Z$. 
     The dual map is actually the adjoint in the generalized sense on Banach spaces 
     which is how the adjoint is defined in this reference. Then the 
@@ -2928,10 +2983,10 @@ $H^{1/2}$
     Using the fact that the $H^1$ trace is bounded we can estimate 
     \begin{align*}
         |\langle l, u \rangle| = |\langle g_l, \tr u \rangle|
-        \leq C \lVert g_l \rVert _{H^-1/2} \, \lVert u \rVert _{H^1} 
+        \leq C_2 \lVert g_l \rVert _{H^{-1/2}} \, \lVert u \rVert _{H^1} 
     \end{align*}
     for some constant $C_2>0$
-    and thus $\lVert l \rVert _{H^(\Omega)'} \leq C_2 \lVert g_l \rVert _{H^-1/2}$ . 
+    and thus $\lVert l \rVert _{H(\Omega)'} \leq C_2 \lVert g_l \rVert _{H^{-1/2}}$ . 
     For the inverse inequality
     we take some $\mu \in H^{1/2}$. If we can find a $f \in H^1$ s.t. $\tr f = \mu$ and 
     \begin{align}
@@ -2943,7 +2998,7 @@ $H^{1/2}$
         \leq \lVert l \rVert _{H^{-1}} \lVert f \rVert _{H^1}
         \leq \lVert l \rVert _{H^{-1}} 1/C_1 \lVert \mu \rVert _{H^{1/2}}
     \end{align*}
-    and thus $\lVert g_l \rVert _{H^-1/2} \leq 1/C_1 \lVert l \rVert _{H^{-1}}$.
+    and thus $\lVert g_l \rVert _{H^{-1/2}} \leq 1/C_1 \lVert l \rVert _{H^{-1}}$.
 
     We have to show that such an $f$ exists. This is true for bounded domains (cf. \cite[Thm.\,3.10]{ern_guermond}).
     To generalize it to unbounded domains with compact boundary, take a open ball $B_R$ centered at the 
@@ -2990,12 +3045,12 @@ We can now define a trace operator for $H(\diver)$.
     the linear functional $l_\mathbf{v} \in H^1(\Omega)'$ for a fixed $\mathbf{v} \in H(\diver)$
     as
     \begin{align*}
-        \langle l_\mathbf{v}, u \rangle _{H^1}' \vcentcolon= \int_\Omega u \, \diver \mathbf{v} \, dx 
+        \langle l_\mathbf{v}, u \rangle \vcentcolon= \int_\Omega u \, \diver \mathbf{v} \, dx 
          + \int_\Omega \grad u \cdot \mathbf{v} \, dx.
     \end{align*}
     Using Cauchy-Schwarz we get
     \begin{align*}
-        \langle l_\mathbf{v}, u \rangle _{H^1}' 
+        \langle l_\mathbf{v}, u \rangle 
         \leq \lVert \mathbf{v} \rVert _{H(\diver)} \lVert u \rVert _{H^1} 
     \end{align*}
     and so $l_\mathbf{v}$ is indeed a linear bounded functional on $H^1$.
@@ -3013,13 +3068,13 @@ We can now define a trace operator for $H(\diver)$.
     \begin{align*}
         \int_\Omega u \, \diver \mathbf{v} \, dx 
         + \int_\Omega \grad u \cdot \mathbf{v} \, dx 
-        = \langle \gamma_n , u \, \rangle \quad \forall u \in H^1(\Omega).
+        = \langle \gamma_n \mathbf{v}, u \, \rangle \quad \forall u \in H^1(\Omega).
     \end{align*}
     
     The linearity of $\gamma_n$ is trivial to see.
     For the boundedness, using Cauchy-Schwarz 
     \begin{align*}
-        \langle \gamma_n \mathbf{v}, u \rangle 
+        \langle \gamma_n \mathbf{v}, \tr u \rangle 
         = \int_\Omega u \, \diver \mathbf{v} \, dx 
             + \int_\Omega \grad u \cdot \mathbf{v} \, dx
         \leq \lVert \mathbf{v} \rVert _{H(\diver)} \lVert u \rVert _{H^1}
@@ -3029,7 +3084,7 @@ We can now define a trace operator for $H(\diver)$.
     by parts formula is fulfilled by construction. 
 
     Let us now prove the case when $\mathbf{v} \in C_b^1(\overline{\Omega}; \real^3)$.
-    We know for all the integration-by-parts formula holds for all $u \in H^1$ as 
+    We know the integration-by-parts formula holds for all $u \in H^1$ as 
     explained above. We have
     \begin{align*}
         \langle \gamma_n \mathbf{v}, \tr u \rangle = 
@@ -3041,7 +3096,7 @@ We can now define a trace operator for $H(\diver)$.
     \begin{align*}
         \langle \gamma_n \mathbf{v}, \cdot \rangle = \langle \mathbf{v} \cdot n, \cdot \rangle_{L^2(\partial\Omega)}.
     \end{align*}
-    So in this sense the operator $\mathbf{v} \mapsto \langle \mathbf{v} \cdot n, \cdot \rangle 
+    So in this sense the operator $\mathbf{v} \mapsto \langle \mathbf{v} \cdot n, \cdot \rangle_{L^2(\partial\Omega)} 
     \in H^{-1/2}$ extends to the bounded operator $\gamma_n: H(\diver) \rightarrow H^{-1/2}$.
 \end{proof}
 This theorem motivates us to recognize the normal trace as the natural trace 
@@ -3109,7 +3164,7 @@ $C_b^\infty(\overline{\Omega})$ which are dense in $L^2$. This follows easily
 from the fact that $C^\infty(\overline{\Omega})$ is dense in $H^1$ if $\Omega$ is bounded.
 Analogously,
 it can be shown that $C_b^\infty(\overline{\Omega};\real^3)$ is dense in $H(\diver)$ as well 
-by using the fact that $C^\infty(\overline{\Omega})$ is dense $H(\diver)$ is $\Omega$
+by using the fact that $C^\infty(\overline{\Omega};\real^3)$ is dense in $H(\diver)$ if $\Omega$
 is bounded (\cite[Thm. 3.22]{monk}).
 Hence, 
 both of $(\grad,H^1)$ and $(\diver,H(\diver))$ are densely defined and 
@@ -3136,14 +3191,14 @@ we need the following theorem.
     which reads in variational formulation
     \begin{align*}
         \int_{\Omega_R} \grad u_R \cdot \grad \phi \, dx + \int_{\Omega_R} u_R \, \phi \,dx 
-        = \langle g, \tr \phi \rangle_{H^{-1/2}(\partial \Omega)} \quad \forall \phi \in H^1(\Omega_R).
+        = \langle g, \tr \phi \rangle_{H^{-1/2}(\partial \Omega) \times H^{1/2}(\partial \Omega)} \quad \forall \phi \in H^1(\Omega_R).
     \end{align*}
     This problem has a unique solution since $\Omega_R$ is bounded (see \cite[Thm. 3.12]{monk}).
     Take $\mathbf{v} \vcentcolon= \grad u_R$. Then we see from the variational 
     formulation by choosing $\phi \in C_0^\infty(\Omega_R)$ that $u_R = \diver \mathbf{v}$.
     And then define $\bar{u}_R$ as the extension by zero outside of $B_R$ which is in $H^1$ 
     because $u_R = 0$ on $\partial B_R$ and take $\bar{\mathbf{v}} = \grad \bar{u}_R$. 
-    Then $\diver \bar{\mathbf{v}} = \bar{u}_R$.
+    Then $\diver \bar{\mathbf{v}} = \bar{u}_R$
     and for any $\phi \in H^1(\Omega)$
     \begin{align*}
         \langle \gamma_n \mathbf{v}, \tr \phi \rangle 
@@ -3157,12 +3212,12 @@ we need the following theorem.
     \end{align*}
     Since the trace on $H^1$ is surjective we get $\gamma_n \mathbf{v} = g$.
 \end{proof}
-Now we can prove the adjoints of the operators without boundary conditions.
+Now we can compute the adjoints of the operators $\grad$ and $\diver$ without boundary conditions.
 
 \begin{theorem}\label{thm:adjoints_grad_div_without_bc}
     \begin{align}
-        (\diver, H_0(\diver)) &= (\grad, H^1)^* \\
-        (\grad, H_0^1) &= (\diver, H(\diver))^*
+        (-\diver, H_0(\diver)) &= (\grad, H^1)^* \\
+        (-\grad, H_0^1) &= (\diver, H(\diver))^*
     \end{align}
 \end{theorem}
 \begin{proof}
@@ -3172,8 +3227,8 @@ Now we can prove the adjoints of the operators without boundary conditions.
         \langle -\diver \mathbf{v}, u \rangle = \langle \mathbf{v}, \grad u \rangle \quad \forall u \in H^1
     \end{align*}
     and so $\mathbf{v} \in D((\grad, H^1)^*)$ and $\grad^* \mathbf{v} = -\diver \mathbf{v}$.
-    The inner product is the $L^2$ inner product and we will from now on the inner 
-    product without subindex will be the $L^2$ inner product.
+    The inner product is the $L^2$ inner product and we will from now denote the $L^2$ inner 
+    product just by $\langle \cdot , \cdot \rangle$.
     Vice versa, take $\mathbf{v} \in D((\grad, H^1)^*)$. Then there exists 
     $\sigma \in L^2$ s.t.
     \begin{align*}
@@ -3189,7 +3244,7 @@ Now we can prove the adjoints of the operators without boundary conditions.
     and since $\tr$ is surjective we get $\gamma_n \mathbf{v} = 0$ i.e. 
     $\mathbf{v} \in H_0(\diver)$ and we have proven the first equality.
 
-    Take $u \in D((\diver, H(\diver))^*)$. Then we already see by taking 
+    Take $u \in D((\diver, H(\diver))^*)$. Then we already see
     \begin{align*}
         \int_\Omega \diver^*u \cdot \bm{\phi} \, dx
         = \int_\Omega u \diver \bm{\phi} \, dx \quad \forall \bm{\phi} \in C_0^\infty(\Omega;\real^3)
@@ -3274,10 +3329,9 @@ of the $\grad$ and $\diver$ with homogeneous boundary conditions.
 % \end{align*}
 
 
-This completes the computation of the adjoints of $\grad$ and $\diver$. We also 
-see that $(\diver, H(\diver))^{**} = (\diver, H(\diver))$ which shows that 
-$ (\diver, H(\diver))$ is a closed operator and analogous for the other operators 
-we have investigated. So by taking the graph inner product on $H(\diver)$
+This completes the computation of the adjoints of $\grad$ and $\diver$.Because  
+$(\diver, H(\diver))$ is a closed and densely defined operator 
+by taking the graph inner product on $H(\diver)$
 \begin{align*}
     \langle \mathbf{v}, \mathbf{w} \rangle _{H(\diver)}
     \vcentcolon= \langle \mathbf{v}, \mathbf{w} \rangle + \langle \diver \mathbf{v}, \diver \mathbf{w} \rangle
@@ -3285,7 +3339,7 @@ we have investigated. So by taking the graph inner product on $H(\diver)$
 and the induced norm
 we know from Prop. \ref{prop:closed_operator_graph_norm} that $H(\diver)$ becomes a Hilbert space.
 
-Now let us turn our attention to the remaining fundamenta differential operator 
+Now let us turn our attention to the remaining fundamental differential operator 
 $\curl$. Recall that we have for 
 $\mathbf{u}, \mathbf{v} \in C^1(\overline{\Omega})$ the integration-by-parts 
 formula
@@ -3315,7 +3369,7 @@ From the definition we can see
     (\curl, H(\curl)) = (\curl, C_0^\infty)^*.
 \end{align*}
 
-Following analogous arguments as above, obbtain the following 
+Following analogous arguments as above, we obtain the following 
 \begin{theorem}\label{thm:trace_hcurl}
     Let $\Omega$ be Lipschitz domain with compact boundary $\partial \Omega$.
     Then the operator $\mathbf{v} \mapsto 
@@ -3352,14 +3406,14 @@ Using this definition we can compute the adjoint.
         = \int_\Omega \mathbf{v} \cdot \curl \boldsymbol{\phi} \, dx
             \quad \forall \boldsymbol{\phi} \in C_0^\infty(\Omega;\real^3)
     \end{align*}
-    and thus $\curl* \mathbf{v} = \curl \mathbf{v}$ and we have 
+    and thus $\curl^* \mathbf{v} = \curl \mathbf{v}$ and we have 
     \begin{align}
         \langle \curl \mathbf{v}, \mathbf{w} \rangle
         = \langle \mathbf{v}, \curl \mathbf{w} \rangle \label{eq:adjoint_curl_equation}
     \end{align}
     for all $\mathbf{w} \in H(\curl)$. That means that for $\mathbf{w} \in H^1(\Omega;\real^3)$
     \begin{align*}
-        \langle \gamma_\tau \mathbf{v}, \mathbf{w} \rangle 
+        \langle \gamma_\tau \mathbf{v}, \tr \mathbf{w} \rangle 
         =  \langle \curl \mathbf{v}, \mathbf{w} \rangle - \langle \mathbf{v}, \curl \mathbf{w} \rangle
         = 0
     \end{align*}
@@ -3387,10 +3441,10 @@ Using this definition we can compute the adjoint.
     arbitrary we get $\mathbf{v} \in D((\curl, H(\curl))^*)$ and 
     we obtain the first equality. 
 
-    The second equality follows from the fact that $(\curl, H\curl)$ is 
+    The second equality follows from the fact that $(\curl, H(\curl))$ is 
     a closed and densely defined operator and thus 
     \begin{align*}
-        (\curl, H\curl)= (\curl, H\curl)^{**} = (\curl, H_0(\curl))^*.
+        (\curl, H(\curl))= (\curl, H(\curl))^{**} = (\curl, H_0(\curl))^*.
     \end{align*}
 \end{proof}
 With this, we computed the adjoints of the most important differential operators that 
@@ -3400,7 +3454,10 @@ will be needed in the following section.
 
 Now we will combine the idea of cochain complexes from Section 
 \ref{sec:singular_homology} 
-with unbounded operators. Recall that a cochain complex 
+with unbounded operators. We will then together with previous results of
+this section derive the Hodge decomposition and apply it to the three dimensional case.
+
+Recall that a cochain complex 
 is in full generality a sequence of groups $(G^i)_{i\in \integers}$ 
 and group homomorphims $f^i: G^i \rightarrow G^{i+1}$ s.t. 
 $f^{i+1} \circ f^{i} = 0$.
@@ -3413,11 +3470,15 @@ $f^{i+1} \circ f^{i} = 0$.
 \end{definition}
 \noindent We denote $\mathfrak{Z}^k  \vcentcolon= \ker d^k$ and $\mathfrak{B}^k 
 \vcentcolon= \Ima d^{k-1}$. Then it follows from the definition that
-$\mathfrak{B}^k \subseteq \mathfrak{Z}^k$.
+$\mathfrak{B}^k \subseteq \mathfrak{Z}^k$. 
 
-Because unbounded operators are bounded w.r.t. the graph norm
-which means here that the restriction of the operators to their domain 
-$d^k: V^k \rightarrow V^{k+1}$ are bounded operators when we use the graph norm
+To be precise, a Hilbert complex is in fact not a cochain complex in the exact 
+sense because it is not defined on the whole space, but it is if we look at
+the operators defined on their domains $V^k$ instead.
+
+Because unbounded operators are bounded w.r.t. the graph norm,
+the restriction of the operators to their domain,
+$d^k: V^k \rightarrow V^{k+1}$, are bounded operators when we use the graph norm
 on $V^k$. 
 % Note that $\mathfrak{B}^{k+1} \subseteq \mathfrak{Z}^{k+1} 
 % \subseteq V^{k+1}$
@@ -3472,8 +3533,8 @@ the indices of the spaces decrease. We call this complex the
 \cap \mathfrak{Z}^*_k$. Using 
 (\ref{eq:image_kernel_of_adjoint_in_hilbert_complex}) we can write this as
 \begin{align*}
-    \mathfrak{H}^k = \mathfrak{Z}^k \cap \mathfrak{B}^{*,\perp}_k
-         = \mathfrak{B}^{k,\perp} \cap \mathfrak{Z}^*_k.
+    \mathfrak{H}^k = \mathfrak{Z}^k \cap \mathfrak{B}^{k,\perp}
+         = \mathfrak{B}_k^{*,\perp} \cap \mathfrak{Z}^*_k.
 \end{align*}
 Now we can formulate the most important 
 result of this chapter. 
@@ -3534,7 +3595,7 @@ and we set all other $W^k$ to zero in order to obtain a sequence.
 Then we choose the operators $d^0 = \grad$, $d^1 = \curl$, $d^2 = \diver$ and
 for the domains we choose $V^0 = H^1(\Omega)$, $V^1 = H(\curl;\Omega)$, 
 $V^2 = H(\diver;\Omega)$ and $V^3 = L^2(\Omega) = W^3$. 
-As before, we will leave out the refernence to the domain $\Omega$ now.
+As before, we will leave out the reference to the domain $\Omega$ now.
 All other 
 $d^k$ are just zero. The resulting domain complex is then
 \begin{align}
@@ -3617,9 +3678,9 @@ This gives us the Hodge decomposition in the 3D case.
         &= \overline{\diver H_0(\diver)} \stackrel{\perp}{\oplus} 
             \mathfrak{H}^2.
     \end{align*}
-    We can express $L^2$ as
+    We can express $L^2(\Omega)$ as
     \begin{align*}
-        L^2 &= \overline{\diver H_0(\diver)} \stackrel{\perp}{\oplus} 
+        L^2(\Omega) &= \overline{\diver H_0(\diver)} \stackrel{\perp}{\oplus} 
             \{ v \in H^1 \mid \grad v = 0 \}
         \\ &= \overline{\diver H(\diver)}.
     \end{align*}
@@ -3676,12 +3737,12 @@ example in mind.
 The condition $\mathbf{B}\cdot \mathbf{n} = 0$ on $\partial\Omega$ is replaced
 with $\mathbf{B} \in H_0(\diver)$ i.e. $\gamma_n B = 0$ where 
 $\gamma_n$ is the generalized normal trace. We assume additionally that 
-$\mathbf{B} \in H(\curl)$. This means that in divergence and curl are meant in 
+$\mathbf{B} \in H(\curl)$. This means that the divergence and curl are meant in 
 the weak sense.
 
 Recall that another condition was the piecewise smooth curve integral around the torus.
 Recalling section \ref{sec:singular_homology} we replace the curve $\gamma$
-with formally with a smooth $1$-chain, which is essentially the same, so we will 
+formally with a smooth $1$-chain, which is essentially the same, so we will 
 denote by slight abuse of notation as $\gamma$ as well. We emphasize 
 it only to make it mathematically rigorous and so we can talk about integrals 
 of $1$-forms on it later. Note that smooth chain means here that the chosen 
@@ -3727,8 +3788,8 @@ norm is irrelevant due to all norms on $\real^{3 \times 3}$ being equivalent.
 
 We call a open $Q \subseteq \Omega$ \textit{precompact} if 
 $\overline{Q} \subseteq \Omega$ is compact where the closure is taken in the topology of $\real^3$
-and we write $Q \subset\subset \Omega$. Intuitively, this can be understood as 
-$Q$ being "bounded away from the boundary".
+and we write $Q \subset\subset \Omega$. This can be understood as 
+$Q$ being bounded and having positive distance from the boundary.
 Recall the definition of 
 \begin{align*}
     H^k_{loc}(\Omega) \vcentcolon= \{ u\in L^2 
@@ -3763,7 +3824,7 @@ the notion of weak solution.
     (\ref{eq:weak_elliptic_system}) is fulfilled for all test functions in 
     $C^\infty_0(\Omega;\real^3)$. Now take $\bm{\varphi} \in C^1_0(\Omega;\real^3)$
     arbitrary. Because $\bm{\varphi} \in H_0^1(\Omega;\real^3)$ and 
-    $C^\infty_0(\Omega;\real^3)$ is dense in $H_0^1(\Omega;\real^3)^3$ we can find 
+    $C^\infty_0(\Omega;\real^3)$ is dense in $H_0^1(\Omega;\real^3)$ we can find 
     a sequence $(\bm{\varphi}^{(l)})_{l \in \naturalnum} \subseteq 
     C^\infty_0(\Omega;\real^3)$ s.t. $\bm{\varphi}^{(l)} \rightarrow \bm{\varphi}$
     in $H^1(\Omega;\real^3)$. Thus the partial derivatives converge in $L^2(\Omega)$
@@ -3790,7 +3851,7 @@ the notion of weak solution.
 So we see that in the case of constant coefficents we can consider 
 just smooth compactly supported functions as test functions.
 Next, we will state the crucial result about the regularity of elliptic systems
-which will give us the desired regularity. This is Theorem 2.13 and Remark 2.16 
+which will give us the desired regularity of solutions of our system. This is Theorem 2.13 and Remark 2.16 
 in \cite{lectures_on_elliptic_pdes} in slightly less generality and for 3D.
 \begin{theorem}\label{thm:regularity_elliptic_systems}
     Let $\Omega$ be an open domain in $\real^3$. Let $A$ 
@@ -3929,6 +3990,7 @@ We want to rewrite this system in the expression of the elliptic system
     = - \sum\limits_{\alpha,\beta,j = 1}^3 
     \partial_\alpha \delta_{\alpha,\beta} \delta_{ij} \partial_\beta F_j
 \end{align*}
+with $\delta_{ij}$ being the Kronecker delta, 
 so we get $A_{ij}^{\alpha\beta} = \delta_{ij} \delta_{\alpha \beta}$.
 We have to check that the resulting differential operator is indeed
 elliptic, but this trivial because for any 
@@ -3983,7 +4045,7 @@ due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
 \end{proof}
 
 \begin{remark}
-    This also works for $\Omega$ open without regularity assumtpoi
+    This also works for any $\Omega$ open without regularity assumption on the boundary.
 \end{remark}
 
 % \begin{remark}
@@ -4008,9 +4070,10 @@ homology group is generated by the chain that we are integrating over i.e.
 \begin{align*}
     H_1(\Omega) = \integers [\gamma].
 \end{align*}
-
-Then we get the following existence and uniqueness result on the 
-level of homology.
+With this assumption, we will first prove a existence and uniqueness result on the 
+level of singular cohomology. This will lead to an analogous result for the de Rham 
+cohomology. Once we have proven these propositions we can move on to prove existence 
+and uniqueness of Problem \ref{prob:magnetostatic_problem}.
 
 \begin{proposition}\label{prop:uniqueness_cochain}
     Assume that $H_1(\Omega) = \integers [\gamma]$ i.e. the homology 
@@ -4121,25 +4184,25 @@ that demonstrates the connection of differential forms and cochains.
 \begin{lemma}\label{lem:extension_hcurl}
     Let $U$ be open and $\Omega$ be Lipschitz domain with compact boundary s.t.
     $\Omega \subseteq U$. Assume $\mathbf{v} \in H_0(\curl;\Omega)$. Then 
-    $\bar{\mathbf{v}}$ which is equal to $\mathbf{v}$ in $\Omega$ and zero 
-    in $U \setminus \Omega$ is in $H(\curl;U)$ and $\curl \bar{\mathbf{v}} = \curl \mathbf{v}$ 
+    $\bar{\mathbf{v}}$, which is equal to $\mathbf{v}$ in $\Omega$ and zero 
+    in $U \setminus \Omega$, is in $H(\curl;U)$ and $\curl \bar{\mathbf{v}} = \curl \mathbf{v}$ 
     in $\Omega$ and zero else.
 \end{lemma}
 \begin{proof}
     Take $\boldsymbol{\phi} \in C_0^\infty(U;\real^3)$ arbitrary. Let us denote 
     $\mathbf{w} = \curl \mathbf{v}$ in $\Omega$ and zero on $U\setminus \Omega$.
-    Then $\boldsymbol{\phi} \in C_b^\infty(\overline{\Omega};\real^3)$ and we have 
+    Then $\boldsymbol{\phi} \in C_b^\infty(\overline{\Omega};\real^3)$ and 
     using the integration by parts formula from Thm. \ref{thm:trace_hcurl}
     we get 
     \begin{align*}
         \int_U\mathbf{w} \cdot \boldsymbol{\phi} \, dx 
         &= \int_\Omega \curl \mathbf{v} \cdot \boldsymbol{\phi} \, dx
         \stackrel{Thm. \ref{thm:trace_hcurl}}{=} \int_\Omega \mathbf{v} \cdot \curl \boldsymbol{\phi} \, dx
-            + \langle \gamma_tau \mathbf{b}, \boldsymbol{\phi}\rangle
+            + \langle \gamma_\tau \mathbf{v}, \boldsymbol{\phi}|_{\partial \Omega}\rangle
         \\ &= \int_\Omega \mathbf{v} \cdot \curl \boldsymbol{\phi} \, dx
         = \int_U \bar{\mathbf{v}} \cdot \curl \boldsymbol{\phi} \, dx
     \end{align*}
-    and thus $\mathbf{w} = \curl \bar{\mathbf{v}}$ and since $\mathbf{w} \in L^2(U;\real^3)$
+    and thus $\mathbf{w} = \curl \bar{\mathbf{v}}$ and since $\mathbf{w} \in L^2(U;\real^3)$,
     $\bar{\mathbf{v}} \in H(\curl)$.
 \end{proof}
 
@@ -4147,7 +4210,7 @@ that demonstrates the connection of differential forms and cochains.
     Let $\Omega \subseteq \real^3$ be such that $\real^3 \setminus \Omega$
     is compact. 
     For the topology, we require that $H_1(\Omega) = \integers [\gamma]$ 
-    for a $1$-chain 
+    for a closed smooth $1$-chain 
     $\gamma$. Assume further that there exists an $\epsilon$-neighborhood 
     \begin{align*}
         \Omega_\epsilon \vcentcolon= \{ x \in \real^3 \mid
@@ -4174,19 +4237,19 @@ we can slightly reduce the poloidal radius without changing the topology of its
     \begin{align}
         \int_\gamma \tilde{\theta} = C_0. \label{eq:integral_theta_tilde}
     \end{align}
-    We now refer back to Sec.\,\ref{sec:differential_forms} 
+    We now refer back to Sec.\,\ref{sec:differential_forms_subsection} 
     and change back to vector proxies. Let 
     $\tilde{\bm{\phi}}$ be the vector proxy of $\tilde{\theta}$ 
-    i.e. by recalling the musical isomorphism \ref{}
-     $\tilde{\theta}^\sharp = \tilde{\bm{\phi}} \in C^\infty(\Omega_\epsilon;\real^3$.
+    i.e. by recalling the musical isomorphism from Sec.\,\ref{sec:differential_forms_subsection}
+     $\tilde{\theta}^\sharp = \tilde{\bm{\phi}} \in C^\infty(\Omega_\epsilon;\real^3)$.
     Because $\tilde{\theta}$ is closed and (\ref{eq:integral_theta_tilde}) holds
     we obtain the corresponding properties 
-    of $\tilde{\bm{\phi}}$ using Example \ref{ex:integration_1_forms} the connection 
-    of the curl with the exterior derivative to get 
+    of $\tilde{\bm{\phi}}$ using Example \ref{ex:integration_1_forms} and the connection 
+    of the curl with the exterior derivative,
     \begin{align*}
-        \int_\gamma \tilde{\theta} &= \int_\gamma \tilde{\bm{\phi}} \cdot dl = C_0 
-        \\ \curl \tilde{\bm{\phi}} = (\star d\boldsymbol{\bm{\phi}}^\flat)^\sharp = 
-        (\star d\tilde{\theta})^\sharp &= 0.
+        \int_\gamma \tilde{\bm{\phi}} \cdot dl &= \int_\gamma \tilde{\theta} = C_0 
+        \\ \curl \tilde{\bm{\phi}} &= (\star d\boldsymbol{\bm{\phi}}^\flat)^\sharp = 
+        (\star d\tilde{\theta})^\sharp = 0.
     \end{align*}
     We define $\bm{\phi} \in C^\infty(\overline{\Omega};\real^3)$ by restricting $\tilde{\bm{\phi}}$ to $\Omega$. 
     Let now $K_R$ be the open ball around the origin with radius $R>0$ large
@@ -4197,10 +4260,10 @@ we can slightly reduce the poloidal radius without changing the topology of its
 
     We now need to construct a harmonic vector field with zero tangential trace
     s.t. we can extend it by zero. We do this by using the Hodge 
-    decomposition in the $3$D case Thm. \ref{thm:hodge_decomposition_in_3d}.
+    decomposition in the $3$D case (Thm. \ref{thm:hodge_decomposition_in_3d}).
     We project $\bm{\phi}_R$ onto the harmonic fields to obtain $\mathbf{B}_R \in \mathfrak{H}^1(\Omega_R)$ 
-    which has zero 
-    tangential trace. So there exists a sequence 
+    {\color{red} which has zero 
+    tangential trace (This is wrong)}. So there exists a sequence 
     $(\psi_i)_{i \in \naturalnum} \in H^1(\Omega_R)$ (which is the Sobolev space here) s.t.
     \begin{align*}
         \mathbf{B}_R = \bm{\phi}_R - \lim\limits_{i\rightarrow \infty}\grad \psi_i
@@ -4268,18 +4331,17 @@ In the proof of uniqueness we will use the following lemma.
     Take $K_R$ the open ball around the origin with $R$ large enough 
     s.t. $\real^3 \setminus (K_R) \subseteq \Omega$. 
     Define $\Omega_R \vcentcolon= K_R \cap \Omega$. $\Omega_R$ is a bounded Lipschitz 
-    domai.
+    domain.
     Then we can define $\phi_R \vcentcolon= \phi|_{\Omega_R}$.
 
     We want to show $\phi_R \in H^1(\Omega_R)$. We alredy know that $\grad \phi_R \in L^2(\Omega, \real^3)$.
-    Since $L^2(\Omega_R, \real^3) \subseteq H^{-1}(\Omega_R;\real^3)$ we can conclude that 
+    Since $L^2(\Omega_R; \real^3) \subseteq H^{-1}(\Omega_R;\real^3)$ we can conclude that 
     $\phi_R \in L^2$ because $\Omega_R$ is bounded and Lipschitz (\cite[Lemma 3.11]{monk}) 
     and thus $\phi_R \in H^1(\Omega_R)$ . This essentially means that 
-    if $\phi \notin L^2$ it is due to its behavious at infinity.
+    if $\phi \notin L^2(\Omega)$ it is due to its behavious at infinity.
 
     Since $\Omega_R$ is bounded and Lipschitz we can find an extension $\bar{\phi}_R \in H^1(\real^3)$ 
     s.t. $\bar{\phi}_R|_{\Omega_R} =\phi_R$ (cf. \cite[Sec.\,1.5.1]{mazya}).
-    Therefore we can find an extension
     So we can now define
     \begin{align*}
     \bar{\phi} \vcentcolon=
