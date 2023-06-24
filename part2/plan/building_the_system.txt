@@ -1,0 +1,17 @@
+Splines
+	Definition
+	Properties without proof
+	Tensor splines
+
+Interpolation
+	Geometric interpolation
+	Quasi-Interpolation (?)
+	Error estimates
+
+Building the system
+	Pullback
+	Assembly on logical domain
+	Total stiffness matrix
+
+
+	

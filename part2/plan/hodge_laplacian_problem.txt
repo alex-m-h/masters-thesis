@@ -1,0 +1,15 @@
+Hodge Laplacian problem
+	Hodge Laplacian operator
+	Kernel
+	Problem
+
+Harmonic constraint
+	Orthogonality
+	Curve integral condition
+
+Variational formulation
+	(Weak formulation)
+	Mixed formulation
+	Motivation
+	Equivalence
+	

@@ -1,0 +1,31 @@
+Hodge Laplacian problem
+Discretization of Hilbert complexes
+Implementation in 2D
+Numerical examples
+
+
+Hodge Laplacian problem
+	Hodge Laplacian problem
+	In 3D and 2D
+	Harmonic constraint
+	Variational formulation
+	Magnetostatic problem as Hodge Laplacian problem
+
+Discretization of Hilbert complexes
+	Discrete Hilbert complex
+	Discretized Hodge Laplacian problem
+	CONGA method
+	Curve integral
+	Variational formulation
+	Stability and convergence(?)
+
+Implementation in 2D
+	Splines
+	Interpolation
+	Building the system
+
+Numerical examples
+	Manufactured solution
+	Different integration functions
+	Different interpolation schemes
+	Convergence analysis
