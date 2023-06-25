@@ -1,0 +1,262 @@
+\documentclass[../master_thesis.tex]{subfiles}
+\begin{document}
+\section{The Hodge Laplacian problem}
+
+A Hilbert complex $(W^k, d^k)$ provides us with a natural operator which 
+we call the \textit{abstract Hodge Lpalacian} defined as 
+\begin{align*}
+    L^k: D(L^k) \rightarrow W^k, u \mapsto d^{k+1}_* d^k u + d^{k-1} d^*_k u.
+\end{align*}
+with 
+\begin{align*}
+    D(L^k) \vcentcolon= \{ u \in V^k \cap V^*_k \mid d^k u \in V^*_{k+1}, d^*_k u \in V^{k-1} \}   
+\end{align*}
+The name stems from the standard Hodge Laplacian on Riemannian manifolds where the differential operator 
+is the exterior derivative (see \cite{}). We will usually just leave out the term abstract.
+This section will be dealing with the 
+operator equation
+\begin{align}
+    L^k u = f.
+\end{align}
+We will follow the corresponding section 4.4 in Arnold's book \cite{arnold}.
+Let us start with the question of well-posedness for which the following 
+Proposition is crucial. Also we will stick to the notation introduced in Sec.\,\ref{sec:hilbert_complexes}
+
+\subsection{Strong formulation}
+
+\begin{proposition}[Kernel of the Hodge Laplacian]
+    \begin{align}
+        \ker L^k = \mathfrak{H}^k \label{eq:hodge_laplacian_operator_eq}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    The direction "$\supseteq$" is clear from the definition of harmonic forms.
+    We will leave away the index now. Let $u \in \ker L^k$,
+    \begin{align*}
+        0 = \langle L^k u, u \rangle 
+        = \langle d^{k+1}_* d^k u, u \rangle + \langle d^{k-1} d^*_k u, u \rangle
+        = \lVert d^k u, d^k u \rVert + \lVert d^*_k u, d^*_k u \rVert
+    \end{align*}
+    the norms and inner products are in the spaces $W^{k-1}$, $W^{k}$ and $W^{k+1}$.
+    Thus we see that $d^*_k u = 0$ and $d^k u = 0$ and hence $u \in \mathfrak{H}^k$.
+\end{proof}
+
+This has immediate implications. 
+Let us denote in general the orthogonal projection operator onto a subset 
+$Z$ as $P_Z$.
+This means that (\ref{eq:hodge_laplacian_operator_eq})
+can only have a solution if $P_\mathfrak{H} = 0$ due to the Hodge decomposition 
+and also that solutions are only unique up to addition of harmonic forms and 
+thus (\ref{eq:hodge_laplacian_operator_eq}) is in general not well-posed. 
+We require additional constraints. The simplest option is to require 
+$u \perp \mathfrak{H}^k$. This leads us to the standard 
+\textit{strong formulation} of the Hodge Laplacian problem with 
+\textit{orthogonality constraint}: For any 
+$f \in W^k$ find $u \in V^k \cap V^*_k$ s.t.
+\begin{align*}
+    L^k u = f - P_\mathfrak{H} f \text{ and } u \perp \mathfrak{H}^k.
+\end{align*}
+Because we know from $u \perp \ker L^k$ that the solution must be unique if it 
+exists. We will later also consider different constraints on the harmonic part.
+
+Let us investigate the Hodge-Laplacian in 3D which we are well familiar with.
+We have $V^0 = H^1$, $V^1 = H(\curl)$, $V^2 = H(\diver)$ and $V^3 = L^2$. As before, 
+we leave out the reference to the domain $\Omega$ which is assumed to have 
+a compact Lipschitz boundary as in Sec.\,\ref{sec:l2_de_rham_complex_in_3d}.
+Then we get $V^*_0 = L^2$, $V^*_1 = H_0(\diver)$, $V^*_2 = H_0(\diver)$
+and $V^*_3 = H^1_0$. Since $d^0 = \grad$ and $d^*_1 = -\diver$ and we set 
+$d^*_0 = 0$ to get 
+\begin{align*}
+    D(L^0) &= \{ u \in H^1 \mid \grad u \in H_0(\diver) \} \text{ and }
+    \\ L^0 &= -\diver \grad = - \Delta.
+\end{align*}
+Assume that our domain is path connected. Recall that then 
+$\mathfrak{H}^0$ are the constant functions and thus the 
+condition $f \perp \mathfrak{H}^0$ means that 
+\begin{align}
+    \int_\Omega f \, dx = 0 \label{eq:average_equals_zero}
+\end{align}
+Then we see that the resulting Hodge Laplacian problem: Take $f \in L^2$ with (\ref{eq:average_equals_zero}) 
+being fulfilled. 
+Find $u \in D(L^0)$ 
+s.t.
+\begin{align*}
+    -\diver \grad u &= f \text{ and }
+    \\ \int_\Omega u &= 0
+\end{align*}
+Note that $u \in D(L^0)$ requires $\grad u \cdot \mathbf{n} = 0$ on $\partial \Omega$ and 
+thus we recognize the strong formulation of the well-known Poisson problem with 
+Neumann boundary conditions. (\ref{eq:average_equals_zero}) is the well-known 
+compatibility condition for the Neumann boundary conditions.
+
+Let us also look at situation for $k=1$. Then 
+\begin{align*}
+    D(L^1) &= \{ \mathbf{u} \in H(\curl) \cap H_0(\diver) 
+        \mid \curl \mathbf{u} \in H_0(\curl), \diver \mathbf{u} \in H^1 \} \text{ and }
+    \\ L^1 &= \curl \curl - \grad \diver.
+\end{align*}
+This operator we already know form \ref{}. The connection to the magnetostatic problem 
+will be made clear later (?). The full problem then reads: Take $\mathbf{f} \in L^2(\Omega;\real^3)$. 
+Find $\mathbf{u} \in D(L^1)$ s.t. 
+\begin{align*}
+    \curl \curl \mathbf{u} - \grad \diver \mathbf{u} &= \mathbf{f} - P_{\mathfrak{H}^1}\mathbf{f}.
+    \\ u \perp \mathfrak{H}^1
+\end{align*}
+
+Analogously, we obtain the same problem with changed boundary conditions for the operator $L^2$ 
+and $\mathfrak{H}^2$ instead of $\mathfrak{H}^1$. For $k=3$ we obtain the Poisson problem, 
+but with Dirichlet boundary conditions.
+
+In this second part of the thesis, the situation in 2D will also become relevant. So we will
+
+\subsection{Mixed formulation}
+We want to deal with Hodge Laplacian problem using a finite element approach. 
+So we woul like to write this problem in variational form. The most principled way to do so 
+is using the \textit{mixed weak formulation}: For any $f \in W^k$ find $\sigma \in V^{k-1}$, 
+$u\in V^k$ and $p\in \mathfrak{H}^k$ s.t.
+\begin{align}
+    \langle \sigma, \tau \rangle - \langle u, d^{k-1}\tau \rangle 
+        &= 0 \quad \forall \tau \in V^{k-1}, \label{eq:first_eq_mixed_formulation}
+    \\ \langle d\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle 
+        &= \langle f, v \rangle \quad \forall v \in V^k \text{ and} \label{eq:second_eq_mixed_formulation}
+    \\ \langle u, q \rangle \quad \forall q \in \mathfrak{H}^k.
+\end{align} 
+This formulation is of course much more complicated than the first one \ref{}, 
+but this formulation will turns out to be well-suited for finite element approximations.
+But it begs the question if the two formulations are equivalent. We will answer it 
+in two propositions. We will treat the harmonic constraint separately.
+
+\begin{proposition}
+    For any $f \in W^k$, (\ref{eq:first_eq_mixed_formulation}) and 
+    (\ref{eq:second_eq_mixed_formulation}) hold i.i.f. 
+    $\sigma = d^*_k u$, $p=P_\mathfrak{H}f$ and 
+    \begin{align*}
+        L^k u = f - P_\mathfrak{H}f
+    \end{align*}
+    i.e. the strong formulation is fulfilled without the additional 
+    constraint $u \perp \mathfrak{H}^k$.
+\end{proposition}
+\begin{proof}
+    We recognize that the first equation (\ref{eq:first_eq_mixed_formulation})
+    is actually just the defining property of the adjoint hence 
+    $\sigma = d^*_k u$. It also implies that $u$ is in fact in $V^*_k$.
+
+    Now assume additionally, that  
+    (\ref{eq:second_eq_mixed_formulation}) holds. Then by choosing $v \in \mathfrak{H}^k$
+    we get from the definition of the harmonic forms 
+    and $\mathfrak{H}^k \perp \mathfrak{B}^k$ from the Hodge decomposition and thus
+    \begin{align*}
+        \langle d\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle
+        = \langle p, v \rangle = \langle f, v \rangle \quad \forall v \in \mathfrak{H}^k
+    \end{align*}
+    which is equivalent to $p = P_\mathfrak{H}f$. Next, we would like to show that 
+    $\langle du, dv \rangle = \langle d^* du, v \rangle$ which is fulfilled if 
+    $du \in V^*_{k+1}$. This follows from (\ref{eq:second_eq_mixed_formulation})
+    since then 
+    \begin{align*}
+        \langle du, dv \rangle &= - \langle d\sigma, v \rangle + \langle f - P_\mathfrak{H}f, v \rangle
+        \\ &\leq \lVert f - P_\mathfrak{H}f - d\sigma \rVert \lVert v \rVert
+    \end{align*}
+    and so $du \in V^*_{k+1}$.
+    Thus we have 
+    \begin{align*}
+        &\langle d^{k-1}\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle
+        \\ &= \langle d^{k-1} d^*_k u, v \rangle + \langle d^* du, v \rangle + \langle p, v \rangle
+        \\ &= \langle d^{k-1} d^*_k u + d^* du + P_\mathfrak{H}f, v \rangle = \langle f, v \rangle
+    \end{align*}
+    and so since by assumption $V^k$ is dense in $W^k$,
+    \begin{align*}
+        d^*_k u + d^* du + P_\mathfrak{H}f = f.
+    \end{align*}
+
+    For the other direction assume $u \in D(L^k)$, $d^*_k u = \sigma$ and $p= P_\mathfrak{H} f$
+    and 
+    \begin{align}
+        d^{k-1} d^*_k u + d^* du  = f - P_\mathfrak{H}f.\label{eq:proof_equivalence_of_formulations:strong_form}
+    \end{align}    
+    The first equation 
+    holds as explained above. For the second one, we take the inner product of 
+    (\ref{eq:proof_equivalence_of_formulations:strong_form}) with an arbitrary 
+    $v \in V^k$ and immediately obtain (\ref{eq:second_eq_mixed_formulation}).
+\end{proof}
+So we immediately obtain 
+
+\begin{corollary}
+    The strong formulation and mixed weak formulation of the Hodge Laplacian problem 
+    with orthogonality constraint $u \perp \mathfrak{H}^k$ are equivalent.
+\end{corollary}
+The reason why did not proof the equivalence directly is that we might add another 
+harmonic constraint and would still get equivalence which we will need later. 
+The problem with orthogonality constraint is then well-posed see \cite{}.
+
+
+\section{Discrete Hilbert complex}
+
+In order to approximate the Hodge Laplacian problem we want to use finite elements.
+We want to use them in a way that we can rebuild the structure of the Hilbert complex 
+in our discretization. This section follows Sec. 5.2 in Arnold's book \cite{arnold}.
+
+Let us assume the we have finite dimensional subspaces $V_h^k \subseteq V^k$. 
+Then we define completely analogous to the continuous case,
+\begin{align*}
+    \mathfrak{Z}_h^k &\vcentcolon= \{ v \in V_h^k \mid d v = 0 \} = \ker d \cap V^k_h
+    \\ \mathfrak{B}^k_h &\vcentcolon= \{ dv \mid v \in V_h^{k-1} \}.
+\end{align*}
+We can now also define the discrete harmonic forms. Now the situation is slightly 
+different however. We will not use the continuous adjoint $d^*_k$ to define it.
+Instead,
+\begin{align*}
+    \mathfrak{H}_h^k \vcentcolon= \{ v \in \mathfrak{Z}_h^k \mid v \perp \mathfrak{B}^k_h \}
+        = \mathfrak{Z}_h^k \cap \mathfrak{B}_h^{k,\perp}.
+\end{align*}
+Notice that we have $\mathfrak{Z}_h^k \subseteq \mathfrak{Z}^k$ and 
+$\mathfrak{B}_h^k \subseteq \mathfrak{b}^k$, but due to 
+$\mathfrak{B}_h^{k,\perp} \supseteq \mathfrak{B}^{k,\perp}$ we have in general
+\begin{align*}
+    \mathfrak{H}^k = \mathfrak{Z}_h^k \cap \mathfrak{B}_h^{k,\perp} 
+    \not\subseteq    \mathfrak{Z}^k \cap \mathfrak{B}^{k,\perp} = \mathfrak{H}^k.
+\end{align*}
+
+This is now already enough to define apply the mixed formulation to the discrete setting: 
+For a given $f \in W^k$, find $\sigma_h \in V_h^{k-1}$, $u_h \in V_h^k$ and 
+$p_h \in \mathfrak{H}^k$ s.t.
+
+\begin{align}
+    \langle \sigma_h, \tau_h \rangle - \langle u_h, d\tau_h \rangle &= 0 \quad \tau_h \in V_h^{k-1},
+    \\ \langle d\sigma_h, v_h \rangle + \langle du_h, dv_h \rangle + \langle p_h, v_h \rangle 
+        &= \langle f, v_h \rangle \quad v_h \in V_h^k,
+    \\ \langle u_h, q_h \rangle = 0, \quad \forall q_h \in \mathfrak{H}^k_h \label{eq:third_eq_discrete_mixed}.
+\end{align}
+When $\mathfrak{H}_h^k \not\subseteq \mathfrak{H}^k_h$ this is a nonconforming 
+Galerkin method. The harmonic constraint (\ref{eq:third_eq_discrete_mixed}) can 
+be replaced with a different one.
+
+There are three crucial properties that are necessary for stability and convergence 
+of the method. The first one is the common and reasonable assumption that 
+-- as usual in finite element theory -- we want that the discrete spaces $V_h^k$
+approximate the continuous ones $V^j$. This can be generally summarized that 
+\begin{align*}
+    \lim_{h \rightarrow 0} \inf_{v_h \in V_h^j} \lVert w - v_h \rVert = 0, \quad \forall w \in V^j.
+\end{align*}
+This is usually satisfied if we use established finite elements for a given space 
+e.g. if we take Lagragian FE if $V = H^1$ or Raviart-Thomas if $V=H(\diver)$ \cite{}.
+
+The next property is more restrictive. We require that $dV_h^{k-1} \subseteq V_h^k$ 
+and $dV_h^j \subseteq V_h^{j+1}$. This shows that the we cannot simply use arbitrary 
+discrete subspaces independent from one another. This property has a very nice
+consequence. 
+It shows that 
+\begin{align*}
+    V_h^{k-1} \xrightarrow{d^{k-1}} V_h^k \xrightarrow{d^k} V_h^{k+1}
+\end{align*}
+is itself a Hilbert complex and we can apply the general theory from 
+Sec. \ref{sec:hilbert_complexes} directly to it. Let us do that.
+
+Denote the restriction of $d^j$ to $V_h^j$ as $d_h^j$. Then as a linear map 
+between finite spaces the adjoint -- denoted as $d_{j,h}^*: V_h^j \rightarrow V_h^{j-1}$ -- 
+is everywhere defined. It is important to notice that in contrast to $d_h$ 
+the adjoint $d^*_jh$ is not the restriction of the adjoint the continuous adjoint $d^*_j$.
+In general, $V_h \not\subseteq V^*$ and so the continuous adjoint might not be 
+well-defined for a given $v_h \in V_h$. 
+
+\end{document}

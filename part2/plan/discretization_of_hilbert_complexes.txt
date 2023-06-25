@@ -13,19 +13,7 @@ CONGA method
 	Hilbert complex
 	Discretized CONGA Hodge Laplacian problem
 
-Curve integral
-	Continuous setting
-	Discretized setting
-	Estimates
-	
-Variational formulation
-	Advantage over primal weak formulation
-	Variational formulation details
-	
-Stability and convergence
-	Stability from inf-sup condition
-	A priori estimates for the "almost conforming" method
-	Stability and convergence for CONGA version (????)
+
 
 
 

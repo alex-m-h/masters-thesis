@@ -1,13 +1,13 @@
-Hodge Laplacian problem
+Hodge Laplacian problem(?)
 Discretization of Hilbert complexes
+Magnetostatic problem in 2D
 Implementation in 2D
 Numerical examples
 
 
 Hodge Laplacian problem
 	Hodge Laplacian problem
-	In 3D and 2D
-	Harmonic constraint
+	In 3D
 	Variational formulation
 	Magnetostatic problem as Hodge Laplacian problem
 
@@ -15,9 +15,13 @@ Discretization of Hilbert complexes
 	Discrete Hilbert complex
 	Discretized Hodge Laplacian problem
 	CONGA method
+
+Magnetostatic problem in 2D
 	Curve integral
 	Variational formulation
-	Stability and convergence(?)
+	Well-posedness
+	Stability
+	convergence(?)
 
 Implementation in 2D
 	Splines
