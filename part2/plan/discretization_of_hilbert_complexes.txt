@@ -2,6 +2,8 @@ Discrete Hilbert complex
 	Discrete Hilbert complex
 	Discrete dual complex
 	Cochain projections
+	Discrete harmonic forms
+	Discrete Poincare inequality
 
 Discretized Hodge Laplacian problem
 	Discretized Hodge Laplacian problem

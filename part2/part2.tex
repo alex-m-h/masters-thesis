@@ -227,8 +227,8 @@ $p_h \in \mathfrak{H}^k$ s.t.
         &= \langle f, v_h \rangle \quad v_h \in V_h^k,
     \\ \langle u_h, q_h \rangle = 0, \quad \forall q_h \in \mathfrak{H}^k_h \label{eq:third_eq_discrete_mixed}.
 \end{align}
-When $\mathfrak{H}_h^k \not\subseteq \mathfrak{H}^k_h$ this is a nonconforming 
-Galerkin method. The harmonic constraint (\ref{eq:third_eq_discrete_mixed}) can 
+When $\mathfrak{H}_h^k \not\subseteq \mathfrak{H}^k_h$ this is a nonconforming
+method. The harmonic constraint (\ref{eq:third_eq_discrete_mixed}) can 
 be replaced with a different one.
 
 There are three crucial properties that are necessary for stability and convergence 
@@ -259,4 +259,131 @@ the adjoint $d^*_jh$ is not the restriction of the adjoint the continuous adjoin
 In general, $V_h \not\subseteq V^*$ and so the continuous adjoint might not be 
 well-defined for a given $v_h \in V_h$. 
 
+So we obtain the Hilbert complex
+\begin{align*}
+    V_h^{k-1} \xrightarrow{d^{k-1}} V_h^{k} \xrightarrow{d^{k}} V_h^{k+1}
+\end{align*}
+and its dual complex
+\begin{align*}
+    V_h^{k-1} \xleftarrow{d^*_k} V_h^{k} \xleftarrow{d^*_{k+1}} V_h^{k+1}
+\end{align*}
+From the general Hilbert complex theory (Thm.\,\ref{thm:hodge_decomposition})
+we thus obtain the \textit{discrete Hodge decomposition}
+\begin{align*}
+    V_h^j = \mathfrak{B}^j_h \stackrel{\perp}{\oplus} \mathfrak{H}^j_h \stackrel{\perp}{\oplus}
+        \mathfrak{B}^*_{jh}.
+\end{align*}
+So we achieved our goal of getting a structure like in the continuous case 
+for our discrete approximation. Especially the question how well the discrete harmonic 
+forms approximate the contiinous one will be looked at more closely.
+
+
+The third crucial assumption is the existence of \textit{bounded cochain projections} $\pi_h$. 
+This is a projection that is a cochain map in the sense of cochain complexes \ref{} i.e. 
+the following diagram commutes:
+% \begin{tikzcd}
+%     A \arrow[r, "\phi"] 
+%     & B \arrow[d, "\psi" red] 
+% \end{tikzcd}    
+$\pi_h$ are either bounded in the $V$ or in the $W$-norm where  
+$W$-boundedness implies $V$ boundedness. 
+The cochain projection will play an important 
+role in the stablity of the discrete system.
+
+Let us now answer the question about the difference between discrete and continous 
+harmonic forms. In order to do that we need some way to measure the "difference" 
+between two subspaces.
+
+\begin{definition}[Gap between subspaces]
+    For a Banach space $W$ with subspaces $Z_1$ and $Z_2$. 
+    Let $S_1$ and $S_2$ be the unit spheres in $Z_1$ and $Z_2$ respectively i.e.
+    $S_1 = \{ z\in Z_1 \mid \lVert z \rVert _W = 1 \}$.
+    Then we define 
+    the gap between these subspaces as 
+    \begin{align*}
+        \gap(Z_1, Z_2) = \max\{ \sup_{z_1 \in S_1} \text{dist}{z_1, Z_2}, \sup_{z_2 \in S_2} \text{dist}{z_2, Z_1} \}
+    \end{align*}
+\end{definition}
+This definition is from \cite[p.198]{kato perturbation theory} and defines a metric on the set of closed subspaces
+of $W$ (see \ref[Remark p.198]{})
+If $W$ is a Hilbert space -- as it is throughout this section -- and $Z_1$ and $Z_2$ are closed then
+the $\gap(Z_1, Z_2) = \lVert P_{Z_1} - P_{Z_2} \rVert$ i.e. the difference in operator norm of the 
+orthogonal projections onto $Z_1$ and $Z_2$. This gives us a measure of distance between 
+spaces which we can now apply to the question of the difference of the difference between 
+discrete and continous harmonic forms.
+
+\begin{proposition}[Gap between harmonic forms]
+    Assume that the discrete complex \ref{} admits a $V$-bounded cochain projection
+    $\pi_h$. Then
+    \begin{align*}
+        \lVert (I - P_{\mathfrak{H}^k_h}) q \rVert _V \leq \lVert (I - \pi_h^k) q \rVert _V, 
+            \forall q \in \mathfrak{H}^k 
+        \\ \lVert (I - P_{\mathfrak{H}^k}) q_h \rVert _V 
+        \leq \lVert (I - \pi_h^k)P_{\mathfrak{H}^k} q \rVert _V, \forall q \in \mathfrak{H}^k, 
+                \forall q_h \in \mathfrak{H}^k_h 
+    \end{align*}
+    and then 
+    \begin{align*}
+        \gap (\mathfrak{H}, \mathfrak{H}_h) 
+        \leq \sup_{q \in \mathfrak{H}, \lVert q \rVert = 1} \lVert (I - \pi_h^k) q \rVert_V
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    See \cite[Thm.\,5.2]{arnold}. 
+\end{proof}
+{\color{red} Do not forget the continuous poincare inequality}
+\begin{proposition}[Discrete Poincare inequality]
+    Assume that we have a $V$-bounded cochain projection $\pi_h$ for 
+    the discrete Hilbert complex \ref{}. Then 
+    \begin{align*}
+        \lVert v \rVert _V \leq c_P \lVert \pi_h \rVert _V \lVert dv \rVert, 
+            \quad \forall v \in \mathfrak{Z}_h^{k\perp}\cap V_h
+    \end{align*}
+    with $c_P$ being the Poincare constant from \ref{}.
+\end{proposition}
+\begin{proof}
+    This indeed is a direct consequence of the existence of bounded cochain projections.
+    Take $v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h$ arbitrary. 
+    Since $d (\mathfrak{Z}^{k,\perp} \cap V^k) = \mathfrak{B} \supseteq \mathfrak{B}_h$ we find 
+    $z\in \mathfrak{Z}^{k\perp}\cap V_h$ s.t. $dz = dv$. We can apply now the continuous 
+    Poincare inequality \ref{} to get $\lVert z \rVert _V \leq c_P \lVert dz \rVert _V = c_P \lVert dv_h \rVert _V$.
+    Now we can combine the different assumptions about the discrete Hilbert complex teo get 
+    $v_h - \pi_h z \in V_h^k$. Now we can use the fact that $\pi_h$ is a cochain map 
+    and the fact that $\pi_h$ is a projection:
+    \begin{align*}
+        d\pi^k_h z = \pi^{k+1}_h dz = \pi^{k+1}_h dv_h = dv_h
+    \end{align*}
+    For the last equality we used also the fact that we have a discrete complex i.e. $d^k V^k_h \subseteq V^{k+1}_h$.
+    That shows that $d(v_h - \pi_h z) = 0$ i.e. $(v_h - \pi_h z) \in \mathfrak{Z}_h^k$.
+    Because $v_h \in \mathfrak{Z}_h^{k,\perp}$ by assumption we have 
+    \begin{align*}
+        0 = \langle v, v_h - \pi_h z \rangle = \langle v, v_h - \pi_h z \rangle + \langle dv, d(v_h - \pi_h z) \rangle
+            = \langle v, v_h - \pi_h z \rangle _V
+    \end{align*}
+    so $v_h - \pi_h z$ is $V$ orthogonal to $v_h$. So 
+    \begin{align*}
+        \lVert v_h \rVert _V^2 = \langle v_h, \pi_h^k z \rangle _V + \langle v_h, v_h - \pi_h^k z\rangle _V 
+        = \langle v_h, \pi_h^k z \rangle _V \leq \lVert \pi_h \rVert _V \lVert dv \rVert
+        \stackrel{Poincare ineq.}{\leq} c_P \lVert \pi_h \rVert _V \lVert dv \rVert _V
+    \end{align*}
+\end{proof}
+
+So we get the inf sup condition with $c_{P,h} = c_P \lVert \pi_h \rVert _V$ instead of $c_P$ 
+and obtain well-posedness.
+
+\section{Magnetostatic problem in 2D}
+
+We are interested in solving the 2D version of the magnetostatic problem. 
+Find $\mathbf{B} \in H(\curl) \cap H_0(\diver)$ s.t.
+\begin{align*}
+    \diver \mathbf{B} &= 0
+    \\ \curl \mathbf{B} &= J.
+\end{align*}
+This problem is generally not-well posed since we need to add a harmonic constraint. 
+One option is to take the orthogonality constraint again. But now we want to use the 
+analogous problem that we dealt with in the first part of the thesis and add the 
+constraint 
+\begin{align*}
+    
+\end{align*}
 \end{document}
