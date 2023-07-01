@@ -1,35 +1,30 @@
-Hodge Laplacian problem(?)
+Magnetostatic problem in variational mixed form
 Discretization of Hilbert complexes
-Magnetostatic problem in 2D
 Implementation in 2D
 Numerical examples
 
 
-Hodge Laplacian problem
-	Hodge Laplacian problem
-	In 3D
+Magnetostatic problem in variational mixed form
+	2D magnetostatic problem
 	Variational formulation
-	Magnetostatic problem as Hodge Laplacian problem
+	Curve integral
+	Inf-sup condition with curve integral
+	Stability with curve integral
+	A-priori estimate
 
 Discretization of Hilbert complexes
 	Discrete Hilbert complex
-	Discretized Hodge Laplacian problem
-	CONGA method
-
-Magnetostatic problem in 2D
-	Curve integral
-	Variational formulation
-	Well-posedness
-	Stability
-	convergence(?)
+	Discretized magnetostatic problem
 
 Implementation in 2D
 	Splines
 	Interpolation
+	Imposing boundary conditions
+	Projection operators
 	Building the system
 
 Numerical examples
 	Manufactured solution
 	Different integration functions
-	Different interpolation schemes
+	Different interpolation schemes (?)
 	Convergence analysis

@@ -5,15 +5,10 @@ Discrete Hilbert complex
 	Discrete harmonic forms
 	Discrete Poincare inequality
 
-Discretized Hodge Laplacian problem
-	Discretized Hodge Laplacian problem
+Discretized magnetostatic problem
+	Discrete formulation
 	Different harmonic constraints
 
-CONGA method
-	Idea
-	General approach
-	Hilbert complex
-	Discretized CONGA Hodge Laplacian problem
 
 
 

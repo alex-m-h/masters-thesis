@@ -1,125 +1,44 @@
 \documentclass[../master_thesis.tex]{subfiles}
 \begin{document}
-\section{The Hodge Laplacian problem}
+\section{Variational formulation of the magnetostatic in 2D}
 
-A Hilbert complex $(W^k, d^k)$ provides us with a natural operator which 
-we call the \textit{abstract Hodge Lpalacian} defined as 
+In 2D we have the Hilbert complex 
 \begin{align*}
-    L^k: D(L^k) \rightarrow W^k, u \mapsto d^{k+1}_* d^k u + d^{k-1} d^*_k u.
+    ?????????
 \end{align*}
-with 
-\begin{align*}
-    D(L^k) \vcentcolon= \{ u \in V^k \cap V^*_k \mid d^k u \in V^*_{k+1}, d^*_k u \in V^{k-1} \}   
-\end{align*}
-The name stems from the standard Hodge Laplacian on Riemannian manifolds where the differential operator 
-is the exterior derivative (see \cite{}). We will usually just leave out the term abstract.
-This section will be dealing with the 
-operator equation
-\begin{align}
-    L^k u = f.
-\end{align}
-We will follow the corresponding section 4.4 in Arnold's book \cite{arnold}.
-Let us start with the question of well-posedness for which the following 
-Proposition is crucial. Also we will stick to the notation introduced in Sec.\,\ref{sec:hilbert_complexes}
+where we have the $\curl$ which is the scalar curl and 
+$\mathbf{\curl}$ which is the vector valued curl defined as.
 
-\subsection{Strong formulation}
+It is easily derived that we have the integration by parts formula if $\mathbf{v} \in C_b^1(\overline{\Omega})$.
+Here $\Omega$ is from now on assumed bounded and Lipschitz.
 
-\begin{proposition}[Kernel of the Hodge Laplacian]
-    \begin{align}
-        \ker L^k = \mathfrak{H}^k \label{eq:hodge_laplacian_operator_eq}
-    \end{align}
-\end{proposition}
-\begin{proof}
-    The direction "$\supseteq$" is clear from the definition of harmonic forms.
-    We will leave away the index now. Let $u \in \ker L^k$,
+The 2D magnetostatic problem is then
+Let $J \in B^*_0$ be given. Then
+\begin{problem}[2D magnetostatic problem]
+    Find $\mathbf{B} \in H_0(\diver) \cap H(\curl)$ s.t.
     \begin{align*}
-        0 = \langle L^k u, u \rangle 
-        = \langle d^{k+1}_* d^k u, u \rangle + \langle d^{k-1} d^*_k u, u \rangle
-        = \lVert d^k u, d^k u \rVert + \lVert d^*_k u, d^*_k u \rVert
+        \curl \mathbf{B} &= J,
+        \\ \diver \mathbf{B} = 0,
+        \text{+ additional constraints}
     \end{align*}
-    the norms and inner products are in the spaces $W^{k-1}$, $W^{k}$ and $W^{k+1}$.
-    Thus we see that $d^*_k u = 0$ and $d^k u = 0$ and hence $u \in \mathfrak{H}^k$.
-\end{proof}
-
-This has immediate implications. 
-Let us denote in general the orthogonal projection operator onto a subset 
-$Z$ as $P_Z$.
-This means that (\ref{eq:hodge_laplacian_operator_eq})
-can only have a solution if $P_\mathfrak{H} = 0$ due to the Hodge decomposition 
-and also that solutions are only unique up to addition of harmonic forms and 
-thus (\ref{eq:hodge_laplacian_operator_eq}) is in general not well-posed. 
-We require additional constraints. The simplest option is to require 
-$u \perp \mathfrak{H}^k$. This leads us to the standard 
-\textit{strong formulation} of the Hodge Laplacian problem with 
-\textit{orthogonality constraint}: For any 
-$f \in W^k$ find $u \in V^k \cap V^*_k$ s.t.
-\begin{align*}
-    L^k u = f - P_\mathfrak{H} f \text{ and } u \perp \mathfrak{H}^k.
-\end{align*}
-Because we know from $u \perp \ker L^k$ that the solution must be unique if it 
-exists. We will later also consider different constraints on the harmonic part.
-
-Let us investigate the Hodge-Laplacian in 3D which we are well familiar with.
-We have $V^0 = H^1$, $V^1 = H(\curl)$, $V^2 = H(\diver)$ and $V^3 = L^2$. As before, 
-we leave out the reference to the domain $\Omega$ which is assumed to have 
-a compact Lipschitz boundary as in Sec.\,\ref{sec:l2_de_rham_complex_in_3d}.
-Then we get $V^*_0 = L^2$, $V^*_1 = H_0(\diver)$, $V^*_2 = H_0(\diver)$
-and $V^*_3 = H^1_0$. Since $d^0 = \grad$ and $d^*_1 = -\diver$ and we set 
-$d^*_0 = 0$ to get 
-\begin{align*}
-    D(L^0) &= \{ u \in H^1 \mid \grad u \in H_0(\diver) \} \text{ and }
-    \\ L^0 &= -\diver \grad = - \Delta.
-\end{align*}
-Assume that our domain is path connected. Recall that then 
-$\mathfrak{H}^0$ are the constant functions and thus the 
-condition $f \perp \mathfrak{H}^0$ means that 
-\begin{align}
-    \int_\Omega f \, dx = 0 \label{eq:average_equals_zero}
-\end{align}
-Then we see that the resulting Hodge Laplacian problem: Take $f \in L^2$ with (\ref{eq:average_equals_zero}) 
-being fulfilled. 
-Find $u \in D(L^0)$ 
-s.t.
-\begin{align*}
-    -\diver \grad u &= f \text{ and }
-    \\ \int_\Omega u &= 0
-\end{align*}
-Note that $u \in D(L^0)$ requires $\grad u \cdot \mathbf{n} = 0$ on $\partial \Omega$ and 
-thus we recognize the strong formulation of the well-known Poisson problem with 
-Neumann boundary conditions. (\ref{eq:average_equals_zero}) is the well-known 
-compatibility condition for the Neumann boundary conditions.
-
-Let us also look at situation for $k=1$. Then 
-\begin{align*}
-    D(L^1) &= \{ \mathbf{u} \in H(\curl) \cap H_0(\diver) 
-        \mid \curl \mathbf{u} \in H_0(\curl), \diver \mathbf{u} \in H^1 \} \text{ and }
-    \\ L^1 &= \curl \curl - \grad \diver.
-\end{align*}
-This operator we already know form \ref{}. The connection to the magnetostatic problem 
-will be made clear later (?). The full problem then reads: Take $\mathbf{f} \in L^2(\Omega;\real^3)$. 
-Find $\mathbf{u} \in D(L^1)$ s.t. 
-\begin{align*}
-    \curl \curl \mathbf{u} - \grad \diver \mathbf{u} &= \mathbf{f} - P_{\mathfrak{H}^1}\mathbf{f}.
-    \\ u \perp \mathfrak{H}^1
-\end{align*}
-
-Analogously, we obtain the same problem with changed boundary conditions for the operator $L^2$ 
-and $\mathfrak{H}^2$ instead of $\mathfrak{H}^1$. For $k=3$ we obtain the Poisson problem, 
-but with Dirichlet boundary conditions.
-
-In this second part of the thesis, the situation in 2D will also become relevant. So we will
+\end{problem}
+The additional constraints are necessary to give a unique solution. 
+We will focus, just as in the first part, on 
+a curve integral as additional constraint. 
+Another option would be an orthogonality constraint as in \ref{}.
 
 \subsection{Mixed formulation}
-We want to deal with Hodge Laplacian problem using a finite element approach. 
-So we woul like to write this problem in variational form. The most principled way to do so 
-is using the \textit{mixed weak formulation}: For any $f \in W^k$ find $\sigma \in V^{k-1}$, 
-$u\in V^k$ and $p\in \mathfrak{H}^k$ s.t.
+In order to solve this problem numerically using finite elements we have to 
+choose a suitable variational formulation of the problem. We will use the following
+For any $J \in \curl H(\curl)$ find $\sigma \in H^1_0$, 
+$B \in H_0(\diver)$ and $p \in \mathfrak{H}^1$ s.t.
 \begin{align}
-    \langle \sigma, \tau \rangle - \langle u, d^{k-1}\tau \rangle 
-        &= 0 \quad \forall \tau \in V^{k-1}, \label{eq:first_eq_mixed_formulation}
-    \\ \langle d\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle 
-        &= \langle f, v \rangle \quad \forall v \in V^k \text{ and} \label{eq:second_eq_mixed_formulation}
-    \\ \langle u, q \rangle \quad \forall q \in \mathfrak{H}^k.
+    \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle 
+        &=  -\langle J, \tau \rangle \quad \forall \tau \in H^1_0, \label{eq:first_eq_mixed_formulation}
+    \\ \langle \mathbf{\curl}\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
+        + \langle \mathbf{p}, \mathbf{v} \rangle 
+        &= 0 \quad \forall \mathbf{v} \in V^k \text{ and} \label{eq:second_eq_mixed_formulation}
+        \text{+ additional constraints}
 \end{align} 
 This formulation is of course much more complicated than the first one \ref{}, 
 but this formulation will turns out to be well-suited for finite element approximations.
@@ -127,68 +46,286 @@ But it begs the question if the two formulations are equivalent. We will answer 
 in two propositions. We will treat the harmonic constraint separately.
 
 \begin{proposition}
-    For any $f \in W^k$, (\ref{eq:first_eq_mixed_formulation}) and 
+    For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
     (\ref{eq:second_eq_mixed_formulation}) hold i.i.f. 
-    $\sigma = d^*_k u$, $p=P_\mathfrak{H}f$ and 
-    \begin{align*}
-        L^k u = f - P_\mathfrak{H}f
-    \end{align*}
-    i.e. the strong formulation is fulfilled without the additional 
-    constraint $u \perp \mathfrak{H}^k$.
+    $\sigma = 0$, $\mathbf{p}=0$ and $\curl \mathbf{B} = J$ and 
+    $\diver \mathbf{B} = 0$
+    i.e. the magnetostatic \ref{}  is fulfilled without the additional 
+    constraint.
 \end{proposition}
 \begin{proof}
-    We recognize that the first equation (\ref{eq:first_eq_mixed_formulation})
-    is actually just the defining property of the adjoint hence 
-    $\sigma = d^*_k u$. It also implies that $u$ is in fact in $V^*_k$.
+    Assume $(\sigma,\mathbf{B},\mathbf{p})$ is a solution of (\ref{eq:first_eq_mixed_formulation}) and 
+    (\ref{eq:second_eq_mixed_formulation}). Then the first equation is
+    \begin{align*}
+        \langle \sigma + J, \tau \rangle  
+        &=  \langle \mathbf{B}, \mathbf{\curl}\tau \rangle  \quad \forall \tau \in H^1_0
+    \end{align*}
+    which is equivalent to $\mathbf{B} \in H(\curl)$ and $J + \sigma = \curl \mathbf{B}$.
 
     Now assume additionally, that  
-    (\ref{eq:second_eq_mixed_formulation}) holds. Then by choosing $v \in \mathfrak{H}^k$
+    (\ref{eq:second_eq_mixed_formulation}) holds. Then by choosing $\mathbf{v} \mathfrak{p} \in \mathfrak{H}^1$
     we get from the definition of the harmonic forms 
-    and $\mathfrak{H}^k \perp \mathfrak{B}^k$ from the Hodge decomposition and thus
+    and $\mathfrak{H}^1 \perp \mathbf{\curl} H^1_0$ from the Hodge decomposition and thus
     \begin{align*}
-        \langle d\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle
-        = \langle p, v \rangle = \langle f, v \rangle \quad \forall v \in \mathfrak{H}^k
+        \langle \mathbf{\curl} \sigma, \mathfrak{p} \rangle + \langle du, d\mathfrak{p} \rangle + \langle p, \mathfrak{p} \rangle
+        = \langle p, \mathfrak{p} \rangle = 0
     \end{align*}
-    which is equivalent to $p = P_\mathfrak{H}f$. Next, we would like to show that 
-    $\langle du, dv \rangle = \langle d^* du, v \rangle$ which is fulfilled if 
-    $du \in V^*_{k+1}$. This follows from (\ref{eq:second_eq_mixed_formulation})
-    since then 
+    and so $\mathfrak{p} = 0$. Then we can choose $\mathbf{v} = \mathbf{\curl} \sigma$ to get 
     \begin{align*}
-        \langle du, dv \rangle &= - \langle d\sigma, v \rangle + \langle f - P_\mathfrak{H}f, v \rangle
-        \\ &\leq \lVert f - P_\mathfrak{H}f - d\sigma \rVert \lVert v \rVert
+        \langle \mathbf{\curl} \sigma, \mathbf{\curl} \sigma \rangle + \langle \diver \mathbf{B}, \diver \mathbf{\curl} \sigma \rangle 
+            + \langle \mathbf{p}, \mathbf{\curl} \sigma \rangle
+        = \lVert \mathbf{\curl} \sigma \rVert^2.
     \end{align*}
-    and so $du \in V^*_{k+1}$.
-    Thus we have 
-    \begin{align*}
-        &\langle d^{k-1}\sigma, v \rangle + \langle du, dv \rangle + \langle p, v \rangle
-        \\ &= \langle d^{k-1} d^*_k u, v \rangle + \langle d^* du, v \rangle + \langle p, v \rangle
-        \\ &= \langle d^{k-1} d^*_k u + d^* du + P_\mathfrak{H}f, v \rangle = \langle f, v \rangle
-    \end{align*}
-    and so since by assumption $V^k$ is dense in $W^k$,
-    \begin{align*}
-        d^*_k u + d^* du + P_\mathfrak{H}f = f.
-    \end{align*}
+    Because $\sigma \in H^1_0$ this gives us $\sigma = 0$. Also we have then 
+    $J = \curl \mathbf{B}$. At last we choose $\mathbf{v} = \mathbf{B}$ which gives us 
+    $\diver \mathbf{B} = 0$ and thus we proved the first direction. 
 
-    For the other direction assume $u \in D(L^k)$, $d^*_k u = \sigma$ and $p= P_\mathfrak{H} f$
+    The other implication is clear i.e. if $\mathbf{B} \in H(\curl) \cap H_0(\diver)$
+    with $\curl \mathbf{B} = J$ and $\diver \mathbf{B} = 0$ then the variational 
+    formulation clearly holds.
+    \end{proof}
+If we now add the same additional constraints to both formulations of the problem 
+then they will remain equivalent.
+
+
+\subsection{Curve integral constraint}
+
+We want to add now a curve integral constraint. We first want to rewrite the curve 
+integral in variational form. 
+
+Let $\Gamma$ be a closed curve with parametrization $\gamma:[0,|\Gamma|]$ s.t. 
+$|\gamma'(t)| = 1$ and assume that $\gamma$ is bijective i.e. the curve does not 
+intersect itself. Since $\Gamma$ is a closed curve 
+it encompasses a set $K$ {\color{red} Add drawing} Let $\mathbf{n}$ be the 
+unit normal of $K$. Then we know that $\mathbf{n} \perp \gamma'$. 
+
+If we now take $\mathbf{B}$ that 
+\begin{align*}
+    n \times \mathbf{B} =   -\mathbf{B}\times n = -\mathbf{B} \cdot R_{\pi/2} \mathbf{n}
+\end{align*}
+then $R_{\pi/2} \mathbf{n}$ is either $\gamma'$ or $-\gamma'$. Assume w.l.o.g.
+that $R_{\pi/2} \mathbf{n} = \gamma'$ and thus 
+\begin{align*}
+    -\mathbf{B} \cdot R_{\pi/2} \mathbf{n} = - \mathbf{B} \cdot \gamma'.
+\end{align*}
+
+So we see that we can write 
+\begin{align*}
+    n \times \mathbf{B} = - \mathbf{B} \cdot \gamma'
+\end{align*}
+and so the curve integral becomes
+
+\begin{align*}
+    \int_\Gamma \mathbf{B}\cdot dl= \int_0^{|\Gamma|} \mathbf{B}(\gamma(t)) \cdot \gamma'(t) \, dt 
+    = - \int_0^{|\Gamma|} n(\gamma(t)) \times \mathbf{B}(\gamma(t)) \, dt 
+    = - \int_\Gamma n \times \mathbf{B}.
+\end{align*}
+
+Defie $\psi$ s.t. $\psi = 0$ on $\partial \Omega_{in}$ and $\psi = 1$ on $\Gamma$ 
+and constant one outside
+Then we observe 
+
+\begin{align*}
+    \int_\Omega \mathbf{\curl} \psi \cdot \mathbf{B} \, dx = 
+    \int_\Omega \psi \, J \, dx - \int_\partial\Omega n\times \mathbf{B} \, dl
+    = \int_\Omega \psi \, J \, dx - \int_\Gamma \mathbf{B}\cdot dl
+\end{align*}
+
+Note that even though right hand side requires some regularity for $\mathbf{B}$
+the left hand side makes sense even if $\mathbf{B}$ is only in $L^2$!
+So if we are in a situation where the we have curve integral given then 
+we can add this constraint like this. 
+
+Let us assume we are given that the curve integral 
+\begin{align*}
+    \int_\Gamma \mathbf{B} \cdot dl = C_0
+\end{align*}
+assuming this makes sense. Then we choose $\psi$ and then get 
+the constraint
+\begin{align*}
+    \langle \mathbf{\curl} \psi, \mathbf{B} \rangle = \langle J, \psi \rangle +-? C_0.
+\end{align*}
+Note that there are not test functions involved since $\psi$ is fixed. 
+We define $C_1 \vcentcolon=  \langle J, \psi \rangle +-? C_0$. Then to get a variational 
+formulation we multiply \ref{} with an arbitrary $\mu \in \real$. Then we reformulate 
+the mixed variational form slightly. 
+
+Let $J \in L^2$, $\mathbf{p} \in \mathfrak{H}^1$. 
+Find $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$, $\lambda \in \real$ s.t.
+\begin{align}
+    \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle 
+    &=  -\langle J, \tau \rangle \quad \forall \tau \in H^1_0, \label{eq:first_eq_mixed_formulation_curve_integral}
+    \\ \langle \mathbf{\curl}\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
+    + \langle \lambda \mathbf{p}, \mathbf{v} \rangle 
+    &= 0 \quad \forall \mathbf{v} \in V^k, \label{eq:second_eq_mixed_formulation_curve_integral}
+    \\ \mu \langle \bm{\curl} \psi, \mathbf{B} \rangle &= \mu C_1 \quad \forall \mu \in \real.
+\end{align}
+which gives us the variational formulation of the magnetostatic problem with curve integral 
+constraint. We will study the well-posedness of this formulation next. 
+Using the analogous reasoning as in \ref{} we see that the first two equations are still equivalent 
+to the magnetostatic problem without additional constraint even though we use now {\color{red} Need 
+assumption that $\dim \mathfrak{H}^1= 1$}. 
+
+Defining $X \vcentcolon= H^1_0 \times H_0(\diver) \times \real$ and the 
+bilinear form $a:X\times X \rightarrow \real$
+
+\begin{align*}
+    a(\sigma,\mathbf{B}, \lambda;\tau,\mathbf{v},\mu) 
+    =   \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle
+        + \langle \mathbf{\curl}\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
+        + \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \mathbf{\curl} \psi, \mathbf{B} \rangle.
+\end{align*}
+This allows us to rewrite \ref{} in the standard form
+\begin{align*}
+    a(\sigma,\mathbf{B},\lambda;\tau,\mathbf{v},\mu) = -\langle J, \tau \rangle - \mu C_1
+        \quad \forall (\tau,\mathbf{v},\mu) \in X.
+\end{align*}
+Note that the bilinear form $a$ is not symmetric. 
+
+\begin{lemma}
+    Define $T:X \rightarrow X$ as 
+    \begin{align*}
+        T(\sigma, \mathbf{B},\lambda)
+        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \mathbf{p},
+            -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  
+            + \frac{\lambda}{c_\psi} \rangle).
+    \end{align*}
+    Assume $c_\psi$ is positive.
+    Then $T$ is surjective. 
+\end{lemma}
+\begin{proof}
+    Take $(\tau, \mathbf{v},\mu) \in X$ arbitrary. Then 
+    Now we choose $\sigma = (1+1/c_P)^{-1} (\tau + (1/c_P^2) \veccurl^{-1} \mathbf{v})$ 
+    and $\mathbf{B}_\mathfrak{B} = \mathbf{v}_\mathfrak{B} - \veccurl \sigma$. 
+    So 
+    \begin{align*}
+        \sigma -  1/c_P^2 \veccurl^{-1}\mathbf{B}_\mathfrak{B} 
+        = \sigma -  1/c_P^2 (\veccurl^{-1} \mathbf{v} - \sigma)
+        = (1+1/c_P^2)\sigma - 1/c_P^2 \veccurl^{-1} \mathbf{v}
+        = \tau.
+    \end{align*}
+    We simply choose $\mathbf{B}_\mathfrak{B^*} = \mathbf{v}_\mathfrak{B^*}$.
+    For the harmonic part we observe for $\mathbf{v}_\mathfrak{H} = c_v p$
+    Let us look at the system 
+    \begin{align*}
+        \begin{pmatrix}
+            1 & \beta 
+            \\ \alpha & 1/c_\psi
+        \end{pmatrix}
+        \begin{pmatrix}
+            \kappa_u 
+            \\ \lambda 
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            c_v 
+            \\ \mu
+        \end{pmatrix}
+    \end{align*}
+    Now since $c_\psi > 0$ and $\alpha < 0$, $\beta > 0$ we get 
+    $1/c_\psi - \alpha \beta \neq 0$ and the system has a solution. 
+    Then we see 
+    \begin{align*}
+        \mathbf{v}_\mathfrak{H} = c_v p = p(\kappa_u + \beta \lambda) 
+        =  \mathbf{B}_\mathfrak{H} + \beta \lambda p
+    \end{align*}
     and 
-    \begin{align}
-        d^{k-1} d^*_k u + d^* du  = f - P_\mathfrak{H}f.\label{eq:proof_equivalence_of_formulations:strong_form}
-    \end{align}    
-    The first equation 
-    holds as explained above. For the second one, we take the inner product of 
-    (\ref{eq:proof_equivalence_of_formulations:strong_form}) with an arbitrary 
-    $v \in V^k$ and immediately obtain (\ref{eq:second_eq_mixed_formulation}).
+    \begin{align*}
+        \mu = \alpha \kappa_u + 1/c_\psi \lambda
+        = \alpha \kappa_u \lVert p \rVert^2 + 1/c_\psi \lambda 
+        = \alpha \langle \mathbf{B}, \mathbf{p} \rangle + 1/c_\psi \lambda.
+    \end{align*}
+    And so in comining all that we arrive at 
+    $T(\sigma,\mathbf{B}, \mathbf{p}) = (\tau, \mathbf{v}, \mathbf{p})$.
 \end{proof}
-So we immediately obtain 
 
-\begin{corollary}
-    The strong formulation and mixed weak formulation of the Hodge Laplacian problem 
-    with orthogonality constraint $u \perp \mathfrak{H}^k$ are equivalent.
-\end{corollary}
-The reason why did not proof the equivalence directly is that we might add another 
-harmonic constraint and would still get equivalence which we will need later. 
-The problem with orthogonality constraint is then well-posed see \cite{}.
+\begin{theorem}
+    $a$ satisfies a inf-sup condition with $\gamma$ depending on the Poincaré constant 
+    as well as $\psi$.
+\end{theorem}
+\begin{proof}
+    We will use T-coercivity to prove it. 
+    \begin{align*}
+        T(\sigma, \mathbf{B},\lambda)
+        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \mathbf{p},
+            -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \rangle)
+    \end{align*}
+    with $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$ and $\alpha = -\frac{c_\psi}{4 c_1^2 c_P^2}$.
+    Then $T$ is bijective \ref{}. We split up $d\psi = d\psi_0 + c_\psi \mathfrak{p}$ to get 
+    \begin{align*}
+        &a(\sigma, \mathbf{B},\lambda;T(\sigma, \mathbf{B},\lambda))
+        \\ &=\langle \sigma, \sigma - \frac{1}{c_P^2} \rho \rangle 
+            - \langle \mathbf{B}, \veccurl \sigma - \frac{1}{c_P^2}\veccurl \rho \rangle
+            + \langle \diver \mathbf{B}, \diver \veccurl 
+        \\ &\quad + \sigma \diver \mathbf{B} + \beta \lambda \mathfrak{p}\rangle
+            + \langle \lambda \mathbf{p}, \veccurl \sigma + \mathbf{B} + \beta \lambda \mathfrak{p}\rangle
+            - (\alpha \langle \mathbf{B}, \mathbf{p} \rangle + \frac{\lambda}{c_\psi})
+            \langle \mathbf{B} , \veccurl\psi \rangle
+        \\ &= \lVert \sigma \rVert^2 - \frac{1}{c_P^2} \langle \sigma , \rho \rangle 
+            + \frac{1}{c_P^2} \lVert B_\mathfrak{B} \rVert^2 + \lVert  \veccurl \sigma \rVert^2
+            + \lVert \diver \mathbf{B} \rVert ^2 + \lambda ^2 \beta - \alpha c_\psi \lVert \mathbf{B}_\mathfrak{H} \rVert^2
+        \\ &\quad- \alpha \langle \mathfrak{p}, \mathbf{B} \rangle \langle \mathbf{B}, \veccurl \psi_0 \rangle
+            - \frac{\lambda}{c_\psi} \langle B_\mathfrak{B} , \veccurl \psi_0 \rangle
+        \\ &...\geq \lVert \sigma \rVert^2 - 
+            \left( \frac{1}{2} \lVert \sigma \rVert^2 
+            + \frac{\lVert B_\mathfrak{B} \rVert^2}{2 c_P^2}  \right)
+            + \frac{1}{c_P^2} \lVert B_\mathfrak{B} \rVert^2
+            + \lVert  \veccurl \sigma \rVert^2 + \lVert \diver \mathbf{B} \rVert ^2
+        \\ &\quad+ \lambda ^2 \beta - \alpha c_\psi \lVert \mathbf{B}_\mathfrak{H} \rVert^2
+            - \left( \frac{\epsilon_1 \alpha^2 \lVert \mathbf{B}_\mathfrak{H} \rVert^2}{2} 
+            + \frac{\lVert \mathbf{B}_\mathfrak{B} \rVert^2 \lVert  \veccurl \psi_0 \rVert^2}{2 \epsilon_1} \right)
+            - \left( \frac{\lambda^2}{2 \epsilon_2 c_\psi^2} 
+            + \frac{\epsilon_2 \lVert \mathbf{B}_\mathfrak{B} \rVert^2 \lVert  \veccurl \psi_0 \rVert^2}{2} \right)
+    \end{align*}
+    Choose $\epsilon_1 = 4 c_1^2 c_P^2$ to get 
+    \begin{align*}
+        &\frac{1}{2} \lVert \sigma \rVert^2 + \frac{1}{2 c_P^2} \lVert B_\mathfrak{B} \rVert^2
+        + \lVert  \veccurl \sigma \rVert^2 + \lVert \diver \mathbf{B} \rVert ^2
+        + \lambda ^2 \left( \beta - \frac{1}{2 \epsilon_2 c_\psi^2} \right) 
+        \\ &\quad+ \lVert \mathbf{B}_\mathfrak{H} \rVert^2 
+        \left( - \alpha c_\psi - \frac{4 c_1^2 c_P^2 \alpha^2}{2} \right)
+        - \lVert B_\mathfrak{B} \rVert^2 \frac{\lVert  \veccurl \psi_0 \rVert^2}{8c_1^2 c_P^2}
+        - \lVert B_\mathfrak{B} \rVert^2 \frac{ \epsilon_2 \lVert  \veccurl \psi_0 \rVert^2 }{2}
+    \end{align*}
+    Now choose $\epsilon_2 = \frac{1}{4 c_1^2 c_P^2}$ and plug in the definition of $\alpha$
+    to get bound it from below with
+    \begin{align*}
+        &\frac{1}{2} \lVert \sigma \rVert^2 + \lVert B_\mathfrak{B} \rVert^2 
+        \left( \frac{1}{2 c_P^2} - \frac{1}{8 c_P^2} 
+        - \frac{\lVert  \veccurl \psi_0 \rVert^2}{8 c_1^2 c_P^2} \right)
+        + \lVert  \veccurl \sigma \rVert^2 + \lVert \diver \mathbf{B} \rVert ^2
+        + \lambda ^2 \left( \beta - \frac{4 c_1^2 c_P^2}{2 c_\psi^2} \right)
+        \\ &\quad+ \lVert \mathbf{B}_\mathfrak{H} \rVert^2  \left( \frac{c_\psi^2}{4 c_1^2 c_P^2 }
+        - \frac{ c_1^2 c_P^2 c_\psi^2}{8 c_1^4 c_P^4} \right)
+    \end{align*}
+    and finally by using .... and $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$
+    \begin{align*}
+        \frac{1}{2} \lVert \sigma \rVert^2 + \frac{1}{4 c_P^2}\lVert B_\mathfrak{B} \rVert^2 
+        + \lVert  \veccurl \sigma \rVert^2
+        + \frac{1}{2 c_P^2 B_{\mathfrak{B}^*}} + \frac{c_\psi}{8 c_1^2 c_P^2} 
+        + \frac{1}{2} \lVert \diver \mathbf{B} \rVert ^2
+        + \frac{c_1^2 c_P^2}{c_\psi^2}\lambda^2
+        + \frac{c_\psi^2}{8 c_1^2 c_P^2} \lVert \mathbf{B}_\mathfrak{H} \rVert^2 
+    \end{align*}
+\end{proof}
 
+\begin{theorem}[Stability]
+    The system is stable. For solution $(\sigma, \mathbf{B},\mathbf{p}) \in X$
+    we get 
+    \begin{align*}
+        \lVert \sigma \rVert _V + \lVert \mathbf{B} \rVert _V + |\lambda|
+        \leq \frac{\lVert J \rVert + |C_1|}{\gamma}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    The statement follows immediately from \ref{} and the fact that 
+    \begin{align*}
+        | l(\tau,\mathbf{v},\mu) |
+        = | - \langle J, \tau \rangle - C_1 \mu | 
+        \leq (\lVert J \rVert + C_1) \lVert \tau,\mathbf{v},\mu \rVert _X
+    \end{align*}
+    and thus $\lVert l \rVert _{X'} \leq \lVert J \rVert + | C_1 |$.
+\end{proof}
 
 \section{Discrete Hilbert complex}
 
@@ -383,7 +520,4 @@ This problem is generally not-well posed since we need to add a harmonic constra
 One option is to take the orthogonality constraint again. But now we want to use the 
 analogous problem that we dealt with in the first part of the thesis and add the 
 constraint 
-\begin{align*}
-    
-\end{align*}
 \end{document}

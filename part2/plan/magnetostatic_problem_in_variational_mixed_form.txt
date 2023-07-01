@@ -1,0 +1,19 @@
+2D magnetostatic problem
+	Relation to 3D case
+	Definition of the 2D scalar and vector curl
+	Properties of the 2D scalar and vector curl
+	Problem
+
+Variational formulation
+	Mixed formulation
+	(Motivation)
+	Equivalence
+	Inf-sup condition
+	Stability
+
+Curve integral
+	Derivation
+	Variational form
+	
+	
+	
