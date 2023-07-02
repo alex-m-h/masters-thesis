@@ -10,11 +10,12 @@ Magnetostatic problem in variational mixed form
 	Curve integral
 	Inf-sup condition with curve integral
 	Stability with curve integral
-	A-priori estimate
 
 Discretization of Hilbert complexes
 	Discrete Hilbert complex
 	Discretized magnetostatic problem
+	Stability
+	A-priori estimate
 
 Implementation in 2D
 	Splines
