@@ -354,19 +354,6 @@ $\mathfrak{B}_h^{k,\perp} \supseteq \mathfrak{B}^{k,\perp}$ we have in general
     \not\subseteq    \mathfrak{Z}^k \cap \mathfrak{B}^{k,\perp} = \mathfrak{H}^k.
 \end{align*}
 
-This is now already enough to define apply the mixed formulation to the discrete setting: 
-For a given $f \in W^k$, find $\sigma_h \in V_h^{k-1}$, $u_h \in V_h^k$ and 
-$p_h \in \mathfrak{H}^k$ s.t.
-
-\begin{align}
-    \langle \sigma_h, \tau_h \rangle - \langle u_h, d\tau_h \rangle &= 0 \quad \tau_h \in V_h^{k-1},
-    \\ \langle d\sigma_h, v_h \rangle + \langle du_h, dv_h \rangle + \langle p_h, v_h \rangle 
-        &= \langle f, v_h \rangle \quad v_h \in V_h^k,
-    \\ \langle u_h, q_h \rangle = 0, \quad \forall q_h \in \mathfrak{H}^k_h \label{eq:third_eq_discrete_mixed}.
-\end{align}
-When $\mathfrak{H}_h^k \not\subseteq \mathfrak{H}^k_h$ this is a nonconforming
-method. The harmonic constraint (\ref{eq:third_eq_discrete_mixed}) can 
-be replaced with a different one.
 
 There are three crucial properties that are necessary for stability and convergence 
 of the method. The first one is the common and reasonable assumption that 
@@ -380,7 +367,8 @@ e.g. if we take Lagragian FE if $V = H^1$ or Raviart-Thomas if $V=H(\diver)$ \ci
 
 The next property is more restrictive. We require that $dV_h^{k-1} \subseteq V_h^k$ 
 and $dV_h^j \subseteq V_h^{j+1}$. This shows that the we cannot simply use arbitrary 
-discrete subspaces independent from one another. This property has a very nice
+discrete subspaces independent from one another. We say the spaces have to be 
+compatible \cite{}. This property has a very nice
 consequence. 
 It shows that 
 \begin{align*}
@@ -507,6 +495,49 @@ discrete and continous harmonic forms.
 
 So we get the inf sup condition with $c_{P,h} = c_P \lVert \pi_h \rVert _V$ instead of $c_P$ 
 and obtain well-posedness.
+
+\section{Discretized magnetostatic problem}
+
+Let us apply this discretized Hilbert complex to the 2D Hilbert complex \ref{}
+to get $V^0_h \subseteq H^1_0$, $V^1_h \subseteq H_0(\diver)$ and $V^2_h \subseteq L^2$
+with 
+\begin{align*}
+    V^0_h \xrightarrow{\veccurl} V^1_h \xrightarrow{\diver} V^2_h
+\end{align*}
+and the dual complex 
+\begin{align*}
+    V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\grad}_h} V^2_h
+\end{align*}
+where $\widetilde{\curl}_h$ is the adjoint of $\veccurl$ and corresponds thus to
+weak form of $\curl$ and the same for $\widetilde{\grad}_h$.
+The discretized version of the magnetostatic problem then states: 
+Find $\mathbf{B}_h \in V_h^1$ s.t.
+\begin{align*}
+    \weakcurl_h \mathbf{B} = J \text{ and }
+    \diver \mathbf{B} = 0.
+\end{align*}
+Note that the divergence is enforced strongly while the curl is only enforced weakly.
+As explained in \ref{} we will add the curve integral constraint as in \ref{}.
+This gives us the following discrete formulation. Find 
+$\sigma_h \in V_h^0$, $\mathbf{B} \in V_h^1$ and $\lambda \in \real$ s.t.
+
+\begin{align*}
+    \langle \sigma_h, \tau_h \rangle - \langle \mathbf{B}_h, \mathbf{\curl}\tau_h \rangle 
+    &=  -\langle J, \tau_h \rangle \quad \forall \tau_h \in V_h^0, 
+    \\ \langle \mathbf{\curl}\sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
+    + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle 
+    &= 0 \quad \forall \mathbf{v}_h \in V^1_h, 
+    \\ \mu \langle \bm{\curl} \psi, \mathbf{B}_h \rangle &= \mu C_1 \quad \forall \mu \in \real.
+\end{align*}
+Here we assume for simplicity that $\veccurl \psi \in V_h^1$. Since 
+we can choose $\psi$ this is not unreasonable. 
+
+Note that this trial and test space is indeed conforming, but we choose a discrete harmonic form 
+$\mathbf{p}_h \in \mathfrak{H}^1_h$ so the resulting bilinear forms are different. 
+We assume that $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$.
+The stability now follows from the exact same arguments as in \ref{} 
+so we obtain a inf sup condition with a different constant $\gamma_h$ that involves 
+$c_{P,h}$ from \ref{}. 
 
 \section{Magnetostatic problem in 2D}
 
