@@ -1,0 +1,11 @@
+Biot Savart
+	Short explanation
+	Solution on annulus with different integration functions
+	Solution on distorted annulus
+	Convergence analysis
+	
+Manufactured solution
+	Solution on annulus with different integration functions
+	Solution on distorted annulus
+	Convergence analysis
+	

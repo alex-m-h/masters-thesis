@@ -1,6 +1,6 @@
 Splines
 	Definition
-	Properties without proof
+	(Properties without proof)
 	Tensor splines
 
 Interpolation

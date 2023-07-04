@@ -20,12 +20,10 @@ Discretization of Hilbert complexes
 Implementation in 2D
 	Splines
 	Interpolation
-	Imposing boundary conditions
 	Projection operators
+	Imposing boundary conditions
 	Building the system
 
 Numerical examples
+	Biot-Savart
 	Manufactured solution
-	Different integration functions
-	Different interpolation schemes (?)
-	Convergence analysis

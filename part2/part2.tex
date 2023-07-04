@@ -508,7 +508,7 @@ and the dual complex
 \begin{align*}
     V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\grad}_h} V^2_h
 \end{align*}
-where $\widetilde{\curl}_h$ is the adjoint of $\veccurl$ and corresponds thus to
+where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and corresponds thus to
 weak form of $\curl$ and the same for $\widetilde{\grad}_h$.
 The discretized version of the magnetostatic problem then states: 
 Find $\mathbf{B}_h \in V_h^1$ s.t.
@@ -539,16 +539,195 @@ The stability now follows from the exact same arguments as in \ref{}
 so we obtain a inf sup condition with a different constant $\gamma_h$ that involves 
 $c_{P,h}$ from \ref{}. 
 
-\section{Magnetostatic problem in 2D}
+\section{Implementation in 2D}
 
-We are interested in solving the 2D version of the magnetostatic problem. 
-Find $\mathbf{B} \in H(\curl) \cap H_0(\diver)$ s.t.
+\subsection{Splines}
+
+For the discretization we will use the push forward of tensor product splines 
+on a rectangular reference domain $\hat{\Omega}$. We use geometric degrees of freedom
+which we will introduce below \ref{}. This section is a recollection 
+ of \cite[Sec. 4.2]{broken FEEC framework on mapped multipatch} 
+since we use the same method as presented in this paper also to fix notation. 
+
+We will use two different types knot sequences, non-periodic and periodic ones. 
+For the non-periodic ones we take an open knot sequence 
 \begin{align*}
-    \diver \mathbf{B} &= 0
-    \\ \curl \mathbf{B} &= J.
+    0 =  \xi_0 = \xi_1 = ... = \xi_p < \xi_{p+1} < \xi_{p+2} < ... < \xi_{n-1} < \xi_n 
+    = \xi_{n+1} = ... = \xi_{n+p}
 \end{align*}
-This problem is generally not-well posed since we need to add a harmonic constraint. 
-One option is to take the orthogonality constraint again. But now we want to use the 
-analogous problem that we dealt with in the first part of the thesis and add the 
-constraint 
+with $n = N + p$ where $N$ is the number of cells.
+Note that all the knot multiplicities in the interior are one and thus our spline 
+space has maximal regularity. We then define 
+$\mathcal{N}_i^q$ be the normalized B-spline \cite[Ref. 46, Def.4.19]{multipatch paper}.
+We then define the spline spce $\mathbb{S}_q = \mathbb{S}_q(\bm{\xi}) = 
+span{\mathcal{N}_i^q \mid i = 0, ..., n-1}$. Since we have maximal regularity 
+we get that 
+\begin{align*}
+    \{ v \in C^{q-1} \mid v |_{\xi_{q+j, q+j+1}} \in \mathbb{P}_q \}.
+\end{align*}
+$\mathcal{N}_0^{p-1} $ vanishes.
+
+For the periodic case, the B-splines starting at knots ... are periodically 
+extended to the start of the integral. 
+
+We now can take tensor product of spline spaces. We use the notation 
+with $\mathbf{q} \in \{p-1,p\}^2$ and we define with $\mathbf{i} \in [N_0 ] \times [ N_1 ]$
+\begin{align*}
+    \mathcal{N}_\mathbf{i}^\mathbf{q} \mathcal{N}_{i_1}^{q_1} \mathcal{N}_{i_2}^{q_2}.
+\end{align*}
+We write this as $\mathbb{S}_\mathbf{q} = \mathbb{S}_{q_1} \otimes \mathbb{S}_{q_2}$ 
+The spline spaces used in the tensor product can also be periodic or only one of them 
+can be periodic.
+On $\hat{\Omega}$ we obtain the following discrete Hilbert complex 
+\begin{align*}
+    \mathbb{S}_{p,p} \xrightarrow{\veccurl} \mathbb{S}_{p-1,p} \xrightarrow{\diver} \mathbb{S}_{p-1,p-1}
+\end{align*}
+and we denote $\hat{V}^0 = \mathbb{S}_{p,p}$, $\hat{V}^1 = \mathbb{S}_{p-1,p}$ 
+and $\hat{V}^2 = \mathbb{S}_{p-1,p-1}$. These spaces are conforming for $p>1$?
+
+Let us now investigate the degrees of freedom. We will use geometric degrees of 
+freedom i.e. each degree of freedom can be associated with some geometrical element of our 
+domain. We define Greville points by 
+\begin{align*}
+    \zeta_i \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p}
+\end{align*}
+i.e. the knot averages for $i=0,...,n-1$. Then the spline interpolation at these 
+points is well-defined (see \cite{I think that was in the isogeometric analysis book}).
+
+This gives us the following geometric elements nodes, edges and cells
+\begin{align*}
+    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}) for \mathbf{i} \in \hat{\mathcal{M}}^0
+    \\ \hat{\mathtt{e}}_{d,\mathbf{i}} 
+        \vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
+        for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
+    \\ \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i}}]
+        = [\zeta_{i_1}, \zeta_{i_1+1}] \times [\zeta_{i_2}, \zeta_{i_2+1}] 
+        for \mathbf{i} \in \hat{\mathcal{M}}^2 
+\end{align*}
+with $[\cdot]$ being the convex hull. As before, $\mathbf{e}_d$ for $d = 1,2$ is the 
+standard basis vector of $\real^2$. The set of multiindices are defined as
+\begin{align*}
+    \hat{\mathcal{M}}^0 \vcentcolon= [n-1]^2
+    \\ \hat{\mathcal{M}}^1 \vcentcolon= \{ (d, \mathbf{i}=) \mid \mathbf{i} \in \hat{\mathcal{M}}^0, d\in \{1,2\} \}
+    \\ \hat{\mathcal{M}}^2 \vcentcolon= [n-2]^2
+\end{align*}
+{\color{red} Does this stuff go through for periodic case?}
+
+Now that we have defined the geometric elements we define the corresponding 
+degrees of freedom as 
+\begin{align*}
+    \hat{\sigma_\mathbf{i}^0(v) } \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}) for \mathbf{i} \in \hat{\mathcal{M}}^0
+    % \\ \hat{\sigma_{\mathbf{d,i}^1(\mathbf{v})} } 
+    %     \vcentcolon= \int_\hat{\mathtt{e}}_{d,\mathbf{i}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
+    %     for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
+    \\ \hat{\sigma}_{\mathbf{i}}^2(v) 
+        \vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
+        for (\mathbf{i}) \in \hat{\mathcal{M}}^2
+\end{align*}
+We $\mathbf{e}_d^\perp$ as the rotation of $\mathbf{e}_d$ by $\pi_2$ in counter clockwise 
+direction i.e. $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$.  
+Something about orientation
+
+These degrees of freedome are unisolvent (explanation) and we can thus define our basis functions 
+$\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$ as the basis which is dual to the 
+degrees of freedom in the sense 
+\begin{align*}
+    \hat{\sigma}_\mu^l(\hat{\Lambda}^l_\nu) = \delta_{\mu,\nu} \quad for \mu, \nu \in \mathcal{M}^l.
+\end{align*}
+
+The question is now  on what function spaces these degrees of freedom are defined. We note first that 
+the standard choice as described above with $\hat{V}^0 = H^1_0(\hat{\Omega})$ 
+$\hat{V}^1 = H_0(\diver)$ and $\hat{V}^2 = L^2(\hat{\Omega})$ can not work 
+because the evaluation at point values is not well-defined for $H^1$ in 2D since 
+they can not be embedded into the continuous functions. Thus, 
+we need to choose function spaces with higher regularity or integrability.
+
+Let us define the spaces
+\begin{align*}
+    W^1_{1,2}(\hat{\Omega}) &\vcentcolon= \{ v \in L^1(\hat{\Omega}) \mid \partial_1 \partial_2 v
+        \in L^1(\hat{\Omega}) \}
+    \\  W^1_d(\hat{\Omega}) &\vcentcolon= \{ v \in L^1(\hat{\Omega}) \mid \partial_d v
+        \in L^1(\hat{\Omega}) \}
+\end{align*}
+{\color{red} Why do we set the sequence to the spaces with $L^1$ sub instead of the intersection?}
+
+
+This now gives us the discrete setting on the reference domain $\hat{\Omega}$ the idea 
+is now to define the basis functions on the physical domain $\Omega$ by a 
+push forward of the basis functions on the reference domain.
+This is now the inverse of the analogous operations to 
+\ref{} in 2D. 
+
+We will stick to the single patch case meaning that there is a diffeomorphism 
+$F: \hat{\Omega} \rightarrow \Omega$. Then we define 
+the pullbacks 
+\begin{align*}
+    &\mathcal{P}_F^0: v \mapsto \hat{v} \vcentcolon= v \circ F
+    \\ &\mathcal{P}_F^1: \mathbf{v} \mapsto \hat{\mathbf{v}} \vcentcolon= \det DF \,DF^{-1} \mathbf{v}
+    \\ &\mathcal{P}_F^2: v \mapsto \hat{v} \vcentcolon= (\det DF) v
+\end{align*}
+which map functions on the physical domain $\Omega$ to functions on the reference domain 
+$\hat{\Omega}$. Then we have the commuting properties
+\begin{align*}
+    \widehat{\veccurl} \mathcal{P}_F^0 v &= \mathcal{P}_F^1 \veccurl v
+    \\ \widehat{\diver} \mathcal{P}_F^1 \mathbf{v} &= \mathcal{P}_F^1 \diver v
+\end{align*}
+
+Using the pullbacks we define the pushforwards as 
+$\mathcal{F}^l \vcentcolon= (\mathcal{P}_F^l)^{-1}$ and then 
+we get the basis functions on the physical domain
+\begin{align*}
+    \Lambda^l_{\mu} \vcentcolon= \mathcal{F}^l \hat{\Lambda}^l_{\mu}
+\end{align*}
+and then 
+\begin{align*}
+    V_h^l \vcentcolon= \text{span} \{ \Lambda^l_{\mu} \mid \mu \in \mathcal{M}^l \}
+\end{align*}
+are our discrete spaces. {\color{red} Approximation properties???}
+
+Using the geometric degrees from \ref{} we can now construct the corresponding 
+by 
+\begin{align*}
+    \sigma^l_\mu \vcentcolon= \hat{\sigma}_\mu^l \circ \mathcal{P}_F^l
+\end{align*}
+Then we have by construction that 
+$\sigma^l_\mu(\Lambda^l_{\nu}) = \delta_{\mu,\nu}$. 
+
+Then these degrees of freedom commute with the corresponding differential operators 
+as desired from \ref{}. They also correspond to geometric elements. 
+$\sigma^0$ corresponds to point values in the physical domain, 
+$\sigma^1$ to the fluxes through the image of edges and 
+$\sigma^2$ to the integral over the mapped cells.
+
+This very simple geometric interpretation gives us the ability to enforce 
+the boundary condition directly by setting the corresponding degrees of freedom 
+to zero. 
+
+For $V_h^0 \subseteq H^1_0$ we want the trace on the boundary to vanish which 
+means that we set the values at the boundary nodes to zero. Thus, 
+for $\mathtt{n}_\mathbf{i}$ on the boundary we want 
+$\sigma^0_{\mathbf{i}}(v) = 0$. 
+
+For $V_h^1 \subseteq H_0(\diver)$ we want to have the normal trace zero. 
+So when $\mathtt{e}_{d,\mathbf{i}}(\mathbf{v})$ is boundary edge we require
+This is then achieved when $\sigma^1_{d,\mathbf{i}} (\mathbf{v}) = 0$.
+
+We now define the spaces $\bar{V}_h^l$ which are the correspoding spaces 
+without any boundary conditions. Then we define the 
+projections $P_h^l: \bar{V}_h^l \rightarrow \bar{V}_h^l$ which set 
+the boundary degrees of freedom to zero. They have a very simple 
+matrix representation $\mathbb{P}_h^l$ 
+$(\mathbb{P}_h^l)_{\mu, \nu} = 1 $ i.i.f. $\mu = \nu$ and $\mu$ does not 
+correspond to a geometric element on the boundary. They are easily constructed 
+by taking the identity matrix and setting the diagonal entries to zero that 
+belong to boundary degrees of freedom.
+
+On the lower level these basis functions are not used explicitely. Instead 
+we use B-splines to compute the corresponding mass matrices etc. We will not 
+go to deep into the details of implementation however. More details about the 
+use of B-splines and the connection with the basis $\Lambda^l_\mu$ can be found 
+in \cite[Sec.\,4.8]{multipatch_paper} 
+
+\
+
 \end{document}
