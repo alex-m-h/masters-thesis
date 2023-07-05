@@ -1,19 +1,24 @@
 2D magnetostatic problem
-	Relation to 3D case
-	Definition of the 2D scalar and vector curl
-	Properties of the 2D scalar and vector curl
+	# Definition of the 2D scalar and vector curl
+	# Properties of the 2D scalar and vector curl
+	Hilbert complex
+	# Derivation from 3D case
 	Problem
 
 Variational formulation
 	Mixed formulation
-	(Motivation)
+	# (Motivation)
 	Equivalence
-	Inf-sup condition
-	Stability
+	# (Inf-sup condition)
+	# (Stability)
 
 Curve integral
 	Derivation
 	Variational form
+
+Inf-sup condition with curve integral
+	# General idea of inf-sup and implications
+	# T-coercivity
+	Proof for the system
 	
-	
-	
+Stability with curve integral

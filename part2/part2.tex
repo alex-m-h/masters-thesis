@@ -4,10 +4,12 @@
 
 In 2D we have the Hilbert complex 
 \begin{align*}
-    ?????????
+    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2
 \end{align*}
 where we have the $\curl$ which is the scalar curl and 
 $\mathbf{\curl}$ which is the vector valued curl defined as.
+
+We use the notation introduced in \ref{} for general Hilbert complexes.
 
 It is easily derived that we have the integration by parts formula if $\mathbf{v} \in C_b^1(\overline{\Omega})$.
 Here $\Omega$ is from now on assumed bounded and Lipschitz.
@@ -90,6 +92,8 @@ then they will remain equivalent.
 
 \subsection{Curve integral constraint}
 
+From now on, we assume that the space of harmonic forms $\mathfrak{H}^1$ has dimension 
+one.
 We want to add now a curve integral constraint. We first want to rewrite the curve 
 integral in variational form. 
 
@@ -101,25 +105,32 @@ unit normal of $K$. Then we know that $\mathbf{n} \perp \gamma'$.
 
 If we now take $\mathbf{B}$ that 
 \begin{align*}
-    n \times \mathbf{B} =   -\mathbf{B}\times n = -\mathbf{B} \cdot R_{\pi/2} \mathbf{n}
+    n \times \mathbf{B} =   -\mathbf{B}\times n 
+    = - (B_1 n_2 - B_2 n_1) = - \mathbf{B} \cdot \begin{pmatrix}n_2 \\ -n_1 \end{pmatrix}
+    = \mathbf{B} \cdot R_{\pi/2}\mathbf{n}
 \end{align*}
 then $R_{\pi/2} \mathbf{n}$ is either $\gamma'$ or $-\gamma'$. Assume w.l.o.g.
 that $R_{\pi/2} \mathbf{n} = \gamma'$ and thus 
 \begin{align*}
-    -\mathbf{B} \cdot R_{\pi/2} \mathbf{n} = - \mathbf{B} \cdot \gamma'.
+    \mathbf{B} \cdot R_{\pi/2} \mathbf{n} = \mathbf{B} \cdot \gamma'.
 \end{align*}
 
 So we see that we can write 
 \begin{align*}
-    n \times \mathbf{B} = - \mathbf{B} \cdot \gamma'
+    n \times \mathbf{B} = \mathbf{B} \cdot \gamma'
 \end{align*}
 and so the curve integral becomes
 
 \begin{align*}
     \int_\Gamma \mathbf{B}\cdot dl= \int_0^{|\Gamma|} \mathbf{B}(\gamma(t)) \cdot \gamma'(t) \, dt 
-    = - \int_0^{|\Gamma|} n(\gamma(t)) \times \mathbf{B}(\gamma(t)) \, dt 
-    = - \int_\Gamma n \times \mathbf{B}.
+    = \int_0^{|\Gamma|} n(\gamma(t)) \times \mathbf{B}(\gamma(t)) \, dt 
+    = \int_\Gamma n \times \mathbf{B}.
 \end{align*}
+
+Assume now that $K$ is an annulus type domain. More precisely, there are two 
+disjoint closed curve $\partial \Omega_{in}$ and $\partial \Omega_{out}$ that $\Omega$. 
+$\Omega_\gamma$ as the set that is encompassed by $\partial \Omega_{in}$ and $\gamma$.
+{\color{red} Drawing!}
 
 Defie $\psi$ s.t. $\psi = 0$ on $\partial \Omega_{in}$ and $\psi = 1$ on $\Gamma$ 
 and constant one outside
@@ -143,14 +154,14 @@ Let us assume we are given that the curve integral
 assuming this makes sense. Then we choose $\psi$ and then get 
 the constraint
 \begin{align*}
-    \langle \mathbf{\curl} \psi, \mathbf{B} \rangle = \langle J, \psi \rangle +-? C_0.
+    \langle \mathbf{\curl} \psi, \mathbf{B} \rangle = \langle J, \psi \rangle - C_0.
 \end{align*}
 Note that there are not test functions involved since $\psi$ is fixed. 
-We define $C_1 \vcentcolon=  \langle J, \psi \rangle +-? C_0$. Then to get a variational 
+We define $C_1 \vcentcolon=  \langle J, \psi \rangle - C_0$. Then to get a variational 
 formulation we multiply \ref{} with an arbitrary $\mu \in \real$. Then we reformulate 
 the mixed variational form slightly. 
 
-Let $J \in L^2$, $\mathbf{p} \in \mathfrak{H}^1$. 
+Let $J \in L^2$, $\mathbf{p} \in \mathfrak{H}^1 \setminus \{0\}$. 
 Find $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$, $\lambda \in \real$ s.t.
 \begin{align}
     \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle 
@@ -163,8 +174,7 @@ Find $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$, $\lambda \in \real$ s.t.
 which gives us the variational formulation of the magnetostatic problem with curve integral 
 constraint. We will study the well-posedness of this formulation next. 
 Using the analogous reasoning as in \ref{} we see that the first two equations are still equivalent 
-to the magnetostatic problem without additional constraint even though we use now {\color{red} Need 
-assumption that $\dim \mathfrak{H}^1= 1$}. 
+to the magnetostatic problem without additional constraint.
 
 Defining $X \vcentcolon= H^1_0 \times H_0(\diver) \times \real$ and the 
 bilinear form $a:X\times X \rightarrow \real$
@@ -182,15 +192,23 @@ This allows us to rewrite \ref{} in the standard form
 \end{align*}
 Note that the bilinear form $a$ is not symmetric. 
 
+As stated in the proof of the Poincare inequality \ref{} 
+the $\veccurl| _{\mathfrak{Z}^\perp}: \mathfrak{Z}^\perp \rightarrow \mathfrak{B}^1$
+is bijective and since it is bounded w.r.t. the $V$-norm -- which is the 
+$H^1$-norm here -- due to Banach inverse theorem it is invertible and we denote this 
+inverse $\veccurl^{-1}$. This is a slight abuse of notation since it is not really 
+the inverse of the full $\veccurl$.
+
 \begin{lemma}
+    Assume $\veccurl \psi = \veccurl \psi_0 + c_\psi \mathbf{p}$. Assume w.l.o.g. $c_\psi >0$
+    (otherwise we can choose the representative of $\mathfrak{H}^1$ with the opposite sign).
     Define $T:X \rightarrow X$ as 
     \begin{align*}
         T(\sigma, \mathbf{B},\lambda)
-        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \mathbf{p},
+        = (\sigma - \frac{1}{c_P^2}\veccurl^{-1}, \veccurl \sigma + \mathbf{B} + \lambda \beta \mathbf{p},
             -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  
             + \frac{\lambda}{c_\psi} \rangle).
     \end{align*}
-    Assume $c_\psi$ is positive.
     Then $T$ is surjective. 
 \end{lemma}
 \begin{proof}
@@ -244,14 +262,17 @@ Note that the bilinear form $a$ is not symmetric.
     as well as $\psi$.
 \end{theorem}
 \begin{proof}
-    We will use T-coercivity to prove it. 
+    We will use T-coercivity to prove it. Choose $(\sigma, \mathbf{B},\lambda) \in X$ 
+    arbitrary and define $\rho \vcentcolon= \veccurl^{-1} \mathbf{B}_{\mathfrak{B}}$
     \begin{align*}
         T(\sigma, \mathbf{B},\lambda)
         = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \mathbf{p},
             -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \rangle)
     \end{align*}
     with $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$ and $\alpha = -\frac{c_\psi}{4 c_1^2 c_P^2}$.
-    Then $T$ is bijective \ref{}. We split up $d\psi = d\psi_0 + c_\psi \mathfrak{p}$ to get 
+    Take $c_1 > 0$ s.t. $\lVert \veccurl \psi_0 \rVert \leq c_1$ (e.g. one could choose 
+    $c_1 = \lVert \veccurl \psi_0 \rVert + 1)$.
+    Then $T$ is surjective \ref{}. We split up $d\psi = d\psi_0 + c_\psi \mathfrak{p}$ to get 
     \begin{align*}
         &a(\sigma, \mathbf{B},\lambda;T(\sigma, \mathbf{B},\lambda))
         \\ &=\langle \sigma, \sigma - \frac{1}{c_P^2} \rho \rangle 
@@ -332,6 +353,8 @@ Note that the bilinear form $a$ is not symmetric.
 In order to approximate the Hodge Laplacian problem we want to use finite elements.
 We want to use them in a way that we can rebuild the structure of the Hilbert complex 
 in our discretization. This section follows Sec. 5.2 in Arnold's book \cite{arnold}.
+
+Recall situation
 
 Let us assume the we have finite dimensional subspaces $V_h^k \subseteq V^k$. 
 Then we define completely analogous to the continuous case,
@@ -456,7 +479,8 @@ discrete and continous harmonic forms.
 \begin{proof}
     See \cite[Thm.\,5.2]{arnold}. 
 \end{proof}
-{\color{red} Do not forget the continuous poincare inequality}
+{\color{red} Do not forget the continuous poincare inequality} This then implies 
+that there is a quasi optimal kind of bound of the gap
 \begin{proposition}[Discrete Poincare inequality]
     Assume that we have a $V$-bounded cochain projection $\pi_h$ for 
     the discrete Hilbert complex \ref{}. Then 
@@ -510,6 +534,8 @@ and the dual complex
 \end{align*}
 where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and corresponds thus to
 weak form of $\curl$ and the same for $\widetilde{\grad}_h$.
+Analogous to the continuous case we assume that $\dim \mathfrak{H}_h^1 = 1$ 
+which is not unreasonable thanks to \ref{} for $h>0$ small enough.
 The discretized version of the magnetostatic problem then states: 
 Find $\mathbf{B}_h \in V_h^1$ s.t.
 \begin{align*}
@@ -534,7 +560,6 @@ we can choose $\psi$ this is not unreasonable.
 
 Note that this trial and test space is indeed conforming, but we choose a discrete harmonic form 
 $\mathbf{p}_h \in \mathfrak{H}^1_h$ so the resulting bilinear forms are different. 
-We assume that $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$.
 The stability now follows from the exact same arguments as in \ref{} 
 so we obtain a inf sup condition with a different constant $\gamma_h$ that involves 
 $c_{P,h}$ from \ref{}. 
@@ -550,7 +575,24 @@ which we will introduce below \ref{}. This section is a recollection
 since we use the same method as presented in this paper also to fix notation. 
 
 We will use two different types knot sequences, non-periodic and periodic ones. 
-For the non-periodic ones we take an open knot sequence 
+We choose a knot sequence $\{ \xi_i \}_{i=0}^{n+p}$ with 
+$\xi_0 \leq \xi_1 \leq ... \xi_{n+p}$. We choose two types of sequences.
+
+Let us define $x_0 < x_1 < ... < x_N$ as the physical knots which 
+is our actual grid. We will stick to the equidistant case. Let $h$ be 
+$x_{i+1} - x_i$.
+
+For the non-periodic case we choose an \textit{open} knot sequence by 
+$\xi_0 = ... = \xi_p = x_0$, $\xi_{p+l} = x_l$ for $l = 0,1,...,N$ and 
+$\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$
+\begin{align*}
+    \xi_0 = ... = \xi_p < \xi_{p+1} < ... \xi_{n} = \xi_{n+1} = ... = \xi_{n+p}    
+\end{align*}
+and for the periodic case 
+$\xi_0 = x_0-ph, \xi_1 = x_0-(p-1)h, ..., \xi_p = x_0$,
+$\xi_{p+l} = x_l$ and $\xi_{n+l} = x_N + lh$ for $l = 0, ..., p$. 
+Thus we always have $N+p = n$. 
+
 \begin{align*}
     0 =  \xi_0 = \xi_1 = ... = \xi_p < \xi_{p+1} < \xi_{p+2} < ... < \xi_{n-1} < \xi_n 
     = \xi_{n+1} = ... = \xi_{n+p}
@@ -567,8 +609,6 @@ we get that
 \end{align*}
 $\mathcal{N}_0^{p-1} $ vanishes.
 
-For the periodic case, the B-splines starting at knots ... are periodically 
-extended to the start of the integral. 
 
 We now can take tensor product of spline spaces. We use the notation 
 with $\mathbf{q} \in \{p-1,p\}^2$ and we define with $\mathbf{i} \in [N_0 ] \times [ N_1 ]$
@@ -583,7 +623,17 @@ On $\hat{\Omega}$ we obtain the following discrete Hilbert complex
     \mathbb{S}_{p,p} \xrightarrow{\veccurl} \mathbb{S}_{p-1,p} \xrightarrow{\diver} \mathbb{S}_{p-1,p-1}
 \end{align*}
 and we denote $\hat{V}^0 = \mathbb{S}_{p,p}$, $\hat{V}^1 = \mathbb{S}_{p-1,p}$ 
-and $\hat{V}^2 = \mathbb{S}_{p-1,p-1}$. These spaces are conforming for $p>1$?
+and $\hat{V}^2 = \mathbb{S}_{p-1,p-1}$. 
+
+It is well-known that if we have a function $\mathbf{v}$ that is piecewise smooth 
+then $\mathbf{v} \in H(\diver)$ i.i.f. the normal trace across element interfaces
+agrees almost everywhere. Analogously for $\tau \in H^1$ i.i.f. the values agree 
+on the interfaces almost everywhere. Since we always have $p \geq 2$ we thus know that 
+all our tensor splines are at least continuous globally and thus we get 
+$\hat{V}_h^j \subseteq \hat{V}^j$ for $j=0,1,2$ as desired. 
+
+\subsection{Basis and degrees of freedom}
+
 
 Let us now investigate the degrees of freedom. We will use geometric degrees of 
 freedom i.e. each degree of freedom can be associated with some geometrical element of our 
@@ -593,6 +643,9 @@ domain. We define Greville points by
 \end{align*}
 i.e. the knot averages for $i=0,...,n-1$. Then the spline interpolation at these 
 points is well-defined (see \cite{I think that was in the isogeometric analysis book}).
+Note that in the case periodic some Greville points lie outside of 
+the physical grid. But since the function is periodic it can simply be extended periodically 
+and then interpolated at these points. 
 
 This gives us the following geometric elements nodes, edges and cells
 \begin{align*}
@@ -628,7 +681,15 @@ We $\mathbf{e}_d^\perp$ as the rotation of $\mathbf{e}_d$ by $\pi_2$ in counter 
 direction i.e. $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$.  
 Something about orientation
 
-These degrees of freedome are unisolvent (explanation) and we can thus define our basis functions 
+
+These degrees of freedome are unisolvent (explanation) i.e. 
+with some ordering $\mu_0, \mu_1, ...$ of the indices of $\mathcal{M}^l$
+\begin{align*}
+    (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{|\mathcal{M}^l|}}):
+    V^l_h \rightarrow \real^{|\mathcal{M}^l}
+\end{align*}
+is bijective.
+And we can thus define our basis functions 
 $\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$ as the basis which is dual to the 
 degrees of freedom in the sense 
 \begin{align*}
@@ -692,6 +753,11 @@ by
 \end{align*}
 Then we have by construction that 
 $\sigma^l_\mu(\Lambda^l_{\nu}) = \delta_{\mu,\nu}$. 
+
+We can thus define the projection operators 
+\begin{align*}
+    \pi_h^l: U^l \rightarrow V_h^l, v \mapsto \sum_{\mu \in \mathcal{M}^l} \sigma^l_\mu \Lambda^l_\mu.
+\end{align*}
 
 Then these degrees of freedom commute with the corresponding differential operators 
 as desired from \ref{}. They also correspond to geometric elements. 

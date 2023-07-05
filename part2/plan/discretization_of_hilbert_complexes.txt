@@ -5,7 +5,11 @@ Discrete Hilbert complex
 	Discrete harmonic forms
 	Discrete Poincare inequality
 
+Discretized magnetostatic problem
 
+Stability
+
+A-priori estimate
 
 
 
