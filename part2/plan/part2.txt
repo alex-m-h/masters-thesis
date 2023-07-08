@@ -8,12 +8,12 @@ Magnetostatic problem in variational mixed form
 	2D magnetostatic problem
 	Variational formulation
 	Curve integral
-	Inf-sup condition with curve integral
-	Stability with curve integral
+	Well-posedness of the magnetostatic system
 
 Discretization of Hilbert complexes
 	Discrete Hilbert complex
 	Discretized magnetostatic problem
+	Well-posedness
 	Stability
 	A-priori estimate
 

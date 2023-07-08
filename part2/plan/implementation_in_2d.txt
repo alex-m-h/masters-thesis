@@ -1,7 +1,8 @@
 Splines
 	Definition
-	(Properties without proof)
+	Properties without proof
 	Tensor splines
+	Approximation properties
 
 Interpolation
 	Geometric interpolation
@@ -11,7 +12,8 @@ Interpolation
 Building the system
 	Pullback
 	Assembly on logical domain
-	Total stiffness matrix
 
+Imposing boundary conditions
 
+Building the system
 	

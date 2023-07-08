@@ -1,27 +1,147 @@
 \documentclass[../master_thesis.tex]{subfiles}
 \begin{document}
-\section{Variational formulation of the magnetostatic in 2D}
+\section{Variational formulation of the magnetostatic problem in 2D}
 
-In 2D we have the Hilbert complex 
+For simplicity we will now turn to the 2D case and we assume that 
+our open domain will be bounded and Lipschitz. This involves to introduce 
+a different Hilbert complex with other differential operators. 
+
+We define the scalar curl for $\mathbf{v} \in C^1(\Omega,\real^2)$
 \begin{align*}
-    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2
+    \curl \mathbf{v} = \partial_1 v_2 - \partial_2 v_1.
 \end{align*}
-where we have the $\curl$ which is the scalar curl and 
-$\mathbf{\curl}$ which is the vector valued curl defined as.
+Additionally, we have the vector-valued curl, denoted in bold, defined 
+for $v \in C^1(\Omega)$
+\begin{align*}
+    \veccurl v = \begin{pmatrix}\partial_2 v \\ -\partial_1 v    \end{pmatrix}.
+\end{align*}
 
-We use the notation introduced in \ref{} for general Hilbert complexes.
+The cross product for 2D reads for $\mathbf{a}, \mathbf{b} \in \real^2$,
+\begin{align*}
+    \mathbf{a} \times \mathbf{b} \vcentcolon= a_1 b_2- a_2 b_1.
+\end{align*}
 
-It is easily derived that we have the integration by parts formula if $\mathbf{v} \in C_b^1(\overline{\Omega})$.
-Here $\Omega$ is from now on assumed bounded and Lipschitz.
+A straightforward calculation shows that the following integration-by-parts formula 
+holds for $u \in C^1(\overline{\Omega})$, $\mathbf{v} \in C^1(\overline{\Omega};\real^2)$,
+assuming $\Omega$ is Lipschitz
+\begin{align*}
+    \int_\Omega \veccurl u \cdot \mathbf{v} \,dx 
+    = \int_\Omega u \, \curl \mathbf{v} \, dx - \int_{\partial \Omega} u\, \mathbf{n}\times \mathbf{v} \, dl
+\end{align*}
+where $\mathbf{n}$ is the outward unit normal.
+Now, analogous to what we did in \ref{} we can now extend this definition in the weak sense.
 
-The 2D magnetostatic problem is then
-Let $J \in B^*_0$ be given. Then
+First, notice that $\veccurl u = R_{-\pi/2} \grad u$ and thus $\veccurl$ is well-defined 
+on $H^1$. For the scalar curl we define 
+\begin{align*}
+    H(\curl;\Omega) = \{ \mathbf{v} \in L^2 \mid \exists  w \in L^2: 
+        \int_\Omega w \phi \, dx = \int_\Omega \mathbf{v} \cdot \veccurl \phi \, dx 
+        \quad \forall \phi \in C_0^\infty \}
+\end{align*}
+i.e. $(\curl, H(\curl)) = (\veccurl, C_0^\infty)^*$. 
+Analogous to Section\,\ref{}, it is then possible to extend the 
+tangential trace to a operator $\gamma_\tau$ defined on $H(\curl)$ s.t. 
+the integration by parts formula \ref{} holds. Also analogous to the 3D case,
+we can define 
+\begin{align*}
+    H_0(\curl) \vcentcolon= \{ \mathbf{v} \in H(\curl) \mid \gamma_\tau \mathbf{v} = 0\}
+\end{align*}
+and then
+\begin{align*}
+    (\curl, H_0(\curl)) & = (\veccurl, H^1)^* 
+    \\ (\curl, H(\curl)) & = (\veccurl, H_0^1)^*.
+\end{align*}
+
+Notice that it hold $\div \veccurl = 0$ and so 
+we thus have the following 2D Hilbert complex 
+\begin{align*}
+    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2.
+\end{align*}
+and the dual complex
+\begin{align*}
+    L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\grad} H^1
+\end{align*}
+We use the notation introduced in \ref{} for general Hilbert complexes i.e.
+$V^0 = H^1_0$, $V^1= H_0(\diver)$, $V^*_1 = H(\curl)$ etc. Also we remind of 
+the notation $\mathfrak{B}^k$ for the image of a differential operator 
+and $\mathfrak{B}^*_k$ and analogous $\mathfrak{Z}^k$ for the kernel and 
+$\mathfrak{Z}^k$ for the kernel of the adjoint.
+
+We want to look at the following simplified problem. Assume that our current source 
+$\mathbf{J}$ is pointing in $z$-direction i.e. $\mathbf{J} = J \mathbf{e}_z$. 
+Further assume that there is a $\tilde{\Omega}$ s.t. 
+$\Omega = \tilde{\Omega} \times \real$. Due to symmetry we can then assume
+further that $B_3$ does not change in $z$-direction which implies that 
+\begin{align*}
+    0 = \diver \mathbf{B} = \partial_x B_1 + \partial_y B_2 = \diver \tilde{\mathbf{B}}.
+\end{align*}
+where $\tilde{\mathbf{B}} = (B_1,B_2)^\top$. The last line of the 
+$\curl \mathbf{B} = \mathbf{J}$ reads 
+\begin{align*}
+    J = \partial_x B_2 - \partial_y B_1 = \curl \tilde{\mathbf{B}}
+\end{align*}
+For $\Omega$ the unit outer normal has zero part in $z$-direction and thus the boundary 
+condition
+\begin{align*}
+    0 = \mathbf{B} \cdot \mathbf{n} = \tilde{\mathbf{B}} \cdot \tilde{\mathbf{n}}
+\end{align*}
+with $\tilde{\mathbf{n}} = (n_1, n_2)^\top$ is the outer unit normal 
+$\tilde{\Omega}$. 
+
+Now we will abuse notation and refer to $\tilde{\mathbf{B}}$ as $\mathbf{B}$ 
+$\tilde{\mathbf{n}}$ as $\mathbf{n}$ and $\tilde{\Omega}$ as $\mathbf{\Omega}$.
+Let $J \in L^2$ be given. Then we see that $\mathbf{B}$ must fulfill the 
+following equations
+\begin{align*}
+    \curl \mathbf{B} &= J,
+    \\ \diver \mathbf{B} &= 0.
+\end{align*}
+Depending on the domain, this problem is in general not well-posed -- just as the problem in 3D -- 
+and requires an additional constraint. Let us now make certain restrictions 
+on what type of domain we will consider. 
+
+From now on, we assume that the space of harmonic forms $\mathfrak{H}^1$ has dimension 
+one and that our domain is encompassed by two disjoint closed curves (cf. Fig.\ref{})
+i.e. we have curves $\partial \Omega_{in}$ and $\partial \Omega_{out}$ s.t. 
+$\partial \Omega_{in} \cup \partial\Omega_{out}$ is the boundary of $\Omega$. 
+Let now $\Gamma$ be s.t. it is a closed curve in $\Omega$ that goes around the 
+hole in the middle i.e. the area surrounded by $\Gamma$ contains $\partial \Omega_{in}$.
+Let $\Gamma$ be a closed curve with parametrization $\gamma:[0,|\Gamma|]$ s.t. 
+$|\gamma'(t)| = 1$ and assume that $\gamma$ is bijective i.e. the curve does not 
+intersect itself. We assume that $\Gamma$ has positive distance from 
+$\partial \Omega_{in}$. We do not assume anything like that for the exterior boundary 
+i.e. $\Gamma$ can touch or be identical to $\partial \Omega_{out}$ 
+We then denote the area that is enclosed by $\Gamma$ and
+$\partial\Omega_{in}$ as $\Omega_\Gamma$. 
+
+\begin{figure}
+    \centering
+    \resizebox{8cm}{8cm}{
+    \begin{tikzpicture}
+    \draw[fill=lightgray] (0,0) circle [radius=5];
+    \draw[fill=white] (0,0) circle [radius=2];
+    \draw[dashed, -{Latex[length=3mm,width=3mm]}] (4,0) 
+         arc [start angle=0, end angle=180, radius=4] node[midway, below]{\large$\Gamma$} ;
+    \draw[dashed, -{Latex[length=3mm,width=3mm]}] (-4,0) arc [start angle=180, end angle=360, radius=4] ;
+    \node[above] at (0,5) {\large$\partial \Omega_{out}$};
+    \node[below] at (0,2) {\large$\partial \Omega_{in}$};
+    \node at (135:3) {\huge$\Omega$};
+\end{tikzpicture}
+}
+\caption{Does this really work?} \label{fig:annulus_domain}
+\end{figure}
+
+From now on, our domain $\Omega$ is always assumed to be of that kind. 
+Then we add the curve integral along $\Gamma$ as an additional constraint, which we 
+assume to be well-defined.
+So in total, we obtain the following problem.
+
 \begin{problem}[2D magnetostatic problem]
-    Find $\mathbf{B} \in H_0(\diver) \cap H(\curl)$ s.t.
+    Given $J \in L^2$ and $C_0 \in \real$, find $\mathbf{B} \in H_0(\diver) \cap H(\curl)$ s.t.
     \begin{align*}
         \curl \mathbf{B} &= J,
         \\ \diver \mathbf{B} = 0,
-        \text{+ additional constraints}
+        \\ \int_\Gamma \mathbf{B} \cdot \, dl = C_0
     \end{align*}
 \end{problem}
 The additional constraints are necessary to give a unique solution. 
@@ -31,17 +151,22 @@ Another option would be an orthogonality constraint as in \ref{}.
 
 \subsection{Mixed formulation}
 In order to solve this problem numerically using finite elements we have to 
-choose a suitable variational formulation of the problem. We will use the following
-For any $J \in \curl H(\curl)$ find $\sigma \in H^1_0$, 
-$B \in H_0(\diver)$ and $p \in \mathfrak{H}^1$ s.t.
+choose a suitable variational formulation of the problem. Ignoring the curve integral 
+at first, we will use the following. We choose a non-zero harmonic form 
+$\mathbf{p} \in \mathfrak{H}^1$.
+For any $J \in L^2$ find $\sigma \in H^1_0$, 
+$B \in H_0(\diver)$ and $\lambda \in \real$ s.t.
 \begin{align}
     \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle 
         &=  -\langle J, \tau \rangle \quad \forall \tau \in H^1_0, \label{eq:first_eq_mixed_formulation}
     \\ \langle \mathbf{\curl}\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
-        + \langle \mathbf{p}, \mathbf{v} \rangle 
-        &= 0 \quad \forall \mathbf{v} \in V^k \text{ and} \label{eq:second_eq_mixed_formulation}
-        \text{+ additional constraints}
+        + \lambda \langle \mathbf{p}, \mathbf{v} \rangle 
+        &= 0 \quad \forall \mathbf{v} \in V^k \label{eq:second_eq_mixed_formulation}
 \end{align} 
+Here the curve integral condition is missing. It is difficult to include the curve integral 
+condition directly when solving this system numerically. So we will reformulate it below 
+in \ref{}.
+
 This formulation is of course much more complicated than the first one \ref{}, 
 but this formulation will turns out to be well-suited for finite element approximations.
 But it begs the question if the two formulations are equivalent. We will answer it 
@@ -50,7 +175,7 @@ in two propositions. We will treat the harmonic constraint separately.
 \begin{proposition}
     For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
     (\ref{eq:second_eq_mixed_formulation}) hold i.i.f. 
-    $\sigma = 0$, $\mathbf{p}=0$ and $\curl \mathbf{B} = J$ and 
+    $\sigma = 0$, $\lambda=0$ and $\curl \mathbf{B} = J$ and 
     $\diver \mathbf{B} = 0$
     i.e. the magnetostatic \ref{}  is fulfilled without the additional 
     constraint.
@@ -69,13 +194,13 @@ in two propositions. We will treat the harmonic constraint separately.
     we get from the definition of the harmonic forms 
     and $\mathfrak{H}^1 \perp \mathbf{\curl} H^1_0$ from the Hodge decomposition and thus
     \begin{align*}
-        \langle \mathbf{\curl} \sigma, \mathfrak{p} \rangle + \langle du, d\mathfrak{p} \rangle + \langle p, \mathfrak{p} \rangle
-        = \langle p, \mathfrak{p} \rangle = 0
+        \langle \mathbf{\curl} \sigma, \mathfrak{p} \rangle + \langle du, d\mathfrak{p} \rangle + \lambda\langle p, \mathfrak{p} \rangle
+        = \lambda \langle p, \mathfrak{p} \rangle = 0
     \end{align*}
-    and so $\mathfrak{p} = 0$. Then we can choose $\mathbf{v} = \mathbf{\curl} \sigma$ to get 
+    and so $\lambda = 0$. Then we can choose $\mathbf{v} = \mathbf{\curl} \sigma$ to get 
     \begin{align*}
         \langle \mathbf{\curl} \sigma, \mathbf{\curl} \sigma \rangle + \langle \diver \mathbf{B}, \diver \mathbf{\curl} \sigma \rangle 
-            + \langle \mathbf{p}, \mathbf{\curl} \sigma \rangle
+            + \lambda \langle \mathbf{p}, \mathbf{\curl} \sigma \rangle
         = \lVert \mathbf{\curl} \sigma \rVert^2.
     \end{align*}
     Because $\sigma \in H^1_0$ this gives us $\sigma = 0$. Also we have then 
@@ -86,23 +211,22 @@ in two propositions. We will treat the harmonic constraint separately.
     with $\curl \mathbf{B} = J$ and $\diver \mathbf{B} = 0$ then the variational 
     formulation clearly holds.
     \end{proof}
-If we now add the same additional constraints to both formulations of the problem 
+Notice that the variable $\lambda$ is not necessary for this variational formulation, 
+but we will need it later, since we will add another equation representing the 
+curve integral constraint and hence we need another variable to have the same 
+number of unknowns and equations.
+If we now add the same additional constraint to both formulations of the problem 
 then they will remain equivalent.
 
 
 \subsection{Curve integral constraint}
 
-From now on, we assume that the space of harmonic forms $\mathfrak{H}^1$ has dimension 
-one.
-We want to add now a curve integral constraint. We first want to rewrite the curve 
-integral in variational form. 
 
-Let $\Gamma$ be a closed curve with parametrization $\gamma:[0,|\Gamma|]$ s.t. 
-$|\gamma'(t)| = 1$ and assume that $\gamma$ is bijective i.e. the curve does not 
-intersect itself. Since $\Gamma$ is a closed curve 
-it encompasses a set $K$ {\color{red} Add drawing} Let $\mathbf{n}$ be the 
-unit normal of $K$. Then we know that $\mathbf{n} \perp \gamma'$. 
+We then take $\psi$ s.t. $\psi = 0$ on $\partial \Omega_{in}$ 
+and $\psi = 1$ on $\Gamma$ and $\psi \equiv 1$ in $\Omega \setminus \Omega_\Gamma$.
 
+Then we know that for $\mathbf{n}$ being the unit outward normal 
+of $\Omega_\Gamma$ we have $\mathbf{n} \perp \gamma'$.
 If we now take $\mathbf{B}$ that 
 \begin{align*}
     n \times \mathbf{B} =   -\mathbf{B}\times n 
@@ -126,26 +250,20 @@ and so the curve integral becomes
     = \int_0^{|\Gamma|} n(\gamma(t)) \times \mathbf{B}(\gamma(t)) \, dt 
     = \int_\Gamma n \times \mathbf{B}.
 \end{align*}
-
-Assume now that $K$ is an annulus type domain. More precisely, there are two 
-disjoint closed curve $\partial \Omega_{in}$ and $\partial \Omega_{out}$ that $\Omega$. 
-$\Omega_\gamma$ as the set that is encompassed by $\partial \Omega_{in}$ and $\gamma$.
-{\color{red} Drawing!}
-
-Defie $\psi$ s.t. $\psi = 0$ on $\partial \Omega_{in}$ and $\psi = 1$ on $\Gamma$ 
-and constant one outside
 Then we observe 
-
 \begin{align*}
     \int_\Omega \mathbf{\curl} \psi \cdot \mathbf{B} \, dx = 
     \int_\Omega \psi \, J \, dx - \int_\partial\Omega n\times \mathbf{B} \, dl
     = \int_\Omega \psi \, J \, dx - \int_\Gamma \mathbf{B}\cdot dl
 \end{align*}
 
+So we see that 
+
 Note that even though right hand side requires some regularity for $\mathbf{B}$
 the left hand side makes sense even if $\mathbf{B}$ is only in $L^2$!
 So if we are in a situation where the we have curve integral given then 
-we can add this constraint like this. 
+we can add this constraint like this without having to compute the 
+curve integral explicitely in our approximation.
 
 Let us assume we are given that the curve integral 
 \begin{align*}
@@ -157,10 +275,18 @@ the constraint
     \langle \mathbf{\curl} \psi, \mathbf{B} \rangle = \langle J, \psi \rangle - C_0.
 \end{align*}
 Note that there are not test functions involved since $\psi$ is fixed. 
-We define $C_1 \vcentcolon=  \langle J, \psi \rangle - C_0$. Then to get a variational 
-formulation we multiply \ref{} with an arbitrary $\mu \in \real$. Then we reformulate 
-the mixed variational form slightly. 
-
+We define $C_1 \vcentcolon=  \langle J, \psi \rangle - C_0$. 
+Then we have for $\mathbf{B} \in C^1(\Omega;\real^2)$ that 
+\begin{align*}
+    \int_\Gamma \mathbf{B} \cdot dl = C_0 
+    \Leftrightarrow \langle \mathbf{\curl} \psi, \mathbf{B} \rangle = C_1.
+\end{align*}
+This is the motivation why it makes sense to add the right equation as an 
+representation of the curve integral to our system since it is much easier 
+to enforce numerically.
+Then to get a variational 
+formulation we multiply \ref{} with an arbitrary $\mu \in \real$. 
+In conclusion, we have the following variational problem:
 Let $J \in L^2$, $\mathbf{p} \in \mathfrak{H}^1 \setminus \{0\}$. 
 Find $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$, $\lambda \in \real$ s.t.
 \begin{align}
@@ -172,22 +298,61 @@ Find $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$, $\lambda \in \real$ s.t.
     \\ \mu \langle \bm{\curl} \psi, \mathbf{B} \rangle &= \mu C_1 \quad \forall \mu \in \real.
 \end{align}
 which gives us the variational formulation of the magnetostatic problem with curve integral 
-constraint. We will study the well-posedness of this formulation next. 
-Using the analogous reasoning as in \ref{} we see that the first two equations are still equivalent 
+constraint. Using the analogous reasoning as in \ref{} we see that the first two equations are still equivalent 
 to the magnetostatic problem without additional constraint.
+We will study the well-posedness of this formulation next. 
 
-Defining $X \vcentcolon= H^1_0 \times H_0(\diver) \times \real$ and the 
+\subsection{Well-posedness of the magnetostatic system}
+
+The well-posedness is based on the well-known Banach-Nečas-Babuška (BNB) theorem 
+(this formulation is from \cite[Sec.\,25.3]{ern_guermond} in the real case)
+
+\begin{theorem}[BNB]
+    Let $X$ be a Banach space and $Y$ be reflexive Banach space. Let $a:X\times Y \rightarrow \real$ be a 
+    bounded bilinear form and $\ell \in W'$. Then a problem of the form 
+    \ref{} is well-posed(?) i.i.f. the following two criteria are fulfilled
+    \begin{enumerate}
+        \item $\inf_{x \in X} \sup_{y\in Y} \frac{|a(x,y)|}{\lVert x \rVert _X \lVert y \rVert _Y} 
+        =\vcentcolon \gamma > 0$
+        \item if we have $y \in Y$ $a(x,y) = 0$ for every $x \in X$, then $y=0$.
+    \end{enumerate}
+    Then we also get the stability estimate for a solution $x$
+    \begin{align*}
+        \lVert x \rVert _X \leq \frac{1}{\gamma} \lVert \ell\rVert _{W'}.
+    \end{align*}
+\end{theorem}
+
+Since we are dealing with Hilbert spaces only we can utilize the following proposition to prove it 
+(see \cite[Rem.\,25.14]{ern_guermond}).
+\begin{proposition}[$T$-coercivity]
+    Let $X$ and $Y$ be Hilbert spaces. Then \ref{} holds, i.i.f.
+    there exists a bounded bijective operator $T:X \rightarrow Y$ s.t.
+    \begin{align}
+        a(x,T(x)) \geq \eta \lVert x \rVert _X^2 \quad \forall x \in X. \label{eq:T_coercivity_bound}
+    \end{align}
+\end{proposition}
+When we have found such a $T$ then 
+we can choose the $\gamma$ from \ref{} as $\eta/\lVert T \rVert _{\mathcal{L}(X,Y)}$. 
+Note also that when we have found $T$ s.t. (\ref{eq:T_coercivity_bound}) holds 
+then it must be injective.
+
+
+Now defining $X \vcentcolon= H^1_0 \times H_0(\diver) \times \real$ and the 
 bilinear form $a:X\times X \rightarrow \real$
-
 \begin{align*}
     a(\sigma,\mathbf{B}, \lambda;\tau,\mathbf{v},\mu) 
     =   \langle \sigma, \tau \rangle - \langle u, \mathbf{\curl}\tau \rangle
         + \langle \mathbf{\curl}\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
         + \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \mathbf{\curl} \psi, \mathbf{B} \rangle.
 \end{align*}
-This allows us to rewrite \ref{} in the standard form
+and 
 \begin{align*}
-    a(\sigma,\mathbf{B},\lambda;\tau,\mathbf{v},\mu) = -\langle J, \tau \rangle - \mu C_1
+    \ell(\tau,\mathbf{v},\mu) = -\langle J, \tau \rangle - \mu C_1.
+\end{align*}
+This allows us to rewrite \ref{} in the standard form: Find $(\sigma,\mathbf{B},\lambda) \in 
+X$ s.t.
+\begin{align*}
+    a(\sigma,\mathbf{B},\lambda;\tau,\mathbf{v},\mu) = \ell(\tau,\mathbf{v},\mu)
         \quad \forall (\tau,\mathbf{v},\mu) \in X.
 \end{align*}
 Note that the bilinear form $a$ is not symmetric. 
@@ -199,27 +364,54 @@ $H^1$-norm here -- due to Banach inverse theorem it is invertible and we denote 
 inverse $\veccurl^{-1}$. This is a slight abuse of notation since it is not really 
 the inverse of the full $\veccurl$.
 
+Usually the last equation \ref{} is used to enforced the harmonic part of the 
+solution. This implies that we expect that $\veccurl \psi$ must have 
+non-vanishing harmonic part. This is indeed true.
+\begin{proposition}
+    Let $Q_\mathfrak{H}^1: L^2 \rightarrow \mathfrak{H}^1$ be the orthogonal
+    projection onto the harmonic forms. Then with $\psi$ defined as above 
+    we have $Q_\mathfrak{H}^1\veccurl \psi \neq 0$.
+\end{proposition}
+\begin{proof}
+    Since $\diver \veccurl \psi = 0$ we know that 
+    \begin{align*}
+        \veccurl \psi \in \mathfrak{Z}^1 = \mathfrak{B}^1 \stackrel{\perp}{\oplus} \mathfrak{H}^1
+    \end{align*}
+    using the Hodge decomposition (cf Thm.\,\ref{thm:hodge_decomposition}). 
+    Assume for now that $\veccurl \psi \in \mathfrak{B}^1$ i.e. there exists 
+    $\psi_0 \in H^1_0$ s.t. $\veccurl \psi_0 = \veccurl \psi$. 
+    Since the $\veccurl$ is just the rotated gradient we would get that 
+    $\grad (\psi - \psi_0) = 0$ and thus $\psi - \psi_0$ is constant almost 
+    everywhere. But this is a contradiction since $\tr \psi_0$ is zero on $\partial\Omega_{in}$ 
+    and $\partial \Omega_{out}$, but $\tr \psi = 0$ on $\partial\Omega_{in}$,
+    but $\tr \psi = 1$ on $\partial\Omega_{in}$. 
+    Thus $\veccurl \psi \notin \mathfrak{B}^1$ and the claim follows.
+\end{proof}
+
+
 \begin{lemma}
-    Assume $\veccurl \psi = \veccurl \psi_0 + c_\psi \mathbf{p}$. Assume w.l.o.g. $c_\psi >0$
-    (otherwise we can choose the representative of $\mathfrak{H}^1$ with the opposite sign).
+    Take $\veccurl \psi = \veccurl \psi_0 + c_\psi \mathbf{p}$. Assume w.l.o.g. $c_\psi >0$
+    (otherwise we can choose the representative of $\mathfrak{H}^1$ with the opposite sign) 
+    and $\lVert \mathbf{p}\rVert =1$.
     Define $T:X \rightarrow X$ as 
     \begin{align*}
         T(\sigma, \mathbf{B},\lambda)
         = (\sigma - \frac{1}{c_P^2}\veccurl^{-1}, \veccurl \sigma + \mathbf{B} + \lambda \beta \mathbf{p},
-            -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  
+            \alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  
             + \frac{\lambda}{c_\psi} \rangle).
     \end{align*}
+    with $\alpha < 0$ and $\beta>0$.
     Then $T$ is surjective. 
 \end{lemma}
 \begin{proof}
     Take $(\tau, \mathbf{v},\mu) \in X$ arbitrary. Then 
-    Now we choose $\sigma = (1+1/c_P)^{-1} (\tau + (1/c_P^2) \veccurl^{-1} \mathbf{v})$ 
+    Now we choose $\sigma = (1+1/c_P)^{-1} (\tau + (1/c_P^2) \veccurl^{-1} \mathbf{v}_\mathfrak{B})$ 
     and $\mathbf{B}_\mathfrak{B} = \mathbf{v}_\mathfrak{B} - \veccurl \sigma$. 
     So 
     \begin{align*}
         \sigma -  1/c_P^2 \veccurl^{-1}\mathbf{B}_\mathfrak{B} 
-        = \sigma -  1/c_P^2 (\veccurl^{-1} \mathbf{v} - \sigma)
-        = (1+1/c_P^2)\sigma - 1/c_P^2 \veccurl^{-1} \mathbf{v}
+        = \sigma -  1/c_P^2 (\veccurl^{-1} \mathbf{v}_\mathfrak{B} - \sigma)
+        = (1+1/c_P^2)\sigma - 1/c_P^2 \veccurl^{-1} \mathbf{v}_\mathfrak{B}
         = \tau.
     \end{align*}
     We simply choose $\mathbf{B}_\mathfrak{B^*} = \mathbf{v}_\mathfrak{B^*}$.
@@ -242,6 +434,7 @@ the inverse of the full $\veccurl$.
     \end{align*}
     Now since $c_\psi > 0$ and $\alpha < 0$, $\beta > 0$ we get 
     $1/c_\psi - \alpha \beta \neq 0$ and the system has a solution. 
+    Choose $\mathbf{B}_\mathfrak{H} = \kappa_u \mathbf{p}$.
     Then we see 
     \begin{align*}
         \mathbf{v}_\mathfrak{H} = c_v p = p(\kappa_u + \beta \lambda) 
@@ -253,9 +446,15 @@ the inverse of the full $\veccurl$.
         = \alpha \kappa_u \lVert p \rVert^2 + 1/c_\psi \lambda 
         = \alpha \langle \mathbf{B}, \mathbf{p} \rangle + 1/c_\psi \lambda.
     \end{align*}
-    And so in comining all that we arrive at 
-    $T(\sigma,\mathbf{B}, \mathbf{p}) = (\tau, \mathbf{v}, \mathbf{p})$.
+    By combining all that we arrive at 
+    $T(\sigma,\mathbf{B}, \lambda) = (\tau, \mathbf{v}, \mu)$.
 \end{proof}
+
+We assume from now on that we have chosen $\mathbf{p}$ in a way s.t. 
+$c_\psi$ -- as defined in the previous lemma -- is positive and $\mathbf{p}$ has 
+norm one. This comes down to choosing $\mathbf{p}$ with the correct sign and normalizing it. 
+Now we can use the T-coercivity \ref{} to prove the inf-sup condition and thus 
+well-posedness of our formulation.
 
 \begin{theorem}
     $a$ satisfies a inf-sup condition with $\gamma$ depending on the Poincaré constant 
@@ -266,20 +465,31 @@ the inverse of the full $\veccurl$.
     arbitrary and define $\rho \vcentcolon= \veccurl^{-1} \mathbf{B}_{\mathfrak{B}}$
     \begin{align*}
         T(\sigma, \mathbf{B},\lambda)
-        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \mathbf{p},
-            -\alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \rangle)
+        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \lambda\mathbf{p},
+            \alpha \langle \mathbf{p}, \alpha \langle \mathfrak{p}, \mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \rangle)
     \end{align*}
     with $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$ and $\alpha = -\frac{c_\psi}{4 c_1^2 c_P^2}$.
     Take $c_1 > 0$ s.t. $\lVert \veccurl \psi_0 \rVert \leq c_1$ (e.g. one could choose 
     $c_1 = \lVert \veccurl \psi_0 \rVert + 1)$.
-    Then $T$ is surjective \ref{}. We split up $d\psi = d\psi_0 + c_\psi \mathfrak{p}$ to get 
+    Then $T$ is surjective \ref{}. 
+    Note 
+    \begin{align*}
+        \langle B, \mathbf{p} \rangle ^ 2
+        = \lVert \mathbf{B}_\mathfrak{H} \rVert^2  
+            \langle \frac{\mathbf{B}_\mathfrak{H}}{\lVert \mathbf{B}_\mathfrak{H} \rVert}, \mathbf{p} \rangle ^ 2
+        = \lVert \mathbf{B}_\mathfrak{H} \rVert^2
+    \end{align*}
+    where we used in the last equality that $\frac{\mathbf{B}_\mathfrak{H}}{\lVert \mathbf{B}_\mathfrak{H} \rVert}$
+    is either $+p$ or $-p$ because $\mathfrak{H}^1$ is assumed to be one-dimensional.
+    We split up $d\psi = d\psi_0 + c_\psi \mathfrak{p}$ to get 
     \begin{align*}
         &a(\sigma, \mathbf{B},\lambda;T(\sigma, \mathbf{B},\lambda))
         \\ &=\langle \sigma, \sigma - \frac{1}{c_P^2} \rho \rangle 
             - \langle \mathbf{B}, \veccurl \sigma - \frac{1}{c_P^2}\veccurl \rho \rangle
-            + \langle \diver \mathbf{B}, \diver \veccurl 
-        \\ &\quad + \sigma \diver \mathbf{B} + \beta \lambda \mathfrak{p}\rangle
-            + \langle \lambda \mathbf{p}, \veccurl \sigma + \mathbf{B} + \beta \lambda \mathfrak{p}\rangle
+            + \langle \veccurl \sigma , \veccurl \sigma + \mathbf{B} + \beta \lambda \diver \mathbf{p} \rangle
+        \\ &\quad + \langle \diver \mathbf{B}, \diver \veccurl 
+            + \sigma \diver \mathbf{B} + \beta \lambda \diver \mathbf{p}\rangle
+        \\ &\quad + \langle \lambda \mathbf{p}, \veccurl \sigma + \mathbf{B} + \beta \lambda \mathfrak{p}\rangle
             - (\alpha \langle \mathbf{B}, \mathbf{p} \rangle + \frac{\lambda}{c_\psi})
             \langle \mathbf{B} , \veccurl\psi \rangle
         \\ &= \lVert \sigma \rVert^2 - \frac{1}{c_P^2} \langle \sigma , \rho \rangle 
@@ -298,6 +508,7 @@ the inverse of the full $\veccurl$.
             - \left( \frac{\lambda^2}{2 \epsilon_2 c_\psi^2} 
             + \frac{\epsilon_2 \lVert \mathbf{B}_\mathfrak{B} \rVert^2 \lVert  \veccurl \psi_0 \rVert^2}{2} \right)
     \end{align*}
+    In the last step we used $\epsilon$-Young combined with Cauchy-Schwarz inequality several times. 
     Choose $\epsilon_1 = 4 c_1^2 c_P^2$ to get 
     \begin{align*}
         &\frac{1}{2} \lVert \sigma \rVert^2 + \frac{1}{2 c_P^2} \lVert B_\mathfrak{B} \rVert^2
@@ -319,15 +530,19 @@ the inverse of the full $\veccurl$.
         \\ &\quad+ \lVert \mathbf{B}_\mathfrak{H} \rVert^2  \left( \frac{c_\psi^2}{4 c_1^2 c_P^2 }
         - \frac{ c_1^2 c_P^2 c_\psi^2}{8 c_1^4 c_P^4} \right)
     \end{align*}
-    and finally by using .... and $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$
+    and finally by using the Poincaré inequality $\lVert \mathbf{B}_{\mathfrak{B}^*} \rVert 
+    \leq c_P \lVert \diver \mathbf{B} \rVert$
+    and $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$
     \begin{align*}
         \frac{1}{2} \lVert \sigma \rVert^2 + \frac{1}{4 c_P^2}\lVert B_\mathfrak{B} \rVert^2 
         + \lVert  \veccurl \sigma \rVert^2
-        + \frac{1}{2 c_P^2 B_{\mathfrak{B}^*}} + \frac{c_\psi}{8 c_1^2 c_P^2} 
+        + \frac{1}{2 c_P^2 B_{\mathfrak{B}^*}} 
         + \frac{1}{2} \lVert \diver \mathbf{B} \rVert ^2
         + \frac{c_1^2 c_P^2}{c_\psi^2}\lambda^2
-        + \frac{c_\psi^2}{8 c_1^2 c_P^2} \lVert \mathbf{B}_\mathfrak{H} \rVert^2 
+        + \frac{c_\psi^2}{8 c_1^2 c_P^2} \lVert \mathbf{B}_\mathfrak{H} \rVert^2.
     \end{align*}
+    We can define now $\eta$ by taking the minimum of all these coefficients and 
+    thus we proved $T$-coercivity together with \ref{}. 
 \end{proof}
 
 \begin{theorem}[Stability]
@@ -341,12 +556,20 @@ the inverse of the full $\veccurl$.
 \begin{proof}
     The statement follows immediately from \ref{} and the fact that 
     \begin{align*}
-        | l(\tau,\mathbf{v},\mu) |
+        | \ell(\tau,\mathbf{v},\mu) |
         = | - \langle J, \tau \rangle - C_1 \mu | 
         \leq (\lVert J \rVert + C_1) \lVert \tau,\mathbf{v},\mu \rVert _X
     \end{align*}
-    and thus $\lVert l \rVert _{X'} \leq \lVert J \rVert + | C_1 |$.
+    and thus $\lVert \ell \rVert _{X'} \leq \lVert J \rVert + | C_1 |$.
 \end{proof}
+
+Note that $1/c_\psi$ terms arise
+stability constant $\gamma$. This is not surprising since the term 
+$\langle \veccurl \psi, \mathbf{B} \rangle$ will not enforce the harmonic 
+part if the harmonic part of $\veccurl \psi$ is zero because 
+$\mathbf{B}_\mathfrak{H}$ will disappear from the formulation.
+This also forces us to choose $\psi$ with this in mind to obtain a 
+stable system.
 
 \section{Discrete Hilbert complex}
 
