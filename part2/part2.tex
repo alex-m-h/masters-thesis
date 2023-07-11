@@ -169,8 +169,8 @@ in \ref{}.
 
 This formulation is of course much more complicated than the first one \ref{}, 
 but this formulation will turns out to be well-suited for finite element approximations.
-But it begs the question if the two formulations are equivalent. We will answer it 
-in two propositions. We will treat the harmonic constraint separately.
+But it begs the question if the two formulations are equivalent. We will first 
+investigate the formulation without curve integral
 
 \begin{proposition}
     For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
@@ -546,14 +546,16 @@ well-posedness of our formulation.
 \end{proof}
 
 \begin{theorem}[Stability]
-    The system is stable. For solution $(\sigma, \mathbf{B},\mathbf{p}) \in X$
+    The system is stable. For solution $(\sigma, \mathbf{B},\lambda) \in X$
     we get 
     \begin{align*}
-        \lVert \sigma \rVert _V + \lVert \mathbf{B} \rVert _V + |\lambda|
+        \lVert \mathbf{B} \rVert _{H(\diver)} 
         \leq \frac{\lVert J \rVert + |C_1|}{\gamma}.
     \end{align*}
 \end{theorem}
 \begin{proof}
+    Recall that when $(\sigma, \mathbf{B},\lambda)$ is a solution 
+    then $\sigma = 0$ and $\lambda = 0$.
     The statement follows immediately from \ref{} and the fact that 
     \begin{align*}
         | \ell(\tau,\mathbf{v},\mu) |
@@ -752,7 +754,7 @@ clarifies how close a discrete harmonic form can be chosen.
     \begin{align*}
         \inf \lVert q_h - p \rVert _V \leq \lVert P_{\mathfrak{H}_h}p - p \rVert _V
         \leq \lVert \Pi_h^k p - p \rVert _V 
-        \leq \lVert I - P_{\mathfrak{H}_h}\rVert _{\mathcal{L}(V,V)}
+        \leq \lVert I - \Pi_h^k\rVert _{\mathcal{L}(V,V)}
             \inf_{v_h \in V_h} \lVert p - v_h \rVert _V
     \end{align*}
     which gives us the estimate.
@@ -905,7 +907,7 @@ in we (i.e. conforming subspace but a different bilinear form) we can formulate 
     \begin{align*}
         \lVert x - x_h \rVert _X 
         \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma} \right) 
-            \inf_{z_h \in X_h} \lVert x - z_h\rVert _X + \frac{|\delta(x)|}{\gamma_h}.
+            \inf_{z_h \in X_h} \lVert x - z_h\rVert _X + \frac{\lVert \delta(x) \rVert_{Y'}}{\gamma_h}.
     \end{align*}
 \end{lemma}
 \begin{proof}
@@ -914,7 +916,7 @@ in we (i.e. conforming subspace but a different bilinear form) we can formulate 
         \lVert x - x_h \rVert \leq \lVert x - z_h \rVert _X + \lVert x_h - z_h \rVert _X. \label{eq:a_priori:triangular}
     \end{align}
     We now have to bound the last term on the right hand side.
-    Assume that $x_h - z_h$ is not zero. Then from the inf-sup condition 
+    Assume w.l.o.g. that $x_h - z_h$ is not zero. Then from the inf-sup condition 
     we can find $y_h \in X_h \setminus \{0\}$ s.t. 
     \begin{align*}
         &\gamma_h \lVert x_h - z_h \rVert _X \lVert y_h \rVert _X
@@ -950,7 +952,7 @@ We now have to apply this lemma to the magnetostatic formulation.
         \lVert \mathbf{B} - \mathbf{B}_h \rVert _{H(\diver)} 
         \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma_h} \right)
             \inf_{\mathbf{z}_h \in V_h^1} \lVert \mathbf{B} - \mathbf{z}_h \rVert _{H(\diver)} 
-            + \frac{\lambda}{\gamma_h} C \inf_{\mathbf{v}_h \in V_h^1} \lVert p - \mathbf{v}_h \rVert _{H(\diver)}.
+            % + \frac{\lambda}{\gamma_h} C \inf_{\mathbf{v}_h \in V_h^1} \lVert p - \mathbf{v}_h \rVert _{H(\diver)}.
     \end{align*}
 \end{theorem}
 \begin{proof}
@@ -1251,7 +1253,7 @@ We denote the vector of coefficients of a function in bold with an underline e.g
 $\underline{\bm{\sigma} }$ is the vector of coefficients of $\sigma$ in 
 the basis $\Lambda^0_\mu$ $\mu \in \mathcal{M}^0$ 
 and $\underline{\mathbf{B}}$ is are the coefficients of $\mathbf{B}$ in the basis 
-$\Lambda^1_\mu$ $\mu \in \mathcal{M}^0$.
+$\Lambda^1_\mu$ $\mu \in \mathcal{M}^1$.
 using some flattening again.
 
 \begin{align*}
@@ -1259,7 +1261,7 @@ using some flattening again.
         (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
         + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
         + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
-        \underline{\mathbf{B}} &= \underline{\bm{\tau}}^\top J \quad \forall \underline{\bm{\tau}} \in \real^{N_0}
+        \underline{\mathbf{B}} &= \underline{\bm{\tau}}^\top \underline{\tilde{\mathbf{J}}} \quad \forall \underline{\bm{\tau}} \in \real^{N_0}
     \\ \underline{\mathbf{v}}^\top \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
         + \underline{\mathbf{v}}^\top (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
         \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + \underline{\mathbf{v}}^\top (\mathbb{P}^1_h)^\top \mathbb{M}^1
@@ -1267,15 +1269,14 @@ using some flattening again.
         \quad \forall \underline{\mathbf{v}} \in \real^{N_1}
     \\ \underline{\bm{\psi}}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1_h \underline{\mathbf{B}} = C_1
 \end{align*}
-
+where $\underline{\tilde{J}}_i = \langle J, \Lambda^0_i \rangle$
 which gives us the final system to be solved 
-
 \begin{align*}
     (I-\mathbb{P}^0_h)\top \mathbb{M}^0 
         (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
         +  \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
         +  \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
-        \underline{\mathbf{B}} &=  J 
+        \underline{\mathbf{B}} &=  \underline{\tilde{\mathbf{J}}} 
     \\ \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
         + (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
         \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + (\mathbb{P}^1_h)^\top \mathbb{M}^1
@@ -1300,10 +1301,10 @@ As a first simple numerical example we consider a standard example from
 magnetostatics which is the magnetic field induced by an infinitely long, 
 wire with radius zero. The \textit{Biot-Savart law} can be used to compute it. 
 Let the wire be equal to the $z$-axis and $I$ be the electrical current 
-flowing through it. $\ell(s) = s \mathbf{e}_3$, $x = x_1 \mathbf{e}_1 +  x_2 \mathbf{e}_2$
+flowing through it. $\bm{\ell}(s) = s \mathbf{e}_3$, $\mathbf{x} = x_1 \mathbf{e}_1 +  x_2 \mathbf{e}_2$
 
 \begin{align*}
-    \mathbf{B}(x) = \frac{\mu_0 I}{4\pi} \int_\infty^\infty  
+    \mathbf{B}(\mathbf{x}) = \frac{\mu_0 I}{4\pi} \int_\infty^\infty  
         \frac{\ell' \times (x - \ell(s))}{|x - \ell(s)|^3} \, ds
     = \frac{\mu_0 I}{4\pi |x|^2}  \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}
 \end{align*}
@@ -1317,9 +1318,9 @@ inner radius $1$ and outer radius $2$.
 We choose as our curve $\Gamma$ the parametrization of the circle with radius 
 $1.5$ in anticlockwise direction. We obtain the curve integral 
 \begin{align*}
-    \int_\Gamma \mathbf{B}\cdot d\ell = 4\pi
+    C_0 = \int_\Gamma \mathbf{B}\cdot d\ell = 4\pi
 \end{align*}
-and thus $C_0 = -4\pi$. $J= 0$ on our domain and hence $C_1 = C_0$. 
+$J= 0$ on our domain and hence $C_1 = C_0$. 
 
 The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping 
 \begin{align*}
@@ -1329,12 +1330,11 @@ The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping
     \end{pmatrix}.
 \end{align*}
 Then we choose $\psi$ as a simple interpolation i.e. in logical coordinates 
-\begin{align*}
-    \hat{\psi} = \begin{cases*}
-        2 \hat{x}_1 \text{ for \hat{x}_1 \leq 0.5}
-        \\ 1 \text{ else}.
-    \end{cases*}
-\end{align*}
+% $\hat{\psi} = 
+$\begin{cases}
+    2 \hat{x}_1 & \text{ for $\hat{x}_1 \leq 0.5$}
+    \\ 1 & \text{ else}.
+\end{cases}$
 This fulfills all the criteria we had for $\psi$ for this given $\Gamma$. 
 
 We give as another example by choosing now the different mapping 
@@ -1344,7 +1344,7 @@ We give as another example by choosing now the different mapping
         \\ (\cos^2(\hat{x}_2 ) + 1 ) (\hat{x}_1 + 1)\sin(\hat{x}_2 ) 
     \end{pmatrix}.
 \end{align*}
-which results in a torus. Note that now for this domain we do not have 
+which results in a kind of "distorted annulus"(see \ref{}). Note that now for this domain we do not have 
 $\mathbf{B}\cdot \mathbf{n}$ anymore. Thus we have to deal with the boundary conditions 
 by using a lifting approach. This means we take an interpolation of the boundary conditions 
 $\mathbf{B}_{h,g}$ which we compute before and then split
