@@ -1,16 +1,18 @@
 Splines
 	Definition
-	Properties without proof
 	Tensor splines
-	Approximation properties
 
 Interpolation
 	Geometric interpolation
-	Quasi-Interpolation (?)
-	Error estimates
+	Degrees of freedom
+	Basis on reference domain
+	Pullback and pushforward
+	Basis on physical domain
+	Approximation properties
+	Cochain projection
 
 Building the system
-	Pullback
+	Homogeneous boundary projection
 	Assembly on logical domain
 
 Imposing boundary conditions

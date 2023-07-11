@@ -984,6 +984,7 @@ Let us define $x_0 < x_1 < ... < x_N$ as the physical knots which
 is our actual grid. We will stick to the equidistant case. Let $h$ be 
 $x_{i+1} - x_i$.
 
+Define $n = N + p$.
 For the non-periodic case we choose an \textit{open} knot sequence by 
 $\xi_0 = ... = \xi_p = x_0$, $\xi_{p+l} = x_l$ for $l = 0,1,...,N$ and 
 $\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$
@@ -993,13 +994,7 @@ $\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$
 and for the periodic case 
 $\xi_0 = x_0-ph, \xi_1 = x_0-(p-1)h, ..., \xi_p = x_0$,
 $\xi_{p+l} = x_l$ and $\xi_{n+l} = x_N + lh$ for $l = 0, ..., p$. 
-Thus we always have $N+p = n$. 
 
-\begin{align*}
-    0 =  \xi_0 = \xi_1 = ... = \xi_p < \xi_{p+1} < \xi_{p+2} < ... < \xi_{n-1} < \xi_n 
-    = \xi_{n+1} = ... = \xi_{n+p}
-\end{align*}
-with $n = N + p$ where $N$ is the number of cells.
 Note that all the knot multiplicities in the interior are one and thus our spline 
 space has maximal regularity. We then define 
 $\mathcal{N}_i^q$ be the normalized B-spline \cite[Ref. 46, Def.4.19]{multipatch paper}.
@@ -1034,10 +1029,13 @@ on the interfaces almost everywhere. Since we always have $p \geq 2$ we thus kno
 all our tensor splines are at least continuous globally and thus we get 
 $\hat{V}_h^j \subseteq \hat{V}^j$ for $j=0,1,2$ as desired. 
 
+
+
 \subsection{Basis and degrees of freedom}
 
-
-Let us now investigate the degrees of freedom. We will use geometric degrees of 
+Let us now investigate the degrees of freedom. At first, we will work on only on the 
+reference domain and then use a pullback and pushforward to transfer that to the physical domain.
+We will use geometric degrees of 
 freedom i.e. each degree of freedom can be associated with some geometrical element of our 
 domain. We define Greville points by 
 \begin{align*}
@@ -1046,51 +1044,54 @@ domain. We define Greville points by
 i.e. the knot averages for $i=0,...,n-1$. Then the spline interpolation at these 
 points is well-defined (see \cite{I think that was in the isogeometric analysis book}).
 Note that in the case periodic some Greville points lie outside of 
-the physical grid. But since the function is periodic it can simply be extended periodically 
+the grid. But since the function is periodic it can simply be extended periodically 
 and then interpolated at these points. 
 
 This gives us the following geometric elements nodes, edges and cells
 \begin{align*}
-    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}) for \mathbf{i} \in \hat{\mathcal{M}}^0
+    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}) for \mathbf{i} \in \mathcal{M}^0
     \\ \hat{\mathtt{e}}_{d,\mathbf{i}} 
         \vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
-        for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
-    \\ \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i}}]
+        for (d, \mathbf{i}) \in \mathcal{M}^1
+    \\ \hat{\mathtt{c}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i}}]
         = [\zeta_{i_1}, \zeta_{i_1+1}] \times [\zeta_{i_2}, \zeta_{i_2+1}] 
-        for \mathbf{i} \in \hat{\mathcal{M}}^2 
+        for \mathbf{i} \in \mathcal{M}^2 
 \end{align*}
 with $[\cdot]$ being the convex hull. As before, $\mathbf{e}_d$ for $d = 1,2$ is the 
-standard basis vector of $\real^2$. The set of multiindices are defined as
+standard basis vector of $\real^2$. 
+We define for a $m \in \naturalnum$, $[m] \vcentcolon= \{ 0, 1, ..., m\}$.
+The set of multiindices are defined as
 \begin{align*}
-    \hat{\mathcal{M}}^0 \vcentcolon= [n-1]^2
-    \\ \hat{\mathcal{M}}^1 \vcentcolon= \{ (d, \mathbf{i}=) \mid \mathbf{i} \in \hat{\mathcal{M}}^0, d\in \{1,2\} \}
-    \\ \hat{\mathcal{M}}^2 \vcentcolon= [n-2]^2
+    \mathcal{M}^0 \vcentcolon= [n-1]^2
+    \\ \mathcal{M}^1 \vcentcolon= \{ (d, \mathbf{i}=) \mid \mathbf{i} \in \mathcal{M}^0, d\in \{1,2\} \}
+    \\ \mathcal{M}^2 \vcentcolon= [n-2]^2
 \end{align*}
 {\color{red} Does this stuff go through for periodic case?}
 
 Now that we have defined the geometric elements we define the corresponding 
 degrees of freedom as 
 \begin{align*}
-    \hat{\sigma_\mathbf{i}^0(v) } \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}) for \mathbf{i} \in \hat{\mathcal{M}}^0
+    \hat{\sigma_\mathbf{i}^0(v) } \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}) for \mathbf{i} \in \mathcal{M}^0
     % \\ \hat{\sigma_{\mathbf{d,i}^1(\mathbf{v})} } 
     %     \vcentcolon= \int_\hat{\mathtt{e}}_{d,\mathbf{i}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
     %     for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
     \\ \hat{\sigma}_{\mathbf{i}}^2(v) 
         \vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
-        for (\mathbf{i}) \in \hat{\mathcal{M}}^2
+        for (\mathbf{i}) \in \mathcal{M}^2
 \end{align*}
-We $\mathbf{e}_d^\perp$ as the rotation of $\mathbf{e}_d$ by $\pi_2$ in counter clockwise 
+We $\mathbf{e}_d^\perp$ as $R_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
 direction i.e. $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$.  
 Something about orientation
 
 
 These degrees of freedome are unisolvent (explanation) i.e. 
 with some ordering $\mu_0, \mu_1, ...$ of the indices of $\mathcal{M}^l$
+define 
 \begin{align*}
-    (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{|\mathcal{M}^l|}}):
-    V^l_h \rightarrow \real^{|\mathcal{M}^l}
+    \bm{\sigma}^l \vcentcolon= (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{|\mathcal{M}^l|}})^\top
+    : V^l_h \rightarrow \real^{|\mathcal{M}^l}
 \end{align*}
-is bijective.
+which is bijective.
 And we can thus define our basis functions 
 $\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$ as the basis which is dual to the 
 degrees of freedom in the sense 
@@ -1117,17 +1118,19 @@ Let us define the spaces
 
 This now gives us the discrete setting on the reference domain $\hat{\Omega}$ the idea 
 is now to define the basis functions on the physical domain $\Omega$ by a 
-push forward of the basis functions on the reference domain.
-This is now the inverse of the analogous operations to 
-\ref{} in 2D. 
+push forward of the basis functions on the reference domain. 
+The pushforward is the inverse of the pullback introduce in Sec.\,\ref{}.
+Here it is in the 2D setting, but it works completely analogous as 
+introduced there.
 
 We will stick to the single patch case meaning that there is a diffeomorphism 
-$F: \hat{\Omega} \rightarrow \Omega$. Then we define 
+$\mathbf{F}: \hat{\Omega} \rightarrow \Omega$. Then we define 
 the pullbacks 
 \begin{align*}
-    &\mathcal{P}_F^0: v \mapsto \hat{v} \vcentcolon= v \circ F
-    \\ &\mathcal{P}_F^1: \mathbf{v} \mapsto \hat{\mathbf{v}} \vcentcolon= \det DF \,DF^{-1} \mathbf{v}
-    \\ &\mathcal{P}_F^2: v \mapsto \hat{v} \vcentcolon= (\det DF) v
+    &\mathcal{P}_F^0: v \mapsto \hat{v} \vcentcolon= v \circ \mathbf{F}
+    \\ &\mathcal{P}_F^1: \mathbf{v} \mapsto \hat{\mathbf{v}} 
+        \vcentcolon= \det D\mathbf{F} \,D\mathbf{F}^{-1} (\mathbf{v} \circ \mathbf{F})
+    \\ &\mathcal{P}_\mathbf{F}^2: v \mapsto \hat{v} \vcentcolon= (\det DF) (v\circ \mathbf{F})
 \end{align*}
 which map functions on the physical domain $\Omega$ to functions on the reference domain 
 $\hat{\Omega}$. Then we have the commuting properties
@@ -1135,6 +1138,9 @@ $\hat{\Omega}$. Then we have the commuting properties
     \widehat{\veccurl} \mathcal{P}_F^0 v &= \mathcal{P}_F^1 \veccurl v
     \\ \widehat{\diver} \mathcal{P}_F^1 \mathbf{v} &= \mathcal{P}_F^1 \diver v
 \end{align*}
+
+These are easy to prove by adapting the arguments of Sec.\,\ref{} i.e. we 
+can use the corresponding operators on differential forms.
 
 Using the pullbacks we define the pushforwards as 
 $\mathcal{F}^l \vcentcolon= (\mathcal{P}_F^l)^{-1}$ and then 
@@ -1162,10 +1168,31 @@ We can thus define the projection operators
 \end{align*}
 
 Then these degrees of freedom commute with the corresponding differential operators 
-as desired from \ref{}. They also correspond to geometric elements. 
+as desired from \ref{} i.e. the diagram
+\begin{tikzcd}
+    H_0^1 \arrow[d, "\Pi^{0}_h"] \arrow[r, "\veccurl"] 
+        & H_0(\diver) \arrow[d, "\Pi^1_h"] \arrow[r, "\diver"] & L^2 \arrow[d, "\Pi^2_h"]
+    \\ V^{0}_h \arrow[r, "\veccurl"] & V^{1}_h  \arrow[r, "\diver"]& V^2_h
+\end{tikzcd}    
+
+
+and is thus a cochain projection. 
+They also correspond to geometric elements. 
 $\sigma^0$ corresponds to point values in the physical domain, 
 $\sigma^1$ to the fluxes through the image of edges and 
 $\sigma^2$ to the integral over the mapped cells.
+
+\begin{remark}
+    The cochain projections we use here are in fact not $V$-bounded i.e. 
+    neither $\Pi_h^0$ is bounded $H^1$ nor $\Pi_h^1$ in $H(\diver)$. 
+    This is a drawback of the geometric projections and means that -- 
+    strictly speaking -- we can not apply the theoretical results to them. 
+    We will use them anyway for the practical implementation 
+    since they are easier to implement than other 
+    options e.g. quasi-interpolants (see \cite{} ).
+\end{remark}
+
+\subsection{Building the discrete system}
 
 This very simple geometric interpretation gives us the ability to enforce 
 the boundary condition directly by setting the corresponding degrees of freedom 
@@ -1190,12 +1217,155 @@ correspond to a geometric element on the boundary. They are easily constructed
 by taking the identity matrix and setting the diagonal entries to zero that 
 belong to boundary degrees of freedom.
 
-On the lower level these basis functions are not used explicitely. Instead 
-we use B-splines to compute the corresponding mass matrices etc. We will not 
-go to deep into the details of implementation however. More details about the 
-use of B-splines and the connection with the basis $\Lambda^l_\mu$ can be found 
-in \cite[Sec.\,4.8]{multipatch_paper} 
+We now reformulate the discrete system using these projections. We apply them 
+to all functions involved and then penalize the boundary.
+With boundary penalities the discrete system is: Find $\sigma_h \in \bar{V}_h^0$, 
+$\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ s.t.
+\begin{align*}
+    \langle (I-P^0_h)\sigma_h, (I-P^0_h)\tau_h \rangle + \langle P^0_h \sigma_h, P^0_h\tau_h \rangle 
+        - \langle P^1_h \mathbf{B}_h, \mathbf{\curl}P^0_h\tau_h \rangle 
+    &=  -\langle J, P^0_h \tau_h \rangle \quad \forall \tau_h \in \bar{V}_h^0, 
+    \\ \langle \mathbf{\curl}P^0_h \sigma_h, P^1_h\mathbf{v}_h \rangle 
+        + \langle (I-P^1_h)\mathbf{B}_h, (I-P^1_h)\mathbf{v}_h \rangle
+    \\ \quad    + \langle \diver P^1_h\mathbf{B}_h, \diver P^1_h\mathbf{v}_h \rangle 
+        + \langle \lambda \mathbf{p}_h, P^1_h\mathbf{v}_h \rangle 
+    &= 0 \quad \forall \mathbf{v}_h \in \bar{V}^1_h, 
+    \\ \mu \langle \bm{\curl} \psi, P^1_h \mathbf{B}_h \rangle &= \mu C_1 \quad \forall \mu \in \real.
+\end{align*}
+Since we apply the projection everywhere it is then easy to show that 
+$\sigma_h \in \bar{V}_h^0$, 
+$\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ solve \ref{} 
+i.i.f. $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V^1_h$ 
+and it solves the system with homogeneous discrete spaces \ref{}. 
+So the two formulations are equivalent.
 
-\
+In the matrix formulation. Define $\mathbb{M}^l$ as the mass matrix 
+of $V_h^l$ i.e. $\mathbb{M}_{ij} = \langle \Lambda^l_i , \Lambda^l_j \rangle$ 
+where we used some flattening of the multiindices in $\mathcal{M}^l$. 
+We also define the matrix $\mathbb{D}$ the matrix representation of the 
+divergence applied to $V^1_h$ i.e. $\diver|_{V^1_h}: V^1_h \rightarrow V^2_h$.
+Analogously $\mathbb{C}$ is the matrix representation of $\veccurl$. Then 
+we have, as mentioned before, the matrix representation of the boundary projections 
+$\mathbb{P}^l$. Overall we can rewrite the linear system like this. 
+We denote the vector of coefficients of a function in bold with an underline e.g. 
+$\underline{\bm{\sigma} }$ is the vector of coefficients of $\sigma$ in 
+the basis $\Lambda^0_\mu$ $\mu \in \mathcal{M}^0$ 
+and $\underline{\mathbf{B}}$ is are the coefficients of $\mathbf{B}$ in the basis 
+$\Lambda^1_\mu$ $\mu \in \mathcal{M}^0$.
+using some flattening again.
+
+\begin{align*}
+    \underline{\bm{\tau}}^\top (I-\mathbb{P}^0_h)\top \mathbb{M}^0 
+        (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
+        + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
+        + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
+        \underline{\mathbf{B}} &= \underline{\bm{\tau}}^\top J \quad \forall \underline{\bm{\tau}} \in \real^{N_0}
+    \\ \underline{\mathbf{v}}^\top \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
+        + \underline{\mathbf{v}}^\top (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
+        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + \underline{\mathbf{v}}^\top (\mathbb{P}^1_h)^\top \mathbb{M}^1
+        \underline{\mathbf{v}}^\top (\mathbb{P}^1) \mathbb{M}^1 \underline{\mathbf{p}} &= 0 
+        \quad \forall \underline{\mathbf{v}} \in \real^{N_1}
+    \\ \underline{\bm{\psi}}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1_h \underline{\mathbf{B}} = C_1
+\end{align*}
+
+which gives us the final system to be solved 
+
+\begin{align*}
+    (I-\mathbb{P}^0_h)\top \mathbb{M}^0 
+        (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
+        +  \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
+        +  \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
+        \underline{\mathbf{B}} &=  J 
+    \\ \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
+        + (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
+        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + (\mathbb{P}^1_h)^\top \mathbb{M}^1
+        (\mathbb{P}^1) \mathbb{M}^1 \underline{\mathbf{p}} &= 0 
+    \\ \underline{\bm{\psi}}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1_h \underline{\mathbf{B}} = C_1
+\end{align*}
+
+\begin{remark}
+    For implementational purposes, these dual basis functions are not necessarily the 
+    best option. For the computation of mass matrices etc. 
+    it is more convenient to use the normalized B-splines directly due to their 
+    local support and fast computation.
+    We will not 
+    go to deep into the details of implementation however. More details about the 
+    use of B-splines and the connection with the basis $\Lambda^l_\mu$ can be found 
+    in \cite[Sec.\,4.8]{multipatch_paper} 
+\end{remark}
+
+\section{Numerical examples}
+
+As a first simple numerical example we consider a standard example from 
+magnetostatics which is the magnetic field induced by an infinitely long, 
+wire with radius zero. The \textit{Biot-Savart law} can be used to compute it. 
+Let the wire be equal to the $z$-axis and $I$ be the electrical current 
+flowing through it. $\ell(s) = s \mathbf{e}_3$, $x = x_1 \mathbf{e}_1 +  x_2 \mathbf{e}_2$
+
+\begin{align*}
+    \mathbf{B}(x) = \frac{\mu_0 I}{4\pi} \int_\infty^\infty  
+        \frac{\ell' \times (x - \ell(s))}{|x - \ell(s)|^3} \, ds
+    = \frac{\mu_0 I}{4\pi |x|^2}  \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}
+\end{align*}
+for convenience we pick now $I = \frac{2 \pi}{\mu}$ to get 
+\begin{align*}
+    \mathbf{B}(x) = \frac{2}{|x|^2} \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}.
+\end{align*}
+
+We choose as our domain of computation $\Omega$ as the annulus with 
+inner radius $1$ and outer radius $2$.
+We choose as our curve $\Gamma$ the parametrization of the circle with radius 
+$1.5$ in anticlockwise direction. We obtain the curve integral 
+\begin{align*}
+    \int_\Gamma \mathbf{B}\cdot d\ell = 4\pi
+\end{align*}
+and thus $C_0 = -4\pi$. $J= 0$ on our domain and hence $C_1 = C_0$. 
+
+The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping 
+\begin{align*}
+    F(\hat{x}) = \begin{pmatrix}
+            (\hat{x}_1 + 1)\cos(\hat{x}_2 ) 
+            \\ (\hat{x}_1 + 1)\sin(\hat{x}_2 ) 
+    \end{pmatrix}.
+\end{align*}
+Then we choose $\psi$ as a simple interpolation i.e. in logical coordinates 
+\begin{align*}
+    \hat{\psi} = \begin{cases*}
+        2 \hat{x}_1 \text{ for \hat{x}_1 \leq 0.5}
+        \\ 1 \text{ else}.
+    \end{cases*}
+\end{align*}
+This fulfills all the criteria we had for $\psi$ for this given $\Gamma$. 
+
+We give as another example by choosing now the different mapping 
+\begin{align*}
+    F(\hat{x}) = \begin{pmatrix}
+        (\cos^2(\hat{x}_2 ) + 1 )(\hat{x}_1 + 1)\cos(\hat{x}_2 ) 
+        \\ (\cos^2(\hat{x}_2 ) + 1 ) (\hat{x}_1 + 1)\sin(\hat{x}_2 ) 
+    \end{pmatrix}.
+\end{align*}
+which results in a torus. Note that now for this domain we do not have 
+$\mathbf{B}\cdot \mathbf{n}$ anymore. Thus we have to deal with the boundary conditions 
+by using a lifting approach. This means we take an interpolation of the boundary conditions 
+$\mathbf{B}_{h,g}$ which we compute before and then split
+$\mathbf{B}_{h} = \mathbf{B}_{h,0} + \mathbf{B}_{h,g}$ and put the terms 
+with $\mathbf{B}_{h,g}$ on the right hand side. 
+
+As an example with a non-vanishing $J$ will use a manufactured solution. 
+Let $\mathbf{B}(x) = (|x|^2 -2) (-x_2,x_1)^\top$. It is easy to see that 
+$\mathbf{B}\cdot \mathbf{n} = 0$. 
+Then the resulting 
+\begin{align*}
+    J(x) = 4 |x|^2 - 12 |x| + 8.
+\end{align*}
+We will pose this problem on the annulus domain from before, but we will use two 
+different choices for $\Gamma$. 
+$\Gamma_1$ will be the same $\Gamma$ as before, but $\Gamma_2$ will 
+be the parametrization of the bouter boundary of $\Omega$ i.e. 
+it is equal to $\partial\Omega_{out}$ (cf Fig.\ref{}).
+
+For $\Gamma_1$ we will choose $\psi$ as before. For $\Gamma_2$ we will choose 
+$\psi$ as the solution of the Laplace problem with boundary condition 
+$\psi=0$ on $\partial\Omega_{in}$ and $\psi=0$ on $\partial\Omega_{out}$.
 
 \end{document}
