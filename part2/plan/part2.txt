@@ -19,8 +19,8 @@ Discretization of Hilbert complexes
 
 Implementation in 2D
 	Splines
-	Interpolation
 	Projection operators
+	Basis
 	Imposing boundary conditions
 	Building the system
 

@@ -7,9 +7,13 @@ Discrete Hilbert complex
 
 Discretized magnetostatic problem
 
+Well-posedness
+
 Stability
 
 A-priori estimate
+	Estimate from inf-sup with different bilinear form
+	A-priori estimate
 
 
 

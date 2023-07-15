@@ -19,5 +19,6 @@ Well-posedness of the magnetostatic system
 	General idea of inf-sup and implications
 	T-coercivity
 	Proof for the system
+	Stability with curve integral
 	
-Stability with curve integral
+

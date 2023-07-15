@@ -2,20 +2,21 @@ Splines
 	Definition
 	Tensor splines
 
-Interpolation
+Projection operators
 	Geometric interpolation
 	Degrees of freedom
+
+Basis
 	Basis on reference domain
 	Pullback and pushforward
 	Basis on physical domain
 	Approximation properties
 	Cochain projection
 
-Building the system
-	Homogeneous boundary projection
-	Assembly on logical domain
-
 Imposing boundary conditions
-
+	Homogeneous boundary projection
+	
 Building the system
+	Computing discrete harmonic form
+	Assembly on logical domain
 	

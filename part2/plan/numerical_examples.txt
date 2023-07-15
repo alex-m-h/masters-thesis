@@ -6,6 +6,5 @@ Biot Savart
 	
 Manufactured solution
 	Solution on annulus with different integration functions
-	Solution on distorted annulus
 	Convergence analysis
 	
