@@ -1,6 +1,6 @@
 \documentclass[../master_thesis.tex]{subfiles}
 \begin{document}
-\section{Variational formulation of the magnetostatic problem in 2D}
+\section{Variational formulation of the magnetostatic problem in 2D} 
 
 For simplicity we will now turn to the 2D case and we assume that 
 our open domain will be bounded and Lipschitz. This involves to introduce 
@@ -13,7 +13,8 @@ We will investigate an alternative way to represent this curve integral
 which will turn out to be easily suitable to be included in our numerical 
 approximation.
 
-\subsection{The $\veccurl$-$\diver$ Hilbert complex}
+\subsection{The $\veccurl$-$\diver$ Hilbert complex}\label{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}
+
 
 We start with the introduction of the relevant differential operators and 
 the resulting 2D Hilbert complex. We will then explain what domains we will consider 
@@ -75,9 +76,9 @@ and can then compute the adjoints -- analogous to what we did in \ref{}
 
 Notice that $\diver \veccurl = 0$ and so 
 we have the following 2D Hilbert complex 
-\begin{align*}
-    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2.
-\end{align*}
+\begin{align}
+    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2. \label{eq:2D_hilbert_complex}
+\end{align}
 and the dual complex
 \begin{align*}
     L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\grad} H^1
@@ -342,7 +343,7 @@ which gives us the variational formulation of the magnetostatic problem with cur
 constraint (Problem\,\ref{prob:2d_magnetostatic_problem}). 
 We will study the well-posedness of this formulation next. 
 
-\subsection{Well-posedness of the magnetostatic system}
+\subsection{Well-posedness of the magnetostatic system}\label{sec:well-posedness_of_magnetostatic_system}
 
 The well-posedness is based on the well-known Banach-Nečas-Babuška (BNB) theorem 
 concerning general variational problems of the following form: Find $x \in X$ 
@@ -792,59 +793,70 @@ and then use $C_T$ from (\ref{eq:bound_on_norm_of_T}) to get a lower bound
     stable system.
 \end{remark}
 
-\section{Discrete Hilbert complex}
+\section{Discretized magnetostatic problem}
 
-In order to approximate the Hodge Laplacian problem we want to use finite elements.
-We want to use them in a way that we can rebuild the structure of the Hilbert complex 
-in our discretization. This section follows Sec. 5.2 in Arnold's book \cite{arnold}.
+In order to approximate solutions of the  2D magnetostatic problem we want to use finite elements.
+A very typical question that arises for any discretization of a model is what 
+notions of the continuous model are represented in the discretized one. 
+In our case, a fundamental structure of our problem is the Hilbert complex we introdced in Section\,
+\ref{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}.
+We would like to represent it in our discretization, leading to the discrete Hilbert complex. 
+This section follows Sec. 5.2 in Arnold's book \cite{arnold}. We start with reviewing the 
+general theory behind the discretization of general Hilbert complexes before applying this 
+theory to our problem. Once we discretized our problem, we will utilize
+the inf-sup condition proven in Section\,\ref{sec:variational_formulation_of_the_magnetostatic_problem_in_2D} 
+to prove well-posedness of 
+the discrete formulation and derive a quasi-optimal error estimate.
+
+\subsection{Discrete Hilbert complex}
 
 Let us at first stick to the general situation. We assume that we have a Hilbert complex 
 $(W^k,d^k)$ with its corresponding domain complex 
 $(V^k,d^k)$ and dual complex $(V^*_k,d^*_k)$ for $k \in \integers$. For this chapter 
 we will only need a short subsequence 
 \begin{align*}
-    V^{k-1} \rightarrow V^k \rightarrow V^{k+1}
+    V^{k-1} \xrightarrow{d^{k-1}} V^k \xrightarrow{d^{k}} V^{k+1}
 \end{align*}
-for some fixed $k$ and $j$ will be the index to refer to them i.e. 
-$j \in \{k-1,k,k+1\}$.
+for some fixed $k$ and $j \in \{k-1,k,k+1\}$ will always be the index to refer to 
+all three spaces. We will sometimes leave out the indices if the meaning is clear from the context.
 
-Let us assume the we have finite dimensional subspaces $V_h^j \subseteq V^j$. 
+Let us assume that we have finite dimensional subspaces $V_h^j \subseteq V^j$. 
+As usual in numerical analysis, $h>0$ stands loosely for the fineness of our discretization, 
+e.g. the grid size or the maximal diameter of the elements in the mesh.
 Then we define completely analogous to the continuous case,
 \begin{align*}
-    \mathfrak{Z}_h^k &\vcentcolon= \{ v \in V_h^k \mid d v = 0 \} = \ker d \cap V^k_h
-    \\ \mathfrak{B}^k_h &\vcentcolon= \{ dv \mid v \in V_h^{k-1} \}.
+    \mathfrak{Z}_h^j &\vcentcolon= \{ v_h \in V_h^j \mid d^j v_h = 0 \} = \ker d^j \cap V^j_h
+    \\ \mathfrak{B}^j_h &\vcentcolon= \{ d^j v_h \mid v_h \in V_h^{j-1} \}.
 \end{align*}
 We can now also define the discrete harmonic forms. Now the situation is slightly 
-different however. We will not use the continuous adjoint $d^*_k$ to define it.
+different however. We will not use the adjoint $d^*_j$ to define it.
 Instead,
 \begin{align*}
-    \mathfrak{H}_h^k \vcentcolon= \{ v \in \mathfrak{Z}_h^k \mid v \perp \mathfrak{B}^k_h \}
-        = \mathfrak{Z}_h^k \cap \mathfrak{B}_h^{k,\perp}.
+    \mathfrak{H}_h^j \vcentcolon= \{ v \in \mathfrak{Z}_h^j \mid v \perp \mathfrak{B}^j_h \}
+        = \mathfrak{Z}_h^j \cap \mathfrak{B}_h^{j,\perp}.
 \end{align*}
-Notice that we have $\mathfrak{Z}_h^k \subseteq \mathfrak{Z}^k$ and 
-$\mathfrak{B}_h^k \subseteq \mathfrak{b}^k$, but due to 
-$\mathfrak{B}_h^{k,\perp} \supseteq \mathfrak{B}^{k,\perp}$ we have in general
+Notice that we have $\mathfrak{Z}_h^j \subseteq \mathfrak{Z}^j$ and 
+$\mathfrak{B}_h^j \subseteq \mathfrak{B}^j$, but due to 
+$\mathfrak{B}_h^{j,\perp} \supseteq \mathfrak{B}^{j,\perp}$ we have in general
 \begin{align*}
-    \mathfrak{H}^k_h = \mathfrak{Z}_h^k \cap \mathfrak{B}_h^{k,\perp} 
-    \not\subseteq    \mathfrak{Z}^k \cap \mathfrak{B}^{k,\perp} = \mathfrak{H}^k.
+    \mathfrak{H}^j_h = \mathfrak{Z}_h^j \cap \mathfrak{B}_h^{j,\perp} 
+    \not\subseteq    \mathfrak{Z}^j \cap \mathfrak{B}^{j,\perp} = \mathfrak{H}^j.
 \end{align*}
-
 We will later investigate the difference between the space of discrete and 
-harmonic forms.
+harmonic forms more closely.
+
 There are three crucial properties that are necessary for stability and convergence 
 of the method. The first one is the common and reasonable assumption that 
--- as usual in finite element theory -- we want that the discrete spaces $V_h^k$
-approximate the continuous ones $V^j$. This can be generally summarized that 
+-- as usual in finite element theory -- we want that the discrete spaces $V_h^j$
+ approximate the continuous ones $V^j$. This can be generally summarized that 
 \begin{align*}
-    \lim_{h \rightarrow 0} \inf_{v_h \in V_h^j} \lVert w - v_h \rVert = 0, \quad \forall w \in V^j.
+    \lim_{h \rightarrow 0} \inf_{v_h \in V_h^j} \lVert w - v_h \rVert _V= 0, \quad \forall w \in V^j.
 \end{align*}
-This is usually satisfied if we use established finite elements for a given space 
-e.g. if we take Lagragian FE if $V = H^1$ or Raviart-Thomas if $V=H(\diver)$ \cite{}.
+This is usually satisfied for a reasonable choice of finite element space.
 
-The next property is more restrictive. We require that $dV_h^{k-1} \subseteq V_h^k$ 
-and $dV_h^j \subseteq V_h^{j+1}$. This shows that the we cannot simply use arbitrary 
-discrete subspaces independent from one another. We say the spaces have to be 
-compatible \cite{}. This property has a very nice
+The next property is more restrictive. We require that 
+$dV_h^j \subseteq V_h^{j+1}$. This shows that we cannot simply use arbitrary 
+discrete subspaces independent from one another. This property has a very nice
 consequence. 
 It shows that 
 \begin{align*}
@@ -855,15 +867,15 @@ Sec. \ref{sec:hilbert_complexes} directly to it. Let us do that.
 
 Denote the restriction of $d^j$ to $V_h^j$ as $d_h^j$. Then as a linear map 
 between finite spaces the adjoint -- denoted as $d_{j,h}^*: V_h^j \rightarrow V_h^{j-1}$ -- 
-is everywhere defined. It is important to notice that in contrast to $d_h$ 
-the adjoint $d^*_jh$ is not the restriction of the adjoint the continuous adjoint $d^*_j$.
-In general, $V_h \not\subseteq V^*$ and so the continuous adjoint might not be 
-well-defined for a given $v_h \in V_h$. 
+is everywhere defined. It is important to notice that in contrast to $d^j_h$ 
+the adjoint $d^*_{j,h}$ is not the restriction of the adjoint $d^*_j$.
+In general, $V^j_h \not\subseteq V_j^*$ and so the continuous adjoint might not be 
+well-defined for a given $v_h \in V^j_h$. 
 
 So we obtain the Hilbert complex
-\begin{align*}
-    V_h^{k-1} \xrightarrow{d^{k-1}} V_h^{k} \xrightarrow{d^{k}} V_h^{k+1}
-\end{align*}
+\begin{align}
+    V_h^{k-1} \xrightarrow{d^{k-1}} V_h^{k} \xrightarrow{d^{k}} V_h^{k+1}\label{eq:discrete_hilbert_complex}
+\end{align}
 and its dual complex
 \begin{align*}
     V_h^{k-1} \xleftarrow{d^*_{k,h}} V_h^{k} \xleftarrow{d^*_{k+1,h}} V_h^{k+1}
@@ -875,138 +887,217 @@ we thus obtain the \textit{discrete Hodge decomposition}
         \mathfrak{B}^*_{jh}.
 \end{align*}
 So we achieved our goal of getting a structure like in the continuous case 
-for our discrete approximation. Especially the question how well the discrete harmonic 
-forms approximate the contiinous one will be looked at more closely.
+for our discrete approximation. We  will investigate the question how well the discrete harmonic 
+forms approximate the continuous ones more thoroughly later.
 
 
 The third crucial assumption is the existence of \textit{bounded cochain projections} 
 $\Pi^j_h : V^j \rightarrow V^j_h$. 
 This is a projection that is a cochain map in the sense of cochain complexes \ref{} i.e. 
-the following diagram commutes:
+the following diagram commutes: 
+\\
 \begin{tikzcd}
-    V^{k-1} \arrow[d, "\Pi^{k-1}_h"] \arrow[r, "d^{k-1}"] 
-        & V^{k} \arrow[d, "\Pi^{k}_h"] \arrow[r, "d^{k}"] & V^{k+1} \arrow[d, "\Pi^{k+1}_h"]
-    \\ V^{k-1}_h \arrow[r, "d_h^{k-1}"] & V^{k}_h  \arrow[r, "d_h^{k}"]& V^{k+1}_h 
-\end{tikzcd}    
-$\pi_h$ are either bounded in the $V$ or in the $W$-norm where  
-$W$-boundedness implies $V$ boundedness. 
+V^{k-1} \arrow[d, "\Pi^{k-1}_h"] \arrow[r, "d^{k-1}"] 
+    & V^{k} \arrow[d, "\Pi^{k}_h"] \arrow[r, "d^{k}"] & V^{k+1} \arrow[d, "\Pi^{k+1}_h"]
+\\ V^{k-1}_h \arrow[r, "d^{k-1}"] & V^{k}_h  \arrow[r, "d^{k}"]& V^{k+1}_h 
+\end{tikzcd}
+\\
+   
+$\Pi^j_h$ are either bounded in the $V$- or in the $W$-norm where  
+$W$-boundedness implies $V$-boundedness. 
 The cochain projection will play an important 
-role in the stablity of the discrete system.
+role in the stablity of the discrete system. In this section, we will make 
+the weaker assumption of $V$-boundedness.
 
 The fact that $\Pi_h$ is a $V$-bounded projection immediately allows a quasi 
-optimal estimate of the form. For any $v \in V^k$,  we can take 
-$w_h \in V^k_h$ arbitrary s.t.
-\begin{align*}
-    \lVert v - \Pi^k_h v \rVert _V
-    &=  \lVert v - w_h  + \Pi^k_h  (w_h - v) \rVert _V
-    \\ &\leq (\lVert I - \Pi^k_h\rVert _\mathcal{L}(V,V))\lVert v - w_h \rVert _V.
-\end{align*}
-Since we $w_h$ was arbitrary we can take the infimum over $V_h^k$ and obtain 
-an quasi optimal estimate. Due to 
-$\lVert I - \Pi^k_h\rVert _\mathcal{L}(V,V) = \lVert \Pi^k_h\rVert _\mathcal{L}(V,V)$
-we can also change the factor in front.
+optimal estimate. For any $v \in V^j$,  we can take 
+$w_h \in V^j_h$ arbitrary s.t.
+\begin{align}
+    \lVert v - \Pi^j_h v \rVert _V
+    &=  \lVert v - w_h  + \Pi^j_h  (w_h - v) \rVert _V
+    \\ &\leq \lVert I - \Pi^j_h\rVert _{\mathcal{L}(V,V)} \lVert v - w_h \rVert _V. 
+    \label{eq:bound_projection}
+\end{align}
+From now on we will denote the operator norm $\lVert \cdot \rVert _{\mathcal{L}(V,V)}$ 
+by slight abuse of notation as $\lVert \cdot \rVert _V$.
+Since $w_h$ was arbitrary we can take the infimum over $w_h \in V_h^k$ and obtain 
+a quasi optimal estimate. 
+% If we have the standard situation that 
+% we have for $v \in V^j$
+% \begin{align*}
+%     \lVert v - \Pi^j_h v \rVert _V \leq C \lVert v  \rVert _V h^s
+% \end{align*}
+% for some generic constant $C>0$ independent of $v$ and the mesh size $h$ and some 
+% $s>0$ then this implies 
 
 Let us now answer the question about the difference between discrete and continous 
-harmonic forms. In order to do that we need some way to measure the "difference" 
-between two subspaces.
+harmonic forms. In order to do that, we need some way to measure the "difference" 
+between two subspaces. 
+
+For a general metric space $(X,d)$, we will use the standard notation 
+$d(x,M) \vcentcolon= \inf_{m\in M} d(x,m)$ for $x\in X$ being in a 
+metric space and $M \subseteq X$. If we are dealing with a normed space then we 
+take the metric induced by the norm.
 
 \begin{definition}[Gap between subspaces]
-    For a Banach space $W$ with subspaces $Z_1$ and $Z_2$. 
-    Let $S_1$ and $S_2$ be the unit spheres in $Z_1$ and $Z_2$ respectively i.e.
+    For a Banach space $W$ with subspaces $Z_1$ and $Z_2$
+    let $S_1$ and $S_2$ be the unit spheres in $Z_1$ and $Z_2$ respectively i.e.
     $S_1 = \{ z\in Z_1 \mid \lVert z \rVert _W = 1 \}$ and analogous for $S_2$.
     Then we define 
     the gap between these subspaces as 
     \begin{align*}
-        \gap(Z_1, Z_2) = \max\{ \sup_{z_1 \in S_1} \text{dist}{z_1, Z_2}, \sup_{z_2 \in S_2} \text{dist}{z_2, Z_1} \}
+        \gap(Z_1, Z_2) = \max\{ \sup_{z_1 \in S_1} d(z_1, Z_2), \sup_{z_2 \in S_2} d(z_2, Z_1) \}
     \end{align*}
 \end{definition}
-This definition is from \cite[p.198]{kato perturbation theory} and defines a metric on the set of closed subspaces
-of $W$ (see \ref[Remark p.198]{})
+This definition is from \cite[Ch.4 §2.1]{kato_perturbation_theory} and defines a metric on the set of closed subspaces
+of $W$.
 If $W$ is a Hilbert space -- as it is throughout this section -- and $Z_1$ and $Z_2$ are closed then
-the $\gap(Z_1, Z_2) = \lVert P_{Z_1} - P_{Z_2} \rVert$ i.e. the difference in operator norm of the 
+the $\gap(Z_1, Z_2) = \lVert P_{Z_1} - P_{Z_2} \rVert _{\mathcal{L}(W,W)}$ i.e. the difference in operator norm of the 
 orthogonal projections onto $Z_1$ and $Z_2$. This gives us a measure of distance between 
-spaces which we can now apply to the question of the difference of the difference between 
-discrete and continous harmonic forms.
+spaces which we can now apply to the question about the difference between 
+discrete and continuous harmonic forms.
 
 \begin{proposition}[Gap between harmonic forms]
-    Assume that the discrete complex \ref{} admits a $V$-bounded cochain projection
-    $\pi_h$. Then
-    \begin{align*}
-        \lVert (I - P_{\mathfrak{H}^k_h}) q \rVert _V \leq \lVert (I - \pi_h^k) q \rVert _V, 
-            \forall q \in \mathfrak{H}^k 
+    Assume that the discrete complex (\ref{eq:discrete_hilbert_complex}) admits a $V$-bounded cochain projection
+    $\Pi_h$. Then
+    \begin{align}
+        \lVert (I - P_{\mathfrak{H}^k_h}) q \rVert _V \leq \lVert (I - \Pi_h^k) q \rVert _V, 
+            \forall q \in \mathfrak{H}^k \label{eq:difference_identity_projection_discrete_harmonics}
         \\ \lVert (I - P_{\mathfrak{H}^k}) q_h \rVert _V 
-        \leq \lVert (I - \pi_h^k)P_{\mathfrak{H}^k} q \rVert _V, \forall q \in \mathfrak{H}^k, 
+        \leq \lVert (I - \Pi_h^k)P_{\mathfrak{H}^k} q_h \rVert _V, \quad 
                 \forall q_h \in \mathfrak{H}^k_h 
-    \end{align*}
+    \end{align}
     and then 
     \begin{align*}
         \gap (\mathfrak{H}, \mathfrak{H}_h) 
-        \leq \sup_{q \in \mathfrak{H}, \lVert q \rVert = 1} \lVert (I - \pi_h^k) q \rVert _V
+        \leq \sup_{q \in \mathfrak{H}, \lVert q \rVert = 1} \lVert (I - \Pi_h^k) q \rVert _V
     \end{align*}
 \end{proposition}
 \begin{proof}
     See \cite[Thm.\,5.2]{arnold}. 
 \end{proof}
 {\color{red} Do not forget the continuous poincare inequality} This then implies 
-that there is a quasi optimal kind of bound of the gap. The following proposition 
-clarifies how close a discrete harmonic form can be chosen.
+that there is a quasi optimal kind of bound of the gap. 
+The following proposition 
+clarifies how close a discrete harmonic form can be chosen. But in order to do that, 
+we will need a small lemma.
 
-\begin{proposition}
-    Take $p \in \mathfrak{H}^k$ with $\lVert p \rVert = 1$. Then we can 
-    choose $p_h \in \mathfrak{H}^k$ s.t. we can find a $C>0$ with 
+\begin{lemma}\label{lem:distance_unit_sphere_whole_space}
+    Let $W$ be a Banach space, $Z \subseteq W$ a closed subspace. Denote 
+    $S_Z \vcentcolon= \{ z \in Z \mid \lVert z \rVert _W = 1 \}$. Then for 
+    any $w \in W$ with $\lVert w \rVert _W = 1$ we get 
     \begin{align*}
-        \lVert p - p_h \rVert = \lVert p - p_h \rVert _V 
-        \leq \lVert I - \pi_h^k\rVert _V \inf_{v_h \in V_h} \lVert p - v_h \rVert _V.
+        d(w,S_Z) \leq 2 \,d(w,Z)
+    \end{align*}  
+\end{lemma}
+\begin{proof}
+    See \cite[Ch.4 §2, (2.13)]{kato_perturbation_theory}.
+\end{proof}
+
+\begin{proposition}\label{prop:choice_of_discrete_harmonic_form}
+    Take $p \in \mathfrak{H}^k$ with $\lVert p \rVert = 1$. Then we can 
+    choose $p_h \in \mathfrak{H}_h^k$ with $\lVert p_h \rVert = 1$ s.t. 
+    \begin{align*}
+        \lVert p - p_h \rVert
+        \leq 2\,\lVert I - \Pi_h^k\rVert _V \inf_{v_h \in V_h} \lVert p - v_h \rVert _V.
     \end{align*}
 \end{proposition}
 \begin{proof}
     Notice that since $\mathfrak{H}^k \subseteq \mathfrak{Z}^k$ we always have
     $\lVert q \rVert _V = \lVert q \rVert$ for all $q \in \mathfrak{H}^k$. The same is 
-    true for $\mathfrak{H}_h$
+    true for $\mathfrak{H}^k_h$.
     Denote $S_h \vcentcolon= \{ q_h \in \mathfrak{H}^k_h \mid \lVert q_h \rVert = 1 \}$.
     Since $S_h$ is closed we can find $p_h \in S_h$ s.t. 
     \begin{align*}
-        \lVert p_h - p \rVert = \inf \lVert q_h - p \rVert
+        \lVert p_h - p \rVert = \inf_{q_h \in S_h} \lVert q_h - p \rVert
     \end{align*}
-    The right hand side can be estimated using \ref{} and then the 
-    quasi optimal bound for the projection \ref{}
+    The right hand side can be estimated using (\ref{eq:difference_identity_projection_discrete_harmonics}) 
+    and then the 
+    quasi optimal bound for the projection derived at (\ref{eq:bound_projection}).
     \begin{align*}
-        \inf \lVert q_h - p \rVert _V \leq \lVert P_{\mathfrak{H}_h}p - p \rVert _V
-        \leq \lVert \Pi_h^k p - p \rVert _V 
-        \leq \lVert I - \Pi_h^k\rVert _{\mathcal{L}(V,V)}
+        \inf_{q_h \in S_h} \lVert q_h - p \rVert _V 
+        &= \inf_{q_h \in S_h} \lVert q_h - p \rVert 
+        \stackrel{Lem.\,\ref{lem:distance_unit_sphere_whole_space}}{\leq} 
+            2\,\inf_{q_h \in \mathfrak{H}_h} \lVert q_h - p \rVert
+        = 2\,\lVert P_{\mathfrak{H}_h}p - p \rVert
+        \stackrel{\ref{}}{\leq} 2\,\lVert \Pi_h^k p - p \rVert _V 
+        \\ &\leq 2\,\lVert I - \Pi_h^k\rVert _{\mathcal{L}(V,V)}
             \inf_{v_h \in V_h} \lVert p - v_h \rVert _V
     \end{align*}
     which gives us the estimate.
 \end{proof}
 
-\begin{theorem}[Dimension of $\mathfrak{H}^k_h$]
-    Assume that we have a finite-dimensional subcomplex as described at 
+If we have the standard situation that 
+we have for $v \in V^j$
+\begin{align}
+    \lVert v - \Pi^j_h v \rVert _V \leq C \lVert v  \rVert _V h^s \label{eq:standard_estimate_projection_error}
+\end{align}
+for some generic constant $C>0$ independent of $v$ and the mesh size $h$ and some 
+$s>0$ then we can improve the estimate to
+\begin{align*}
+    \lVert p_h - p \rVert \leq C h^s
+\end{align*}
+by applying it in the last estimate of the proof.
+
+Also if we assume $\lVert \Pi_h \rVert \leq c_\Pi$ for $h$ small enough and 
+$c_\Pi > 0 $ independent of $h$ then we Assumption \ref{} applies
+\begin{align*}
+    p_h \xrightarrow{V} p \text{ as } h \rightarrow 0.
+\end{align*}
+
+\begin{theorem}[Dimension of $\mathfrak{H}^k_h$]\label{thm:dim_of_discrete_harmonic_space}
+    Assume that we have a finite-dimensional subcomplex
     with a $V$-bounded cochain projection. Assume further, that 
     \begin{align}
         \lVert q - \Pi_h^k q \rVert < \lVert q \rVert, \quad \forall q \in \mathfrak{H}^k\setminus \{0\}.
         \label{eq:assumption_same_dimension}
     \end{align}
-    Then $\dim \mathfrak{H}^k = \dim \mathfrak{H}^k:h$.
+    Then $\mathfrak{H}^k$ and $\mathfrak{H}^k_h$ are isomorphic. 
+    In particular, $\dim \mathfrak{H}^k = \dim \mathfrak{H}^k_h$.
 \end{theorem}
 \begin{proof}
     See \cite[Thm\,5.1]{arnold} and the explanation after the proof.
 \end{proof}
-Due to the quasi-optimal bound (\ref{}) and the $V$-boundedness of the projection 
-the additional assumption 
-is fulfilled for any reasonable approximation i.e. if the relative approximation error 
-\begin{align*}
-    \frac{1}{\lVert q \rVert} \inf_{v_h \in V_h} \lVert q - v_h \rVert
-\end{align*}
-is smaller than one.
+If we assume a standard error estimate for the projection as (\ref{eq:standard_estimate_projection_error})
+then (\ref{eq:assumption_same_dimension}) is fulfilled if $C h^s < 1$ which will be true 
+for $h$ small enough.
+
+\begin{proposition}\label{prop:gap_image_spaces}
+    Assuming again a finite-dimensional subcomplex with a $V$-bounded cochain projection. 
+    Then we can bound the gap between the image spaces
+    \begin{align*}
+        \gap (\mathfrak{B}^j_h, \mathfrak{B}^j) 
+        \leq \lVert I - \Pi_h^j \rVert _V  \inf_{v_h \in V^j_h} \lVert z - v_h \rVert _V.
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    At first note, that for any $z \in \mathfrak{B}$, $\lVert z \rVert _V = \lVert z \rVert$.
+    Since $\mathfrak{B}_h \subseteq \mathfrak{B}$, $d(z_h, \mathfrak{B}) = 0$ for any 
+    $z_h \in \mathfrak{B}_h$. 
+    
+    Take $z \in \mathfrak{B}^j$ arbitrary i.e. there exists $w \in V^{j-1}$ s.t. 
+    $dw = z$.
+    Since $\Pi_h$  is a cochain projection, we thus have 
+    \begin{align*}
+        \Pi_h z = \Pi_h dw = d \Pi_h w \in \mathfrak{B}_h^j
+    \end{align*}
+    so $\Pi_h$ maps $\mathfrak{B}^j$ into $\mathfrak{B}^j_h$. Putting all that together,
+    \begin{align*}
+        d(z,\mathfrak{B}^j_h) = \inf_{z_h \in \mathfrak{B}_h} \lVert z - z_h \rVert 
+        \leq \lVert z - \Pi_h z \rVert 
+        = \lVert z - \Pi_h z \rVert _V
+        \stackrel{(\ref{eq:bound_projection})}{\leq} \lVert I - \Pi_h \rVert _V \inf_{v_h \in V_h} \lVert z - v_h \rVert _V
+    \end{align*}
+\end{proof}
 
 \begin{proposition}[Discrete Poincare inequality]
-    Assume that we have a $V$-bounded cochain projection $\pi_h$ for 
-    the discrete Hilbert complex \ref{}. Then 
+    Assume that we have a $V$-bounded cochain projection $\Pi_h$ for 
+    the discrete Hilbert complex. Then 
     \begin{align*}
-        \lVert v \rVert _V \leq c_P \lVert \pi_h \rVert _V \lVert dv \rVert, 
-            \quad \forall v \in \mathfrak{Z}_h^{k\perp}\cap V_h
+        \lVert v_h \rVert _V \leq c_{P,h}  \lVert dv_h \rVert, 
+            \quad \forall v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h
     \end{align*}
-    with $c_P$ being the Poincare constant from \ref{}.
+    with $c_{P,h} \vcentcolon= c_{P} \lVert \Pi_h \rVert _V$  and $c_P$ being the Poincare constant from \ref{}.
 \end{proposition}
 \begin{proof}
     This indeed is a direct consequence of the existence of bounded cochain projections.
@@ -1035,16 +1126,19 @@ is smaller than one.
     \end{align*}
 \end{proof}
 
-Now we obtained all the tools that we used for the proof of well-posedness and stability 
-in the discrete setting. That means we can prove the well
-So we get the inf sup condition with $c_{P,h} = c_P \lVert \pi_h \rVert _V$ instead of $c_P$ 
-and obtain well-posedness.
+Notice that if we assume that $\lim_{h \rightarrow 0} \lVert \Pi_h \rVert _V = 1$ 
+(which is true if e.g. the standard estimate (\ref{eq:standard_estimate_projection_error}) is fulfilled)
+then $c_{P,h} \rightarrow c_P$ for $h \rightarrow 0$.
+
+In conclusion, we obtain a discrete version of the Hilbert complex where the harmonic forms are 
+accurately represented if $h$ is small enough.
 
 \subsection{Discretized magnetostatic problem}
 
-Let us apply this discretized Hilbert complex to the 2D Hilbert complex \ref{}
-to get $V^0_h \subseteq H^1_0$, $V^1_h \subseteq H_0(\diver)$ and $V^2_h \subseteq L^2$
-with 
+Let us apply the theory of discrete Hilbert complexes to the 2D Hilbert complex (\ref{eq:2D_hilbert_complex}).
+We assume that we have finite dimensional subspaces
+$V^0_h \subseteq H^1_0$, $V^1_h \subseteq H_0(\diver)$ and $V^2_h \subseteq L^2$ 
+that approximate the full spaces in the sense of \ref{} and
 \begin{align*}
     V^0_h \xrightarrow{\veccurl} V^1_h \xrightarrow{\diver} V^2_h
 \end{align*}
@@ -1052,72 +1146,159 @@ and the dual complex
 \begin{align*}
     V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\grad}_h} V^2_h
 \end{align*}
-where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and corresponds thus to
-weak form of $\curl$ and the same for $\widetilde{\grad}_h$.
+where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and can thus be 
+seen as a weak approximation of $\curl$ and the same for $\widetilde{\grad}_h$.
 Analogous to the continuous case we assume that $\dim \mathfrak{H}_h^1 = 1$ 
-which is not unreasonable thanks to \ref{} for $h>0$ small enough.
-The discretized version of the magnetostatic problem \ref{} then states: 
+which is not unreasonable thanks to Thm.\,\ref{thm:dim_of_discrete_harmonic_space} 
+for $h>0$ small enough.
+
+For our domain, we assume from now on that $\Omega$ is suitable for discretization in the 
+sense that the functions in the discrete spaces and the continuous ones 
+are both defined on it. What that means exactly depends on the chosen discretization 
+and we will explain it later in \ref{} when we go into more detail about the 
+actual implementation. We need a analogous assumption for $\Omega_\Gamma$.
+
+The discretized version of the strong formulation of the magnetostatic problem 
+(Problem \ref{prob:2d_magnetostatic_problem}) 
+then states: 
 Find $\mathbf{B}_h \in V_h^1$ s.t.
 \begin{align*}
     \weakcurl_h \mathbf{B}_h = J \text{ and }
     \diver \mathbf{B}_h = 0
 \end{align*}
-plus the additional curve integral constraint.
+plus the additional curve integral constraint. If $J \notin V_h^0$ then this 
+clearly does not have a solution.
 Note that the divergence is enforced strongly while the curl is only enforced weakly.
-As explained in \ref{} we will add the curve integral constraint as in \ref{}.
-This gives us the following discrete formulation. Choose $\mathbf{p}_h \in \mathfrak{H}^1\setminus\{0\}$ 
-s.t. $\lVert \mathfrak{p}_h \rVert = 1$. 
-Find 
-$\sigma_h \in V_h^0$, $\mathbf{B} \in V_h^1$ and $\lambda \in \real$ s.t.
 
-\begin{align*}
-    \langle \sigma_h, \tau_h \rangle - \langle \mathbf{B}_h, \mathbf{\curl}\tau_h \rangle 
-    &=  -\langle J, \tau_h \rangle \quad \forall \tau_h \in V_h^0, 
-    \\ \langle \mathbf{\curl}\sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
-    + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle 
-    &= 0 \quad \forall \mathbf{v}_h \in V^1_h, 
-    \\ \mu \langle \bm{\curl} \psi, \mathbf{B}_h \rangle &= \mu C_1 \quad \forall \mu \in \real.
-\end{align*}
+As explained in Sec.\,\ref{sec:curve_integral_constraint}, 
+we will substitute the curve integral constraint from Problem\,\ref{prob:2d_magnetostatic_problem} with 
+(\ref{eq:variational_curve_integral}).
+This gives us the following discrete formulation. Choose $\mathbf{p}_h \in \mathfrak{H}^1_h$ 
+s.t. $\lVert \mathbf{p}_h \rVert = 1$. 
+
+\begin{problem}\label{prob:magnetostatic_problem_discrete_variational}
+    Find 
+    $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V_h^1$ and $\lambda \in \real$ s.t.
+
+    \begin{align*}
+        \langle \sigma_h, \tau_h \rangle - \langle \mathbf{B}_h, \veccurl\tau_h \rangle 
+        &=  -\langle J, \tau_h \rangle \quad \forall \tau_h \in V_h^0, 
+        \\ \langle \veccurl \sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
+        + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle 
+        &= 0 \quad \forall \mathbf{v}_h \in V^1_h, 
+        \\ \mu \langle \bm{\curl} \psi, \mathbf{B}_h \rangle &= \mu C_1 \quad \forall \mu \in \real.
+    \end{align*}
+\end{problem}
 Here we assume for simplicity that $\veccurl \psi \in V_h^1$. Since 
-we can choose $\psi$ this is not unreasonable. In practice, $\mathbf{p}_h$ 
+we can choose $\psi$ this is not unreasonable {\color{red} What assumptions do we need 
+to suit enforced a "discretized curve" $\Gamma$?}. In practice, $\mathbf{p}_h$ 
 is computed numerically before assembling the system. 
-
 
 We define $X_h \vcentcolon= V_h^0 \times V_h^1 \times \real$. 
 Note that this trial and test space is indeed conforming i.e. $X_h \subseteq X$, 
-but we choose a discrete harmonic form 
-with $\mathbf{p}_h \in \mathfrak{H}^1_h$ so $a_h:X_h \times X_h \rightarrow \real$
+but we choose the discrete bilinear form $a_h:X_h \times X_h \rightarrow \real$
 \begin{align*}
     &a_h(\sigma_h,\mathbf{B}_h,\lambda;\tau_h,\mathbf{v}_h,\mu)
-    \\ \quad&= \langle \sigma_h, \tau_h \rangle - \langle u_h, \mathbf{\curl}\tau_h \rangle
-    + \langle \mathbf{\curl}\sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
-    + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle - \mu \langle \mathbf{\curl} \psi, \mathbf{B}_h \rangle.
-\end{align*}
+    \\ \quad&= \langle \sigma_h, \tau_h \rangle - \langle \mathbf{B}_h, \veccurl\tau_h \rangle
+    + \langle \veccurl\sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
+    + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle - \mu \langle \veccurl \psi, \mathbf{B}_h \rangle.
+\end{align*} 
+with $\mathbf{p}_h \in \mathfrak{H}^1_h$ 
 so the resulting bilinear forms are different since we have $\mathbf{p}_h$ 
 instead of $\mathbf{p}$. So we can write the discrete problem in 
 standard form: Find $\sigma_h,\mathbf{B}_h,\lambda \in X_h$ s.t.
 \begin{align*}
-    a_h(\sigma_h,\mathbf{B}_h,\lambda;\tau_h,\mathbf{v}_h,\mu) = \ell(\tau_h,\mathbf{v}_h,\mu).
+    a_h(\sigma_h,\mathbf{B}_h,\lambda;\tau_h,\mathbf{v}_h,\mu) = \ell(\tau_h,\mathbf{v}_h,\mu) 
+    \quad \forall (\tau_h,\mathbf{v}_h,\mu) \in X_h.
 \end{align*}
 For simplicity we assume for the theoretical considerations that we can 
-compute all inner products exactly and that $C_1$ from \ref{} is 
+compute all inner products exactly and that $C_1$ is 
 given exactly as well. That also means that the right hand side $\ell$ is the 
-same for the continous and discrete problem.
+same for the continuous and discrete problem.
 
-Because we have transfered the continous structures to the discrete case 
-we can apply the same arguments as in \ref{}.
-Thus we obtain a inf-sup condition with a $\gamma_h$ that depends 
-on $c_{P,h}$ instead of $c_P$. This provides us with the well-posedness 
-of the discrete formulation \ref{} and gives us the stability estimate
-\begin{align*}
-    \lVert \mathbf{B}_h \rVert_{H(\diver)} \rVert \leq \frac{\lVert J \rVert + |C_1|}{\gamma_h}.
-\end{align*}
+Because we have transfered the continuous structures to the discrete case 
+we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}.
 
-{\color{red} Why can $\gamma_h$ not go to zero?} In the situation that we are 
-in we (i.e. conforming subspace but a different bilinear form) we can formulate the following result
 
-\begin{lemma}
-    Let $x \in X$ be a solution of \ref{} and $x_h \in X_h$ be a solution of \ref{}.
+\begin{theorem}[Well-posedness of the discrete problem]
+    For the following assumptions we always tacitly require that 
+    $h>0$ is small enough. We assume that the Hilbert complex admits uniformly $V$-bounded 
+    cochain projections $\Pi_h$ i.e. 
+    there exists $c_\Pi > 0$ independent of $h$ s.t. $\lVert \Pi_h \rVert _{\mathcal{L}(V,V)} \leq c_\Pi$.
+    We assume that $\veccurl \psi \in V_h^1$. Then we find 
+    $\psi_{0,h} \in V_h^0$ and $c_{\psi,h}>0$ 
+    s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$.
+    We also assume that (\ref{eq:assumption_same_dimension}) holds and thus 
+    $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$ and we choose 
+    $\mathbf{p}_h$ according to Prop.\,\ref{prop:choice_of_discrete_harmonic_form}
+    Then the discrete variational problem (Problem \ref{prob:magnetostatic_problem_discrete_variational} )
+    is well-posed i.e. there exists a 
+    unique solution and for a solution $(\sigma_h, \mathbf{B}_h,\lambda) \in X_h$
+    we have the stability estimate 
+    \begin{align*}
+        \lVert \mathbf{B}_h \rVert _{H(\diver)} 
+        \leq \frac{\lVert J \rVert + |C_1|}{\gamma_h}.
+    \end{align*}
+    where $\gamma_h$ has the same expression as $\gamma$ except  
+    $c_{P,h}$ instead of $c_P$ and $c_{\psi,h}$ instead of $c_{\psi}$.
+    Furthermore if $c_{P,h} \rightarrow c_P$ then $\gamma_h \rightarrow \gamma$ for $h \rightarrow 0$.
+\end{theorem}
+\begin{proof}
+    By following exactly the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}, 
+    we can prove
+    the well-posedness through the BNB-theorem. However, we have to argue
+    why $c_{\psi,h}>0$ if $c_\psi>0$. 
+    Notice since $ \lVert \mathbf{p}_h \rVert  = \lVert \mathbf{p} \rVert =1$
+    and $\dim \mathfrak{H}^1 = \dim \mathfrak{H}^1_h = 1$
+    we have 
+    \begin{align*}
+        c_\psi = \langle \mathbf{p}, \veccurl \psi \rangle 
+        \text{ and } c_{\psi,h} = \langle \mathbf{p}_h, \veccurl \psi \rangle.
+    \end{align*}
+    So 
+    \begin{align*}
+        | c_{\psi,h} - c_\psi | = |\langle \mathbf{p} - \mathbf{p}_h, \veccurl \psi \rangle|
+        \leq \lVert \veccurl \psi \rVert \lVert \mathbf{p} - \mathbf{p}_h \rVert.
+    \end{align*}
+    and so because we chose $\mathbf{p}_h$ as described in Prop.\,\ref{prop:choice_of_discrete_harmonic_form} 
+    and assume $\Pi_h$ being 
+    uniformly bounded we have $\lVert \mathbf{p} - \mathbf{p}_h \rVert \rightarrow 0$
+    as $h\rightarrow 0$ and thus
+    we obtain $c_{\psi,h} \rightarrow c_\psi$ for $h \rightarrow 0$ and hence 
+    we can assume $c_{\psi,h} > 0$ for $h$ small enough.
+
+    The next question is why we can choose $c_1$ for the discrete case just as 
+    in the continuous one. Remember that $c_1>0$ was chosen 
+    s.t. $\lVert \veccurl \psi_0 \rVert \leq c_1$. Choose now w.l.o.g. 
+    $c_1 =  \lVert \veccurl \psi_0 \rVert + 1$. Then it would be clear, 
+    that we can choose the same $c_1$ if $\lVert \veccurl \psi_{0,h} \rVert \rightarrow 
+    \lVert \veccurl \psi_0 \rVert$. This is indeed true: 
+    \begin{align*}
+        &\big| \lVert \veccurl \psi_{0,h} \rVert - \lVert \veccurl \psi_0 \rVert \big|
+        \leq \lVert \veccurl \psi_{0,h} -  \veccurl \psi_0 \rVert
+        = \lVert P_{\mathfrak{B}^1_h}\veccurl \psi -  P_{\mathfrak{B}^1} \veccurl \psi \rVert
+        \\ &\leq \lVert P_{\mathfrak{B}^1_h} -  P_{\mathfrak{B}^1} \rVert
+            \lVert \veccurl \psi \rVert
+        = \gap (\mathfrak{B}^1_h, \mathfrak{B}^1) \lVert \veccurl \psi \rVert
+        \rightarrow 0
+    \end{align*}
+    where we use Prop.\,\ref{prop:gap_image_spaces} combined with the uniform boundedness 
+    of $\Pi_h$ to obtain convergence.
+
+    Then $\gamma_h \rightarrow \gamma$ if $c_{P,h} \rightarrow c_P$ is clear because 
+    $\gamma$ depends continuously on $c_{\psi}$ and $c_P$.
+\end{proof}
+In the situation that we are 
+in we (i.e. conforming subspace but a different bilinear form in the discrete problem) 
+we can formulate the following result.
+
+\begin{lemma}\label{lem:a_priori_estimate_from_infsup}
+    Let $x \in X$ be a solution of a general variational problem of the form (\ref{eq:general_variational_problem}) 
+    and $x_h \in X_h$ be a solution of the discretized version i.e for $X_h \subseteq X$ 
+    and $ Y_h \subseteq Y$ finite-dimensional subspaces
+    \begin{align*}
+        a_h(x_h,y_h) = \ell(y_h) \quad \forall y_h \in Y_h.
+    \end{align*}
     Assume that a inf-sup condition holds for the discrete problem with constant 
     $\gamma_h$.
     Define $\delta_h(x) \in Y'$ as 
@@ -1128,48 +1309,50 @@ in we (i.e. conforming subspace but a different bilinear form) we can formulate 
     Then
     \begin{align*}
         \lVert x - x_h \rVert _X 
-        \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma} \right) 
-            \inf_{z_h \in X_h} \lVert x - z_h\rVert _X + \frac{\lVert \delta(x) \rVert_{Y'}}{\gamma_h}.
+        \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma_h} \right) 
+            \inf_{z_h \in X_h} \lVert x - z_h\rVert _X + \frac{\lVert \delta_h(x) \rVert _{Y'}}{\gamma_h}.
     \end{align*}
 \end{lemma}
 \begin{proof}
     Take $z_h \in X_h$ arbitrary. Then with the triangular inequality
     \begin{align}
-        \lVert x - x_h \rVert \leq \lVert x - z_h \rVert _X + \lVert x_h - z_h \rVert _X. \label{eq:a_priori:triangular}
+        \lVert x - x_h \rVert _X \leq \lVert x - z_h \rVert _X + \lVert x_h - z_h \rVert _X. \label{eq:a_priori:triangular}
     \end{align}
     We now have to bound the last term on the right hand side.
     Assume w.l.o.g. that $x_h - z_h$ is not zero. Then from the inf-sup condition 
-    we can find $y_h \in X_h \setminus \{0\}$ s.t. 
+    we can find $y_h \in Y_h \setminus \{0\}$ s.t. 
     \begin{align*}
-        &\gamma_h \lVert x_h - z_h \rVert _X \lVert y_h \rVert _X
+        &\gamma_h \lVert x_h - z_h \rVert _X \lVert y_h \rVert _Y
         \leq a_h(x_h-z_h, y_h) 
         \\ &= a_h(x-z_h, y_h) + a_h(x_h, y_h) - a(x, y_h) + a(x, y_h) - a_h(x, y_h) 
         \\ &= a_h(x-z_h, y_h) + \langle \delta_h(x), y_h \rangle_{Y'\times Y} 
-        \\ &\leq \lVert a_h \rVert _X \lVert x- z_h \rVert _X \lVert y_h \rVert _X
-            \lVert \delta_h(x) \rVert _{X'}  \lVert y_h \rVert _X
+        \\ &\leq \lVert a_h \rVert \lVert x- z_h \rVert _X \lVert y_h \rVert _Y
+            + \lVert \delta_h(x) \rVert _{Y'}  \lVert y_h \rVert _Y
     \end{align*}
-    In the third step, we used the fact that $x$ and $x_h$ are solutions.
+    In the third step, we used the fact that $x$ and $x_h$ are solutions and the discrete 
+    problem has the same right hand side as the continous one.
     So we can bound $\lVert x_h - z_h \rVert _X$ by 
     \begin{align*}
         \lVert x_h - z_h \rVert _X
-        \leq \lVert a_h \rVert _X \lVert x- z_h \rVert _X 
-            \lVert \delta_h(x) \rVert _{X'}  
+        \leq \frac{\lVert a_h \rVert}{\gamma_h} \lVert x- z_h \rVert _X 
+            + \frac{\lVert \delta_h(x) \rVert _{Y'}}{\gamma_h}  
     \end{align*}
     and plugging this in (\ref{eq:a_priori:triangular}) and taking the infimum 
     over $z_h \in X_h$ we get 
     \begin{align*}
         \lVert x - x_h \rVert 
         \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma_h} \right) \inf _{z_h \in V_h}\lVert x - z_h \rVert _X 
-            + \frac{1}{\gamma_h}\lVert \delta_h(x) \rVert _{X'}.
+            + \frac{\lVert \delta_h(x) \rVert _{Y'}}{\gamma_h}.
     \end{align*}
 \end{proof}
 
 We now have to apply this lemma to the magnetostatic formulation.
 
 \begin{theorem}[Quasi optimal a-priori estimate]
-    Let $(\sigma,\mathbf{B},\lambda) \in X$ the exact solution of \ref{} and 
+    Let $(\sigma,\mathbf{B},\lambda) \in X$ the exact solution of Problem \ref{prob:magnetostatic_problem_variational} 
+    and 
     $(\sigma_h,\mathbf{B}_h,\lambda_h) \in X_h$ the solution of the discrete 
-    system \ref{}. Then 
+    Problem \ref{prob:magnetostatic_problem_discrete_variational}. Then 
     \begin{align*}
         \lVert \mathbf{B} - \mathbf{B}_h \rVert _{H(\diver)} 
         \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma_h} \right)
@@ -1181,24 +1364,24 @@ We now have to apply this lemma to the magnetostatic formulation.
     At first recall that if $(\sigma,\mathbf{B},\lambda)$ is solution then 
     $\sigma = 0$ and $\lambda = 0$ . 
     So $\lVert (\sigma,\mathbf{B},\lambda) \rVert _X = \lVert \mathbf{B} \rVert _{H(\diver)}$
-    and analogous for the $(\sigma_h,\mathbf{B}_h,\lambda_h)$.
+    and analogous for $(\sigma_h,\mathbf{B}_h,\lambda_h)$.
     Also recognize then for any $y = (\tau,\mathbf{v}, \mu) \in X$
     \begin{align*}
         \langle \delta_h(x), y \rangle = \lambda \langle \mathbf{p}, \mathbf{v} \rangle 
         - \lambda \langle \mathbf{p}_h, \mathbf{v} \rangle = 0.
     \end{align*}
-    Thus the estimate follows immediately from Lemma \ref{}.
+    Thus the estimate follows immediately from Lemma \ref{lem:a_priori_estimate_from_infsup}.
 \end{proof}
 
-\section{Implementation in 2D}
+\section{Implementation using Pushforward Splines}
 
 \subsection{Splines}
 
-For the discretization we will use the push forward of tensor product splines 
-on a rectangular reference domain $\hat{\Omega}$. We use geometric degrees of freedom
+For the discretization we will use the space of pushforward tensor product splines 
+defined on a rectangular reference domain $\hat{\Omega}$. We use geometric degrees of freedom
 which we will introduce below \ref{}. This section is a recollection 
- of \cite[Sec. 4.2]{broken FEEC framework on mapped multipatch} 
-since we use the same method as presented in this paper also to fix notation. 
+ of \cite[Sec. 4.2]{multipatch_paper} 
+since we use the same method as presented in this paper and also to fix notation. 
 
 We will use two different types knot sequences, non-periodic and periodic ones. 
 We choose a knot sequence $\{ \xi_i \}_{i=0}^{n+p}$ with 
@@ -1258,7 +1441,8 @@ $\hat{V}_h^j \subseteq \hat{V}^j$ for $j=0,1,2$ as desired.
 \subsection{Basis and degrees of freedom}
 
 Let us now investigate the degrees of freedom. At first, we will work on only on the 
-reference domain and then use a pullback and pushforward to transfer that to the physical domain.
+reference domain and then use a pullback and pushforward to transfer our degrees of freedom 
+and basis functions to the physical domain.
 We will use geometric degrees of 
 freedom i.e. each degree of freedom can be associated with some geometrical element of our 
 domain. We define Greville points by 
@@ -1266,20 +1450,20 @@ domain. We define Greville points by
     \zeta_i \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p}
 \end{align*}
 i.e. the knot averages for $i=0,...,n-1$. Then the spline interpolation at these 
-points is well-defined (see \cite{I think that was in the isogeometric analysis book}).
+points is well-defined (see \cite[p.30 Sec.\,3.3.1]{isogeometric analysis}).
 Note that in the case periodic some Greville points lie outside of 
 the grid. But since the function is periodic it can simply be extended periodically 
 and then interpolated at these points. 
 
 This gives us the following geometric elements nodes, edges and cells
 \begin{align*}
-    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}) for \mathbf{i} \in \mathcal{M}^0
+    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}), \quad \mathbf{i} \in \mathcal{M}^0
     \\ \hat{\mathtt{e}}_{d,\mathbf{i}} 
         \vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
-        for (d, \mathbf{i}) \in \mathcal{M}^1
-    \\ \hat{\mathtt{c}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i}}]
+        , \quad (d, \mathbf{i}) \in \mathcal{M}^1
+    \\ \hat{\mathtt{c}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i} + \mathbf{e}_1}]
         = [\zeta_{i_1}, \zeta_{i_1+1}] \times [\zeta_{i_2}, \zeta_{i_2+1}] 
-        for \mathbf{i} \in \mathcal{M}^2 
+        , \quad \mathbf{i} \in \mathcal{M}^2 
 \end{align*}
 with $[\cdot]$ being the convex hull. As before, $\mathbf{e}_d$ for $d = 1,2$ is the 
 standard basis vector of $\real^2$. 
@@ -1295,39 +1479,37 @@ The set of multiindices are defined as
 Now that we have defined the geometric elements we define the corresponding 
 degrees of freedom as 
 \begin{align*}
-    \hat{\sigma_\mathbf{i}^0(v) } \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}) for \mathbf{i} \in \mathcal{M}^0
+    \hat{\sigma}_\mathbf{i}^0(v)  \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}), \quad \mathbf{i} \in \mathcal{M}^0
     % \\ \hat{\sigma_{\mathbf{d,i}^1(\mathbf{v})} } 
     %     \vcentcolon= \int_\hat{\mathtt{e}}_{d,\mathbf{i}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
     %     for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
     \\ \hat{\sigma}_{\mathbf{i}}^2(v) 
         \vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
-        for (\mathbf{i}) \in \mathcal{M}^2
+        , \quad \mathbf{i} \in \mathcal{M}^2
 \end{align*}
-We $\mathbf{e}_d^\perp$ as $R_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
+We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
 direction i.e. $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$.  
-Something about orientation
 
-
-These degrees of freedome are unisolvent (explanation) i.e. 
-with some ordering $\mu_0, \mu_1, ...$ of the indices of $\mathcal{M}^l$
+These degrees of freedome are unisolvent i.e. with $N_l = |\mathcal{M}^l|$ 
+with some ordering $\mu_0, \mu_1, ..., \mu_{N_l}$ of the indices of $\mathcal{M}^l$ we
 define 
 \begin{align*}
-    \bm{\sigma}^l \vcentcolon= (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{|\mathcal{M}^l|}})^\top
-    : V^l_h \rightarrow \real^{|\mathcal{M}^l}
+    \bm{\sigma}^l \vcentcolon= (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{N_l}})^\top
+    : \hat{V}^l_h \rightarrow \real^{N_l}
 \end{align*}
 which is bijective.
 And we can thus define our basis functions 
 $\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$ as the basis which is dual to the 
 degrees of freedom in the sense 
 \begin{align*}
-    \hat{\sigma}_\mu^l(\hat{\Lambda}^l_\nu) = \delta_{\mu,\nu} \quad for \mu, \nu \in \mathcal{M}^l.
+    \hat{\sigma}_\mu^l(\hat{\Lambda}^l_\nu) = \delta_{\mu,\nu} \quad \forall \mu, \nu \in \mathcal{M}^l.
 \end{align*}
 
 The question is now  on what function spaces these degrees of freedom are defined. We note first that 
 the standard choice as described above with $\hat{V}^0 = H^1_0(\hat{\Omega})$ 
 $\hat{V}^1 = H_0(\diver)$ and $\hat{V}^2 = L^2(\hat{\Omega})$ can not work 
 because the evaluation at point values is not well-defined for $H^1$ in 2D since 
-they can not be embedded into the continuous functions. Thus, 
+it can not be embedded into the continuous functions. Thus, 
 we need to choose function spaces with higher regularity or integrability.
 
 Let us define the spaces
@@ -1340,9 +1522,16 @@ Let us define the spaces
 {\color{red} Why do we set the sequence to the spaces with $L^1$ sub instead of the intersection?}
 
 
-This now gives us the discrete setting on the reference domain $\hat{\Omega}$ the idea 
-is now to define the basis functions on the physical domain $\Omega$ by a 
-push forward of the basis functions on the reference domain. 
+We thus obtained the degrees of freedom and basis functions on the reference domain $\hat{\Omega}$. The idea 
+to continue is now
+to define the basis functions on the physical domain $\Omega$ by a 
+pushforward of the basis functions on the reference domain. We will now clarify what 
+types of domain we will consider for the discretization. Then we will define the pushforward 
+as the inverse of the pullback and apply it to the basis functions and degrees of freedom 
+to transfer them to the physical domain.
+
+We already introduced the pullback in Sec.\ref{}. In the case of two dimensions 
+
 The pushforward is the inverse of the pullback introduce in Sec.\,\ref{}.
 Here it is in the 2D setting, but it works completely analogous as 
 introduced there.
