@@ -1377,139 +1377,199 @@ We now have to apply this lemma to the magnetostatic formulation.
 
 \subsection{Splines}
 
-For the discretization we will use the space of pushforward tensor product splines 
+For the finite element spaces, we will use the space the pushforward of tensor product splines 
 defined on a rectangular reference domain $\hat{\Omega}$. We use geometric degrees of freedom
 which we will introduce below \ref{}. This section is a recollection 
  of \cite[Sec. 4.2]{multipatch_paper} 
-since we use the same method as presented in this paper and also to fix notation. 
+since we use the same method as presented in this paper.  
+We start with a very brief introduction of B-Splines and the spaces of tensor products 
+of these.
 
-We will use two different types knot sequences, non-periodic and periodic ones. 
-We choose a knot sequence $\{ \xi_i \}_{i=0}^{n+p}$ with 
-$\xi_0 \leq \xi_1 \leq ... \xi_{n+p}$. We choose two types of sequences.
+We choose a knot sequence $\bm{\xi} = (\xi_i )_{i=0}^{n+p}$ with 
+$\xi_0 \leq \xi_1 \leq ... \xi_{n+p}$. 
+Then we define B-Splines $B^p_i$ of degree $p\geq 1$ for $i = 0,...,n-1$ recursively as 
+\begin{align*}
+    B^p_{i}(x) \vcentcolon= \frac{x - \xi_i}{\xi_{i+p}- \xi_i} B_i^{p-1}(x) 
+        + \frac{\xi_{i+p+1} - x}{\xi_{i+p+1}- \xi_{i+1}} B_{i+1}^{p-1}(x) 
+\end{align*}
+and 
+\begin{align*}
+    B^0_i(x) \vcentcolon= \begin{cases*}
+        1, & \text{ if $x \in [\xi_i,\xi_{i+1})$},
+        \\0, & \text{ else}
+    \end{cases*}
+\end{align*}
 
-Let us define $x_0 < x_1 < ... < x_N$ as the physical knots which 
-is our actual grid. We will stick to the equidistant case. Let $h$ be 
+We choose two types of sequences, periodic and non-periodic ones.
+On an interval $[a,b]$, 
+let $a= x_0 < x_1 < ... < x_N = b$ be our grid. 
+We will stick to the equidistant case i.e. $h$ will be our grid size 
 $x_{i+1} - x_i$.
 
-Define $n = N + p$.
 For the non-periodic case we choose an \textit{open} knot sequence by 
-$\xi_0 = ... = \xi_p = x_0$, $\xi_{p+l} = x_l$ for $l = 0,1,...,N$ and 
-$\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$
+$\xi_0 = ... = \xi_p = x_0$, $\xi_{p+k} = x_k$ for $k = 0,1,...,N$ and 
+$\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$ i.e. 
 \begin{align*}
-    \xi_0 = ... = \xi_p < \xi_{p+1} < ... \xi_{n} = \xi_{n+1} = ... = \xi_{n+p}    
+    \bm{\xi} = (\underbrace{x_0, x_0,...,x_0}_{\text{$p$ times}}, x_1, x_2, ..., x_{N-1}, 
+        \underbrace{x_N, x_N, ..., x_N}_{\text{$p$ times}})   
 \end{align*}
 and for the periodic case 
 $\xi_0 = x_0-ph, \xi_1 = x_0-(p-1)h, ..., \xi_p = x_0$,
-$\xi_{p+l} = x_l$ and $\xi_{n+l} = x_N + lh$ for $l = 0, ..., p$. 
+$\xi_{p+l} = x_l$ and $\xi_{n+l} = x_N + lh$ for $l = 0, ..., p$, 
+\begin{align*}
+    \bm{\xi} = (x_0-ph,x_0-(p-1)h,...,x_0-h, x_0,  x_1, x_2, ..., x_{N-1}, 
+        x_N, x_N + h, x_N + 2h, ..., x_N + ph ).
+\end{align*}
+In the periodic case, the spline at beginning and end of the interval are extended periodically.
+In both cases, we have $n + p +1 = N+2p+1$ knots in our knot sequence $\bm{\xi}$ and
+hence obtain $n = N + p$ splines.
+We then define the spline space $\mathbb{S}^p(\bm{\xi}) \vcentcolon= \spanvec \{ B_i^p \}_{i=0}^{n-1}$.
+which has dimension $N+p$.
 
 Note that all the knot multiplicities in the interior are one and thus our spline 
-space has maximal regularity. We then define 
-$\mathcal{N}_i^q$ be the normalized B-spline \cite[Ref. 46, Def.4.19]{multipatch paper}.
-We then define the spline spce $\mathbb{S}_q = \mathbb{S}_q(\bm{\xi}) = 
-span{\mathcal{N}_i^q \mid i = 0, ..., n-1}$. Since we have maximal regularity 
-we get that 
+space has maximal regularity which implies that it is equal to the piecewise polynomial space
 \begin{align*}
-    \{ v \in C^{q-1} \mid v |_{\xi_{q+j, q+j+1}} \in \mathbb{P}_q \}.
+    \mathbb{S}^p(\bm{\xi}) = \{ v \in C^{p-1} \mid v |_{[x_j,x_{j+1})} \in \mathbb{P}_p([x_j,x_{j+1})) 
+        \text{ for } j\in [N-1]\}.
 \end{align*}
-$\mathcal{N}_0^{p-1} $ vanishes.
+where $\mathbb{P}_p([x_j,x_{j+1}))$ are the polynomials of degree $p$ on $[x_j,x_{j+1})$ 
+and we use the standard notation $[K] = \{ 0, 1, ..., K\}$ for $k\in \naturalnum$.
 
+This construction can now be generalized to 2D by using a tensor product approach.
+Denote $a_1 = x_0 < x_1 < x_2 < ... < x_N = b_1$ the grid in $x$-direction and 
+$a_2 = y_0 < y_1 < y_2 < ... < y_N = b_2$ in $y$-direction and assume that we have the 
+same number of grid points in both dimensions for simplicity. 
+Using the same definition of knot sequence as above gives as the knot sequence 
+$\bm{\xi}$ in $x$-direction and $\bm{\eta}$ in $y$-direction. The resulting splines 
+are are denoted as $B_{i,\xi}^{q_1}$, $i=0,...,n_1 = N + q_1$, and $B_{j,\eta}^{q_2}$, 
+$j = 0,...,N + q_2$ and the spaces
+$\mathbb{S}^{q_1}(\xi)$ and $\mathbb{S}^{q_2}(\eta)$ respectively.
 
-We now can take tensor product of spline spaces. We use the notation 
-with $\mathbf{q} \in \{p-1,p\}^2$ and we define with $\mathbf{i} \in [N_0 ] \times [ N_1 ]$
+We use the notation 
+with $\mathbf{q} \in \{p-1,p\}^2$, $n_1 = N + q_1$, $n_2 = N + q_2$ 
+and we define with $\mathbf{i} \in [n_1-1] \times [n_2-1]$ the \textit{tensor product spline}
 \begin{align*}
-    \mathcal{N}_\mathbf{i}^\mathbf{q} \mathcal{N}_{i_1}^{q_1} \mathcal{N}_{i_2}^{q_2}.
+    B_\mathbf{i}^\mathbf{q} =  B_{i_1}^{q_1} B_{i_2}^{q_2}
 \end{align*}
-We write this as $\mathbb{S}_\mathbf{q} = \mathbb{S}_{q_1} \otimes \mathbb{S}_{q_2}$ 
-The spline spaces used in the tensor product can also be periodic or only one of them 
-can be periodic.
-On $\hat{\Omega}$ we obtain the following discrete Hilbert complex 
+and $\mathbb{S}_\mathbf{q}(\xi,\eta)$ 
+the span of these tensor product splines. We will from now on leave out the reference 
+to the knot sequence and assume them to be fixed.
+The spline spaces used in the tensor product can also be periodic or be periodic in 
+one direction and non-periodic in the other. The last case will be significant one later.
+
+Then we obtain the following discrete Hilbert complex on our reference domain $\hat{\Omega}$
 \begin{align*}
-    \mathbb{S}_{p,p} \xrightarrow{\veccurl} \mathbb{S}_{p-1,p} \xrightarrow{\diver} \mathbb{S}_{p-1,p-1}
+    \mathbb{S}_{p,p} \xrightarrow{\veccurl} \begin{pmatrix}\mathbb{S}_{p,p-1} \\ \mathbb{S}_{p-1,p}  
+    \end{pmatrix} \xrightarrow{\diver} \mathbb{S}_{p-1,p-1}
 \end{align*}
-and we denote $\hat{V}^0 = \mathbb{S}_{p,p}$, $\hat{V}^1 = \mathbb{S}_{p-1,p}$ 
-and $\hat{V}^2 = \mathbb{S}_{p-1,p-1}$. 
+and we denote
+\begin{align*}
+     \hat{V}^0 = \mathbb{S}_{p,p}, \; \hat{V}^1 = \begin{pmatrix}\mathbb{S}_{p,p-1} \\ \mathbb{S}_{p-1,p}  
+    \end{pmatrix}
+    \text{ and } \hat{V}^2 = \mathbb{S}_{p-1,p-1}.
+\end{align*}
 
 It is well-known that if we have a function $\mathbf{v}$ that is piecewise smooth 
 then $\mathbf{v} \in H(\diver)$ i.i.f. the normal trace across element interfaces
-agrees almost everywhere. Analogously for $\tau \in H^1$ i.i.f. the values agree 
-on the interfaces almost everywhere. Since we always have $p \geq 2$ we thus know that 
-all our tensor splines are at least continuous globally and thus we get 
+agrees. Analogously a piecewise smooth $\tau \in H^1$ i.i.f. the values agree 
+on the interfaces. We will always assume $q_i \geq 2$ and thus know that 
+all our tensor splines are at least continuous globally and so
 $\hat{V}_h^j \subseteq \hat{V}^j$ for $j=0,1,2$ as desired. 
 
 
 
 \subsection{Basis and degrees of freedom}
 
-Let us now investigate the degrees of freedom. At first, we will work on only on the 
-reference domain and then use a pullback and pushforward to transfer our degrees of freedom 
-and basis functions to the physical domain.
+Let us now investigate the degrees of freedom and the corresponding basis functions. 
+At first, we will define these only on the 
+reference domain $\hat{\Omega}$. Then we will use
+pullbacks and pushforwards to transfer them
+from the reference domain to the physical domain $\Omega$. 
+We will also use this opportunity to specify more precisely, what domains we consider 
+such that this approach works.
+
+We now fix $p$ and get $n = N+p$. Here it is crucial to remember that we assumed to 
+have the same number of grid points in both dimensions.
 We will use geometric degrees of 
 freedom i.e. each degree of freedom can be associated with some geometrical element of our 
 domain. We define Greville points by 
 \begin{align*}
-    \zeta_i \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p}
+    \zeta_i^x \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p}
 \end{align*}
-i.e. the knot averages for $i=0,...,n-1$. Then the spline interpolation at these 
-points is well-defined (see \cite[p.30 Sec.\,3.3.1]{isogeometric analysis}).
-Note that in the case periodic some Greville points lie outside of 
-the grid. But since the function is periodic it can simply be extended periodically 
-and then interpolated at these points. 
+i.e. the knot averages for $i=0,...,n-1$ and analogous $\zeta_j^y$ in $y$-direction 
+using the knot sequence $\bm{\eta}$. 
+Then the spline interpolation at these 
+points is well-defined (see \cite[Sec.\,3.3.1]{isogeometric_analysis}).
+Note that in the periodic case some Greville points lie outside of 
+the grid, but we assume the function that is interpolated to be periodic as well, so
+the values at the Greville points are well-defined.
 
 This gives us the following geometric elements nodes, edges and cells
 \begin{align*}
-    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta_{i_1}, \zeta_{i_2}), \quad \mathbf{i} \in \mathcal{M}^0
+    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta^x_{i_1}, \zeta^y_{i_2}), \quad \mathbf{i} \in \mathcal{M}^0
     \\ \hat{\mathtt{e}}_{d,\mathbf{i}} 
         \vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
         , \quad (d, \mathbf{i}) \in \mathcal{M}^1
     \\ \hat{\mathtt{c}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i} + \mathbf{e}_1}]
-        = [\zeta_{i_1}, \zeta_{i_1+1}] \times [\zeta_{i_2}, \zeta_{i_2+1}] 
+        = [\zeta^x_{i_1}, \zeta^x_{i_1+1}] \times [\zeta^y_{i_2}, \zeta^y_{i_2+1}] 
         , \quad \mathbf{i} \in \mathcal{M}^2 
 \end{align*}
 with $[\cdot]$ being the convex hull. As before, $\mathbf{e}_d$ for $d = 1,2$ is the 
 standard basis vector of $\real^2$. 
-We define for a $m \in \naturalnum$, $[m] \vcentcolon= \{ 0, 1, ..., m\}$.
 The set of multiindices are defined as
 \begin{align*}
     \mathcal{M}^0 \vcentcolon= [n-1]^2
-    \\ \mathcal{M}^1 \vcentcolon= \{ (d, \mathbf{i}=) \mid \mathbf{i} \in \mathcal{M}^0, d\in \{1,2\} \}
+    \\ \mathcal{M}^1 \vcentcolon= \{ (d, \mathbf{i}) \mid d \in \{1,2\}, \mathbf{i} \in [0,n-1]^2, i_d < n-1 \}
     \\ \mathcal{M}^2 \vcentcolon= [n-2]^2
 \end{align*}
-{\color{red} Does this stuff go through for periodic case?}
 
 Now that we have defined the geometric elements we define the corresponding 
-degrees of freedom as 
+degrees of freedom. 
+We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
+direction which leads to $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$. 
+The degrees of freedom are then
 \begin{align*}
     \hat{\sigma}_\mathbf{i}^0(v)  \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}), \quad \mathbf{i} \in \mathcal{M}^0
-    % \\ \hat{\sigma_{\mathbf{d,i}^1(\mathbf{v})} } 
-    %     \vcentcolon= \int_\hat{\mathtt{e}}_{d,\mathbf{i}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
-    %     for (d, \mathbf{i}) \in \hat{\mathcal{M}}^1
+    \\ \hat{\sigma}^1_{\mathbf{d,i}}(\mathbf{v})  
+        \vcentcolon= \int_{\hat{\mathtt{e}}_{d,\mathbf{i}}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
+        , \quad (d, \mathbf{i}) \in \mathcal{M}^1
     \\ \hat{\sigma}_{\mathbf{i}}^2(v) 
         \vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
         , \quad \mathbf{i} \in \mathcal{M}^2
 \end{align*}
-We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
-direction i.e. $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$.  
 
-These degrees of freedome are unisolvent i.e. with $N_l = |\mathcal{M}^l|$ 
-with some ordering $\mu_0, \mu_1, ..., \mu_{N_l}$ of the indices of $\mathcal{M}^l$ we
+These degrees of freedom are unisolvent on $\hat{V}^\ell_h$ i.e. with $N_l = |\mathcal{M}^l|$ 
+and some ordering $\mu_0, \mu_1, ..., \mu_{N_l}$ 
+of the indices of $\mathcal{M}^l$, denoting $\sigma^\ell_{\mu_i} = \sigma_i^\ell$,  we
 define 
 \begin{align*}
-    \bm{\sigma}^l \vcentcolon= (\sigma^l_{\mu_0}, \sigma^l_{\mu_1}, ..., \sigma^l_{\mu_{N_l}})^\top
+    \bm{\sigma}^l \vcentcolon= (\sigma^l_0, \sigma^l_1, ..., \sigma^l_{N_l})^\top
     : \hat{V}^l_h \rightarrow \real^{N_l}
 \end{align*}
 which is bijective.
 And we can thus define our basis functions 
-$\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$ as the basis which is dual to the 
+$\hat{\Lambda}^l_\mu$, $\mu \in \mathcal{M}^l$, (denoted in bold if vector valued) 
+as the basis which is dual to the 
 degrees of freedom in the sense 
 \begin{align*}
     \hat{\sigma}_\mu^l(\hat{\Lambda}^l_\nu) = \delta_{\mu,\nu} \quad \forall \mu, \nu \in \mathcal{M}^l.
 \end{align*}
 
+\begin{remark}
+    For implementational purposes, these basis functions dual to the degrees of freedom are not necessarily the 
+    best option. For the computation of mass matrices etc. 
+    it is more convenient to use the B-splines directly due to their 
+    local support and fast computation.
+    We will not 
+    go too deeply into the details of implementation however. More details about the 
+    use of B-splines and the connection with the basis $\Lambda^\ell_\mu$ can be found 
+    in \cite[Sec.\,4.8]{multipatch_paper} 
+\end{remark}
+
 The question is now  on what function spaces these degrees of freedom are defined. We note first that 
-the standard choice as described above with $\hat{V}^0 = H^1_0(\hat{\Omega})$ 
+the standard choice as described above with $\hat{V}^0 = H^1_0(\hat{\Omega})$, 
 $\hat{V}^1 = H_0(\diver)$ and $\hat{V}^2 = L^2(\hat{\Omega})$ can not work 
-because the evaluation at point values is not well-defined for $H^1$ in 2D since 
-it can not be embedded into the continuous functions. Thus, 
+because e.g. the evaluation at point values is generally not well-defined for $H^1$-functions in 2D. Thus, 
 we need to choose function spaces with higher regularity or integrability.
 
 Let us define the spaces
@@ -1517,63 +1577,90 @@ Let us define the spaces
     W^1_{1,2}(\hat{\Omega}) &\vcentcolon= \{ v \in L^1(\hat{\Omega}) \mid \partial_1 \partial_2 v
         \in L^1(\hat{\Omega}) \}
     \\  W^1_d(\hat{\Omega}) &\vcentcolon= \{ v \in L^1(\hat{\Omega}) \mid \partial_d v
-        \in L^1(\hat{\Omega}) \}
+        \in L^1(\hat{\Omega}) \} \text{ for } d\in \{1,2\}
 \end{align*}
-{\color{red} Why do we set the sequence to the spaces with $L^1$ sub instead of the intersection?}
-
+and then denote $\hat{U}_{L^1}^0 \vcentcolon= W^1_{1,2}(\hat{\Omega})$, 
+$\hat{U}_{L^1}^1 \vcentcolon= W^1_1(\hat{\Omega}) \times W^1_2(\hat{\Omega})$
+and $\hat{U}_{L^1}^2 \vcentcolon= L^1(\hat{\Omega})$. Then the degrees of freedom $\sigma_\mu^\ell$ are 
+well-defined on $\hat{U}^\ell \vcentcolon= \hat{U}_{L^1}^2 \cap \hat{V}^\ell$. 
 
 We thus obtained the degrees of freedom and basis functions on the reference domain $\hat{\Omega}$. The idea 
 to continue is now
 to define the basis functions on the physical domain $\Omega$ by a 
-pushforward of the basis functions on the reference domain. We will now clarify what 
+pushforward of the basis functions from the reference domain. We will now clarify what 
 types of domain we will consider for the discretization. Then we will define the pushforward 
 as the inverse of the pullback and apply it to the basis functions and degrees of freedom 
 to transfer them to the physical domain.
 
-We already introduced the pullback in Sec.\ref{}. In the case of two dimensions 
+\begin{assumption}
+    There exists a rectangular reference domain $\hat{\Omega} = [a_1, b_1] \times [0, T]$ 
+    and a orientation preserving diffeomorphism $\mathbf{F}$ defined on $\hat{\Omega}$, which is $T$-periodic 
+    in the second variable, such that
+    $\Omega = F(\hat{\Omega})$. 
+    
+    We have the tensor grid on the reference domain
+    \begin{align*}
+        \{a_1 = x_0 < x_1 < ... < x_N = b_1\} \times \{0 = y_0 < y_1 < ... < y_N = T\}.
+    \end{align*}
+    For the curve $\Gamma$, we assume that there exists $\hat{\Gamma} \subseteq \hat{\Omega}$ 
+    that goes along the edges of the grid such that $\Gamma = \mathbf{F}(\hat{\Gamma})$.
+\end{assumption}
 
-The pushforward is the inverse of the pullback introduce in Sec.\,\ref{}.
-Here it is in the 2D setting, but it works completely analogous as 
-introduced there.
+This is usually referred as the \textit{single patch case} since we only use 
+one mapping from the reference domain. We see that this assumption is made so that 
+the notions on the physical domain are well-represented on the reference 
+domain. Notice that with this assumption the preimage of $\Omega_\Gamma$ corresponds to 
+a subgrid on the reference domain. 
 
-We will stick to the single patch case meaning that there is a diffeomorphism 
-$\mathbf{F}: \hat{\Omega} \rightarrow \Omega$. Then we define 
-the pullbacks 
+We already introduced the pullback in Sec.\ref{} in the 3D case. 
+Then we define the pullbacks in 2D
 \begin{align*}
-    &\mathcal{P}_F^0: v \mapsto \hat{v} \vcentcolon= v \circ \mathbf{F}
-    \\ &\mathcal{P}_F^1: \mathbf{v} \mapsto \hat{\mathbf{v}} 
+    &\mathcal{P}_\mathbf{F}^0: v \mapsto \hat{v} \vcentcolon= v \circ \mathbf{F}
+    \\ &\mathcal{P}_\mathbf{F}^1: \mathbf{v} \mapsto \hat{\mathbf{v}} 
         \vcentcolon= \det D\mathbf{F} \,D\mathbf{F}^{-1} (\mathbf{v} \circ \mathbf{F})
-    \\ &\mathcal{P}_\mathbf{F}^2: v \mapsto \hat{v} \vcentcolon= (\det DF) (v\circ \mathbf{F})
+    \\ &\mathcal{P}_\mathbf{F}^2: v \mapsto \hat{v} \vcentcolon= (\det D\mathbf{F}) (v\circ \mathbf{F})
 \end{align*}
 which map functions on the physical domain $\Omega$ to functions on the reference domain 
 $\hat{\Omega}$. Then we have the commuting properties
 \begin{align*}
-    \widehat{\veccurl} \mathcal{P}_F^0 v &= \mathcal{P}_F^1 \veccurl v
-    \\ \widehat{\diver} \mathcal{P}_F^1 \mathbf{v} &= \mathcal{P}_F^1 \diver v
+    \widehat{\veccurl} \mathcal{P}_\mathbf{F}^0 v &= \mathcal{P}_\mathbf{F}^1 \veccurl v
+    \\ \widehat{\diver} \mathcal{P}_\mathbf{F}^1 \mathbf{v} &= \mathcal{P}_\mathbf{F}^1 \diver \mathbf{v}
 \end{align*}
+when the $\veccurl$ and divergence are well-defined.
+\begin{remark}
+    Just as in Sec.\ref{} these pullbacks can be derived from the pullbacks of differential forms.
+    Keep in mind however, that in 2D there are two different ways to identify a $1$-form 
+    with a vector field (cf. \ref{}). This leads to different pullbacks. We have chosen it 
+    here s.t. we have the commuting property with the differential operators in 
+    our Hilbert complex (\ref{eq:2D_hilbert_complex}).
+\end{remark}
 
-These are easy to prove by adapting the arguments of Sec.\,\ref{} i.e. we 
-can use the corresponding operators on differential forms.
-
-Using the pullbacks we define the pushforwards as 
-$\mathcal{F}^l \vcentcolon= (\mathcal{P}_F^l)^{-1}$ and then 
-we get the basis functions on the physical domain
+We now define the pushforwards as 
+$\mathcal{F}^\ell \vcentcolon= (\mathcal{P}_\mathbf{F}^\ell)^{-1}$ 
+which then read
 \begin{align*}
-    \Lambda^l_{\mu} \vcentcolon= \mathcal{F}^l \hat{\Lambda}^l_{\mu}
+    &\mathcal{F}^0:  \hat{v}\mapsto v  \vcentcolon= v \circ \mathbf{F}^{-1}
+    \\ &\mathcal{F}^1: \hat{\mathbf{v}}  \mapsto \mathbf{v}
+        \vcentcolon= \det D\mathbf{F}^{-1} \,D\mathbf{F} (\mathbf{v} \circ \mathbf{F}^{-1})
+    \\ &\mathcal{F}^2:  \hat{v} \mapsto  v\vcentcolon= (\det D\mathbf{F}^{-1}) (v\circ \mathbf{F}^{-1}).
+\end{align*}
+By applying these pushforwards we get the basis functions on the physical domain
+\begin{align*}
+    \Lambda^\ell_{\mu} \vcentcolon= \mathcal{F}^\ell \hat{\Lambda}^\ell_{\mu}
 \end{align*}
 and then 
 \begin{align*}
-    V_h^l \vcentcolon= \text{span} \{ \Lambda^l_{\mu} \mid \mu \in \mathcal{M}^l \}
+    \bar{V}_h^l \vcentcolon= \text{span} \{ \Lambda^l_{\mu} \mid \mu \in \mathcal{M}^l \}
 \end{align*}
-are our discrete spaces. {\color{red} Approximation properties???}
+are our discrete spaces without boundary conditions. {\color{red} Approximation properties???}
 
-Using the geometric degrees from \ref{} we can now construct the corresponding 
-by 
+Using the geometric degrees of freedom on the reference domain, we can now construct the corresponding 
+degrees of freedom on the physical domain as
 \begin{align*}
     \sigma^l_\mu \vcentcolon= \hat{\sigma}_\mu^l \circ \mathcal{P}_F^l
 \end{align*}
 Then we have by construction that 
-$\sigma^l_\mu(\Lambda^l_{\nu}) = \delta_{\mu,\nu}$. 
+$\sigma^l_\mu(\Lambda^l_{\nu}) = \delta_{\mu,\nu}$ for all $\mu, \nu \in \mathcal{M}^\ell$.
 
 We can thus define the projection operators 
 \begin{align*}
@@ -1590,9 +1677,17 @@ as desired from \ref{} i.e. the diagram
 
 
 and is thus a cochain projection. 
-They also correspond to geometric elements. 
-$\sigma^0$ corresponds to point values in the physical domain, 
-$\sigma^1$ to the fluxes through the image of edges and 
+
+The degrees of freedom then also correspond to geometric objects in the physical domain. 
+The reference grid gets mapped to the physical domain which gives us the geometric objects there.
+We define the mapped nodes in the physical domain as 
+\begin{align*}
+    \mathtt{n}_\mathbf{i} \vcentcolon= \mathbf{F}(\hat{\mathtt{n}}_\mathbf{i}), 
+\end{align*}
+and analogous edges $\mathtt{e}_{d,\mathbf{i}}$, $(d,\mathbf{i}) \in \mathcal{M}^1$, and 
+cells $\mathtt{c}_\mathbf{i}$, $\mathbf{i} \in \mathcal{M}^2$.
+$\sigma^0$ corresponds to point values at the nodes,
+$\sigma^1$ to the fluxes through the edges and 
 $\sigma^2$ to the integral over the mapped cells.
 
 \begin{remark}
@@ -1607,117 +1702,168 @@ $\sigma^2$ to the integral over the mapped cells.
 
 \subsection{Building the discrete system}
 
-This very simple geometric interpretation gives us the ability to enforce 
-the boundary condition directly by setting the corresponding degrees of freedom 
-to zero. 
+Now that we have specified the basis and degrees of freedom we will talk about 
+how we will build the system to solve the magnetostatic problem on $\Omega$. 
+In particular, we will explain how we will enforce homogeneous boundary conditions since 
+this is the way the magnetostatic problem was posed. To achive that, we 
+define the boundary projections and reformulate the discrete problem with them.
+When this is done, we will write the system in matrix form to see 
+what system is solved in practice. 
 
-For $V_h^0 \subseteq H^1_0$ we want the trace on the boundary to vanish which 
-means that we set the values at the boundary nodes to zero. Thus, 
-for $\mathtt{n}_\mathbf{i}$ on the boundary we want 
-$\sigma^0_{\mathbf{i}}(v) = 0$. 
+Recall that $\mathbf{F}$, the parametrization of the physical domain, is assumed to 
+be periodic in the second variable and so the "north" and "south" edge of the 
+rectangle $\hat{\Omega}$ do not correspond to a boundary of the physical domain 
+$\Omega$. This motivates the 
+(slight abuse of) notation 
+\begin{align*}
+    \partial \hat{\Omega} \vcentcolon= [a,b] \times \{ 0 \} \cup [a,b] \times \{ T \}.
+\end{align*}
 
-For $V_h^1 \subseteq H_0(\diver)$ we want to have the normal trace zero. 
-So when $\mathtt{e}_{d,\mathbf{i}}(\mathbf{v})$ is boundary edge we require
-This is then achieved when $\sigma^1_{d,\mathbf{i}} (\mathbf{v}) = 0$.
+Let us define the sets boundary indices $\mathcal{B}^\ell$ which correspond 
+to the multiindices of the geometric elements on the boundary i.e. 
+\begin{align*}
+    \mathcal{B}^0 &\vcentcolon= \{ \mathbf{i} \in \mathcal{M}^0 
+        \mid \hat{\mathtt{n}}_\mathbf{i} \in \partial \hat{\Omega} \}
+    \\ \mathcal{B}^1 &\vcentcolon= \{ (d,\mathbf{i}) \in \mathcal{M}^1 
+        \mid \hat{\mathtt{e}}_{d,\mathbf{i}} \subseteq \partial \hat{\Omega} \}
+\end{align*}
+Since $V_h^2 \subseteq L^2$ we do not require any boundary conditions there.
+Then we define the spaces 
+\begin{align*}
+    V_h^\ell \vcentcolon= \{ v_h \in \bar{V}_h^\ell \mid \sigma^\ell_\mu (v_h) = 0 
+        \quad \forall \mu \in \mathcal{B}^\ell \}
+    = \spanvec \{ \Lambda^\ell_\mu \mid \mu \in \mathcal{M}^\ell \setminus \mathcal{B}^\ell \}
+\end{align*}
+For these spaces it holds then
+\begin{align*}
+    V_h^0 &= \bar{V}_h^0 \cap H^1_0(\Omega)
+    \\ V_h^1 &= \bar{V}_h^1 \cap H_0(\diver)
+\end{align*}
+and so we see that the homogeneous boundary conditions simply correspond to the 
+boundary degrees of freedom being zero. This means for $V_h^0$ we require the 
+nodal values on the boundary to vanish and for $V_h^1$ zero flux through the boundary edges.
 
-We now define the spaces $\bar{V}_h^l$ which are the correspoding spaces 
-without any boundary conditions. Then we define the 
+Then we define the 
 projections $P_h^l: \bar{V}_h^l \rightarrow \bar{V}_h^l$ which set 
-the boundary degrees of freedom to zero. They have a very simple 
-matrix representation $\mathbb{P}_h^l$ 
-$(\mathbb{P}_h^l)_{\mu, \nu} = 1 $ i.i.f. $\mu = \nu$ and $\mu$ does not 
+the boundary degrees of freedom to zero and are thus 
+a projection onto $V_h^\ell$. The
+matrix representation $\mathbb{P}^l$ is then simply
+$(\mathbb{P}^l)_{\mu, \nu} = 1 $ i.i.f. $\mu = \nu$ and $\mu$ does not 
 correspond to a geometric element on the boundary. They are easily constructed 
 by taking the identity matrix and setting the diagonal entries to zero that 
 belong to boundary degrees of freedom.
 
-We now reformulate the discrete system using these projections. We apply them 
-to all functions involved and then penalize the boundary.
+We now reformulate the discrete system using these projections. We apply the boundary projections 
+to all functions involved and then add the boundary penalization terms.
 With boundary penalities the discrete system is: Find $\sigma_h \in \bar{V}_h^0$, 
 $\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ s.t.
-\begin{align*}
+\begin{align}
     \langle (I-P^0_h)\sigma_h, (I-P^0_h)\tau_h \rangle + \langle P^0_h \sigma_h, P^0_h\tau_h \rangle 
-        - \langle P^1_h \mathbf{B}_h, \mathbf{\curl}P^0_h\tau_h \rangle 
-    &=  -\langle J, P^0_h \tau_h \rangle \quad \forall \tau_h \in \bar{V}_h^0, 
-    \\ \langle \mathbf{\curl}P^0_h \sigma_h, P^1_h\mathbf{v}_h \rangle 
-        + \langle (I-P^1_h)\mathbf{B}_h, (I-P^1_h)\mathbf{v}_h \rangle
+        - \langle P^1_h \mathbf{B}_h,\veccurl P^0_h\tau_h \rangle 
+    &=  -\langle J, P^0_h \tau_h \rangle \quad \forall \tau_h \in \bar{V}_h^0, \label{eq:system_with_penalties:eq1}
+    \\ \langle \veccurl P^0_h \sigma_h, P^1_h\mathbf{v}_h \rangle 
+        + \langle (I-P^1_h)\mathbf{B}_h, (I-P^1_h)\mathbf{v}_h \rangle \notag
     \\ \quad    + \langle \diver P^1_h\mathbf{B}_h, \diver P^1_h\mathbf{v}_h \rangle 
         + \langle \lambda \mathbf{p}_h, P^1_h\mathbf{v}_h \rangle 
-    &= 0 \quad \forall \mathbf{v}_h \in \bar{V}^1_h, 
-    \\ \mu \langle \bm{\curl} \psi, P^1_h \mathbf{B}_h \rangle &= \mu C_1 \quad \forall \mu \in \real.
-\end{align*}
+    &= 0 \quad \forall \mathbf{v}_h \in \bar{V}^1_h, \label{eq:system_with_penalties:eq2}
+    \\ \langle \bm{\curl} \psi, P^1_h \mathbf{B}_h \rangle &= C_1 .
+        \label{eq:system_with_penalties:eq3}
+\end{align}
+
 Since we apply the projection everywhere it is then easy to show that 
 $\sigma_h \in \bar{V}_h^0$, 
-$\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ solve \ref{} 
+$\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ solve 
+(\ref{eq:system_with_penalties:eq1})-(\ref{eq:system_with_penalties:eq3})
 i.i.f. $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V^1_h$ 
-and it solves the system with homogeneous discrete spaces \ref{}. 
+and it solves the system with homogeneous discrete spaces 
+(Prob.\,\ref{prob:magnetostatic_problem_discrete_variational}). 
 So the two formulations are equivalent.
 
-In the matrix formulation. Define $\mathbb{M}^l$ as the mass matrix 
-of $V_h^l$ i.e. $\mathbb{M}_{ij} = \langle \Lambda^l_i , \Lambda^l_j \rangle$ 
-where we used some flattening of the multiindices in $\mathcal{M}^l$. 
-We also define the matrix $\mathbb{D}$ the matrix representation of the 
-divergence applied to $V^1_h$ i.e. $\diver|_{V^1_h}: V^1_h \rightarrow V^2_h$.
+We will from now on often use implicitly some flattening of the multiindices in $\mathcal{M}^\ell$.
+Define $\mathbb{M}^l$ as the mass matrix 
+of $\bar{V}_h^l$ i.e. $\mathbb{M}_{ij}^\ell = \langle \Lambda^l_i , \Lambda^l_j \rangle$.
+We define the matrix $\mathbb{D}$ as the matrix representation of the 
+divergence applied to $\bar{V}^1_h$ i.e. $\diver|_{\bar{V}^1_h}: \bar{V}^1_h \rightarrow \bar{V}^2_h$.
 Analogously $\mathbb{C}$ is the matrix representation of $\veccurl$. Then 
 we have, as mentioned before, the matrix representation of the boundary projections 
-$\mathbb{P}^l$. Overall we can rewrite the linear system like this. 
-We denote the vector of coefficients of a function in bold with an underline e.g. 
-$\underline{\bm{\sigma} }$ is the vector of coefficients of $\sigma$ in 
-the basis $\Lambda^0_\mu$ $\mu \in \mathcal{M}^0$ 
-and $\underline{\mathbf{B}}$ is are the coefficients of $\mathbf{B}$ in the basis 
-$\Lambda^1_\mu$ $\mu \in \mathcal{M}^1$.
-using some flattening again.
-
+$\mathbb{P}^l$ and $\mathbb{I}^\ell \in \real^{N_\ell \times N_\ell}$ is the identity matrix.
+We denote the vector of coefficients of a function with an underline e.g. 
+$\underline{\sigma} \in \real^{N_0}$ is the vector of coefficients of $\sigma$ in 
+the basis $\Lambda^0_\mu$, $\mu \in \mathcal{M}^0$.
+$\underline{\mathbf{B}}, \underline{\mathbf{p}} \in \real^{N_1}$ are the coefficients 
+of $\mathbf{B}_h$ and $\mathbf{p}_h$ in the basis 
+$\bm{\Lambda}^1_\mu$, $\mu \in \mathcal{M}^1$.
+So rewriting the equations (\ref{eq:system_with_penalties:eq1})-(\ref{eq:system_with_penalties:eq3})
+in matrix-vector form gives us
 \begin{align*}
-    \underline{\bm{\tau}}^\top (I-\mathbb{P}^0_h)\top \mathbb{M}^0 
-        (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
-        + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
-        + \underline{\bm{\tau}}^\top \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
-        \underline{\mathbf{B}} &= \underline{\bm{\tau}}^\top \underline{\tilde{\mathbf{J}}} \quad \forall \underline{\bm{\tau}} \in \real^{N_0}
-    \\ \underline{\mathbf{v}}^\top \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
-        + \underline{\mathbf{v}}^\top (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
-        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + \underline{\mathbf{v}}^\top (\mathbb{P}^1_h)^\top \mathbb{M}^1
-        \underline{\mathbf{v}}^\top (\mathbb{P}^1) \mathbb{M}^1 \underline{\mathbf{p}} &= 0 
+    \underline{\tau}^\top (\mathbb{I}^0-\mathbb{P}^0) \mathbb{M}^0 
+        (\mathbb{I}^0-\mathbb{P}^0)\underline{\sigma} 
+        + \underline{\tau}^\top \mathbb{P}^0 \mathbb{M}^0 \mathbb{P}^0 \underline{\sigma}
+        + \underline{\tau}^\top \mathbb{P}^0 \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1 
+        \underline{\mathbf{B}} &= \underline{\tau}^\top \underline{\tilde{J}} 
+        \quad \forall \underline{\tau} \in \real^{N_0}
+    \\ \underline{\mathbf{v}}^\top \mathbb{P}^1 \mathbb{M}^1 \mathbb{C} \mathbb{P}^0 \underline{\sigma}
+        + \underline{\mathbf{v}}^\top (\mathbb{I}^1-\mathbb{P}^1) \mathbb{M}^1 
+        (\mathbb{I}^1-\mathbb{P}^1)\underline{\mathbf{B}}
+    \\ + \underline{\mathbf{v}}^\top (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
+        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + \underline{\mathbf{v}}^\top (\mathbb{P}^1)^\top \mathbb{M}^1
+        \underline{\mathbf{p}} &= 0 
         \quad \forall \underline{\mathbf{v}} \in \real^{N_1}
-    \\ \underline{\bm{\psi}}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1_h \underline{\mathbf{B}} = C_1
+    \\ \underline{\psi}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1 \underline{\mathbf{B}} = C_1
 \end{align*}
-where $\underline{\tilde{J}}_i = \langle J, \Lambda^0_i \rangle$
+where $\underline{\tilde{J}} = (\langle J, \Lambda^0_i \rangle)_{i=1}^{N_0}$
 which gives us the final system to be solved 
 \begin{align*}
-    (I-\mathbb{P}^0_h)\top \mathbb{M}^0 
-        (I-\mathbb{P}^0_h)\underline{\bm{\sigma}} 
-        +  \mathbb{P}^0_h \mathbb{M}^0 \mathbb{P}^0_h \underline{\bm{\sigma }}
-        +  \mathbb{P}^0_h \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1_h 
-        \underline{\mathbf{B}} &=  \underline{\tilde{\mathbf{J}}} 
-    \\ \mathbb{P}^1_h \mathbb{M}^1 \mathbb{C} \mathbb{P}^0_h \underline{\bm{\sigma }}
+    (\mathbb{I}^0-\mathbb{P}^0)^\top \mathbb{M}^0 
+        (\mathbb{I}^0-\mathbb{P}^0)\underline{\sigma} 
+        +  \mathbb{P}^0 \mathbb{M}^0 \mathbb{P}^0 \underline{\sigma}
+        +  \mathbb{P}^0 \mathbb{C} ^\top \mathbb{M}^1 \mathbb{P}^1 
+        \underline{\mathbf{B}} &=  \underline{\tilde{J}} 
+    \\ \mathbb{P}^1 \mathbb{M}^1 \mathbb{C} \mathbb{P}^0 \underline{\sigma}
+        + (\mathbb{I}-\mathbb{P}^1) \mathbb{M}^1 
+        (\mathbb{I}-\mathbb{P}^1)\underline{\mathbf{B}}
         + (\mathbb{P}^1)^\top \mathbb{D}^\top \mathbb{M}^1 
-        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + (\mathbb{P}^1_h)^\top \mathbb{M}^1
-        (\mathbb{P}^1) \mathbb{M}^1 \underline{\mathbf{p}} &= 0 
-    \\ \underline{\bm{\psi}}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1_h \underline{\mathbf{B}} = C_1
+        \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + (\mathbb{P}^1)^\top \mathbb{M}^1
+        \mathbb{P}^1 \mathbb{M}^1 \underline{\mathbf{p}} &= 0 
+    \\ \underline{\psi}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1 \underline{\mathbf{B}} = C_1
 \end{align*}
 
 Now we will explain how the discrete harmonic form is computed.
-Notice first that for any linear operator $\phi$ between finite dimensional inner product spaces 
-$V$ and $W$ with matrix representation $A$ we get the matrix representation of 
-adjoint $\phi^*$ has matrix representation $G_V^{-1} A^\top G_W$ where 
-$G_V$ and $G_W$ are the gramian matrices of the chosen bases in $V$ and $W$ 
-respectively.
+We claim that $\mathfrak{H}^1_h = \ker (-\widetilde{\grad}_h \diver 
++ \veccurl \widetilde{\curl}_h)$ which is the \textit{discrete Hodge Laplacian}. This can 
+be easily seen. We see that $\mathbf{q}_h \in \ker (-\widetilde{\grad}_h \diver 
++ \veccurl \widetilde{\curl}_h)$ i.i.f.
+\begin{align*}
+    0 = -\langle \widetilde{\grad}_h \diver \mathbf{q}_h,  \mathbf{v}_h \rangle 
+    + \langle \veccurl \widetilde{\curl}_h\mathbf{q}_h , \mathbf{v}_h\rangle
+    = \langle \diver \mathbf{q}_h, \diver \mathbf{v}_h \rangle 
+    + \langle \widetilde{\curl}_h\mathbf{q}_h , \widetilde{\curl}_h\mathbf{v}_h\rangle 
+    \quad \forall \mathbf{v}_h \in V_h^1.
+\end{align*}
+By choosing $\mathbf{v}_h \in \mathfrak{Z}^{1,\perp}_h = \mathfrak{B}^{*}_{1,h}$ 
+this gives us $\diver \mathbf{q}_h = 0$ and choosing 
+$\mathbf{v}_h \in \mathfrak{Z}^{*,\perp}_{1,h} = \mathfrak{B}^{1}_{h}$
+we get $\widetilde{\curl}_h\mathbf{q}_h = 0$ which is equivalent to 
+\begin{align*}
+    0 = \langle \widetilde{\curl}_h\mathbf{q}_h, \tau_h \rangle 
+    = \langle \mathbf{q}_h, \veccurl\tau_h \rangle \quad \forall \tau_h \in V_h^0.
+\end{align*}
+and so $\mathbf{q}_h \in \mathfrak{Z}_h^1 \cap \mathfrak{B}^{1,\perp}_h = \mathfrak{H}^1_h$.
+On the other hand following analogous arguments backwards it is clear, 
+that if $\mathbf{q}_h \in \mathfrak{H}^1_h$ then $-\widetilde{\grad}_h \diver \mathbf{q}_h
++ \veccurl \widetilde{\curl}_h \mathbf{q}_h = 0$ and thus 
+$\mathfrak{H}^1_h = (\ker -\widetilde{\grad}_h \diver 
++ \veccurl \widetilde{\curl}_h)$ as claimed.
 
-We compute $\mathbf{p}_h$ as an element of the kernel of the 
-discrete Hodge Laplacian operator $-\widetilde{\grad}_h \diver 
-+ \veccurl \widetilde{\curl}_h$ which has matrix 
+Notice that for any linear operator $\phi:V \rightarrow W$ between finite dimensional inner product spaces 
+$V$ and $W$ with matrix representation $A$, the matrix representation of the
+adjoint $\phi^*$ is $G_V^{-1} A^\top G_W$ where 
+$G_V$ and $G_W$ are the Gramian matrices of the chosen bases in $V$ and $W$ 
+respectively. The discrete Hodge Laplacian has then the matrix 
 representation $(\mathbb{M}^1)^{-1} \mathbb{D}^\top \mathbb{M}^1 \mathbb{D} 
-+ \mathbb{C} (\mathbb{M}^0)^{-1}\mathbb{C}^\top \mathbb{M}^1$. 
-
-\begin{remark}
-    For implementational purposes, these dual basis functions are not necessarily the 
-    best option. For the computation of mass matrices etc. 
-    it is more convenient to use the normalized B-splines directly due to their 
-    local support and fast computation.
-    We will not 
-    go to deep into the details of implementation however. More details about the 
-    use of B-splines and the connection with the basis $\Lambda^l_\mu$ can be found 
-    in \cite[Sec.\,4.8]{multipatch_paper} 
-\end{remark}
++ \mathbb{C} (\mathbb{M}^0)^{-1}\mathbb{C}^\top \mathbb{M}^1$ and we compute the 
+coefficients $\underline{\mathbf{p}}$ of the the discrete harmonic
+by computing an element of the kernel of this matrix.
 
 \section{Numerical examples}
 

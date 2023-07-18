@@ -10,8 +10,8 @@ Basis
 	Basis on reference domain
 	Pullback and pushforward
 	Basis on physical domain
+	DOFs physical domain
 	Approximation properties
-	Cochain projection
 
 Imposing boundary conditions
 	Homogeneous boundary projection
