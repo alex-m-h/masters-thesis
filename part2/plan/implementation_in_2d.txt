@@ -11,12 +11,10 @@ Basis
 	Pullback and pushforward
 	Basis on physical domain
 	DOFs physical domain
-	Approximation properties
-
-Imposing boundary conditions
-	Homogeneous boundary projection
+	Assumptions of general theory
 	
 Building the system
+	Imposing boundary conditions
 	Computing discrete harmonic form
 	Assembly on logical domain
 	
