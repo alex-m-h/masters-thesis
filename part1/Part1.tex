@@ -1285,6 +1285,14 @@ is invertible and then $\text{ad}(DF(\hat{x})) = (\det DF(\hat{x}))\,
 DF(\hat{x})^{-1}$.
 (\ref{eq:piola_transformation}) is widely known as the Piola transformation \cite[Def.\,9.8]{ern_guermond}.
 
+\begin{remark}\label{rem:vector_proxies_differential_forms_2d}
+    Notice that for $n=2$, this gives us two ways to identify a vector field with a $1$-form. 
+    For an vector field $X = X_1 \frac{\partial}{\partial x_1} + X_2 \frac{\partial}{\partial x_2}$, 
+    $X^\flat$ and $\star X^\flat$ are both $1$-forms. 
+    Depending on the choice, this results in one of the pullbacks of 
+    Prop.\,\ref{prop:pullback_vector_fields}.
+\end{remark}
+
 Now let us move on to scalar proxies. So let $\rho: \Omega \rightarrow \real$ be 
 just a scalar field i.e. a $0$-form. In this case, we 
 have the simple expression for the pullback $F^* \rho = \rho \circ F$. 
@@ -1487,7 +1495,7 @@ and we recognize
     \mathcal{P}^{n}_F (\diver \mathbf{X}) = \widehat{\diver} \mathcal{P}^{n-1}_F \mathbf{X}.
 \end{align*}
 To summarize the situation in 3D,
-\begin{proposition}
+\begin{proposition}\label{prop:pullback_and_commutativity_3D}
     Let $F: \hat{\Omega} \rightarrow \Omega$ be a diffeomorphism, 
     $\rho \in C^1(\Omega)$ and $\mathbf{X} \in C^1(\Omega, \real^3)$.
     In scalar and vector proxies for 3D, we obtain the following expressions for 
@@ -2083,7 +2091,7 @@ the homology groups denoted as
     [f_i]: H_i(A_*) \rightarrow H_i(B_*), \, [f_i]([a]) = [f_i(a)]
 \end{align*}
 
-\subsection{Cohomology groups}
+\subsection{Cohomology groups}\label{sec:cohomology_groups}
 
 Let us start with the abstract definition of a cochain complex.
 Let $\{ C^i \}_{i\in \naturalnum}$ be a collection of abelian groups
@@ -3519,7 +3527,30 @@ result of this chapter.
     \end{align*}
 \end{proof}
 The Hodge decomposition is a very powerful tool whenever deal with Hilbert
-complexes.
+complexes. Another important result will be the Poincaré inequality 
+in the case where $\mathfrak{B}^k$ is closed.
+
+\begin{theorem}[Poincaré inequality] \label{thm:poincare_inequality}
+    For any $k$, if $\mathfrak{B}^{k+1}$ is closed in $V$ then there exists a 
+    $c_{P,k}>0$ s.t. 
+    \begin{align*}
+        \lVert z \rVert _V \leq c_{P,k} \lVert dz \rVert, \quad \forall z \in \mathfrak{Z}^{k,\perp_V}
+    \end{align*}
+    where $\perp_V$ denotes the orthogonal complement w.r.t. the $V$-inner product.
+\end{theorem}
+\begin{proof}
+    This follows directly form the Banach inverse theorem. Because $\mathfrak{B}^{k+1}$ is closed
+    it is itself a Hilbert space. If we restrict $d^k$ to $\mathfrak{Z}^{k,\perp_V}$ it 
+    is injective and so $d^k|_{\mathfrak{Z}^{k,\perp_V}}:\mathfrak{Z}^{k,\perp_V} 
+    \rightarrow \mathfrak{B}^{k+1}$ is a bounded isomorphism between 
+    Hilbert spaces and we can apply the Banach inverse theorem to obtain the inverse 
+    denoted by slight abuse of notation as $d^{-1}$ which is also bounded. So 
+    for any $z \in \mathfrak{Z}^{k,\perp_V}$
+    \begin{align*}
+        \lVert z \rVert _V = \lVert d^{-1} dz \rVert _V  \leq c_{P,k} \lVert dz \rVert _V 
+        = c_{P,k} \lVert dz \rVert.
+    \end{align*}
+\end{proof}
 
 \subsubsection{$L^2$ de Rham complex in 3D} \label{sec:l2_de_rham_complex_in_3d}
 Let us investigate the situation for the differential operators 
@@ -4347,5 +4378,4 @@ In the proof of uniqueness we will use the following lemma.
     because $\mathbf{B}, \tilde{\mathbf{B}} \in \mathfrak{H}^1$.
     Thus, $\mathbf{B} = \tilde{\mathbf{B}}$ which concludes the proof of uniqueness.
 \end{proof}
-\printbibliography
 \end{document}

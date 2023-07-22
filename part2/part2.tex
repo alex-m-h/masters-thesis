@@ -60,7 +60,7 @@ on $H^1$. For the scalar curl we define
 and we denote $w$ in the definition -- which is uniquely determined -- 
 as $\curl \mathbf{v}$, so in short
 $(\curl, H(\curl)) = (\veccurl, C_0^\infty)^*$. 
-Analogous to Section\,\ref{}, it is then possible to extend the 
+Analogous to Section\,\ref{sec:adjoints_differential_operators_3d}, it is then possible to extend the 
 tangential trace to an operator $\gamma_\tau$ defined on $H(\curl)$ s.t. 
 for any $u\in H^1(\Omega)$, $\mathbf{v} \in H(\curl)$
 the integration by parts formula
@@ -73,7 +73,7 @@ we can define
 \begin{align*}
     H_0(\curl) \vcentcolon= \{ \mathbf{v} \in H(\curl) \mid \gamma_\tau \mathbf{v} = 0\}
 \end{align*}
-and can then compute the adjoints analogously to what we did in \ref{}
+and can then compute the adjoints analogously to what we did in Section\,\ref{sec:adjoints_differential_operators_3d},
 \begin{align*}
     (\curl, H_0(\curl)) & = (\veccurl, H^1)^* 
     \\ (\curl, H(\curl)) & = (\veccurl, H_0^1)^*.
@@ -96,6 +96,17 @@ Also we remind of
 the notation $\mathfrak{B}^k$ for the image of the differential operator, $\mathfrak{B}^*_k$ 
 for the image of the adjoint and analogous $\mathfrak{Z}^k$ for the kernel and 
 $\mathfrak{Z}_k^*$ for the kernel of the adjoint.
+
+\begin{remark}
+    Since we are working only on bounded domains in this and the coming sections, 
+    the Hilbert complex is closed i.e. all the images of the differential operators 
+    are closed subspaces w.r.t. the $V$-norm. This was stated in 
+    Thm.\,\ref{thm:closed_range} for the three-dimensional case, but it holds 
+    for 2D as well. This is because these are both special cases for the analogous result 
+    for the exterior derivative on Riemannian manifolds 
+    in arbitrary dimensions (see \cite[Sec.\,6.2.6]{arnold}). This means
+    in particular that we can use the Poincaré inequality (Thm.\,\ref{thm:poincare_inequality}).
+\end{remark}
 
 \subsection{Strong formulation of the 2D magnetostatic problem}
 
@@ -364,7 +375,7 @@ s.t.
 where $X$ and $Y$ are Banach spaces, $a$ is a bilinear form 
 and $\ell \in Y'$. The BNB-theorem then answers the question of well-posedness 
 i.e. if there exists a unique solution and if we can find a stability estimate.
-The following formulation is from \cite[Sec.\,25.3]{ern_guermond} in the real case.
+The following formulation is from \cite[Sec.\,25.3]{ern_guermond_2} in the real case.
 
 \begin{theorem}[BNB]\label{thm:BNB}
     Let $X$ be a Banach space and $Y$ be a reflexive Banach space. Let $a:X\times Y \rightarrow \real$ be a 
@@ -475,7 +486,7 @@ assuming $\psi$ has been chosen as described above.
     a neighborhood of $\partial \Omega_{out}$ and zero near $\partial \Omega_{in}$. Here we used the fact that 
     the two parts of the boundary are disjoint and have positive distance from one another.
     Then also $\tr \phi = \tr \phi_1 + \tr \phi_2$.
-    We use the integration by parts formula \ref{}, $\diver \veccurl = 0$ and the 
+    We use the integration by parts formula from Thm.\,\ref{thm:trace_of_hdiv}, $\diver \veccurl = 0$ and the 
     integration-by-parts formula for the curl
     \begin{align*}
         &\langle \gamma_n \veccurl \psi , \tr \phi \rangle 
@@ -546,7 +557,7 @@ $\veccurl \psi$ and obtain the following
 Because we can choose $\mathbf{p}$ we can assume w.l.o.g. that $c_\psi > 0$ and 
 we will do so from now on.
 
-As stated in the proof of the Poincare inequality \ref{} 
+As stated in the proof of the Poincare inequality (Thm.\,\ref{thm:poincare_inequality}), 
 the $\veccurl| _{\mathfrak{Z}^\perp}: \mathfrak{Z}^\perp \rightarrow \mathfrak{B}^1$
 is bijective and since it is bounded w.r.t. the $V$-norm -- which is the 
 $H^1$-norm here -- due to Banach inverse theorem it is invertible and we denote this 
@@ -921,7 +932,8 @@ forms approximate the continuous ones more thoroughly later.
 
 \begin{assumption}
     There exist  \textit{bounded cochain projections} $\Pi^j_h : V^j \rightarrow V^j_h$. 
-    This is a projection that is a cochain map in the sense of cochain complexes \ref{} i.e. 
+    This is a projection that is a cochain map in the sense of cochain complexes 
+    (see Sec.\,\ref{sec:cohomology_groups}) i.e. 
     the following diagram commutes: 
     \\
     \begin{tikzcd}
@@ -1005,7 +1017,6 @@ discrete and continuous harmonic forms.
 \begin{proof}
     See \cite[Thm.\,5.2]{arnold}. 
 \end{proof}
-{\color{red} Do not forget the continuous poincare inequality} 
 The following proposition 
 clarifies how close a discrete harmonic form can be chosen. But in order to prove it, 
 we will need a small lemma.
@@ -1128,14 +1139,15 @@ for $h$ small enough.
         \lVert v_h \rVert _V \leq c_{P,h}  \lVert dv_h \rVert, 
             \quad \forall v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h
     \end{align*}
-    with $c_{P,h} \vcentcolon= c_{P} \lVert \Pi_h \rVert _V$  and $c_P$ being the Poincare constant from \ref{}.
+    with $c_{P,h} \vcentcolon= c_{P} \lVert \Pi_h \rVert _V$  and $c_P$ being the Poincare constant from 
+    Thm.\,\ref{thm:poincare_inequality}.
 \end{proposition}
 \begin{proof}
     This indeed is a direct consequence of the existence of bounded cochain projections.
     Take $v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h$ arbitrary. 
     Since $d (\mathfrak{Z}^{k,\perp} \cap V^k) = \mathfrak{B}^{k+1} \supseteq \mathfrak{B}^{k+1}_h$ we find 
     $z\in \mathfrak{Z}^{k\perp}\cap V_h$ s.t. $dz = dv_h$. We can apply now the continuous 
-    Poincare inequality \ref{} to get $\lVert z \rVert _V \leq c_P \lVert dz \rVert _V = c_P \lVert dv_h \rVert _V$.
+    Poincare inequality (Thm.\,\ref{thm:poincare_inequality}) to get $\lVert z \rVert _V \leq c_P \lVert dz \rVert _V = c_P \lVert dv_h \rVert _V$.
     Now we can use the fact that $\Pi_h$ is a cochain map 
     and the fact that $\Pi_h$ is a projection:
     \begin{align*}
@@ -1542,11 +1554,11 @@ the values at the Greville points are well-defined.
 
 This gives us the following geometric elements nodes, edges and cells
 \begin{align*}
-    \hat{\mathtt{n}}_\mathbf{i} \vcentcolon= (\zeta^x_{i_1}, \zeta^y_{i_2}), \quad \mathbf{i} \in \mathcal{M}^0
+    \hat{\mathtt{n}}_\mathbf{i} &\vcentcolon= (\zeta^x_{i_1}, \zeta^y_{i_2}), \quad \mathbf{i} \in \mathcal{M}^0
     \\ \hat{\mathtt{e}}_{d,\mathbf{i}} 
-        \vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
+        &\vcentcolon= [\hat{\mathtt{n}}_\mathbf{i}, \hat{\mathtt{n}}_{\mathbf{i} + \mathbf{e}_d}] 
         , \quad (d, \mathbf{i}) \in \mathcal{M}^1
-    \\ \hat{\mathtt{c}}_\mathbf{i} \vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i} + \mathbf{e}_1}]
+    \\ \hat{\mathtt{c}}_\mathbf{i} &\vcentcolon= [\hat{\mathtt{e}}_{1,\mathbf{i}}, \hat{\mathtt{e}}_{1,\mathbf{i} + \mathbf{e}_1}]
         = [\zeta^x_{i_1}, \zeta^x_{i_1+1}] \times [\zeta^y_{i_2}, \zeta^y_{i_2+1}] 
         , \quad \mathbf{i} \in \mathcal{M}^2 
 \end{align*}
@@ -1554,9 +1566,9 @@ with $[\cdot]$ being the convex hull. As before, $\mathbf{e}_d$ for $d = 1,2$ is
 standard basis vector of $\real^2$. 
 The set of multiindices are defined as
 \begin{align*}
-    \mathcal{M}^0 \vcentcolon= [n-1]^2
-    \\ \mathcal{M}^1 \vcentcolon= \{ (d, \mathbf{i}) \mid d \in \{1,2\}, \mathbf{i} \in [0,n-1]^2, i_d < n-1 \}
-    \\ \mathcal{M}^2 \vcentcolon= [n-2]^2
+    \mathcal{M}^0 &\vcentcolon= [n-1]^2
+    \\ \mathcal{M}^1 &\vcentcolon= \{ (d, \mathbf{i}) \mid d \in \{1,2\}, \mathbf{i} \in [0,n-1]^2, i_d < n-1 \}
+    \\ \mathcal{M}^2 &\vcentcolon= [n-2]^2
 \end{align*}
 
 Now that we have defined the geometric elements we define the corresponding 
@@ -1565,12 +1577,12 @@ We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$ i.e. the rota
 direction which leads to $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$. 
 The degrees of freedom are then
 \begin{align*}
-    \hat{\sigma}_\mathbf{i}^0(v)  \vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}), \quad \mathbf{i} \in \mathcal{M}^0
+    \hat{\sigma}_\mathbf{i}^0(v)  &\vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}), \quad \mathbf{i} \in \mathcal{M}^0
     \\ \hat{\sigma}^1_{\mathbf{d,i}}(\mathbf{v})  
-        \vcentcolon= \int_{\hat{\mathtt{e}}_{d,\mathbf{i}}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
+        &\vcentcolon= \int_{\hat{\mathtt{e}}_{d,\mathbf{i}}} \mathbf{v} \cdot \mathbf{e}^\perp_d 
         , \quad (d, \mathbf{i}) \in \mathcal{M}^1
     \\ \hat{\sigma}_{\mathbf{i}}^2(v) 
-        \vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
+        &\vcentcolon= \int_{\hat{c}_{\mathbf{i}}} v 
         , \quad \mathbf{i} \in \mathcal{M}^2
 \end{align*}
 
@@ -1650,7 +1662,7 @@ the notions on the physical domain are well-represented on the reference
 domain. Notice that under this assumption the preimage of $\Omega_\Gamma$ corresponds to 
 a subgrid on the reference domain. 
 
-We already introduced the pullback in Sec.\ref{} in the 3D case. 
+We already introduced the pullback in Prop.\,\ref{prop:pullback_and_commutativity_3D} in the 3D case. 
 Then we define the pullbacks in 2D
 \begin{align*}
     &\mathcal{P}_\mathbf{F}^0: v \mapsto \hat{v} \vcentcolon= v \circ \mathbf{F}
@@ -1666,9 +1678,11 @@ $\hat{\Omega}$. Then we have the commuting properties
 \end{align*}
 when the $\veccurl$ and divergence are well-defined.
 \begin{remark}
-    Just as in Sec.\ref{} these pullbacks can be derived from the pullbacks of differential forms.
+    Just as in Sec.\ref{sec:differential_forms_subsection} 
+    these pullbacks can be derived from the pullbacks of differential forms.
     Keep in mind however, that in 2D there are two different ways to identify a $1$-form 
-    with a vector field (cf. \ref{}). This leads to different pullbacks. We have chosen it 
+    with a vector field (cf. Remark \ref{rem:vector_proxies_differential_forms_2d}). 
+    This leads to different pullbacks. We have chosen it 
     here s.t. we have the commuting property with the differential operators in 
     our Hilbert complex (\ref{eq:2D_hilbert_complex}).
 \end{remark}
@@ -2194,5 +2208,5 @@ $\psi=0$ on $\partial\Omega_{in}$ and $\psi=1$ on $\partial\Omega_{out}$
     }
     \label{fig:convergence_analysis_manufactured}
 \end{figure}    
-
+\printbibliography
 \end{document}
