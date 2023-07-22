@@ -1,0 +1,83 @@
+\documentclass[../master_thesis.tex]{subfiles}
+\begin{document}
+Mathematics is the art of abstraction, of putting basic theories into more 
+general frameworks to gain insights that would otherwise be hard or 
+impossible to see.
+
+This thesis is about the magnetostatic problem which reads.
+It is a fascinating PDE for the reason that it combines the differential 
+equations with this curve integral constraint which gives this problem 
+a strong topological flavour. For a student familiar with PDEs it 
+begs the question how these notions can be combined to investigate this problem.
+
+James Clerk Maxwell recognized how many years ago that some
+vector fields are to be understood in relation to curves 
+i.e. the natural relation is the curve integral and some are to be understood 
+as flux through a surface. This thought paves the way to a new paradigm 
+which presents itself in differential forms which are a classic 
+subject of differential geometry. Differential geometry especially on Riemannian 
+manifolds gives a much more general framework in which basic vector calculus can 
+be embedded. Differential forms turn out to be the more suited objects 
+to study in fields like electromagnetism \cite{} and 
+fluid dynamics. 
+
+Differential forms become especially useful when we start integrating. 
+Whitney derives in his classic book \cite that differential forms are the actual objects 
+suited to be integrated over manifolds like curves and surfaces which comes back 
+to Maxwell. Another nice exposition about this topic is Terence Tao's paper \cite{}. 
+
+This integration of differential forms over manifolds turns out to provide 
+a beautiful synergy between three fields, 
+calculus, differential geometry and topology. De Rham's famous theorem which 
+relies on Stokes theorem for 
+gives a very simple and yet deep relationship between the singular homology -- 
+a popular tool in algebraic topology to study topological quanities -- 
+and the integration of differential forms.
+
+For a mathematician interested in analysis and motivated by the beauty of abstraction 
+these reasons should already be sufficient to start learning and investigating 
+differential forms and as a necessary fundament differential geometry. We will 
+give a short exposition of these topics in the first sections of this book. 
+
+Applying these ideas to the magnetostatic problem above has been done before,
+but here another challenge arises. Usually this problem is either posed 
+on bounded domains. Traditionally, the theory of PDEs on unbounded domains 
+is sparse in comparison to bounded ones. But unbounded domains can change the 
+situation drastically. Even one of the simplest most basic problems in the topic 
+of PDEs, the Laplace equation with Dirichlet boundary conditions, does not 
+have a unique solution anymore when posed on an unbounded domains. 
+
+Combining the tools from singular homology, differential geometry and 
+analysis we will the existsnce and uniqueness of the magnetostatic problem 
+under suitable assumptions.
+
+The second part of this thesis will then be concerned with the numerical approximation. 
+As usual for the numerical analysis -- especially in a master's thesis -- we 
+will simplify the problem. to bounded domains in 2D, but we keep the curve integral 
+constraint and the non-trivial topology of the domain. As explained above, the natural 
+way to study an equation like this is in the language of differential forms. 
+In the last decade, there has been a lot of research done about the comination of that 
+which has been put in abstraction in the Acta Numerica paper from Arnold, Falk and Winther. 
+\cite{} who coined the term Finite Element Exterior Calculus (FEEC). This is the perfect 
+tool for our purposes. We will replace the curve integral using the integration 
+by parts in 2D to obtain a new variational formulation to study. We will prove 
+an inf-sup condition and a a-priori error estimate greatly relying on the 
+general framework provided be the FEEC theory. 
+
+The outline is as follows. We will first spend a lot of time 
+introducing the necessary tools for the proof of well-posedness of the magnetostatic problelm 
+in 3D. We start with differential forms in Sec. \ref{} from the direction 
+of multilinear algebra. Afterwards we will give a short introduction on 
+singular homology in Sec.\, which concludes in the de Rham isomorphism and then 
+we will talk about unbounded operators and the special situation of Hilbert 
+complexes which provide us with the good tools to deal with taht. 
+We will put all this together in Sec.\, to prove the existence and uniqueness 
+of the magnetostatic problem. 
+
+In Chapter\,\ref{} we will focus on numerics. We derive a variational formulation of the 2D problem of the 
+magnetostatic problem in Sec.\,. Then we give a short overview of the discrete Hilbert complexes 
+which are fundamental to FEEC theory before applying it to our new variational formulation 
+to obtain the well-posedness and a-priori estimate. In the end we will explain how this 
+problem is actually implemented and provide some numerical examples.
+
+\end{document}

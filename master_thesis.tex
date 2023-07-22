@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -23,11 +23,11 @@
 
 \pgfplotsset{compat=1.18}
 
-\numberwithin{equation}{subsection}
+\numberwithin{equation}{section}
 \numberwithin{figure}{section}
 
 \newtheorem{lemma}{Lemma}[section]
-\numberwithin{lemma}{subsection}
+\numberwithin{lemma}{section}
 \newtheorem{corollary}[lemma]{Corollary}
 \newtheorem{proposition}[lemma]{Proposition}
 \newtheorem{theorem}[lemma]{Theorem}
@@ -71,7 +71,13 @@
 
 \begin{document}
 \tableofcontents
+\chapter{Introduction}
+\subfile{introduction/introduction.tex}
+\chapter{Existence and uniqueness}
 \subfile{part1/Part1.tex}
+\chapter{Numerical approximation in 2D}
 \subfile{part2/part2.tex}
-
+\chapter{Conclusion}
+\subfile{conclusion/conclusion.tex}
+\printbibliography
 \end{document}
