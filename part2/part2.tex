@@ -825,7 +825,7 @@ and then use $C_T$ from (\ref{eq:bound_on_norm_of_T}) to get a lower bound
     stable system.
 \end{remark}
 
-\section{Discretized magnetostatic problem}
+\section{Discretized magnetostatic problem}\label{sec:discretized_magnetostatic_problem}
 
 In order to approximate solutions of the  2D magnetostatic problem we want to use finite elements.
 A very typical question that arises for any discretization of a model is what 
@@ -1420,7 +1420,7 @@ We now have to apply this lemma to the magnetostatic formulation.
     Thus the estimate follows immediately from Lemma \ref{lem:a_priori_estimate_from_infsup}.
 \end{proof}
 
-\section{Implementation on a single patch domain}
+\section{Implementation on a single patch domain}\label{sec:implementation}
 
 We start with very short introduction on Splines and their tensor product space which 
 will be our choice of basis on the reference domain. Then we 
@@ -1959,7 +1959,7 @@ compute $(\mathbb{M}^1)^{-1}$.
 \end{remark}
 
 
-\section{Numerical examples}
+\section{Numerical examples}\label{sec:numerical_examples}
 We will consider two numerical examples, the simulation of the induced magnetic 
 field induced by the current through a wire, where the exact solution is given by the Biot-Savart law, and 
 a manufactured solution. The Biot-Savart solution will be approximated on a standard annulus 

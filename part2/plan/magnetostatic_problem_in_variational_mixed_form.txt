@@ -14,6 +14,7 @@ Variational formulation
 Curve integral
 	Derivation
 	Variational form
+	Invariance if J=0
 
 Well-posedness of the magnetostatic system
 	General idea of inf-sup and implications

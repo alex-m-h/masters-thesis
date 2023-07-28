@@ -2,17 +2,19 @@
 \begin{document}
 Mathematics is the art of abstraction, of putting basic theories into more 
 general frameworks to gain insights that would otherwise be hard or 
-impossible to see. James Clerk Maxwell recognized how many years ago that some
+impossible to see. James Clerk Maxwell recognized that some
 vector fields are to be understood in relation to curves 
-i.e. the natural relation is the curve integral and some are to be understood 
-as flux through a surface. This thought paves the way to a new paradigm 
+and some to be understood in reference to a surface. 
+This thought paves the way to a new level of abstraction
 which presents itself in differential forms which are a classic 
-subject of differential geometry. Differential forms were recognized later by many to be the more suitable objects 
-to study in fields like electromagnetism \cite{} and 
-fluid dynamics. 
+subject of differential geometry. Differential forms have since been sucessfully
+used for electromagnetic theory (see \cite{differential_forms_electromagnetism}).
+This connection to differential forms and their deep relation to geometry and topology
+will be one major thing we investigate. These are indeed relations between different 
+fields of mathematics which would be hard to reach without this overarching abstract theory.
 
-This thesis is about the problem of finding a static solution to Maxwell's equations.
-This would be the magnetic field $\mathbf{B}$ s.t. for a given current source 
+To become more specific, this thesis is about the problem of finding a static solution to Maxwell's equations
+i.e. we look for the magnetic field $\mathbf{B}$ s.t. for a given current source 
 $\mathbf{J}$ 
 \begin{align*}
     \curl \mathbf{B} &= \mathbf{J} 
@@ -20,71 +22,82 @@ $\mathbf{J}$
 \end{align*}
 A fascinating realization is that the well-posedness of this equation actually 
 depends on fundamental topological quantities of the domain. If it is simply 
-connected then there exists a unique solution.
+connected then there exists a unique solution, but otherwise additional constraints 
+might be necessary.
 
-This problem arises as a part of the ??? code where it is posed on the 
-exterior of a toroidal domain with Neumann boundary conditions 
-$\mathbf{B} \cdot \mathbf{n} = 0$. This is obviously not a simpliy connected domain 
-and as an additional constraint we are 
-given the curve integral 
+Our main motivation behind studying this problem arises as part of the search for plasma equilibria where we have to 
+compute the magnetic field outside of the plasma.
+In this situation we know that the magnetic field lines are orthogonal to the plasma surface
+which translates to imposing Neumann boundary conditions 
+$\mathbf{B} \cdot \mathbf{n} = 0$. The complement of a toroidal domain is obviously not simply connected and so 
+we an require additional constraint. This is given by prescribing the total 
+current flowing through the cross section of the torus. After using Stokes theorem 
+for surfaces, this gives us 
 \begin{align*}
-    \int_\Gamma \mathbf{B}\cdot d\ell = C_0
+    \int_\Gamma \mathbf{B}\cdot d\ell = \frac{4 \pi \mu_0}{c} =\vcentcolon C_0
 \end{align*}
-with $C_0 \in \real$ and $\Gamma$ being the curve that goes around the torus 
-in poloidal direction (see \ref{}). 
-It is a fascinating PDE for the reason that it combines the differential 
+$\Gamma$ being the curve that goes around the torus 
+in poloidal direction (see Fig.\,\ref{fig:exterior_domain_with_curve_integral}). 
+We assume here that $\Gamma$ has positive distance from the torus and 
+$\mathbf{J}$ is zero between $\Gamma$ and the torus.
+
+The resulting PDE is fascinating for the reason that it combines the differential 
 equations with this curve integral constraint which gives this problem 
 a strong topological flavour. For a student familiar with standard PDEs, it 
 begs the question how these notions can be combined to investigate this problem.
 
 To come back to the statement from the beginning, the answer is provided 
-by changing the point to a more general one, namely to differential geometry which
+by changing the context to a more general one, namely to differential geometry which
 gives a much more general framework in which basic vector calculus can 
-be embedded. One standard example of this is the beautiful Stokes theorem 
-which generalizes the Gauss divergence theorem and Stokes' from vector calculus 
+be embedded. One standard example of this is the beautiful Stokes' theorem 
+which generalizes the Gauss divergence theorem and Stokes' theorem from vector calculus 
 into the language of differential forms.
 
 Differential forms are especially useful when we start integrating them. 
-Whitney derives in his classic book \cite that differential forms are the actual objects 
-suited to be integrated over manifolds like curves and surfaces which comes back 
-to what Maxwell said about the natural integration 
-of vector fields either over a curve or a surface. 
-Another recommended exposition about this topic is Terence Tao's paper \cite{}. 
+Whitney derives in his classic book \cite{whitney} why differential forms are
+the correct objects to be integrated over manifolds like curves and surfaces which comes back 
+to what Maxwell said about the relation 
+of vector fields either to a curve or a surface. 
+Another recommended exposition about this topic is Terence Tao's short paper \cite{terence_tao}. 
 
-This integration of differential forms over manifolds turns out to provide 
-a beautiful synergy between the three fields, 
+The integration of differential forms over manifolds turns out to provide 
+a beautiful synergy between the three fields 
 calculus, differential geometry and topology. De Rham's famous theorem which 
-relies on Stokes theorem for 
+relies on Stokes theorem 
 gives a very simple and yet deep relationship between the singular homology -- 
 a popular tool in algebraic topology to study topological quanities -- 
 and the integration of differential forms.
 
 For a mathematician interested in analysis and motivated by the beauty of abstraction 
 these reasons should already be sufficient to start learning and investigating 
-differential forms and as a necessary fundament differential geometry. We will 
+differential forms and -- as a necessary fundament -- differential geometry. We will 
 give a short exposition of these topics in the first sections of this thesis 
 and then apply these ideas to the magnetostatic problem above.
 
-This has been done before on bounded domains,
-but we want to do it on unbounded domains. 
+We will focus on the homogeneous problem with $\mathbf{J} = 0$.
+Existence and uniqueness have been proven before on bounded domains 
+(see \cite[Thm.\,5.4]{mitrea_layer_potentials}),
+but an exterior domain is always unbounded. 
 Traditionally, the theory of PDEs on unbounded domains 
 is sparse in comparison to bounded ones. But unbounded domains can change the 
 situation drastically. Even one of the simplest most basic problems in the topic 
-of PDEs, the Laplace equation with Dirichlet boundary conditions, does not 
-have a unique solution anymore when posed on an unbounded domains. 
+of PDEs, the Laplace equation with homogeneous Dirichlet boundary conditions, does not 
+have a unique solution anymore when posed on an unbounded domains. As a counterexample,
+pose the problem on the domain of positive real numbers. Then any linear function 
+is a solution.
 
 Combining the tools from singular homology, differential geometry and 
-functional analysis we will the existence and uniqueness of the magnetostatic problem 
+functional analysis we will prove the existence and uniqueness of the magnetostatic problem 
 under suitable assumptions.
 
 The second part of this thesis will then be concerned with the numerical approximation. 
 As is often done in numerical analysis -- especially in a master's thesis -- we 
-will simplify the problem. to bounded domains in 2D, but we keep the curve integral 
-constraint and the non-trivial topology of the domain. As explained above, the natural 
-way to study an equation like this is in the language of differential forms. 
-In the last decade, there has been a lot of research done about the combination of that 
-which has been formulated in abstract form in the Acta Numerica paper from Arnold, Falk and Winther 
-\cite{} who coined the term Finite Element Exterior Calculus (FEEC). This is the perfect 
+will simplify the problem. We will investigate the 2D magnetostatic problem on bounded domains, 
+but we keep the curve integral 
+constraint and the non-trivial topology of the domain. The ideas from differential geometry and 
+differential forms can be applied in finite elements
+which has been formulated in the Acta Numerica paper from Arnold, Falk and Winter 
+\cite{arnold_falk_winther} who coined the term Finite Element Exterior Calculus (FEEC). This is the perfect 
 tool for our purposes. We will study a variational formulation of the problem 
 and will strongy rely on the tools from FEEC.
 
@@ -94,22 +107,24 @@ and will strongy rely on the tools from FEEC.
 % general framework provided be the FEEC theory. 
 
 This work will be split between the study of well-posedness of the magnetostatic problem 
-in chapter \ref{} and then the numerics in chapter \,
+in Chapter\,\ref{chap:existence_and_uniqueness} and then the numerics in Chapter\,\ref{chap:approximation_in_2D}.
 
-In chapter \, will first spend a lot of time 
-introducing the necessary tools for the proof of well-posedness of the magnetostatic problelm 
-in 3D. We start with differential forms in Sec. \ref{} from the starting point 
+In Chapter\,\ref{chap:existence_and_uniqueness} will first spend a lot of time 
+introducing the necessary tools for the proof of well-posedness of the magnetostatic problem 
+in 3D. We start with differential forms in Sec.\,\ref{sec:differential_forms} from the starting point 
 of multilinear algebra. Afterwards we will give a short introduction on 
-singular homology in Sec.\, which concludes in the de Rham isomorphism and then 
+singular homology in Sec.\,\ref{sec:singular_homology} which concludes in the de Rham isomorphism and then 
 we will talk about unbounded operators and Hilbert 
-complexes. After applying some regularity results in \ref{}
-we will put all this together in Sec.\, to prove the existence and uniqueness 
+complexes. After applying some regularity results in Sec.\,\ref{sec:regularity_of_solutions}
+we will put all this together in Sec.\,\ref{sec:existence_and_uniqueness} to prove the existence and uniqueness 
 of the magnetostatic problem und suitable suitable assumptions.
 
-In Chapter\,\ref{}, we derive a variational formulation of a 2D version of the 
+In Chapter\,\ref{chap:approximation_in_2D}, we derive a variational formulation of a 2D version of the 
 magnetostatic problem in Sec.\,. Then we give a short overview of the discrete Hilbert complexes 
 which are fundamental to FEEC theory before applying it to our new variational formulation 
-to obtain the well-posedness and a-priori estimate in Sec.\,. In the end, we will explain how this 
-problem is actually implemented (Sec.\,\ref{}) and provide some numerical examples in Sec\,\ref{}.
+to obtain the well-posedness and a-priori estimate in Sec.\,\ref{sec:discretized_magnetostatic_problem}. 
+In the end, we will explain how this 
+problem is actually implemented (Sec.\,\ref{sec:implementation}) 
+and provide some numerical examples in Sec\,\ref{sec:numerical_examples}.
 
 \end{document}
