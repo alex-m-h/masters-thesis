@@ -18,6 +18,7 @@
 \usepackage{showlabels}
 \usepackage{tikz-cd}
 \usepackage{url}
+\usepackage{times}
 
 \usepackage{biblatex}
 \addbibresource{bibliography.bib}
@@ -42,6 +43,8 @@
 \newtheorem{remark}[lemma]{Remark}
 \newtheorem{problem}[lemma]{Problem}
 
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\alt}{Alt}
 \DeclareMathOperator*{\esssup}{ess\,sup}
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\diver}{div}
@@ -57,7 +60,7 @@
 \DeclareMathOperator{\vol}{vol}
 
 \newcommand{\aop}{\mathscr{A}}
-\newcommand{\alternating}[2]{ {\text{Alt}^{#1}\,#2} }
+\newcommand{\alternating}[2]{ {\alt^{#1}\,#2} }
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\smoothcompforms}[2]{C_c^\infty \Lambda^{#1}(#2)}
 \newcommand{\lpcoho}{H^k_{p,dR}}

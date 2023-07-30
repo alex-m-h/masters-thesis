@@ -41,6 +41,40 @@ in poloidal direction (see Fig.\,\ref{fig:exterior_domain_with_curve_integral}).
 We assume here that $\Gamma$ has positive distance from the torus and 
 $\mathbf{J}$ is zero between $\Gamma$ and the torus.
 
+\begin{figure}
+    \centering
+    \tikzset{invclip/.style={clip,insert path={{[reset cm]
+        (-\maxdimen,-\maxdimen) rectangle (\maxdimen,\maxdimen)
+        }}}}
+    \begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+    
+    \draw [rotate around={0:(0,0)}] (0,0) ellipse (2.2249670036cm and 0.9749246981cm);
+    
+    \draw [shift={(0.0002330134,2.5017998378)}] plot[domain=4.1540732725:5.2805268013,variable=\t]({1*2.7976952264*cos(\t r)+0*2.7976952264*sin(\t r)},{0*2.7976952264*cos(\t r)+1*2.7976952264*sin(\t r)});
+    \draw [shift={(0.0526305801,-2.6930446389)}] plot[domain=1.1350452078:2.0252255165,variable=\t]({1*3.0113988641*cos(\t r)+0*3.0113988641*sin(\t r)},{0*3.0113988641*cos(\t r)+1*3.0113988641*sin(\t r)});
+    
+    \begin{scope}
+        \clip (0.5,-0.15263) rectangle (1.097116,-0.8481614);
+        \draw [rotate around={88.3634229584:(1.4475483891,-0.3522365936)}, dashed] 
+        (1.4475483891,-0.3522365936) ellipse (0.6122305788cm and 0.5963878315cm);
+    \end{scope}
+        
+    \begin{scope}
+        \begin{pgfinterruptboundingbox}
+        \path[invclip] (0.5,-0.15263) rectangle (1.097116,-0.8481614);
+        \end{pgfinterruptboundingbox}
+    
+        \draw [rotate around={88.3634229584:(1.4475483891,-0.3522365936)}] 
+        (1.4475483891,-0.3522365936) ellipse (0.6122305788cm and 0.5963878315cm);
+    \end{scope}
+    \node at (2,-1) {$\Gamma$};
+    
+    \end{tikzpicture}
+    \caption{Sketch of how a feasible domain with curve integral $\Gamma$. 
+        The domain of interest would be the complement of the torus.}
+    \label{fig:exterior_domain_with_curve_integral}
+\end{figure}
+
 The resulting PDE is fascinating for the reason that it combines the differential 
 equations with this curve integral constraint which gives this problem 
 a strong topological flavour. For a student familiar with standard PDEs, it 
