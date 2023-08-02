@@ -17,8 +17,8 @@ Find a vector field $\mathbf{B}$ on $\Omega$ s.t.
 \begin{align}
     \curl \, \mathbf{B} &= 0, \\ 
     \diver \, \mathbf{B}  &= 0 \text{ in } \Omega \\
-    \mathbf{B} \cdot \mathbf{n} &= 0 \text{ on } \partial \Omega \text{ and }\\
-    \int_\Gamma \mathbf{B} \cdot d\ell &= C_0
+    \mathbf{B} \cdot \mathbf{n} &= 0 \text{ on } \partial \Omega \text{ and }\label{eq:pointwise_normal_trace}\\ 
+    \int_\Gamma \mathbf{B} \cdot d\ell &= C_0 \label{eq:first_curve_integral_condition}
 \end{align}
 where $\mathbf{n}$ is the outward normal vector field on $\partial \Omega$ and 
 $C_0 \in \real$. 
@@ -3201,20 +3201,28 @@ $H^{1/2}$
     and thus $\lVert g_\ell \rVert _{H^{-1/2}} \leq 1/C_1 \lVert \ell \rVert _{H^1(\Omega)}$.
 
     We have to show that such an $f$ exists. This is true for bounded domains (cf. \cite[Thm.\,3.10]{ern_guermond}).
-    To generalize it to unbounded domains with compact boundary, take a open ball $B_R$ centered at the 
+    To generalize it to unbounded domains with compact boundary, take an open ball $B_R$ centered at the 
     origin with radius $R$ large enough s.t. $\partial \Omega \subseteq B_R$ . 
     Then define 
     $\Omega_R = \Omega \cap B_R$.
     Take $f_R$ as a function s.t. $\tr f_R = \mu$ on $\partial \Omega$,  
-    $\tr f_R = 0$ on $\partial B_R$ and $\lVert \tr f_R \rVert _{H^{1/2}(\Omega_R)}
-    \leq C_R \lVert f_R \rVert _{H^1(\Omega_R)}$. Because $\tr f_R = 0$ on $\partial B_R$ 
+    $\tr f_R = 0$ on $\partial B_R$ and 
+    $\lVert f_R \rVert _{H^1(\Omega_R)} \leq C_R \lVert \tr f_R \rVert _{H^{1/2}(\Omega_R)}$
+    for some $C_R > 0$ independent of $\mu$. 
+    Because $\tr f_R = 0$ on $\partial B_R$ 
     we have $\lVert \tr f_R \rVert _{H^{1/2}(\partial \Omega_R)} 
-    = \lVert \tr f_R \rVert _{H^{1/2}(\partial \Omega)}$.
-    Because 
-    $f= 0$ on $\partial B_R$ we can define $\bar{f}_R \in H^1(\Omega)$ by 
-    extending $f$ by zero outside of $B_R$ and 
-    $\lVert \bar{f}_R \rVert _{H^1(\Omega)} = \lVert \bar{f}_R \rVert _{H^1(\Omega_R)}$
-    so we have found $f$ s.t. (\ref{eq:existence_gl:bound_f}) holds which completes the proof.
+    = \lVert \tr f_R \rVert _{H^{1/2}(\partial \Omega)}$
+    and we can define $\bar{f}_R \in H^1(\Omega)$ by 
+    extending $f$ by zero outside of $B_R$ so that 
+    $\lVert \bar{f}_R \rVert _{H^1(\Omega)} = \lVert f_R \rVert _{H^1(\Omega_R)}$.
+    To summarize,
+    \begin{align*}
+        \lVert \bar{f}_R \rVert _{H^1(\Omega)} = \lVert f_R \rVert _{H^1(\Omega_R)} 
+        \leq C_R \lVert \tr f_R \rVert _{H^{1/2}(\Omega_R)}
+        = C_R \lVert \tr f_R \rVert _{H^{1/2}(\partial \Omega)}
+        = C_R \lVert \mu \rVert _{H^{1/2}(\partial \Omega)}
+    \end{align*}
+    so (\ref{eq:existence_gl:bound_f}) holds with $f = \bar{f}_R$ which completes the proof.
 \end{proof}
 
 We can now define a trace operator for $H(\diver)$.
@@ -3956,7 +3964,7 @@ This gives us the Hodge decomposition in the 3D case.
 
 \section{Existence and uniqueness of solutions}\label{sec:existence_and_uniqueness}
 
-In this section, we will apply the developed theory of the preceding chapters
+In this section, we will apply the developed theory of the preceding sections
 to prove the existence and uniqueness of the magnetostatic problem 
 on exterior domains. But at first, we have to properly formulate the problem.
 
@@ -3968,20 +3976,23 @@ The main motivation for this problem is
 the special case of $\Omega$ being the complement of a torus. 
 This is also the motivation behind the
 topological assumption that we will give. It might be useful to keep this
-example in mind.
+example in mind (see Fig.\,\ref{fig:exterior_domain_with_curve_integral}).
 
-The condition $\mathbf{B}\cdot \mathbf{n} = 0$ on $\partial\Omega$ is replaced
+The condition $\mathbf{B}\cdot \mathbf{n} = 0$ on $\partial\Omega$ from 
+(\ref{eq:pointwise_normal_trace}) is replaced
 with $\mathbf{B} \in H_0(\diver)$ i.e. $\gamma_n\mathbf{B} = 0$ where 
 $\gamma_n$ is the generalized normal trace. We assume additionally that 
 $\mathbf{B} \in H(\curl)$. 
 
-Recall that another condition was the piecewise smooth curve integral around the torus.
-Recalling Section\,\ref{sec:singular_homology} we replace the curve $\Gamma$
-formally with a smooth $1$-chain, which is essentially the same, so we will 
+Recall as another condition we had equation (\ref{eq:first_curve_integral_condition}) 
+which was the curve integral along the piecewise smooth curve around the torus.
+Recalling Section\,\ref{sec:singular_homology}, we replace the curve $\Gamma$
+with a smooth $1$-chain, which will play the same role, so we will 
 denote it, by slight abuse of notation, as $\Gamma$ as well. We emphasize 
-it only to make it mathematically rigorous and so we can talk about integrals 
+it to make it mathematically rigorous and so we can talk about integrals 
 of $1$-forms on it later. Note that smooth chain means here that the chosen 
-singular simplices are smooth. The curve $\Gamma$ is only piecewise smooth in 
+singular simplices are smooth as explained in Sec.\,\ref{sec:de_rhams_theorem}. 
+The curve $\Gamma$ is only piecewise smooth in 
 general.
 
 So we arrive at the following problem that we want to investigate:
@@ -3996,14 +4007,14 @@ So we arrive at the following problem that we want to investigate:
 
 Of course in order for the curve integral constraint to be well-defined 
 we need to check the regularity of solutions. Then using the tools we developed
-in the previous sections we will proof existence and uniqueness.
+in the previous sections, we will proof existence and uniqueness.
 
 \subsection{Regularity of solutions}\label{sec:regularity_of_solutions}
 
-We will rely on standard regularity results about elliptic systems 
-of the following form. Take $A_{ij}^{\alpha \beta} \in \real$
+We will rely on standard regularity results about elliptic systems. 
+Take $A_{ij}^{\alpha \beta} \in \real$
 for $i$, $j$, $\alpha$, $\beta = 1,2,3$ and 
-$A_{ij}^{\alpha \beta} = A_{ji}^{\beta \alpha}$. Then we have systems of the 
+$A_{ij}^{\alpha \beta} = A_{ji}^{\beta \alpha}$. Then we look at systems of the 
 form 
 \begin{align}
     -\sum\limits_{\alpha, \beta, j} \partial_\alpha 
@@ -4012,7 +4023,7 @@ form
     \label{eq:elliptic_system}
 \end{align}
 with data $f_i, F_i^\alpha \in L^2(\Omega)$. We call this system 
-\textit{elliptic} if $A$ satisfies the Legendre condition i.e.
+\textit{elliptic} if $A$ satisfies the Legendre condition, i.e.
 \begin{align}
     \sum_{\alpha,\beta,i,j}A_{ij}^{\alpha \beta} \xi_\alpha^i \xi_\beta^j
     \geq c |\xi|^2, \quad \forall \xi \in \real^{3 \times 3} 
@@ -4039,9 +4050,9 @@ We then call $\mathbf{B} = (B_1, B_2, B_3)^\top \in H^1_{loc}(\Omega;\real^3)$ a
 of (\ref{eq:elliptic_system}) if 
 \begin{align}
     \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
-        A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx
+        A_{ij}^{\alpha \beta} \,\partial_\beta B_j \, \partial_\alpha \varphi_i \, dx
     = \int_\Omega \left\{ \sum\limits_i f_i \varphi_i + 
-        \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi_i \right\} dx
+        \sum\limits_{\alpha,i} F_i^\alpha \, \partial_\alpha \varphi_i \right\} dx
     \label{eq:weak_elliptic_system}
 \end{align}
 for all $\bm{\varphi} = (\varphi_1, \varphi_2, \varphi_3)^\top \in C^1_0(\Omega;\real^3)$. 
@@ -4066,18 +4077,18 @@ the notion of weak solution.
     and we get
     \begin{align*}
         &\int_\Omega \sum\limits_{i,j,\alpha,\beta} 
-            A_{ij}^{\alpha, \beta} \partial_\beta B_j \partial_\alpha \varphi_i
-            dx
+            A_{ij}^{\alpha, \beta}\, \partial_\beta B_j\, \partial_\alpha \varphi_i
+            \,dx
         = \sum\limits_{i,j,\alpha,\beta} A_{ij}^{\alpha, \beta}
-            \int_\Omega \partial_\beta B_j \lim\limits_{l\rightarrow \infty} 
-            \partial_\alpha \varphi_i^{(l)} dx
+            \int_\Omega \partial_\beta B_j \, \lim\limits_{l\rightarrow \infty} 
+            \partial_\alpha \varphi_i^{(l)}\, dx
         \\ &\stackrel{\text{$L^2$ limit}}{=} 
             \lim\limits_{l\rightarrow \infty} 
             \int_\Omega \left\{ \sum\limits_i f_i \varphi^{(l)}_i + 
-            \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi^{(l)}_i 
+            \sum\limits_{\alpha,i} F_i^\alpha \, \partial_\alpha \varphi^{(l)}_i 
             \right\} dx
         = \int_\Omega \left\{ \sum\limits_i f_i \varphi_i + 
-            \sum\limits_{\alpha,i} F_i^\alpha \partial_\alpha \varphi_i 
+            \sum\limits_{\alpha,i} F_i^\alpha \, \partial_\alpha \varphi_i 
             \right\} dx.
     \end{align*}
     Since $\bm{\varphi} \in C_0^1(\Omega;\real^3)$ was arbitrary the first 
@@ -4102,7 +4113,7 @@ in \cite{lectures_on_elliptic_pdes} in slightly less generality and for 3D.
     homogeneous problem, i.e.
     \begin{align*}
         \int_\Omega \sum\limits_{\alpha,\beta,i,j} 
-        A_{ij}^{\alpha \beta} \partial_\beta B_j \partial_\alpha \varphi_i dx =0
+        A_{ij}^{\alpha \beta} \partial_\beta B_j \, \partial_\alpha \varphi_i \,dx =0
     \end{align*}
     for all $\bm{\varphi} \in C^\infty_0(\Omega;\real^3)$, then $\mathbf{B}\in C^\infty(\Omega;\real^3)$.
 \end{corollary}
@@ -4129,9 +4140,9 @@ problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$.
 \end{theorem}
 \noindent Note that we did not assume $\mathbf{B}$ to be a solution.
 \begin{proof}
-    We know that for a function $\mathbf{u} \in H_0(\curl;U) \cap H(\diver;U)$ 
+    We know that for a function $\mathbf{u} \in H_0(\curl;U) \,\cap \,H(\diver;U)$ 
     for some smooth domain $U$ we have $\mathbf{u} \in H^1(U;\real^3)$ 
-    (cf. \cite[Remark 3.48]{monk}). Our $\Omega$ is just assumed to be Lipschitz 
+    (cf. \cite[Remark 3.48]{monk}). Our domain $\Omega$ is just assumed to be Lipschitz 
     so we can not apply this result directly.
 
     Take $Q \subset\subset \Omega$ open and pre-compact. 
@@ -4141,7 +4152,7 @@ problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$.
     \begin{align*}
         \overline{Q} \subseteq \bigcup\limits_{i=1}^N K_i.
     \end{align*}
-    As an open cover of a compact set we can find a smooth partition of unity 
+    As an open cover of a compact set, we can find a smooth partition of unity 
     $\{\chi_i\}_{i=1}^N$ subordinate to $\{K_i\}_{i=1}^N$. 
     $(\mathbf{B} \chi_i)|_{K_i} \in H_0(\curl;K_i) \cap H(\diver;K_i)$ and thus 
     $(\mathbf{B} \chi_i)|_{K_i} \in H^1(K_i;\real^3)$ by the above mentioned result. 
@@ -4150,7 +4161,7 @@ problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$.
     $\mathbf{B} \chi_i \in H^1(\real^3;\real^3)$ where we abused the notation by denoting 
     the extension the same. Whence,
     \begin{align*}
-        \mathbf{B}|_Q = \large( \sum\limits_{i=1}^N \chi_i |_Q \large) \mathbf{B}|_Q = 
+        \mathbf{B}|_Q = \Big( \sum\limits_{i=1}^N \chi_i |_Q \Big) \mathbf{B}|_Q = 
         \sum\limits_{i=1}^N (\chi_i \mathbf{B})|_Q \in H^1(Q;\real^3)
     \end{align*}
     i.e. $\mathbf{B} \in H^1_{loc}(\Omega;\real^3)$.
@@ -4174,7 +4185,7 @@ magnetostatic problem in the above standard elliptic form.
         \grad \diver \mathbf{F} = 
             \begin{pmatrix} \partial_1^2 F_1 + \partial_1 \partial_2 F_2
                 + \partial_1 \partial_3 F_3
-            \\ \partial_1\partial_2 F_2 + \partial_2^2 F_2 + 
+            \\ \partial_1\partial_2 F_1 + \partial_2^2 F_2 + 
                 \partial_2\partial_3 F_3
             \\ \partial_1 \partial_3 F_1 + \partial_2\partial_3 F_2
                 + \partial_3^2 F_3
@@ -4197,8 +4208,8 @@ magnetostatic problem in the above standard elliptic form.
             \partial_1 \partial_2 F_2 - \partial^2_2 F_1 - \partial_3^2 F_1
             + \partial_1 \partial_3 F_3 
             \\ \partial_2 \partial_3 F_3 - \partial^2_3 F_2 - \partial_1^2 F_2
-            + \partial_1 \partial_2 F_3
-            \\ \partial_1 \partial_3 F_3 - \partial^2_3 F_2 - \partial_2^2 F_3
+            + \partial_1 \partial_2 F_1
+            \\ \partial_1 \partial_3 F_3 - \partial^2_1 F_3 - \partial_2^2 F_3
             + \partial_2 \partial_3 F_2  
             \end{pmatrix}
     \end{align*}
@@ -4216,7 +4227,7 @@ magnetostatic problem in the above standard elliptic form.
     \end{align*}
 \end{proof}
 We want to rewrite this system in the expression of the elliptic system 
-(\ref{eq:elliptic_system}). We can rewrite the Laplacian
+(\ref{eq:elliptic_system}). In order to do so, we rewrite the Laplacian
 \begin{align*}
     - \Delta F_i = - \sum\limits_{\alpha = 1}^3 
         \partial_\alpha \partial_\alpha F_i
@@ -4228,22 +4239,22 @@ We want to rewrite this system in the expression of the elliptic system
 with $\delta_{ij}$ being the Kronecker delta, 
 so we get $A_{ij}^{\alpha\beta} = \delta_{ij} \delta_{\alpha \beta}$.
 We have to check that the resulting differential operator is indeed
-elliptic, but this trivial because for any 
+elliptic, but this is trivial because for any 
 $(\xi_\alpha^i)_{1\leq i,\alpha \leq 3}$
 we get 
 \begin{align*}
-    \sum\limits_{\alpha,\beta,i,j} A_{ij}^{\alpha\beta} \xi_\alpha^i \xi_\beta^j 
+    \sum\limits_{\alpha,\beta,i,j} A_{ij}^{\alpha\beta} \xi_\alpha^i \, \xi_\beta^j 
     = \sum\limits_{\alpha,\beta,i,j} \delta_{ij} \delta_{\alpha \beta} 
-        \xi_\alpha^i \xi_\beta^j 
+        \,\xi_\alpha^i \,\xi_\beta^j 
     = \sum\limits_{\alpha,i} (\xi_\alpha^i)^2 = |\xi|^2
 \end{align*}
 so  the Legendre condition (\ref{eq:legendre_condition}) 
-is fulfilled and the resulting system is elliptic. The weak formulation 
+is fulfilled and the resulting system is elliptic. The left hand side of the weak formulation 
 is 
 \begin{align*}
     \int_\Omega \sum\limits_{\alpha,\beta,i,j} \delta_{ij} \delta_{\alpha\beta}
-        \partial_\beta B_j \partial_\alpha \varphi_i dx 
-    = \sum\limits_{i=1}^3 \int_\Omega \grad B_i \cdot \grad \varphi_i dx.
+        \,\partial_\beta B_j \, \partial_\alpha \varphi_i \,dx 
+    = \sum\limits_{i=1}^3 \int_\Omega \grad B_i \cdot \grad \varphi_i \,dx.
 \end{align*}
 Here we can assume $\bm{\varphi} \in C_0^\infty (\Omega;\real^3)$
 due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
@@ -4260,15 +4271,15 @@ due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
 \begin{proof}
     Take $\bm{\varphi} \in C_0^\infty(\Omega;\real^3)$. Then 
     \begin{align*}
-        0 &= \int_\Omega \diver \mathbf{B} \diver \bm{\varphi} + \curl \mathbf{B} \cdot \curl \bm{\varphi} dx
-        = - \int_\Omega \mathbf{B} \cdot (\grad \diver \bm{\varphi} - \curl \curl \bm{\varphi}) dx
+        0 &= \int_\Omega \diver \mathbf{B} \diver \bm{\varphi} + \curl \mathbf{B} \cdot \curl \bm{\varphi} \, dx
+        = - \int_\Omega \mathbf{B} \cdot (\grad \diver \bm{\varphi} - \curl \curl \bm{\varphi}) \, dx
         \\ &\stackrel{\text{Lemma 
             \ref{lem:graddiv_curlcurl_equals_componentwise_laplacian}}}{=} 
             - \int_\Omega \mathbf{B} \cdot 
             \begin{pmatrix}
                 \Delta \varphi_1 \\ \Delta \varphi_2 \\ \Delta \varphi_3
             \end{pmatrix}
-        = \sum\limits_{i=1}^3 \int_\Omega \grad B_i \cdot \grad \varphi_i dx.
+        = \sum\limits_{i=1}^3 \int_\Omega \grad B_i \cdot \grad \varphi_i \,dx.
     \end{align*}
     Note that the last integration by parts is well defined because 
     $\mathbf{B} \in H^1_{loc}(\Omega;\real^3)$ according to Thm.\,\ref{thm:solution_in_H1loc}. 
@@ -4279,21 +4290,6 @@ due to Prop.\,\ref{prop:weak_solution_smooth_test_functions}.
     and thus $\mathbf{B}$ is smooth as well due to Cor.\,\ref{cor:smooth_solution}.
 \end{proof}
 
-\begin{remark}
-    Notice that we do not require any regularity assumptions for the boundary 
-    because we did not bother with the regularity there. 
-\end{remark}
-
-% \begin{remark}
-%     Obviously, the above arguments can be generalized by using a 
-%     non-zero right hand side of our problem. Then we will in general 
-%     not obtain a smooth solution, but for a sufficiently regular right hand 
-%     side the curve integral would still be well-defined.
-%     {\color{red} How much regularity? Source?}
-% \end{remark}
-
-
-
 \subsection{Existence and uniqueness}
 
 The curve integral condition is closely linked to the topology of our domain 
@@ -4303,32 +4299,47 @@ Because of this connection if we want the curve integral
 to give us uniqueness of the solution we need to assume certain topological 
 properties. In our case, this will be the condition that our first 
 homology group is generated by the chain that we are integrating over i.e.
-\begin{align*}
-    H_1(\Omega) = \integers [\Gamma].
-\end{align*}
-With this assumption, we will first prove a existence and uniqueness result on the 
+\begin{align}
+    H_1(\Omega) = \integers [\Gamma].\label{eq:gamma_generates_homology}
+\end{align}
+With this assumption, we will first prove an existence and uniqueness result on the 
 level of singular cohomology. This will lead to an analogous result for the de Rham 
-cohomology. Once we have proven these propositions we can move on to prove existence 
+cohomology. Once we have proven these propositions, we can move on to prove existence 
 and uniqueness of Problem \ref{prob:magnetostatic_problem}.
 
+\begin{remark}
+    In the case where $\Omega$ is the exterior of a torus and $\Gamma$ is the curve
+    that goes around it (cf. Fig.\,\ref{fig:exterior_domain_with_curve_integral}),
+    (\ref{eq:gamma_generates_homology}) is satisfied. This can be proven using tools from algebraic
+    topology like the Meyer-Vietoris sequence, but it is intuitively clear that the curve 
+    can not be the boundary of a surface or a $2$-chain and so it is closed, but 
+    not exact. Also -- if we argue heuristically -- any closed $1$-chain outside the torus 
+    is contractible and hence not exact and any other curve around the torus can 
+    be "moved and continously deformed" to become equal to $\Gamma$. 
+    "Moving and deforming" can be translated to using homotopies and then 
+    this argument can be formulated rigorously. For more details, please consult 
+    \cite[Sec.\,IV]{topology_and_geometry}.
+\end{remark}
+
 \begin{proposition}\label{prop:uniqueness_cochain}
-    Assume that $H_1(\Omega) = \integers [\gamma]$ i.e. the homology 
+    Assume that $H_1(\Omega) = \integers [\Gamma]$ i.e. the homology 
     class of the 
-    closed $1$-chain $\gamma$ is a generator of the first homology group.
+    closed $1$-chain $\Gamma$ is a generator of the first homology group.
     Then we have the following:
-    \begin{enumerate}[(i)]
-        \item For any $C_0 \in \real$ there exists a closed $1$-cochain 
-            $F \in Z^1(\Omega)$ with $F(\gamma) = C_0$,
-        \item any other $G \in Z^1(\Omega)$ with $G(\gamma) = C_0$ 
-            is in the same cohomology class i.e. $[F] = [G]$
-    \end{enumerate}
-    i.e. the cochain is unique up to cohomology.
+\begin{alignat*}{2}
+    &\text{\normalfont{(i)}} \quad&&\text{For any $C_0 \in \real$ there exists a closed $1$-cochain 
+        $F \in Z^1(\Omega)$ with $F(\Gamma) = C_0$,}
+    \\ & \text{\normalfont{(ii)}} \quad&&\text{any other $G \in Z^1(\Omega)$ with $G(\Gamma) = C_0$ 
+        is in the same cohomology class}
+    \\ & &&\text{i.e. $[F] = [G]$}
+\end{alignat*}    
+i.e. the cochain is unique up to cohomology.
 \end{proposition}
 \begin{proof}
     \textbf{Proof of (i)} %TBD: This could be wrong
-    Because $[\gamma]$ is a generator of the homology group we  obtain a 
+    Because $[\Gamma]$ is a generator of the homology group we  obtain a 
     homomorphism $\hat{F} \in \text{Hom}(H_1(\Omega),\real)$ by fixing
-    $\hat{F}([\gamma]) = C_0$. 
+    $\hat{F}([\Gamma]) = C_0$. 
     This determines the other values.
     Recall the isomorphism $\beta : H^1(\Omega) \rightarrow 
     \text{Hom}(H_1(\Omega);\real)$ from the universal coefficent theorem 
@@ -4338,24 +4349,24 @@ and uniqueness of Problem \ref{prob:magnetostatic_problem}.
     % where $F$ and $\tilde{F}$ are in the same cohomology class. 
     (Note that $H^1(\Omega)$ is an abuse of notation 
     because we mean here the first cohomology group of $\Omega$ and not the 
-    Sobolev space. In the context of singular homology this will always be the
+    Sobolev space. In the context of singular homology, this will always be the
     case.)
     Then we know that there exists
-    a $[F] \in H^1(\Omega)$ with $\beta([F]) = \hat{F}$ because $\beta$ is 
+    a $[F] \in H^1(\Omega)$ with $\beta([F]) = \hat{F}$ because $\beta$ is an
     isomorphism. So we obtain
     \begin{align*}
-        F(\gamma) = \beta([F])([\gamma]) = \hat{F}([\gamma]) = C_0.
+        F(\Gamma) = \beta([F])([\Gamma]) = \hat{F}([\Gamma]) = C_0.
     \end{align*}
 
     \textbf{Proof of (ii)} %TBD: This could be wrong
     Take $[c] \in H_1(\Omega)$ arbitrary. 
     Then there exists  $n \in \integers$ s.t.
-    $[c] = n [\gamma]$.
+    $[c] = n [\Gamma]$.
     Using $\beta$ from (\ref{eq:univeral_coefficient_theorem}),
     we have
     \begin{align*}
-        \beta([F])([c]) = \beta([F])(n [\gamma]) 
-        = n \beta([F])([\gamma]) = n \, F(\gamma) = n \, G(\gamma) = 
+        \beta([F])([c]) = \beta([F])(n [\Gamma]) 
+        = n \beta([F])([\Gamma]) = n \, F(\Gamma) = n \, G(\Gamma) = 
         \beta([G])([c])
     \end{align*}
     and thus $\beta([F]) = \beta([G])$. Because $\beta$ is an isomorphism
@@ -4366,16 +4377,16 @@ forms via the de Rham isomorphism from Thm.\,\ref{thm:de_rhams_theorem}.
 We will formulate it in a way 
 that demonstrates the connection of differential forms and cochains.
 \begin{corollary}\label{cor:existence_uniqueness_1form}
-    Assume $H_1(\Omega) = \integers [\gamma]$ as above. Then
-    \begin{enumerate}[(i)]
+    Assume $H_1(\Omega) = \integers [\Gamma]$ as above. Then
+    \begin{enumerate}[\normalfont(i)]
         \item For any $C_0 \in \real$ there exists a closed smooth $1$-form 
             $\theta \in \mathfrak{Z}^1(\Omega)$ with 
             \begin{align*}
-                I(\theta)(\gamma) = \int_\gamma \theta = C_0
+                I(\theta)(\Gamma) = \int_\Gamma \theta = C_0
             \end{align*}
         \item any other $\eta \in \mathfrak{Z}^1(\Omega)$ with 
             \begin{align*}
-                I(\eta)(\gamma) = \int_\gamma \eta = C_0
+                I(\eta)(\Gamma) = \int_\Gamma \eta = C_0
             \end{align*}
             is in the same cohomology class of $H_{dR}^1(\Omega)$ 
             i.e. $[\eta] = [\theta]$.
@@ -4391,7 +4402,7 @@ that demonstrates the connection of differential forms and cochains.
     $[I]: H_{dR}^1(\Omega) \rightarrow H^1(\Omega)$ which we call 
     de Rham isomorphism. We know from 
     Prop.\,\ref{prop:uniqueness_cochain} that there exists $F\in H^1(\Omega)$ 
-    s.t. $F(\gamma) = C_0$. The surjectivity of the de Rham isomorphism 
+    s.t. $F(\Gamma) = C_0$. The surjectivity of the de Rham isomorphism 
     now gives us $[\theta] \in H^1(\Omega)$ s.t.
     \begin{align*}
         [I(\theta)] = [I]([\theta]) = [F]
@@ -4403,12 +4414,12 @@ that demonstrates the connection of differential forms and cochains.
     with $J \in C^0$ (here of course the zero cochains not continuous functions). 
     Then, 
     \begin{align*}
-        I(\theta)(\gamma) = F(\gamma) + \partial^0 J(\gamma) 
-        = C_0 + J(\partial_1 \gamma) 
-        \stackrel{\text{$\gamma$ closed}}{=} C_0. 
+        I(\theta)(\Gamma) = F(\Gamma) + \partial^0 J(\Gamma) 
+        = C_0 + J(\partial_1 \Gamma) 
+        \stackrel{\text{$\Gamma$ closed}}{=} C_0. 
     \end{align*}
     \textbf{Proof of (ii)}
-    We have $I(\eta)$ is a $1$-cochain with $I(\eta)(\gamma) = C_0$.
+    We have $I(\eta)$ is a $1$-cochain with $I(\eta)(\Gamma) = C_0$.
     Thus, we can apply Prop.\,\ref{prop:uniqueness_cochain} to get
     \begin{align*}
         [I]([\eta])=[I(\eta)] = [I(\theta)]=[I]([\theta]).
@@ -4419,11 +4430,11 @@ that demonstrates the connection of differential forms and cochains.
 \begin{lemma}\label{lem:1form_with_bounded_support_in_same_cohomology}
     Let $\Omega$ be an exterior domain i.e. $\real^3 \setminus \Omega$ is compact 
     and assume that the first singular homology 
-    group $H_1(\Omega)$ is generated by $[\gamma]$ i.e. $H_1(\Omega) = \mathbb{Z} [\gamma]$.
+    group $H_1(\Omega)$ is generated by $[\Gamma]$ i.e. $H_1(\Omega) = \mathbb{Z} [\Gamma]$.
     Take now a smooth $1$-form $\theta \in C^\infty \Lambda^1(\Omega)$.
     Then there exists a $\hat{\theta} \in C^\infty_b \Lambda^1(\Omega)$ i.e. smooth with 
     bounded support  
-    s.t. $\theta = \hat{\theta} + d\mu$ for some $\mu \in C^\infty \Lambda^0(\Omega)$
+    s.t. $\theta = \hat{\theta} + d\mu$ for some $\mu \in C^\infty \Lambda^0(\Omega)$.
 \end{lemma}
 \begin{proof}
     Take a ball $K_R$ centered at the origin with radius $R$ large enough s.t. 
@@ -4436,7 +4447,7 @@ that demonstrates the connection of differential forms and cochains.
     for $k \in \naturalnum$. Note that these spaces define a cochain complex with the exterior derivative $d$.
     We denote the resulting cohomology groups as $H^1_{dR}(\Omega,A)$
 
-    Now recall the definition of a exact sequence from Def.\,\ref{def:exact_sequence}. Denote 
+    Now recall the definition of an exact sequence from Def.\,\ref{def:exact_sequence}. Denote 
     $\iota: C^\infty \Lambda^k(\Omega, A) \hookrightarrow  C^\infty \Lambda^k(\Omega)$ the 
     inclusion operator and $\rop: C^\infty \Lambda^k(\Omega) \rightarrow C^\infty \Lambda^k(A)$ 
     the restriction operator. Then it is obvious to see that 
@@ -4446,27 +4457,27 @@ that demonstrates the connection of differential forms and cochains.
         0 \rightarrow C^\infty \Lambda^k(\Omega, A) \xrightarrow{\iota}
         C^\infty \Lambda^k(\Omega) \xrightarrow{\rop} C^\infty \Lambda^k(A) \rightarrow 0
     \end{align*}
-    is an exact sequence. In this situation, we can use Thm.\,V.5.6 from \cite{topology_and_geometry}
+    is an exact sequence. In this situation, we can use Thm.\,IV.5.6 from \cite{topology_and_geometry}
     to get a long exact sequence on the level of cohomology of which we take the following partial 
-    sequence
+    exact sequence
     \begin{align*}
         H_{dR}^1(\Omega,A) \xrightarrow{[\iota]} H_{dR}^1(\Omega) \xrightarrow{[\rop]} H_{dR}^1(A).
     \end{align*}
 
     We now need information about the homology group of $A$. We will only sketch the argument 
-    since it requires some notions that we did not introduce. 
-    $A$ is a so called deformation retract of the sphere $\mathbb{S}_r$ around the origin
-    with sufficiently large radius $r$. 
+    since it requires some notions that we did not introduce. The sphere 
+    around the origin
+    $\mathbb{S}^2_r$ with sufficiently large radius $r$ is a so called deformation retract of A. 
     This can be seen by following the argument of Example I.14.7 in \cite{topology_and_geometry}. This implies that
-    $A$ is homotopy equivalent to $\mathbb{S}_r$ and thus the homology groups are 
+    $A$ is homotopy equivalent to $\mathbb{S}^2_r$ and thus the homology groups are 
     isomorphic according to Prop. IV.6.3 in the same reference. The first homology group of the unit sphere 
-    $\mathbb{S}^2$ is zero and thus it is easy to check that $H_1(\mathbb{S}_r) = 0$
+    $\mathbb{S}^2$ is zero and thus it is easy to check that $H_1(\mathbb{S}^2_r) = 0$
     as well.
     This implies due to the universal coefficient 
     theorem that $H^1(A) = 0$ and then $H^1_{dR}(A) = 0$ with the de Rham isomorphism. 
     
     The exactness now implies that 
-    $[\iota]$ is surjective. Thus there exists a closed $\hat{\theta}\in C^\infty \Lambda^1(\Omega, A)$
+    $[\iota]$ is surjective. Thus, there exists a closed $\hat{\theta}\in C^\infty \Lambda^1(\Omega, A)$
     s.t. 
     $[\theta] = [\iota]([\hat{\theta}]) = [\hat{\theta}]$ which is equivalent to the 
     existence of a $\mu \in C^\infty \Lambda^0 (\Omega)$ s.t. 
@@ -4480,14 +4491,14 @@ that demonstrates the connection of differential forms and cochains.
 \begin{theorem}[Existence of solution]\label{thm:existence}
     Let $\Omega \subseteq \real^3$ be such that $\real^3 \setminus \Omega$
     is compact. 
-    For the topology, we require that $H_1(\Omega) = \integers [\gamma]$ 
+    For the topology, we require that $H_1(\Omega) = \integers [\Gamma]$ 
     for a closed smooth $1$-chain 
-    $\gamma$. Assume further that there exists an $\epsilon$-neighborhood 
+    $\Gamma$. Assume further that there exists an $\epsilon$-neighborhood 
     \begin{align*}
         \Omega_\epsilon \vcentcolon= \{ x \in \real^3 \mid
             d(x,\Omega) < \epsilon \} 
     \end{align*}
-    s.t. $H_1(\Omega_\epsilon) = \integers [\gamma]$ as well.
+    s.t. $H_1(\Omega_\epsilon) = \integers [\Gamma]$ as well.
     Then there exists a solution 
     to Problem \ref{prob:magnetostatic_problem}.
 \end{theorem}
@@ -4498,7 +4509,7 @@ think again of a torus in $\real^3$. Assuming the torus has non-empty interior
 we can slightly reduce the poloidal radius without changing the topology of its 
  exterior domain.
 \begin{proof}
-    At first we want to find a smooth differential $1$-form 
+    At first, we want to find a smooth differential $1$-form 
     $\theta \in C_b^\infty\Lambda^1(\overline{\Omega})$ with the desired curve integral. 
     In order to do that we will increase the 
     domain slightly.
@@ -4506,43 +4517,44 @@ we can slightly reduce the poloidal radius without changing the topology of its
     to get a smooth closed differential $1$-form 
     $\tilde{\theta} \in \Lambda^1(\Omega_\epsilon)$ with 
     \begin{align}
-        \int_\gamma \tilde{\theta} = C_0. \label{eq:integral_theta_tilde}
+        \int_\Gamma \tilde{\theta} = C_0. \label{eq:integral_theta_tilde}
     \end{align}
 
     Now we use Lemma \ref{lem:1form_with_bounded_support_in_same_cohomology} 
     on $\Omega_\epsilon$ to get a $\hat{\theta}$ which vanishes 
     outside of a sufficiently large ball with a $\mu \in C^\infty\Lambda^0 (\Omega_\epsilon)$ s.t. 
     $\hat{\theta} + d\mu= \tilde{\theta}$. Notice that
-    \begin{align*}
-        \int_\gamma \tilde{\theta} = \int_\gamma \hat{\theta} = C_0. 
-    \end{align*}
-    since $\gamma$ is closed. 
+    \begin{align}
+        \int_\Gamma \tilde{\theta} = \int_\Gamma \hat{\theta} = C_0. \label{eq:curve_integral_bounded_support}
+    \end{align}
+    since $\Gamma$ is closed. 
     
-    We now refer back to Sec.\,\ref{sec:differential_forms_subsection} 
+    We now refer to Sec.\,\ref{sec:differential_forms_subsection} 
     and change back to vector proxies. Let 
-    $\tilde{\bm{\phi}}$ be the vector proxy of $\hat{\theta}$ 
-    ,i.e. by recalling the musical isomorphism from Sec.\,\ref{sec:differential_forms_subsection},
+    $\tilde{\bm{\phi}}$ be the vector proxy of $\hat{\theta}$, 
+    i.e. by recalling the musical isomorphism from Sec.\,\ref{sec:differential_forms_subsection},
     $\hat{\theta}^\sharp = \tilde{\bm{\phi}} \in C^\infty(\Omega_\epsilon;\real^3)$.
-    Because $\hat{\theta}$ is closed and (\ref{eq:integral_theta_tilde}) holds
+    Because $\hat{\theta}$ is closed and (\ref{eq:curve_integral_bounded_support}) holds
     we obtain the corresponding properties 
     of $\tilde{\bm{\phi}}$ using Example \ref{ex:integration_1_forms} and the connection 
     of the curl with the exterior derivative,
     \begin{align*}
-        \int_\gamma \tilde{\bm{\phi}} \cdot d\ell &= \int_\gamma \hat{\theta} = C_0 
-        \\ \curl \tilde{\bm{\phi}} &= (\star d\boldsymbol{\bm{\phi}}^\flat)^\sharp = 
+        \int_\Gamma \tilde{\bm{\phi}} \cdot d\ell &= \int_\Gamma \hat{\theta} = C_0 
+        \\ \curl \tilde{\bm{\phi}} &= (\star d\tilde{\bm{\phi}}^\flat)^\sharp = 
         (\star d\hat{\theta})^\sharp = 0.
     \end{align*}
     We define $\bm{\phi} \in C_b^\infty(\overline{\Omega};\real^3)$ by restricting $\tilde{\bm{\phi}}$ 
     to $\overline{\Omega}$. 
 
-    Since $\bm{\phi}$ is curl-free and in $L^2(\Omega)$ we can use the Hodge decomposition to find 
+    Since $\bm{\phi}$ is curl-free and in $L^2(\Omega)$ we can use the Hodge decomposition 
+    (Thm. \ref{thm:hodge_decomposition_in_3d}) to find $\mathbf{B} \in \mathfrak{H}^1$ s.t.
     $\mathbf{B} = \bm{\phi} - \lim\limits_{i\rightarrow \infty}\grad \psi_i$ 
     with $\psi_i \in H^1(\Omega)$ (here $H^1(\Omega)$ is the Sobolev space and not the cochain 
     cohomology group).
 
     Define $\Omega_R \vcentcolon= \Omega \cap K_R$ with $K_R$ the ball around the origin 
     with radius $R$ large enough s.t. $\real^3 \setminus \Omega \subseteq K_R$ and 
-    $\gamma \subseteq K_R$. 
+    $\Gamma \subseteq K_R$. 
     We know from Thm.\,\ref{thm:closed_range} 
     that $\grad H^1(\Omega_R)$ is closed in $L^2$ because $\Omega_R$ is bounded. 
     So we get that 
@@ -4554,7 +4566,7 @@ we can slightly reduce the poloidal radius without changing the topology of its
     Because $\mathbf{B}$ and $\bm{\phi}$ are smooth
     $\psi_R$ must be smooth as well and so we have   
     \begin{align*}
-        \int_\gamma \mathbf{B}\cdot d\ell = \int_\gamma \bm{\phi}\cdot d\ell.
+        \int_\Gamma \mathbf{B}\cdot d\ell = \int_\Gamma \bm{\phi}\cdot d\ell.
     \end{align*}
 
     Thus we see that $\mathbf{B}$ has the desired curve integral. Since 
@@ -4565,22 +4577,22 @@ we can slightly reduce the poloidal radius without changing the topology of its
 
 In the proof of uniqueness we will use the following lemma. 
 \begin{lemma}\label{lem:gradient_sequence}
-    Let $\phi \in L^2_{loc}(\Omega)$ 
+    Let $\Omega$ be a Lipschitz domain and $\phi \in L^2_{loc}(\Omega)$ 
     with $\grad \phi \in L^2(\Omega;\real^3)$. Then 
     there exists a sequence $(\phi_i)_{i \in \naturalnum} \subseteq H^1(\Omega)$
     s.t. $\grad \phi_i \rightarrow \grad \phi$ in $L^2(\Omega;\real^3)$.
 \end{lemma}
 \begin{proof}
     Take $K_R$ the open ball around the origin with $R$ large enough 
-    s.t. $\real^3 \setminus (K_R) \subseteq \Omega$. 
+    s.t. $\real^3 \setminus K_R \subseteq \Omega$. 
     Define $\Omega_R \vcentcolon= K_R \cap \Omega$. $\Omega_R$ is a bounded Lipschitz 
     domain.
     Then we can define $\phi_R \vcentcolon= \phi|_{\Omega_R}$.
 
-    We want to show $\phi_R \in H^1(\Omega_R)$. We alredy know that $\grad \phi_R \in L^2(\Omega, \real^3)$.
+    We want to show $\phi_R \in H^1(\Omega_R)$. We already know that $\grad \phi_R \in L^2(\Omega; \real^3)$.
     Since $L^2(\Omega_R; \real^3) \subseteq H^{-1}(\Omega_R;\real^3)$ we can conclude that 
     $\phi_R \in L^2$ because $\Omega_R$ is bounded and Lipschitz (\cite[Lemma 3.11]{monk}) 
-    and thus $\phi_R \in H^1(\Omega_R)$ . This essentially means that 
+    and thus $\phi_R \in H^1(\Omega_R)$. This essentially means that 
     if $\phi \notin L^2(\Omega)$ it is due to its behaviour at infinity.
 
     Since $\Omega_R$ is bounded and Lipschitz we can find an extension $\bar{\phi}_R \in H^1(\real^3)$ 
@@ -4612,12 +4624,12 @@ In the proof of uniqueness we will use the following lemma.
     Let $\mathbf{B}$ and $\tilde{\mathbf{B}}$ both be solutions and denote with $\omega$ 
     and $\tilde{\omega}$ the corresponding $1$-forms i.e. $\omega =
     \mathbf{B}^\flat$ and $\tilde{\omega} = \tilde{\mathbf{B}}^\flat$. 
-    So we have $I(\omega)(\gamma) = I(\tilde{\omega})(\gamma) = C_0$
+    So we have $I(\omega)(\Gamma) = I(\tilde{\omega})(\Gamma) = C_0$
     since 
     \begin{align*}
-        \int_\gamma \omega = \int_\gamma \mathbf{B}^\flat = 
-        \int_\gamma \mathbf{B} \cdot d\ell = \int_\gamma \tilde{\mathbf{B}}\cdot d\ell 
-        = \int_\gamma \tilde{\mathbf{B}}^\flat = \int_\gamma \tilde{\omega}
+        \int_\Gamma \omega = \int_\Gamma \mathbf{B}^\flat = 
+        \int_\Gamma \mathbf{B} \cdot d\ell = \int_\Gamma \tilde{\mathbf{B}}\cdot d\ell 
+        = \int_\Gamma \tilde{\mathbf{B}}^\flat = \int_\Gamma \tilde{\omega}
     \end{align*}
 
     Then we know from Cor.\,\ref{cor:existence_uniqueness_1form} 
@@ -4637,7 +4649,7 @@ In the proof of uniqueness we will use the following lemma.
     \begin{align*}
         \mathbf{B} - \tilde{\mathbf{B}} \in \overline{\grad H^1(\Omega)}.
     \end{align*}
-    Now remembering the Hodge decomposition in the 3D case (Thm.\,\ref{thm:hodge_decomposition_in_3d}) we know 
+    Remembering the Hodge decomposition in the 3D case (Thm.\,\ref{thm:hodge_decomposition_in_3d}), we know 
     \begin{align*}
         \mathbf{B} - \tilde{\mathbf{B}} \in \overline{\grad H^1(\Omega)}^\perp
     \end{align*}
