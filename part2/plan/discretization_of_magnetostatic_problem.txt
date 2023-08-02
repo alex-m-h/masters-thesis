@@ -15,6 +15,8 @@ A-priori estimate
 	Estimate from inf-sup with different bilinear form
 	A-priori estimate
 
-
-
+Curve integral properties
+	Irrelevance of choice of psi
+	Invariance for Gamma
+	Convergence
 

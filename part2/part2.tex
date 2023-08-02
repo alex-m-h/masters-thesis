@@ -16,7 +16,7 @@ and fundamentals of finite element theory. We will also depend on the
 notions introduced in Sec.\,\ref{sec:hilbert_complexes_subsection}, in particular the Hodge decomposition in the general 
 case.
 
-\subsection{The $\veccurl$-$\diver$ Hilbert complex}\label{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}
+\subsection{The $\bm{\curl}$-$\diver$ Hilbert complex}\label{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}
 
 
 We start with the introduction of the relevant differential operators and 
@@ -50,15 +50,18 @@ assuming $\Omega$ is Lipschitz and bounded
 where $\mathbf{n}$ is the outward unit normal of $\Omega$.
 Analogous to what we did in Sec.\,\ref{sec:adjoints_differential_operators_3d}, 
 we can now extend this definition in the weak sense.
-First, notice that $\veccurl u = R_{-\pi/2} \grad u$ and thus $\veccurl$ is well-defined 
+First, notice that $\veccurl u = R_{-\pi/2} \bm{\grad} u$ and thus $\veccurl$ is well-defined 
 on $H^1$. We define 
 \begin{align*}
     H(\curl;\Omega) = \{ \mathbf{v} \in L^2 \mid \exists  w \in L^2: 
         \int_\Omega w \phi \, dx = \int_\Omega \mathbf{v} \cdot \veccurl \phi \, dx 
         \quad \forall \phi \in C_0^\infty \}
 \end{align*}
-and we denote $w$ in the definition -- which is uniquely determined -- 
-as $\curl \mathbf{v}$, so in short
+and $w$ in the definition -- which is uniquely determined -- coincides with 
+$\curl \mathbf{v}$ in distributional sense. 
+
+Using the notation of unbounded operators introduced in Sec.\,\ref{sec:unbounded_operators}, 
+this is equivalent to
 $(\curl, H(\curl)) = (\veccurl, C_0^\infty)^*$. 
 Analogous to Section\,\ref{sec:adjoints_differential_operators_3d}, it is then possible to extend the 
 tangential trace to an operator $\gamma_\tau$ defined on $H(\curl)$ s.t. 
@@ -86,7 +89,7 @@ we have the following 2D Hilbert complex
 \end{align}
 and the dual complex
 \begin{align*}
-    L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\grad} H^1
+    L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\bm{\grad}} H^1
 \end{align*}
 We use the notation introduced in Sec.\,\ref{sec:hilbert_complexes} for general Hilbert complexes i.e.
 $V^0 = H^1_0$, $V^1= H_0(\diver)$, $V^2= L^2$, $V^*_0 = L^2$, $V^*_1 = H(\curl)$ $V^*_2 = H^1$, 
@@ -185,12 +188,13 @@ From now on, our domain $\Omega$ is always assumed to be of that kind. We will
 later make further restrictions on what types of domain we will consider that 
 will be suitable for discretization (see Assumption\,\ref{ass:discretizable_single_patch_domain}).
 
-
 We add the curve integral along $\Gamma$, which we 
 assume to be well-defined, as an additional constraint.
 So in total, we obtain the following problem.
 \begin{problem}[2D magnetostatic problem]\label{prob:2d_magnetostatic_problem}
-    Given $J \in L^2$ and $C_0 \in \real$, find $\mathbf{B} \in H_0(\diver) \cap H(\curl)$ s.t.
+    Assume $\Omega$ and the curve $\Gamma$ are of the form as described above.
+    Given $J \in L^2(\Omega)$ and $C_0 \in \real$, find $\mathbf{B} \in H_0(\diver;\Omega) 
+    \cap H(\curl;\Omega)$ s.t.
     \begin{align*}
         \curl \mathbf{B} &= J, 
         \\ \diver \mathbf{B} &= 0,
@@ -231,7 +235,7 @@ it will turn out to be well-suited for finite element approximations.
 But it begs the question if the two formulations are equivalent. We will first 
 investigate the formulation without curve integral
 
-\begin{proposition}
+\begin{proposition}\label{prop:equivalence_first_two_equations}
     For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
     (\ref{eq:second_eq_mixed_formulation}) hold i.i.f. 
     $\sigma = 0$, $\lambda=0$, $\curl \mathbf{B} = J$ and 
@@ -291,7 +295,7 @@ final variational formulation of the 2D magnetostatic problem which we
 will investigate in the coming sections.
 
 Because $\mathbf{n}$ is the unit outward normal 
-of $\Omega_\Gamma$ and $\bm{\gamma}$ the parametrization of $\Gamma$ that $\mathbf{n} \perp \bm{\gamma}'$
+of $\Omega_\Gamma$ and $\bm{\gamma}$ the parametrization of $\Gamma$ we know that $\mathbf{n} \perp \bm{\gamma}'$
 and
 \begin{align*}
     \mathbf{B}\times \mathbf{n} 
@@ -310,15 +314,23 @@ and so the curve integral becomes
     % = \int_0^{|\Gamma|} \mathbf{n}(\bm{\gamma}(t)) \times \mathbf{B}(\bm{\gamma}(t)) \, dt 
     = -\int_\Gamma  \mathbf{B}\times \mathbf{n} d\ell.
 \end{align*}
-Choose $\psi \in H^1$ s.t. $\psi = 0$ on $\partial \Omega_{in}$, $\psi = 1$ on 
-$\Gamma$ and $\psi \equiv 1$ in $\Omega \setminus \Omega_\Gamma$
+Choose $\psi \in H^1$ s.t. 
+\begin{align}
+    \text{$\psi = 0$ on $\partial \Omega_{in}$, $\psi = 1$ on 
+    $\Gamma$ and $\psi \equiv 1$ in $\Omega \setminus \Omega_\Gamma$}.\label{eq:conditions_psi}
+\end{align}
 Then we observe 
 \begin{align*}
-    \int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx = 
-    \int_{\Omega_\Gamma} \veccurl \psi \cdot \mathbf{B} \, dx = 
-    \int_{\Omega_\Gamma} \psi \, J \, dx + \int_{\partial\Omega} \mathbf{B} \times \mathbf{n}\, d\ell
+    &\int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx = 
+    \int_{\Omega_\Gamma} \veccurl \psi \cdot \mathbf{B} \, dx 
+    \\ &= \int_{\Omega_\Gamma} \psi \, J \, dx + \int_{\partial\Omega} \mathbf{B} \times \mathbf{n}\, d\ell
     = \int_{\Omega_\Gamma} \psi \, J \, dx - \int_\Gamma \mathbf{B}\cdot d\ell
 \end{align*}
+and we can rewrite the curve integral as 
+\begin{align}
+    \int_\Gamma \mathbf{B} \cdot d\ell = \int_{\Omega_\Gamma} \psi \, J \, dx - 
+        \int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx. \label{eq:rewrite_curve_integral_differentiable}
+\end{align}
 So if the curve integral 
 \begin{align*}
     \int_\Gamma \mathbf{B} \cdot d\ell = C_0
@@ -334,7 +346,7 @@ with
 \end{align*}
 to our system.
 
-From the above derivations it is also clear that for $\mathbf{B} \in C^1(\overline{\Omega};\real^2)$ 
+From the above derivations it is then clear that for $\mathbf{B} \in C^1(\overline{\Omega};\real^2)$
 \begin{align*}
     \int_\Gamma \mathbf{B} \cdot d\ell = C_0 
     \Leftrightarrow \langle \veccurl \psi, \mathbf{B} \rangle = C_1.
@@ -342,6 +354,110 @@ From the above derivations it is also clear that for $\mathbf{B} \in C^1(\overli
 This is the motivation to add the right equation to our system instead
 of the curve integral since it is much easier 
 to enforce numerically.
+
+However, $\psi$ is of course not uniquely determined by the conditions above 
+so we have to check what happens when we use a different $\psi$ respecting the 
+conditions (\ref{eq:conditions_psi}).
+Assume first that $\mathbf{B} \in C^1(\overline{\Omega};\real^2)$. Then we know from 
+(\ref{eq:rewrite_curve_integral_differentiable}) that 
+\begin{align*}
+    \int_{\Omega_\Gamma} \psi \, J \, dx - 
+    \int_\Omega \veccurl\psi \cdot \mathbf{B} \, dx 
+    = C_0 = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - 
+    \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B} \, dx
+\end{align*}
+which immediately implies that if we define 
+\begin{align*}
+    C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
+    \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0.
+\end{align*}
+Then we know 
+\begin{align}
+    \langle \veccurl \psi, \mathbf{B} \rangle = C_1 
+    \Leftrightarrow \langle \veccurl \tilde{\psi}, \mathbf{B} \rangle = C_1
+    \label{eq:equivalence_for_different_psis}
+\end{align}
+so the choice of $\psi$ does not matter in this case as long as the right hand 
+side is computed accordingly.
+
+However, $\mathbf{B}$ might not be $C^1(\overline{\Omega};\real^2)$. 
+But assume, that we are still given $C_0 \in \real$. Then the question arises
+if the choice of $\psi$ matters. This is not the case as the following proposition shows.
+
+\begin{proposition}\label{prop:different_psi_same_curve_integral}
+    Let $\psi$ and $\tilde{\psi}$ both fulfill the assumptions given by (\ref{eq:conditions_psi})
+    and $(\sigma, \mathbf{B}, \lambda)$ be a solution of (\ref{eq:first_eq_mixed_formulation}) and 
+    (\ref{eq:second_eq_mixed_formulation}).
+    Then 
+    \begin{align}
+        \int_{\Omega_\Gamma} \psi \, J \, dx -  \int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx
+        = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx -  \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B} \, dx.
+        \label{eq:different_psi_same_curve_integral}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    We know that $\psi = \tilde{\psi} = 0$ on $\partial \Omega_{in}$. Also  
+    both are equal to one on $\Gamma$ and between $\Gamma$ and $\partial \Omega_{out}$ and so we also 
+    know that $\psi = \tilde{\psi} = 1$ on $\partial \Omega_{out}$. Hence, 
+    $\psi - \tilde{\psi} \in H^1_0(\Omega)$ and $\psi - \tilde{\psi} \equiv 0$ 
+    in $\Omega \setminus \Omega_\Gamma$. 
+    Recall that when $(\sigma, \mathbf{B}, \lambda)$ solves 
+    (\ref{eq:first_eq_mixed_formulation}) and (\ref{eq:second_eq_mixed_formulation}) 
+    then $\sigma = 0$ and $\lambda = 0$ as proven in Prop.\,\ref{prop:equivalence_first_two_equations}.
+    So because $\mathbf{B}$ solves 
+    (\ref{eq:first_eq_mixed_formulation}) we get 
+    \begin{align*}
+        \int_\Omega \veccurl (\psi - \tilde{\psi}) \cdot \mathbf{B} \, dx
+        = \int_\Omega (\psi - \tilde{\psi}) \, J \, dx 
+        = \int_{\Omega_\Gamma} (\psi - \tilde{\psi}) \, J \, dx.
+    \end{align*}
+\end{proof}
+That means if we are just given $C_0$ and define 
+\begin{align*}
+    C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
+    \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0
+\end{align*}
+as before then the equivalence (\ref{eq:equivalence_for_different_psis}) holds as well, 
+even if $\mathbf{B}$ is not continuously 
+differentiable.
+
+There is an important invariance property of the curve integral that we would like 
+to have for its replacement as well. If $J = 0$ and 
+we take two closed curves $\Gamma_1$ and $\Gamma_2$ going around the 
+hole in the middle of the domain in the same direction then
+we have 
+\begin{align}
+    \int_{\Gamma_1} \mathbf{B} \cdot d\ell = \int_{\Gamma_2} \mathbf{B} \cdot d\ell.
+\end{align}
+We would like this to be preserved for our replacement of the curve integral 
+which is indeed the case.
+
+\begin{proposition}\label{prop:different_curve_same_curve_integral_substitute}
+    Let $\Gamma_1$ and $\Gamma_2$ be chosen as just described and $\psi_1$ 
+    and $\psi_2$ accordingly. Let $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$ 
+    and $\lambda \in \real$ be a solution of 
+    (\ref{eq:first_eq_mixed_formulation}) and (\ref{eq:second_eq_mixed_formulation})
+    with $J=0$.
+    Then $C_1 = C_0$ and
+    % i.e. the right hand side is 
+    % independent of $J$ and
+    \begin{align*}
+        \langle \veccurl \psi_1, \mathbf{B} \rangle = \langle \veccurl \psi_2, \mathbf{B} \rangle.
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    $C_1 = C_0$ is obvious due to $J=0$. Notice that even if we have different curves 
+    $\Gamma_1$ and $\Gamma_2$ the fact that $\psi_1$ and $\psi_2$ are constant one 
+    between the curve and $\partial \Omega_{out}$ implies that 
+    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the assumption we also get 
+    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{in}$ so in total 
+    $\psi_1 - \psi_2 \in H^1_0$. Recall that if $(\sigma,\mathbf{B},\lambda)$ is a solution
+    then $\sigma = 0$ and $\lambda=0$. So because $\mathbf{B}$ solves (\ref{eq:first_eq_mixed_formulation}) and 
+    (\ref{eq:second_eq_mixed_formulation}) with $J=0$, this means
+    \begin{align*}
+        \langle \veccurl (\psi_1 - \psi_2), \mathbf{B} \rangle = 0.
+    \end{align*}
+\end{proof}
 
 In order to get a variational 
 formulation to study theoretically,
@@ -477,7 +593,7 @@ assuming $\psi$ has been chosen as described above.
     We need to show $0 = \gamma_n \veccurl \psi$. The integration by parts from Thm.\,\ref{thm:trace_of_hdiv} gives
     \begin{align*}
         \langle \gamma_n \veccurl \psi , \tr u \rangle 
-        = \int_\Omega \veccurl \psi \cdot \grad u \, dx 
+        = \int_\Omega \veccurl \psi \cdot \bm{\grad} u \, dx 
             + \int_\Omega \diver \veccurl \psi \, u \, dx 
     \end{align*}
     where the last term vanishes. Take now $\phi \in C^1(\overline{\Omega})$ 
@@ -492,32 +608,32 @@ assuming $\psi$ has been chosen as described above.
     \begin{align*}
         &\langle \gamma_n \veccurl \psi , \tr \phi \rangle 
         = \langle \gamma_n \veccurl \psi , \tr \phi_1 \rangle + \langle \gamma_n \veccurl \psi , \tr \phi_2 \rangle
-        \\ &= \int_\Omega \veccurl \psi \cdot \grad \phi_1 \, dx + \int_\Omega \veccurl \psi \cdot \grad \phi_2 \, dx
-        \\ &= \int_\Omega \psi \, \curl \grad \phi_1 \, dx + \langle \gamma_\tau \grad \phi_1, \psi \rangle
-            + \int_\Omega \psi \, \curl \grad \phi_2 \, dx + \langle \gamma_\tau \grad \phi_2, \psi \rangle.
+        \\ &= \int_\Omega \veccurl \psi \cdot \bm{\grad} \phi_1 \, dx + \int_\Omega \veccurl \psi \cdot \bm{\grad} \phi_2 \, dx
+        \\ &= \int_\Omega \psi \, \curl \bm{\grad} \phi_1 \, dx + \langle \gamma_\tau \bm{\grad} \phi_1, \psi \rangle
+            + \int_\Omega \psi \, \curl \bm{\grad} \phi_2 \, dx + \langle \gamma_\tau \bm{\grad} \phi_2, \psi \rangle.
     \end{align*}
-    Here only the boundary terms remain because $\curl \grad =0$.
+    Here only the boundary terms remain because $\curl \bm{\grad} =0$.
     Now remember that because $\phi_j \in C^1(\overline{\Omega})$, 
-    $\langle \gamma_\tau \grad \phi_j, \psi \rangle 
-    = \langle \grad \phi_j \times \mathbf{n}, \psi \rangle_{L^2(\partial \Omega)}$. So 
+    $\langle \gamma_\tau \bm{\grad} \phi_j, \psi \rangle 
+    = \langle \bm{\grad} \phi_j \times \mathbf{n}, \psi \rangle_{L^2(\partial \Omega)}$. So 
     \begin{align*}
-        \langle \gamma_\tau \grad \phi_1, \psi \rangle 
-        = \langle \grad \phi_1 \times \mathbf{n}, \psi \rangle_{L^2(\partial \Omega)} = 0
+        \langle \gamma_\tau \bm{\grad} \phi_1, \psi \rangle 
+        = \langle \bm{\grad} \phi_1 \times \mathbf{n}, \psi \rangle_{L^2(\partial \Omega)} = 0
     \end{align*}
     because $\phi_1$ is zero near $\partial \Omega_{out}$ and $\psi$ is zero on 
     $\partial \Omega_{in}$. For the remaining term, 
     \begin{align*}
-        \langle \gamma_\tau \grad \phi_2, \psi \rangle
-        = \int_{\partial\Omega_{out}} \psi \grad \phi_2 \times \mathbf{n}d\ell 
-        = \int_{\partial\Omega_{out}} \grad \phi_2 \times \mathbf{n} d\ell 
-        = - \int_{\partial\Omega_{out}} \grad \phi_2 \cdot d\ell
+        \langle \gamma_\tau \bm{\grad} \phi_2, \psi \rangle
+        = \int_{\partial\Omega_{out}} \psi \bm{\grad} \phi_2 \times \mathbf{n}d\ell 
+        = \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \times \mathbf{n} d\ell 
+        = - \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \cdot d\ell
     \end{align*}
     % using a counter clockwise parametrization of $\partial\Omega_{out}$ 
     % for a parametrization $\mathbf{s}$
     % i.e. $\grad \phi_1 \times \mathbf{n} = -\grad \phi_1 \cdot \mathbf{R}_{\pi/2}\mathbf{s}'$
     and then we know from basic vector calculus because $\partial\Omega_{out}$ is closed
     \begin{align*}
-        \int_{\partial\Omega_{out}} \grad \phi_1 \cdot d\ell = 0.
+        \int_{\partial\Omega_{out}} \bm{\grad} \phi_1 \cdot d\ell = 0.
     \end{align*}
     and so in conclusion, $\gamma_n \veccurl \psi = 0$.
 \end{proof}
@@ -540,7 +656,7 @@ non-vanishing harmonic part. This is indeed true.
     Assume for contradiction that $\veccurl \psi \in \mathfrak{B}^1$ i.e. there exists 
     $\psi_0 \in H^1_0$ s.t. $\veccurl \psi_0 = \veccurl \psi$. 
     Since $\veccurl$ is just the rotated gradient we would get that 
-    $\grad (\psi - \psi_0) = 0$ and thus $\psi - \psi_0$ is constant almost 
+    $\bm{\grad} (\psi - \psi_0) = 0$ and thus $\psi - \psi_0$ is constant almost 
     everywhere. But this is a contradiction since $\tr \psi_0$ is zero on $\partial\Omega_{in}$ 
     and $\partial \Omega_{out}$, but $\tr \psi = 0$ on $\partial\Omega_{in}$ and 
     $\tr \psi = 1$ on $\partial\Omega_{in}$. 
@@ -551,13 +667,32 @@ $\veccurl \psi$ and obtain the following
 \begin{corollary}
     Let $\mathbf{p}\in \mathfrak{H}^1 \setminus \{ 0 \}$. Then there exists 
     $\psi_0 \in H^1_0$ and $c_\psi \in \real \setminus \{ 0 \}$ s.t. 
-    \begin{align*}
-        \veccurl \psi = \veccurl \psi_0 + c_\psi \mathbf{p}.
-    \end{align*}
+    \begin{align}
+        \veccurl \psi = \veccurl \psi_0 + c_\psi \mathbf{p}. \label{eq:decomposition_psi}
+    \end{align}
 \end{corollary}
 Here it is important to remember that we assumed $\mathfrak{H}^1$ to be one-dimensional.
 Because we can choose $\mathbf{p}$ we can assume w.l.o.g. that $c_\psi > 0$ and 
-we will do so from now on.
+we will do so from now on. Also we can prove that the harmonic part is 
+independent of the chosen $\psi$.
+
+\begin{proposition}\label{prop:harmonic_part_curlpsi_independent_of_choice}
+    Choose $\psi$ and $\tilde{\psi}$ according to (\ref{eq:conditions_psi}). Then
+    \begin{align*}
+        P_{\mathfrak{H}^1}\veccurl \psi = P_{\mathfrak{H}^1}\veccurl \tilde{\psi}.
+    \end{align*}
+    In particular, if we decompose them as in (\ref{eq:decomposition_psi}) then 
+    $c_\psi = c_{\tilde{\psi}}$.
+\end{proposition}
+\begin{proof}
+    Take $\mathbf{p} \in \mathfrak{H}^1$ arbitrary. Then using the same argument as in the proof 
+    of Prop.\,\ref{prop:different_psi_same_curve_integral} we get $\psi - \tilde{\psi} \in H^1_0$ and because 
+    $\mathfrak{H}^1 \perp \mathfrak{B}^1$
+    \begin{align}
+        \langle \veccurl (\psi - \tilde{\psi} ), \mathbf{p} \rangle = 0.
+    \end{align}
+    Because $\mathbf{p} \in \mathfrak{H}^1$ was arbitrary the claim follows.
+\end{proof}
 
 As stated in the proof of the Poincare inequality (Thm.\,\ref{thm:poincare_inequality}), 
 $\veccurl| _{\mathfrak{Z}^\perp}: \mathfrak{Z}^\perp \rightarrow \mathfrak{B}^1$
@@ -819,10 +954,12 @@ and then use $C_T$ from (\ref{eq:bound_on_norm_of_T}) to get a lower bound
     in the stability constant $1/\gamma$. This is not surprising since the term 
     $\langle \veccurl \psi, \mathbf{B} \rangle$ will not enforce the harmonic 
     part if the harmonic part of $\veccurl \psi$ would be zero because 
-    $\mathbf{B}_\mathfrak{H}$ will disappear from the formulation. So we 
-    expect stability issues if the harmonic part is too small.
-    This also forces us to choose $\psi$ with this in mind to obtain a 
-    stable system.
+    $\mathbf{B}_\mathfrak{H}$ will disappear from the formulation. But we know from 
+    Prop.\,\ref{prop:harmonic_part_curlpsi_independent_of_choice} 
+    that the harmonic part of $\veccurl \psi$ is actually independent of 
+    the choice of $\psi$. If we take $c_1 = \lVert \veccurl \psi \rVert + 1$ then
+    we could expect stability issues if this value becomes very large. But this 
+    should not be the case for a reasonable choice of $\psi$.
 \end{remark}
 
 \section{Discretized magnetostatic problem}\label{sec:discretized_magnetostatic_problem}
@@ -1150,7 +1287,7 @@ for $h$ small enough.
     This indeed is a direct consequence of the existence of bounded cochain projections.
     Take $v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h$ arbitrary. 
     Since $d (\mathfrak{Z}^{k,\perp} \cap V^k) = \mathfrak{B}^{k+1} \supseteq \mathfrak{B}^{k+1}_h$ we find 
-    {\color{red} $z\in \mathfrak{Z}^{k\perp}\cap V_h$} s.t. $dz = dv_h$. We can apply now the continuous 
+    $z\in \mathfrak{Z}^{k\perp}\cap V^k$ s.t. $dz = dv_h$. We can apply now the continuous 
     Poincare inequality (Thm.\,\ref{thm:poincare_inequality}) to get $\lVert z \rVert _V \leq c_P \lVert dz \rVert _V = c_P \lVert dv_h \rVert _V$.
     Now we can use the fact that $\Pi_h$ is a cochain map 
     and the fact that $\Pi_h$ is a projection:
@@ -1191,10 +1328,10 @@ that approximate the full spaces in the sense of Assumption\,\ref{ass:convergenc
 \end{align*}
 and the dual complex 
 \begin{align*}
-    V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\grad}_h} V^2_h
+    V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\bm{\grad}}_h} V^2_h
 \end{align*}
 where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and can thus be 
-seen as a weak approximation of $\curl$ and the same for $\widetilde{\grad}_h$.
+seen as a weak approximation of $\curl$ and the same for $\widetilde{\bm{\grad}}_h$.
 Analogous to the continuous case we assume that $\dim \mathfrak{H}_h^1 = 1$ 
 which is not unreasonable thanks to Thm.\,\ref{thm:dim_of_discrete_harmonic_space} 
 for $h>0$ small enough.
@@ -1273,7 +1410,8 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
     there exists $c_\Pi > 0$ independent of $h$ s.t. $\lVert \Pi_h \rVert _{\mathcal{L}(V,V)} \leq c_\Pi$.
     We assume that $\veccurl \psi \in V_h^1$. Then we find 
     $\psi_{0,h} \in V_h^0$ and $c_{\psi,h}>0$ 
-    s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$.
+    s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$
+    where $c_{\psi,h}$ does not depend on the choice of $\psi$.
     We also assume that (\ref{eq:assumption_same_dimension}) holds and thus 
     $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$ and we choose 
     $\mathbf{p}_h$ according to Prop.\,\ref{prop:choice_of_discrete_harmonic_form}.
@@ -1292,7 +1430,11 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
 \begin{proof}
     By following exactly the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}, 
     we can prove
-    the well-posedness through the BNB-theorem. However, we have to argue
+    the well-posedness through the BNB-theorem. We also get that
+    $c_{\psi,h}$ does not depend on the choice of $\psi$ by following the same 
+    argument as in Prop.\,\ref{prop:harmonic_part_curlpsi_independent_of_choice} 
+    using the discrete spaces.
+    However, we have to argue
     why $c_{\psi,h}>0$ if $c_\psi>0$. 
     Notice since $ \lVert \mathbf{p}_h \rVert  = \lVert \mathbf{p} \rVert =1$
     and $\dim \mathfrak{H}^1 = \dim \mathfrak{H}^1_h = 1$
@@ -1419,6 +1561,42 @@ We now have to apply this lemma to the magnetostatic formulation.
     \end{align*}
     Thus the estimate follows immediately from Lemma \ref{lem:a_priori_estimate_from_infsup}.
 \end{proof}
+
+One more thing to investigate is the substituted curve integral constraint in the 
+discrete setting. For all the analysis above we fixed $\psi$ before which 
+raises the question if the choice of $\psi$ matters. We know that 
+in the continuous case it does not (cf. Prop.\,\ref{prop:different_psi_same_curve_integral} 
+and the explanation before). 
+It turns out that the analogous result holds with the same argument if we replace $\mathbf{B}$ with 
+a solution of the first two equations of the discrete formulation $\mathbf{B}_h$ and 
+choose the discrete space $V_h^0$ instead of $H^1_0$ 
+(recall that we assume $\psi \in V_h^0$) and then we use the discrete formulation of the problem, i.e.
+the first two equations of Problem\,\ref{prob:magnetostatic_problem_discrete_variational}. Then
+we obtain
+\begin{align}
+    \int_{\Omega_\Gamma} \psi \, J \, dx -  \int_\Omega \veccurl \psi \cdot \mathbf{B}_h \, dx
+    = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx -  \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B}_h \, dx
+\end{align}
+and thus an equivalent system by choosing 
+\begin{align*}
+    C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
+    \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0.
+\end{align*}
+Here we always assumed that we can compute all the inner products exactly.
+
+Another important property of our new curve integral constraint was the 
+invariance if $J=0$, i.e. if we have two different curves 
+$\Gamma_1$ and $\Gamma_2$ with $\psi_1$ and $\psi_2$ then we would like
+\begin{align*}
+    \langle \veccurl \psi_1, \mathbf{B}_h \rangle = \langle \veccurl \psi_2, \mathbf{B}_h \rangle
+\end{align*}
+to hold.
+This was 
+true in the continuous case (see Prop.\,\ref{prop:different_curve_same_curve_integral_substitute}) 
+and it is also true for the discrete 
+problem. Again, the argument is completely identical by using a solution $\mathbf{B}_h$ 
+of the discrete system (Prob.\,\ref{prob:magnetostatic_problem_discrete_variational}) 
+instead and $V_h^0$ instead of $H^1_0$.
 
 \section{Implementation on a single patch domain}\label{sec:implementation}
 
@@ -1892,10 +2070,10 @@ In order to do that we will characterize harmonic forms in a different way.
 \begin{proposition}
     Define the penalized discrete Hodge Laplacian operator $\bar{L}^1_h: \bar{V}^1_h \rightarrow \bar{V}^1_h$ as
     \begin{align*}
-        \bar{L}^1_h = -\widetilde{\grad}_h \diver P^1_h + \widetilde{\curl}_h \veccurl P ^0_h
+        \bar{L}^1_h = -\widetilde{\bm{\grad}}_h \diver P^1_h + \widetilde{\curl}_h \veccurl P ^0_h
             + (I - P^1_h)^* (I-P^1_h)
     \end{align*}
-    where $\widetilde{\grad}_h$ and $\widetilde{\curl}_h$ are the adjoints 
+    where $\widetilde{\bm{\grad}}_h$ and $\widetilde{\curl}_h$ are the adjoints 
     of $\diver P^1_h$ and $\veccurl P^0_h$ respectively. 
     Then 
     \begin{align*}

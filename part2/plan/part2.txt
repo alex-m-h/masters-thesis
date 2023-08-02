@@ -10,15 +10,16 @@ Magnetostatic problem in variational mixed form
 	Curve integral
 	Well-posedness of the magnetostatic system
 
-Discretization of Hilbert complexes
+Discretization of magnetostatic problem
 	Discrete Hilbert complex
 	Discretized magnetostatic problem
 	Well-posedness
 	Stability
 	A-priori estimate
+	Curve integral properties
 
 Implementation in 2D
-	Splines
+	Splines 
 	Projection operators
 	Basis
 	Building the system
