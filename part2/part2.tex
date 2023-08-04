@@ -1,13 +1,33 @@
 \documentclass[../master_thesis.tex]{subfiles}
 \begin{document}
+
+This chapter, which will be the second main part of this thesis, is devoted 
+to the numerical approximation of the magnetostatic problem in 2D which can 
+be derived from a special case of the standard magnetostatic problem. 
+Instead of the exterior of a toroidal domain as in the first part, we 
+will pose the problem on an "annulus like" domain which will be defined more exactly. 
+A curve integral will again be given as an additional constraint and we will 
+investigate the idea to incorporate it using an integration-by-parts approach 
+which is easily applicable to the finite element approximation that we will use. 
+
+We start in Sec.\,\ref{} by deriving a variational formulation of the magnetostatic problem, 
+including the alternative description of the curve integral constraint,
+and prove well-posedness of the resulting formulation. In Sec.\,\ref{} the discretization 
+of the problem will be described including a prove ofwell-posedness and of an a-priori
+estimate. The implementation will be explained in Sec.\,\ref{} and numerical examples 
+given in Sec.\ref{} which confirm our theoretical predictions.
+
+Prerequisites for this chapter are familiarity with finite element theory and 
+basic knowledge of functional analysis and Sobolev spaces. 
+
 \section{Variational formulation of the magnetostatic problem in 2D} 
 
-For simplicity we will now turn to the 2D case and we assume that 
+For simplicity, we will now turn to the 2D case and we assume that 
 our open domain will be bounded and Lipschitz. This involves introducing
 a different Hilbert complex with other differential operators. Then we 
 derive the 2D magnetostatic problem from the three-dimensional one. 
-We will assume our domain $\Omega$ to have a "annulus like" form which we 
-will clarify in more rigour. In order for the 2D magnetostatic problem to be well-posed 
+We will assume our domain $\Omega$ to have an "annulus like" form which we 
+will clarify in more rigour. In order for the 2D magnetostatic problem to be well-posed, 
 we require an additional constraint that will again be a curve integral. 
 We will investigate an alternative way to represent this curve integral 
 which will turn out to be easily suitable to be included in our numerical 
@@ -32,6 +52,8 @@ for $v \in C^1(\Omega)$
 \begin{align*}
     \veccurl v = \begin{pmatrix}\partial_2 v \\ -\partial_1 v    \end{pmatrix}.
 \end{align*}
+In contrast to chapter\,\ref{chap:existence_and_uniqueness}, we will from now 
+on denote vector valued operators in bold, i.e. $\veccurl$ and $\bm{\grad}$.
 The cross product for 2D reads for $\mathbf{a}, \mathbf{b} \in \real^2$,
 \begin{align*}
     \mathbf{a} \times \mathbf{b} \vcentcolon= a_1 b_2- a_2 b_1 
@@ -53,9 +75,9 @@ we can now extend this definition in the weak sense.
 First, notice that $\veccurl u = R_{-\pi/2} \bm{\grad} u$ and thus $\veccurl$ is well-defined 
 on $H^1$. We define 
 \begin{align*}
-    H(\curl;\Omega) = \{ \mathbf{v} \in L^2 \mid \exists  w \in L^2: 
+    H(\curl;\Omega) = \bigg\{ \mathbf{v} \in L^2 \mid \exists  w \in L^2: 
         \int_\Omega w \phi \, dx = \int_\Omega \mathbf{v} \cdot \veccurl \phi \, dx 
-        \quad \forall \phi \in C_0^\infty \}
+        \quad \forall \phi \in C_0^\infty \bigg\}
 \end{align*}
 and $w$ in the definition -- which is uniquely determined -- coincides with 
 $\curl \mathbf{v}$ in distributional sense. 
@@ -64,14 +86,20 @@ Using the notation of unbounded operators introduced in Sec.\,\ref{sec:unbounded
 this is equivalent to
 $(\curl, H(\curl)) = (\veccurl, C_0^\infty)^*$. 
 Analogous to Section\,\ref{sec:adjoints_differential_operators_3d}, it is then possible to extend the 
-tangential trace to an operator $\gamma_\tau$ defined on $H(\curl)$ s.t. 
+operator
+\begin{align}
+    \mathbf{v} \mapsto \langle \mathbf{v} \times \mathbf{n} , \,\cdot \, \rangle_{L^2(\partial \Omega)}
+    \in H^{-1/2}(\partial \Omega)
+\end{align}
+defined on $C^1(\Omega, \real^2)$
+to an operator $\gamma_\tau$ defined on $H(\curl)$ s.t. 
 for any $u\in H^1(\Omega)$, $\mathbf{v} \in H(\curl)$
 the integration by parts formula
 \begin{align*}
     \langle \veccurl u, \mathbf{v} \rangle = \langle  u, \curl \mathbf{v} \rangle 
         + \langle \gamma_\tau \mathbf{v} , \tr u \rangle_{H^{-1/2}(\partial \Omega)\times H^{1/2}(\partial \Omega)}.
 \end{align*}
-holds. From now on we will leave out the subindex of the duality inner product. Also analogous to the 3D case,
+holds. From now on, we will leave out the subindex of the duality inner product. Also analogous to the 3D case,
 we can define 
 \begin{align*}
     H_0(\curl) \vcentcolon= \{ \mathbf{v} \in H(\curl) \mid \gamma_\tau \mathbf{v} = 0\}
@@ -85,11 +113,12 @@ and can then compute the adjoints analogously to what we did in Section\,\ref{se
 Notice that $\diver \veccurl = 0$ and so 
 we have the following 2D Hilbert complex 
 \begin{align}
-    H^1_0 \xrightarrow{\veccurl} H_0(\diver) \xrightarrow{\diver} L^2. \label{eq:2D_hilbert_complex}
+    0 \rightarrow H^1_0 \xrightarrow{\veccurl} H_0(\diver) 
+    \xrightarrow{\diver} L^2 \rightarrow 0. \label{eq:2D_hilbert_complex}
 \end{align}
 and the dual complex
 \begin{align*}
-    L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\bm{\grad}} H^1
+    0 \leftarrow L^2 \xleftarrow{\curl} H(\curl) \xleftarrow{-\bm{\grad}} H^1 \leftarrow 0
 \end{align*}
 We use the notation introduced in Sec.\,\ref{sec:hilbert_complexes} for general Hilbert complexes i.e.
 $V^0 = H^1_0$, $V^1= H_0(\diver)$, $V^2= L^2$, $V^*_0 = L^2$, $V^*_1 = H(\curl)$ $V^*_2 = H^1$, 
@@ -102,10 +131,10 @@ $\mathfrak{Z}_k^*$ for the kernel of the adjoint.
 
 \begin{remark}
     Since we are working only on bounded domains in this and the coming sections, 
-    the Hilbert complex is closed i.e. all the images of the differential operators 
+    the Hilbert complex is closed, i.e. all the images of the differential operators 
     are closed subspaces w.r.t. the $V$-norm. This was stated in 
     Thm.\,\ref{thm:closed_range} for the three-dimensional case, but it holds 
-    for 2D as well. This is because these are both special cases for the analogous result 
+    for 2D as well. The reason is that these are both special cases for the analogous result 
     for the exterior derivative on Riemannian manifolds 
     in arbitrary dimensions (see \cite[Sec.\,6.2.6]{arnold}). This means
     in particular that we can use the Poincaré inequality (Thm.\,\ref{thm:poincare_inequality}).
@@ -125,11 +154,11 @@ $\Omega = \tilde{\Omega} \times \real$. If $B_3$ does not change in $z$-directio
     0 = \diver \mathbf{B} = \partial_x B_1 + \partial_y B_2 = \diver \tilde{\mathbf{B}}.
 \end{align*}
 where $\tilde{\mathbf{B}} = (B_1,B_2)^\top$. The third component of the equation
-$\curl \mathbf{B} = \mathbf{J}$ from the magnetostatic problem reads 
+$\curl \mathbf{B} = \mathbf{J}$ from the magnetostatic problem in three dimensions reads 
 \begin{align*}
     J = \partial_x B_2 - \partial_y B_1 = \curl \tilde{\mathbf{B}}
 \end{align*}
-For $\Omega$ the unit outer normal is zero in $z$-direction and thus $\tilde{\mathbf{B}}$ 
+The unit outer normal of $\Omega$ is zero in $z$-direction and thus $\tilde{\mathbf{B}}$ 
 satisfies the boundary 
 condition
 \begin{align*}
@@ -151,11 +180,13 @@ and requires an additional constraint. Let us now make certain restrictions
 on what type of domain we will consider. 
 
 From now on, we assume that the space of harmonic forms $\mathfrak{H}^1$ has dimension 
-one and that our domain is encompassed by two disjoint closed curves
+one and that our domain is encompassed by two disjoint closed curves,
 i.e. we have curves $\partial \Omega_{in}$ and $\partial \Omega_{out}$ s.t. 
-$\partial \Omega_{in} \dot\cup \partial\Omega_{out}$ is the boundary of $\Omega$. 
-Let now $\Gamma$ be s.t. it is a closed curve in $\Omega$ that goes around the 
-hole in the middle i.e. the area surrounded by $\Gamma$ contains $\partial \Omega_{in}$.
+\begin{align*}
+    \partial \Omega_{in} \,\dot\cup \,\partial\Omega_{out} = \partial\Omega. 
+\end{align*}
+Let now $\Gamma$ be a closed curve in $\Omega$ that goes around the 
+hole in the middle, i.e. the area surrounded by $\Gamma$ contains $\partial \Omega_{in}$.
 Denote its parametrization with $\bm{\gamma}:[0,|\Gamma|] \rightarrow \Omega$ s.t. 
 $|\bm{\gamma}'(t)| = 1$ and assume that $\bm{\gamma}$ is bijective i.e. the curve does not 
 intersect itself. We assume that $\Gamma$ has positive distance from 
@@ -178,7 +209,8 @@ $\partial\Omega_{in}$ as $\Omega_\Gamma$ (cf. Fig.\,\ref{fig:annulus_domain}).
     \node at (135:3) {\huge$\Omega_\Gamma$};
 \end{tikzpicture}
 }
-\caption{A simple example for a domain $\Omega$ as described. The boundary are two 
+\caption{A simple example for a domain $\Omega$ as described in the text. The boundary 
+is given by two 
 disjoint curves $\partial \Omega_{in}$ and $\partial \Omega_{out}$. The curve 
 $\Gamma$ is parametrized in anticlockwise direction and $\Omega_\Gamma$ is the 
 area enclosed by $\Gamma$ and $\partial \Omega_{in}$.} \label{fig:annulus_domain}
@@ -216,15 +248,15 @@ at first, we will use the following. We choose a non-zero harmonic form
 $\mathbf{p} \in \mathfrak{H}^1$ and have 
 $J \in L^2$ . Then the problem is: Find $\sigma \in H^1_0$, 
 $B \in H_0(\diver)$ and $\lambda \in \real$ s.t.
-\begin{align}
+\begin{alignat}{2}
     \langle \sigma, \tau \rangle - \langle \mathbf{B}, \veccurl \tau \rangle 
-        &=  -\langle J, \tau \rangle \quad \forall \tau \in H^1_0, \label{eq:first_eq_mixed_formulation}
+        &=  -\langle J, \tau \rangle \quad &&\forall \tau \in H^1_0, \label{eq:first_eq_mixed_formulation}
     \\ \langle \veccurl\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
         + \lambda \langle \mathbf{p}, \mathbf{v} \rangle 
-        &= 0 \quad \forall \mathbf{v} \in H_0(\diver) \label{eq:second_eq_mixed_formulation}
-\end{align} 
+        &= 0 \quad &&\forall \mathbf{v} \in H_0(\diver) \label{eq:second_eq_mixed_formulation}
+\end{alignat} 
 As before, the inner product without subscript denotes the $L^2$ inner product and 
-$\lVert \cdot \rVert$ the $L^2$ norm.
+$\lVert \cdot \rVert$ the $L^2$-norm.
 Here the curve integral condition is missing. It is difficult to include the curve integral 
 condition directly when solving this system numerically. So we will replace it below 
 in Sec.\,\ref{sec:curve_integral_constraint}.
@@ -233,7 +265,7 @@ Even though this formulation appears more complicated in comparison to the first
 the 2D magnetostatic problem (Problem\,\ref{prob:2d_magnetostatic_problem}), 
 it will turn out to be well-suited for finite element approximations.
 But it begs the question if the two formulations are equivalent. We will first 
-investigate the formulation without curve integral
+investigate the formulation without curve integral.
 
 \begin{proposition}\label{prop:equivalence_first_two_equations}
     For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
@@ -269,7 +301,7 @@ investigate the formulation without curve integral
         = \lVert \veccurl \sigma \rVert^2 = 0.
     \end{align*}
     Because $\sigma \in H^1_0$ this gives us $\sigma = 0$. Also we have then 
-    $J = \curl \mathbf{B}$. At last we choose $\mathbf{v} = \mathbf{B}$ which gives us 
+    $J = \curl \mathbf{B}$. At last, we choose $\mathbf{v} = \mathbf{B}$ which gives us 
     $\diver \mathbf{B} = 0$ and thus we proved the first direction. 
 
     The other implication is clear i.e. if $\mathbf{B} \in H(\curl) \cap H_0(\diver)$
@@ -278,7 +310,7 @@ investigate the formulation without curve integral
     \end{proof}
 Notice that the variable $\lambda$ is not necessary for this variational formulation, 
 but we will need it later, since we will add another equation representing the 
-curve integral constraint and for that purpose we need another variable to have the same 
+curve integral constraint and, for that purpose, we need another variable to have the same 
 number of unknowns and equations.
 If we now add the same additional constraint to both formulations of the problem 
 then they will remain equivalent.
@@ -312,7 +344,7 @@ and so the curve integral becomes
 \begin{align*}
     \int_\Gamma \mathbf{B}\cdot d\ell= \int_0^{|\Gamma|} \mathbf{B}(\bm{\gamma}(t)) \cdot \bm{\gamma}'(t) \, dt 
     % = \int_0^{|\Gamma|} \mathbf{n}(\bm{\gamma}(t)) \times \mathbf{B}(\bm{\gamma}(t)) \, dt 
-    = -\int_\Gamma  \mathbf{B}\times \mathbf{n} d\ell.
+    = -\int_\Gamma  \mathbf{B}\times \mathbf{n} \,d\ell.
 \end{align*}
 Choose $\psi \in H^1$ s.t. 
 \begin{align}
@@ -366,12 +398,12 @@ Assume first that $\mathbf{B} \in C^1(\overline{\Omega};\real^2)$. Then we know 
     = C_0 = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - 
     \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B} \, dx
 \end{align*}
-which immediately implies that if we define 
+which immediately implies that, if we define 
 \begin{align*}
     C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
-    \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0.
+    \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0,
 \end{align*}
-Then we know 
+then we know 
 \begin{align}
     \langle \veccurl \psi, \mathbf{B} \rangle = C_1 
     \Leftrightarrow \langle \veccurl \tilde{\psi}, \mathbf{B} \rangle = C_1
@@ -396,7 +428,7 @@ if the choice of $\psi$ matters. This is not the case as the following propositi
     \end{align}
 \end{proposition}
 \begin{proof}
-    We know that $\psi = \tilde{\psi} = 0$ on $\partial \Omega_{in}$. Also  
+    We know that $\psi = \tilde{\psi} = 0$ on $\partial \Omega_{in}$. Also,  
     both are equal to one on $\Gamma$ and between $\Gamma$ and $\partial \Omega_{out}$ and so we also 
     know that $\psi = \tilde{\psi} = 1$ on $\partial \Omega_{out}$. Hence, 
     $\psi - \tilde{\psi} \in H^1_0(\Omega)$ and $\psi - \tilde{\psi} \equiv 0$ 
@@ -438,7 +470,7 @@ which is indeed the case.
     and $\lambda \in \real$ be a solution of 
     (\ref{eq:first_eq_mixed_formulation}) and (\ref{eq:second_eq_mixed_formulation})
     with $J=0$.
-    Then $C_1 = C_0$ and
+    Then $C_1 = -C_0$ and
     % i.e. the right hand side is 
     % independent of $J$ and
     \begin{align*}
@@ -446,10 +478,11 @@ which is indeed the case.
     \end{align*}
 \end{proposition}
 \begin{proof}
-    $C_1 = C_0$ is obvious due to $J=0$. Notice that even if we have different curves 
+    $C_1 = -C_0$ is obvious due to $J=0$. Notice that even if we have different curves 
     $\Gamma_1$ and $\Gamma_2$ the fact that $\psi_1$ and $\psi_2$ are constant one 
     between the curve and $\partial \Omega_{out}$ implies that 
-    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the assumption we also get 
+    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the assumptions (\ref{eq:conditions_psi}), 
+    we also get 
     $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{in}$ so in total 
     $\psi_1 - \psi_2 \in H^1_0$. Recall that if $(\sigma,\mathbf{B},\lambda)$ is a solution
     then $\sigma = 0$ and $\lambda=0$. So because $\mathbf{B}$ solves (\ref{eq:first_eq_mixed_formulation}) and 
@@ -473,10 +506,10 @@ In conclusion, we have the following variational problem:
         \\ \langle \veccurl\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
         + \langle \lambda \mathbf{p}, \mathbf{v} \rangle 
         &= 0 &&\quad \forall \mathbf{v} \in H_0(\diver), \label{eq:second_eq_mixed_formulation_curve_integral}
-        \\ \mu \langle \bm{\curl} \psi, \mathbf{B} \rangle &= \mu C_1 &&\quad \forall \mu \in \real.
+        \\ \mu \langle \bm{\curl} \psi, \mathbf{B} \rangle &= \mu C_1 &&\quad \forall \mu \in \real,
     \end{align}
 \end{problem}
-\noindent which gives us the variational formulation of the magnetostatic problem with curve integral 
+\noindent which is the variational formulation of the magnetostatic problem with curve integral 
 constraint (Problem\,\ref{prob:2d_magnetostatic_problem}). 
 We will study the well-posedness of this formulation next. 
 
@@ -489,7 +522,7 @@ s.t.
     a(x,y) = \ell(y) \quad \forall y \in Y \label{eq:general_variational_problem}
 \end{align}
 where $X$ and $Y$ are Banach spaces, $a$ is a bilinear form 
-and $\ell \in Y'$. The BNB-theorem then answers the question of well-posedness 
+and $\ell \in Y'$. The BNB-theorem then answers the question of well-posedness, 
 i.e. if there exists a unique solution and if we can find a stability estimate.
 The following formulation is from \cite[Sec.\,25.3]{ern_guermond_2} in the real case.
 
@@ -544,7 +577,7 @@ Since we are dealing with Hilbert spaces only we can utilize the following propo
 
 Note also that when we have found $T$ s.t. (\ref{eq:T_coercivity_bound}) holds 
 then it must be injective. This is because if $Tx = 0$ for any 
-$x \in X$ then $x=0$ follows from the $T$-coercivity.
+$x \in X$ then $x=0$ must hold.
 
 The next step is to put our formulation of
 Problem \ref{prob:magnetostatic_problem_variational} into 
@@ -565,16 +598,16 @@ For the formulation of the problem, we define the
 bilinear form $a:X\times X \rightarrow \real$
 \begin{align}
     a(\sigma,\mathbf{B}, \lambda;\tau,\mathbf{v},\mu) 
-    =   \langle \sigma, \tau \rangle - \langle \mathbf{B}, \veccurl\tau \rangle
-        + \langle \veccurl\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
-        + \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \veccurl \psi, \mathbf{B} \rangle.
+    &=   \langle \sigma, \tau \rangle - \langle \mathbf{B}, \veccurl\tau \rangle
+        + \langle \veccurl\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle \notag
+        \\ &\quad+ \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \veccurl \psi, \mathbf{B} \rangle.
         \label{eq:definition_bilinear_form}
 \end{align}
 and 
 \begin{align*}
-    \ell(\tau,\mathbf{v},\mu) = -\langle J, \tau \rangle - \mu C_1.
+    \ell(\tau,\mathbf{v},\mu) = -\langle J, \tau \rangle - \mu C_1
 \end{align*}
-which is bounded due to the Cauchy-Schwarz inequality.
+which are bounded due to the Cauchy-Schwarz inequality.
 Then Problem\,\ref{prob:magnetostatic_problem_variational}
 is equivalent to the following: Find $(\sigma,\mathbf{B},\lambda) \in 
 X$ s.t.
@@ -584,9 +617,9 @@ X$ s.t.
 \end{align*}
 Note that the bilinear form $a$ is not symmetric. 
 
-The next step is to show two important properties of $\veccurl \psi$ 
+The next step is to show important properties of $\veccurl \psi$ 
 assuming $\psi$ has been chosen as described above.
-\begin{proposition}
+\begin{proposition}\label{prop:psi_zero_normal_trace}
     Under the given assumptions on $\psi$, $\veccurl\psi \in H_0(\diver)$.
 \end{proposition}
 \begin{proof}
@@ -603,7 +636,7 @@ assuming $\psi$ has been chosen as described above.
     a neighborhood of $\partial \Omega_{out}$ and zero near $\partial \Omega_{in}$. Here we used the fact that 
     the two parts of the boundary are disjoint and have positive distance from one another.
     Then also $\tr \phi = \tr \phi_1 + \tr \phi_2$.
-    We use the integration by parts formula again, $\diver \veccurl = 0$ and the 
+    We use the integration-by-parts formula for the divergence again, $\diver \veccurl = 0$ and the 
     integration-by-parts formula for the curl
     \begin{align*}
         &\langle \gamma_n \veccurl \psi , \tr \phi \rangle 
@@ -624,36 +657,36 @@ assuming $\psi$ has been chosen as described above.
     $\partial \Omega_{in}$. For the remaining term, 
     \begin{align*}
         \langle \gamma_\tau \bm{\grad} \phi_2, \psi \rangle
-        = \int_{\partial\Omega_{out}} \psi \bm{\grad} \phi_2 \times \mathbf{n}d\ell 
-        = \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \times \mathbf{n} d\ell 
-        = - \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \cdot d\ell
+        &= \int_{\partial\Omega_{out}} \psi \bm{\grad} \phi_2 \times \mathbf{n} \, d\ell 
+        = \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \times \mathbf{n} \, d\ell 
+        \\ &= - \int_{\partial\Omega_{out}} \bm{\grad} \phi_2 \cdot d\ell
     \end{align*}
     % using a counter clockwise parametrization of $\partial\Omega_{out}$ 
     % for a parametrization $\mathbf{s}$
     % i.e. $\grad \phi_1 \times \mathbf{n} = -\grad \phi_1 \cdot \mathbf{R}_{\pi/2}\mathbf{s}'$
     and then we know from basic vector calculus because $\partial\Omega_{out}$ is closed
     \begin{align*}
-        \int_{\partial\Omega_{out}} \bm{\grad} \phi_1 \cdot d\ell = 0.
+        \int_{\partial\Omega_{out}} \bm{\grad} \phi_1 \cdot d\ell = 0
     \end{align*}
     and so in conclusion, $\gamma_n \veccurl \psi = 0$.
 \end{proof}
 
-Usually the last equation in Problem\,\ref{prob:magnetostatic_problem_variational} 
+The last equation in Problem\,\ref{prob:magnetostatic_problem_variational} 
 is used to determine the harmonic part of the 
 solution. This implies that we would like $\veccurl \psi$ to have 
 non-vanishing harmonic part. This is indeed true.
 \begin{proposition}
-    Let $P_\mathfrak{H}^1: L^2 \rightarrow \mathfrak{H}^1$ be the orthogonal
+    Let $P_{\mathfrak{H}^1}: L^2 \rightarrow \mathfrak{H}^1$ be the orthogonal
     projection onto the harmonic forms. Then with $\psi$ defined as above 
     we have $P_\mathfrak{H}^1\veccurl \psi \neq 0$.
 \end{proposition}
 \begin{proof}
-    Since $\diver \veccurl \psi = 0$ we know that 
+    Since $\diver \veccurl \psi = 0$ and $\veccurl \psi \in H_0(\diver)$, we know that 
     \begin{align*}
         \veccurl \psi \in \mathfrak{Z}^1 = \mathfrak{B}^1 \stackrel{\perp}{\oplus} \mathfrak{H}^1
     \end{align*}
     using the Hodge decomposition (cf. Thm.\,\ref{thm:hodge_decomposition}). 
-    Assume for contradiction that $\veccurl \psi \in \mathfrak{B}^1$ i.e. there exists 
+    Assume for contradiction that $\veccurl \psi \in \mathfrak{B}^1$, i.e. there exists 
     $\psi_0 \in H^1_0$ s.t. $\veccurl \psi_0 = \veccurl \psi$. 
     Since $\veccurl$ is just the rotated gradient we would get that 
     $\bm{\grad} (\psi - \psi_0) = 0$ and thus $\psi - \psi_0$ is constant almost 
@@ -662,7 +695,7 @@ non-vanishing harmonic part. This is indeed true.
     $\tr \psi = 1$ on $\partial\Omega_{in}$. 
     Thus $\veccurl \psi \notin \mathfrak{B}^1$ and the claim follows.
 \end{proof}
-Now we can apply the Hodge decomposition of the $\ker \diver$ on
+Now we can apply the Hodge decomposition of $\ker \diver$ on
 $\veccurl \psi$ and obtain the following
 \begin{corollary}
     Let $\mathbf{p}\in \mathfrak{H}^1 \setminus \{ 0 \}$. Then there exists 
@@ -697,7 +730,7 @@ independent of the chosen $\psi$.
 As stated in the proof of the Poincare inequality (Thm.\,\ref{thm:poincare_inequality}), 
 $\veccurl| _{\mathfrak{Z}^\perp}: \mathfrak{Z}^\perp \rightarrow \mathfrak{B}^1$
 is bijective and since it is bounded w.r.t. the $V$-norm -- which is the 
-$H^1$-norm here -- due to Banach inverse theorem it is invertible and we denote this 
+$H^1$-norm here -- due to the Banach inverse theorem it is invertible and we denote this 
 inverse $\veccurl^{-1}$. This is a slight abuse of notation since it is not really 
 the inverse of the full $\veccurl$.
 
@@ -721,19 +754,20 @@ In order to prove the $T$-coercivity, we need the following lemma.
 \end{lemma}
 \begin{proof}
     The boundedness is clear since all operators used in the definition 
-    are bounded w.r.t. the norms of their domains. From the Poincaré inequality we know that 
+    are bounded w.r.t. the norm of their domains. From the Poincaré inequality, we know that 
     $\lVert \veccurl^{-1} \mathbf{B}_\mathfrak{B} \rVert \leq c_P \lVert \mathbf{B}_\mathfrak{B} \rVert$
     and so 
     \begin{align*}
         &\lVert T(\sigma,\mathbf{B},\lambda) \rVert^2 _X 
-        = \lVert \sigma - \frac{1}{c_P^2}\veccurl^{-1}\mathbf{B}_\mathfrak{B} \rVert^2 _{H^1}
+        \\ &= \lVert \sigma - \frac{1}{c_P^2}\veccurl^{-1}\mathbf{B}_\mathfrak{B} \rVert^2 _{H^1}
             + \lVert \veccurl \sigma + \mathbf{B} + \lambda \beta \mathbf{p} \rVert^2 _{H(\diver)}
              + \left( \alpha \langle \mathbf{p}, \mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \right)^2
         \\ &\leq 2 \lVert \sigma \rVert ^2 _{H^1} 
             +  \frac{2}{c_P^4} \lVert \veccurl^{-1}\mathbf{B}_\mathfrak{B} \rVert ^2 _{H^1}
             + 3 \lVert \veccurl \sigma  \rVert^2 
             + 3 \lVert \mathbf{B} \rVert^2 _{H(\diver)}
-            + 3 \lambda^2 \beta^2 + 2 \alpha^2 \lVert \mathbf{B}_\mathfrak{H}\rVert^2 
+            + 3 \lambda^2 \beta^2 
+            \\ &\quad+ 2 \alpha^2 \lVert \mathbf{B}_\mathfrak{H}\rVert^2 
             + \frac{2}{c_\psi^2} \lambda^2
         \\ &\leq 2 \lVert \sigma \rVert ^2 _{H^1} 
             + \frac{2}{c_P^2} \lVert \mathbf{B}_\mathfrak{B} \rVert ^2 
@@ -749,21 +783,22 @@ In order to prove the $T$-coercivity, we need the following lemma.
         C_T \vcentcolon= \max \left\{ 5, \frac{2}{c_P^2} + 3 + 2\alpha^2, 3 \beta^2 + \frac{2}{c_\psi^2} \right\}.
         \label{eq:bound_on_norm_of_T}
     \end{align}
-    So $T$ is bounded and $\lVert T \rVert _{\mathcal{L}(X,Y)} \leq \sqrt{C_T}.$
+    So $T$ is bounded and $\lVert T \rVert _{\mathcal{L}(X,X)} \leq \sqrt{C_T}.$
 
     Take $(\tau, \mathbf{v},\mu) \in X$ arbitrary. In order to prove surjectivity, 
     we will split up $\mathbf{v} = \mathbf{v}_\mathfrak{B}
     + \mathbf{v}_\mathfrak{H} + \mathbf{v}_\mathfrak{B^*}$ using the Hodge decomposition
     and choose 
     \begin{align*}
-        \sigma = (1+\frac{1}{c_P^2})^{-1} (\tau + \frac{1}{c_P^2} \veccurl^{-1} \mathbf{v}_\mathfrak{B}) 
+        \sigma = \Big(1+\frac{1}{c_P^2}\Big)^{-1} 
+            \Big(\tau + \frac{1}{c_P^2} \veccurl^{-1} \mathbf{v}_\mathfrak{B}\Big) 
         \text{ and }\mathbf{B}_\mathfrak{B} = \mathbf{v}_\mathfrak{B} - \veccurl \sigma.
     \end{align*}
     So 
     \begin{align*}
         \sigma -  \frac{1}{c_P^2} \veccurl^{-1}\mathbf{B}_\mathfrak{B} 
-        = \sigma -  \frac{1}{c_P^2} (\veccurl^{-1} \mathbf{v}_\mathfrak{B} - \sigma)
-        = (1+\frac{1}{c_P^2})\sigma - \frac{1}{c_P^2} \veccurl^{-1} \mathbf{v}_\mathfrak{B}
+        &= \sigma -  \frac{1}{c_P^2} (\veccurl^{-1} \mathbf{v}_\mathfrak{B} - \sigma)
+        \\ &= \Big(1+\frac{1}{c_P^2}\Big)\sigma - \frac{1}{c_P^2} \veccurl^{-1} \mathbf{v}_\mathfrak{B}
         = \tau.
     \end{align*}
     We simply choose $\mathbf{B}_\mathfrak{B^*} = \mathbf{v}_\mathfrak{B^*}$.
@@ -828,8 +863,8 @@ well-posedness of our formulation.
     We take $T$ as in (\ref{lem:T_for_T_coercivity_surjective}),
     \begin{align*}
         T(\sigma, \mathbf{B},\lambda)
-        = (\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \lambda\mathbf{p},
-            \alpha \langle \mathbf{p},\mathbf{B} \rangle  + \frac{\lambda}{c_\psi} )
+        = \Big(\sigma - \frac{1}{c_P^2}\rho, \veccurl \sigma + \mathbf{B} + \beta \lambda\mathbf{p},
+            \alpha \langle \mathbf{p},\mathbf{B} \rangle  + \frac{\lambda}{c_\psi} \Big)
     \end{align*}
     Then $T$ is surjective due to Lemma \ref{lem:T_for_T_coercivity_surjective}. 
     Note 
@@ -850,7 +885,7 @@ well-posedness of our formulation.
         \\ &\quad + \langle \diver \mathbf{B}, \diver \veccurl \sigma 
             + \diver \mathbf{B} + \beta \lambda \diver \mathbf{p}\rangle
         \\ &\quad + \langle \lambda \mathbf{p}, \veccurl \sigma + \mathbf{B} + \beta \lambda \mathbf{p}\rangle
-            - (\alpha \langle \mathbf{B}, \mathbf{p} \rangle + \frac{\lambda}{c_\psi})
+            - \Big(\alpha \langle \mathbf{B}, \mathbf{p} \rangle + \frac{\lambda}{c_\psi}\Big)
             \langle \mathbf{B} , \veccurl\psi \rangle
         \\ &= \lVert \sigma \rVert^2 - \frac{1}{c_P^2} \langle \sigma , \rho \rangle 
             + \frac{1}{c_P^2} \lVert \mathbf{B}_\mathfrak{B} \rVert^2 + \lVert  \veccurl \sigma \rVert^2
@@ -875,7 +910,7 @@ well-posedness of our formulation.
         \\ &\quad+ \lambda ^2 \beta - \alpha c_\psi \lVert \mathbf{B}_\mathfrak{H} \rVert^2
             - \left( \frac{\epsilon_1 \alpha^2 \lVert \mathbf{B}_\mathfrak{H} \rVert^2}{2} 
             + \frac{\lVert \mathbf{B}_\mathfrak{B} \rVert^2 \lVert  \veccurl \psi_0 \rVert^2}{2 \epsilon_1} \right)
-            - \left( \frac{\lambda^2}{2 \epsilon_2 c_\psi^2} 
+        \\ &\quad - \left( \frac{\lambda^2}{2 \epsilon_2 c_\psi^2} 
             + \frac{\epsilon_2 \lVert \mathbf{B}_\mathfrak{B} \rVert^2 \lVert  \veccurl \psi_0 \rVert^2}{2} \right)
     \end{align*}
     Choose $\epsilon_1 = 4 c_1^2 c_P^2$ to get 
@@ -964,7 +999,7 @@ and then use $C_T$ from (\ref{eq:bound_on_norm_of_T}) to get a lower bound
 
 \section{Discretized magnetostatic problem}\label{sec:discretized_magnetostatic_problem}
 
-In order to approximate solutions of the  2D magnetostatic problem we want to use finite elements.
+In order to approximate solutions of the  2D magnetostatic problem, we want to use finite elements.
 A very typical question that arises for any discretization of a model is what 
 notions of the continuous model are represented in the discretized one. 
 In our case, a fundamental structure of our problem is the Hilbert complex that we introduced in Section\,
@@ -972,7 +1007,7 @@ In our case, a fundamental structure of our problem is the Hilbert complex that 
 We would like to represent it in our discretization, leading to the discrete Hilbert complex. 
 This section follows Sec. 5.2 in Arnold's book \cite{arnold}. We start with reviewing the 
  theory behind the discretization of general Hilbert complexes before applying this 
-theory to our problem. Once we discretized our problem, we will utilize
+theory to our problem. Once we discretized it, we will utilize
 the inf-sup condition proven in Section\,\ref{sec:variational_formulation_of_the_magnetostatic_problem_in_2D} 
 to prove well-posedness of 
 the discrete formulation and derive a quasi-optimal error estimate.
@@ -981,7 +1016,7 @@ the discrete formulation and derive a quasi-optimal error estimate.
 
 Let us at first stick to the general situation. We assume that we have a Hilbert complex 
 $(W^k,d^k)$ with its corresponding domain complex 
-$(V^k,d^k)$ and dual complex $(V^*_k,d^*_k)$ for $k \in \integers$. For this chapter 
+$(V^k,d^k)$ and dual complex $(V^*_k,d^*_k)$ for $k \in \integers$. For this chapter, 
 we will only need a short subsequence 
 \begin{align*}
     V^{k-1} \xrightarrow{d^{k-1}} V^k \xrightarrow{d^{k}} V^{k+1}
@@ -1014,10 +1049,10 @@ $\mathfrak{B}_h^{j,\perp} \supseteq \mathfrak{B}^{j,\perp}$ we have in general
 We will later investigate the difference between the space of the discrete and continuous 
 harmonic forms more closely.
 
-There are three crucial assumptions that are necessary for stability and convergence 
+There are three crucial assumptions that we will need to prove stability and convergence 
 of the method. The first one is the common and reasonable assumption that 
--- as usual in finite element theory -- we want that the discrete spaces $V_h^j$
- approximate the continuous ones $V^j$. 
+-- as usual in finite element theory -- we want the discrete spaces $V_h^j$
+to approximate the continuous ones $V^j$. 
 \begin{assumption}\label{ass:convergence_discrete_spaces}
     For the discrete spaces, we require $V_h^j \subseteq V^j$ and
     \begin{align*}
@@ -1058,7 +1093,7 @@ and its dual complex
 \begin{align*}
     V_h^{k-1} \xleftarrow{d^*_{k,h}} V_h^{k} \xleftarrow{d^*_{k+1,h}} V_h^{k+1}
 \end{align*}
-From the general Hilbert complex theory (Thm.\,\ref{thm:hodge_decomposition})
+From the general Hilbert complex theory (cf. Thm.\,\ref{thm:hodge_decomposition}),
 we thus obtain the \textit{discrete Hodge decomposition}
 \begin{align*}
     V_h^j = \mathfrak{B}^j_h \stackrel{\perp}{\oplus} \mathfrak{H}^j_h \stackrel{\perp}{\oplus}
@@ -1074,13 +1109,13 @@ forms approximate the continuous ones more thoroughly later.
     This is a projection that is a cochain map in the sense of cochain complexes 
     (see Sec.\,\ref{sec:cohomology_groups}) i.e. 
     the following diagram commutes: 
-    \\
+    \begin{center}
     \begin{tikzcd}
     V^{k-1} \arrow[d, "\Pi^{k-1}_h"] \arrow[r, "d^{k-1}"] 
         & V^{k} \arrow[d, "\Pi^{k}_h"] \arrow[r, "d^{k}"] & V^{k+1} \arrow[d, "\Pi^{k+1}_h"]
     \\ V^{k-1}_h \arrow[r, "d^{k-1}"] & V^{k}_h  \arrow[r, "d^{k}"]& V^{k+1}_h 
     \end{tikzcd}
-    \\   
+    \end{center}
     $\Pi^j_h$ are either bounded in the $V$- or in the $W$-norm. 
 \end{assumption}
 Quite often we will leave out the index and just say the discrete Hilbert complex admits a 
@@ -1112,13 +1147,13 @@ a quasi optimal estimate.
 % for some generic constant $C>0$ independent of $v$ and the mesh size $h$ and some 
 % $s>0$ then this implies 
 
-Let us now answer the question about the difference between discrete and continous 
+Let us now answer the question about the difference between discrete and continuous 
 harmonic forms. In order to do that, we need some way to measure the "difference" 
 between two subspaces. 
 
 For a general metric space $(X,d)$, we will use the standard notation 
-$d(x,M) \vcentcolon= \inf_{m\in M} d(x,m)$ for $x\in X$ being in a 
-metric space and $M \subseteq X$. If we are dealing with a normed space then we 
+$d(x,M) \vcentcolon= \inf_{m\in M} d(x,m)$ for $x\in X$ 
+and $M \subseteq X$. If we are dealing with a normed space then we 
 take the metric induced by the norm.
 
 \begin{definition}[Gap between subspaces]
@@ -1128,7 +1163,7 @@ take the metric induced by the norm.
     Then we define 
     the gap between these subspaces as 
     \begin{align*}
-        \gap(Z_1, Z_2) = \max\{ \sup_{z_1 \in S_1} d(z_1, Z_2), \sup_{z_2 \in S_2} d(z_2, Z_1) \}
+        \gap(Z_1, Z_2) = \max\left \{ \sup_{z_1 \in S_1} d(z_1, Z_2), \sup_{z_2 \in S_2} d(z_2, Z_1) \right \}
     \end{align*}
 \end{definition}
 This definition is from \cite[Ch.4 §2.1]{kato_perturbation_theory} and defines a metric on the set of closed subspaces
@@ -1142,14 +1177,14 @@ discrete and continuous harmonic forms.
 \begin{proposition}[Gap between harmonic forms]
     Assume that the discrete complex (\ref{eq:discrete_hilbert_complex}) admits a $V$-bounded cochain projection
     $\Pi_h$. Then
-    \begin{align}
+    \begin{alignat}{2}
         \lVert (I - P_{\mathfrak{H}^k_h}) q \rVert _V &\leq \lVert (I - \Pi_h^k) q \rVert _V, 
             &&\forall q \in \mathfrak{H}^k \label{eq:difference_identity_projection_discrete_harmonics}
         \\ \lVert (I - P_{\mathfrak{H}^k}) q_h \rVert _V 
         &\leq \lVert (I - \Pi_h^k)P_{\mathfrak{H}^k} q_h \rVert _V, \quad 
                 &&\forall q_h \in \mathfrak{H}^k_h 
-    \end{align}
-    and then 
+    \end{alignat}
+    and 
     \begin{align*}
         \gap (\mathfrak{H}, \mathfrak{H}_h) 
         \leq \sup_{q \in \mathfrak{H}, \lVert q \rVert = 1} \lVert (I - \Pi_h^k) q \rVert _V
@@ -1189,7 +1224,7 @@ we will need a small lemma.
     Denote $S_h \vcentcolon= \{ q_h \in \mathfrak{H}^k_h \mid \lVert q_h \rVert = 1 \}$.
     Since $S_h$ is closed we can find $p_h \in S_h$ s.t. 
     \begin{align*}
-        \lVert p_h - p \rVert = \inf_{q_h \in S_h} \lVert q_h - p \rVert
+        \lVert p_h - p \rVert = \inf_{q_h \in S_h} \lVert q_h - p \rVert.
     \end{align*}
     The right hand side can be estimated using (\ref{eq:difference_identity_projection_discrete_harmonics}) 
     and then the 
@@ -1200,9 +1235,9 @@ we will need a small lemma.
         \stackrel{\text{Lem.\,\ref{lem:distance_unit_sphere_whole_space}}}{\leq} 
             2\,\inf_{q_h \in \mathfrak{H}_h} \lVert q_h - p \rVert
         = 2\,\lVert P_{\mathfrak{H}_h}p - p \rVert
-        \stackrel{(\ref{eq:difference_identity_projection_discrete_harmonics})}{\leq} 
+        \\ &\stackrel{(\ref{eq:difference_identity_projection_discrete_harmonics})}{\leq} 
             2\,\lVert \Pi_h^k p - p \rVert _V 
-        \\ &\leq 2\,\lVert I - \Pi_h^k\rVert _{\mathcal{L}(V,V)}
+        \leq 2\,\lVert I - \Pi_h^k\rVert _{\mathcal{L}(V,V)}
             \inf_{v_h \in V_h} \lVert p - v_h \rVert _V
     \end{align*}
     which gives us the estimate.
@@ -1257,7 +1292,7 @@ for $h$ small enough.
     Since $\mathfrak{B}_h \subseteq \mathfrak{B}$, $d(z_h, \mathfrak{B}) = 0$ for any 
     $z_h \in \mathfrak{B}_h$. 
     
-    Take $z \in \mathfrak{B}^j$ arbitrary i.e. there exists $w \in V^{j-1}$ s.t. 
+    Take $z \in \mathfrak{B}^j$ arbitrary, i.e. there exists $w \in V^{j-1}$ s.t. 
     $dw = z$.
     Since $\Pi_h$  is a cochain projection, we thus have 
     \begin{align*}
@@ -1278,33 +1313,34 @@ for $h$ small enough.
     the discrete Hilbert complex. Then 
     \begin{align*}
         \lVert v_h \rVert _V \leq c_{P,h}  \lVert dv_h \rVert, 
-            \quad \forall v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h
+            \quad \forall v_h \in \mathfrak{Z}_h^{k,\perp}\cap V_h
     \end{align*}
     with $c_{P,h} \vcentcolon= c_{P} \lVert \Pi_h \rVert _V$  and $c_P$ being the Poincare constant from 
     Thm.\,\ref{thm:poincare_inequality}.
 \end{proposition}
 \begin{proof}
+    The proof is from \cite[Thm.\,5.3]{arnold} with some additional details.
     This indeed is a direct consequence of the existence of bounded cochain projections.
-    Take $v_h \in \mathfrak{Z}_h^{k\perp}\cap V_h$ arbitrary. 
+    Take $v_h \in \mathfrak{Z}_h^{k,\perp}\cap V_h$ arbitrary. 
     Since $d (\mathfrak{Z}^{k,\perp} \cap V^k) = \mathfrak{B}^{k+1} \supseteq \mathfrak{B}^{k+1}_h$ we find 
-    $z\in \mathfrak{Z}^{k\perp}\cap V^k$ s.t. $dz = dv_h$. We can apply now the continuous 
+    $z\in \mathfrak{Z}^{k,\perp}\cap V^k$ s.t. $dz = dv_h$. We can apply now the continuous 
     Poincare inequality (Thm.\,\ref{thm:poincare_inequality}) to get $\lVert z \rVert _V \leq c_P \lVert dz \rVert _V = c_P \lVert dv_h \rVert _V$.
-    Now we can use the fact that $\Pi_h$ is a cochain map 
-    and the fact that $\Pi_h$ is a projection:
+    We use the fact that $\Pi_h$ is a cochain map 
+    and a projection:
     \begin{align*}
         d\Pi^k_h z = \Pi^{k+1}_h dz = \Pi^{k+1}_h dv_h = dv_h
     \end{align*}
-    For the last equality we used also the fact that we have a discrete complex i.e. $d^k V^k_h \subseteq V^{k+1}_h$.
-    That shows that $d(v_h - \Pi_h z) = 0$ i.e. $(v_h - \Pi_h z) \in \mathfrak{Z}_h^k$.
+    For the last equality, we need the fact that we have a discrete complex, i.e. $d^k V^k_h \subseteq V^{k+1}_h$.
+    That shows that $d(v_h - \Pi_h z) = 0$, i.e. $v_h - \Pi_h z \in \mathfrak{Z}_h^k$.
     Because $v_h \in \mathfrak{Z}_h^{k,\perp}$ by assumption we have 
     \begin{align*}
         0 = \langle v_h, v_h - \Pi_h z \rangle = \langle v_h, v_h - \Pi_h z \rangle + \langle dv_h, d(v_h - \Pi_h z) \rangle
-            = \langle v_h, v_h - \Pi_h z \rangle _V
+            = \langle v_h, v_h - \Pi_h z \rangle _V,
     \end{align*}
     so $v_h - \Pi_h z$ is $V$ orthogonal to $v_h$. So 
     \begin{align*}
         \lVert v_h \rVert _V^2 &= \langle v_h, \Pi_h^k z \rangle _V + \langle v_h, v_h - \Pi_h^k z\rangle _V 
-        = \langle v_h, \Pi_h^k z \rangle _V \leq \lVert v_h \rVert _V \lVert \Pi_h \rVert _V \lVert z \rVert 
+        = \langle v_h, \Pi_h^k z \rangle _V \leq \lVert v_h \rVert _V \lVert \Pi_h \rVert _V \lVert z \rVert _V
         \\ &\stackrel{\text{Poincare ineq.}}{\leq} \lVert v_h \rVert _V c_P \lVert \Pi_h \rVert _V 
             \lVert dv_h \rVert _V
     \end{align*}
@@ -1331,8 +1367,9 @@ and the dual complex
     V^0_h \xleftarrow{\widetilde{\curl}_h} V^1_h \xleftarrow{-\widetilde{\bm{\grad}}_h} V^2_h
 \end{align*}
 where $\widetilde{\curl}_h$ is the adjoint of $\veccurl_h$ and can thus be 
-seen as a weak approximation of $\curl$ and the same for $\widetilde{\bm{\grad}}_h$.
-Analogous to the continuous case we assume that $\dim \mathfrak{H}_h^1 = 1$ 
+seen as a weak approximation of $\curl$ and analogous for $\widetilde{\bm{\grad}}_h$ 
+and $\diver$.
+As in the continuous case, we assume that $\dim \mathfrak{H}_h^1 = 1$ 
 which is not unreasonable thanks to Thm.\,\ref{thm:dim_of_discrete_harmonic_space} 
 for $h>0$ small enough.
 
@@ -1379,16 +1416,16 @@ is computed numerically before assembling the system.
 
 We define $X_h \vcentcolon= V_h^0 \times V_h^1 \times \real$. 
 Note that this trial and test space is indeed conforming i.e. $X_h \subseteq X$, 
-but we choose the discrete bilinear form $a_h:X_h \times X_h \rightarrow \real$
+but we choose the discrete bilinear form $a_h:X_h \times X_h \rightarrow \real$,
 \begin{align*}
     &a_h(\sigma_h,\mathbf{B}_h,\lambda;\tau_h,\mathbf{v}_h,\mu)
     \\ \quad&= \langle \sigma_h, \tau_h \rangle - \langle \mathbf{B}_h, \veccurl\tau_h \rangle
     + \langle \veccurl\sigma_h, \mathbf{v}_h \rangle + \langle \diver \mathbf{B}_h, \diver \mathbf{v}_h \rangle 
-    + \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle - \mu \langle \veccurl \psi, \mathbf{B}_h \rangle.
+    \\ &\quad+ \langle \lambda \mathbf{p}_h, \mathbf{v}_h \rangle - \mu \langle \veccurl \psi, \mathbf{B}_h \rangle
 \end{align*} 
-with $\mathbf{p}_h \in \mathfrak{H}^1_h$ 
+with $\mathbf{p}_h \in \mathfrak{H}^1_h$, 
 so the resulting bilinear forms are different since we have $\mathbf{p}_h$ 
-instead of $\mathbf{p}$. So we can write the discrete problem in 
+instead of $\mathbf{p}$. We can then write the discrete problem in 
 standard form: Find $(\sigma_h,\mathbf{B}_h,\lambda) \in X_h$ s.t.
 \begin{align*}
     a_h(\sigma_h,\mathbf{B}_h,\lambda;\tau_h,\mathbf{v}_h,\mu) = \ell(\tau_h,\mathbf{v}_h,\mu) 
@@ -1397,7 +1434,10 @@ standard form: Find $(\sigma_h,\mathbf{B}_h,\lambda) \in X_h$ s.t.
 For simplicity, we assume for the theoretical considerations that we can 
 compute all inner products exactly and that $C_1$ is 
 given exactly as well. That also means that the right hand side $\ell$ is the 
-same for the continuous and discrete problem.
+same for the continuous and discrete problem, i.e. 
+\begin{align*}
+    \ell(\tau_h,\mathbf{v}_h,\mu) = -\langle J, \tau_h \rangle - \mu C_1.
+\end{align*}
 
 Because we have transfered the continuous structures to the discrete case 
 we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}.
@@ -1415,12 +1455,12 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
     We also assume that (\ref{eq:assumption_same_dimension}) holds and thus 
     $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$ and we choose 
     $\mathbf{p}_h$ according to Prop.\,\ref{prop:choice_of_discrete_harmonic_form}.
-    Then the discrete variational problem (Problem \ref{prob:magnetostatic_problem_discrete_variational} )
-    is well-posed i.e. there exists a 
-    unique solution and for a solution $(\sigma_h, \mathbf{B}_h,\lambda) \in X_h$
+    Then the discrete variational problem (Problem \ref{prob:magnetostatic_problem_discrete_variational})
+    is well-posed, i.e. there exists a 
+    unique solution $(\sigma_h, \mathbf{B}_h,\lambda) \in X_h$ and
     we have the stability estimate 
     \begin{align*}
-        \lVert \mathbf{B}_h \rVert _{H(\diver)} 
+        \lVert \mathbf{B}_h \rVert  
         \leq \frac{\lVert J \rVert + |C_1|}{\gamma_h}.
     \end{align*}
     where $\gamma_h$ has the same expression as $\gamma$ except  
@@ -1428,7 +1468,7 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
     Furthermore if $c_{P,h} \rightarrow c_P$ then $\gamma_h \rightarrow \gamma$ for $h \rightarrow 0$.
 \end{theorem}
 \begin{proof}
-    By following exactly the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}, 
+    By following the exact same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}, 
     we can prove
     the well-posedness through the BNB-theorem. We also get that
     $c_{\psi,h}$ does not depend on the choice of $\psi$ by following the same 
@@ -1448,9 +1488,9 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
         | c_{\psi,h} - c_\psi | = |\langle \mathbf{p} - \mathbf{p}_h, \veccurl \psi \rangle|
         \leq \lVert \veccurl \psi \rVert \lVert \mathbf{p} - \mathbf{p}_h \rVert.
     \end{align*}
-    and so because we chose $\mathbf{p}_h$ as described in Prop.\,\ref{prop:choice_of_discrete_harmonic_form} 
-    and assume $\Pi_h$ being 
-    uniformly bounded we have $\lVert \mathbf{p} - \mathbf{p}_h \rVert \rightarrow 0$
+    and, because we chose $\mathbf{p}_h$ as described in Prop.\,\ref{prop:choice_of_discrete_harmonic_form} 
+    and assume $\Pi_h$ to be 
+    uniformly bounded, we have $\lVert \mathbf{p} - \mathbf{p}_h \rVert \rightarrow 0$
     as $h\rightarrow 0$ and thus
     we obtain $c_{\psi,h} \rightarrow c_\psi$ for $h \rightarrow 0$ and 
     we can assume $c_{\psi,h} > 0$ for $h$ small enough.
@@ -1482,7 +1522,7 @@ In order to do so, we have to consider the fact that the bilinear forms
 are different in the discrete and continuous case. So we will use the following lemma.
 \begin{lemma}\label{lem:a_priori_estimate_from_infsup}
     Let $x \in X$ be a solution of a general variational problem of the form (\ref{eq:general_variational_problem}) 
-    and $x_h \in X_h$ be a solution of the discretized version i.e for $X_h \subseteq X$ 
+    and $x_h \in X_h$ be a solution of the discretized version, i.e for $X_h \subseteq X$ 
     and $ Y_h \subseteq Y$ finite-dimensional subspaces
     \begin{align*}
         a_h(x_h,y_h) = \ell(y_h) \quad \forall y_h \in Y_h.
@@ -1493,6 +1533,11 @@ are different in the discrete and continuous case. So we will use the following 
     \begin{align*}
         \langle \delta_h(x), y \rangle_{Y'\times Y} 
         \vcentcolon= a(x,y) - a_h(x,y).
+    \end{align*}
+    and assume 
+    \begin{align*}
+        \lVert a_h \rVert \vcentcolon= \sup_{x\in X, y\in Y}\frac{a_h(x,y)}{\lVert x \rVert _X \, \lVert y \rVert _Y}  
+        < \infty.    
     \end{align*}
     Then
     \begin{align*}
@@ -1518,15 +1563,15 @@ are different in the discrete and continuous case. So we will use the following 
             + \lVert \delta_h(x) \rVert _{Y'}  \lVert y_h \rVert _Y
     \end{align*}
     In the third step, we used the fact that $x$ and $x_h$ are solutions and the discrete 
-    problem has the same right hand side as the continous one.
+    problem has the same right hand side as the continuous one.
     So we can bound $\lVert x_h - z_h \rVert _X$ by 
     \begin{align*}
         \lVert x_h - z_h \rVert _X
         \leq \frac{\lVert a_h \rVert}{\gamma_h} \lVert x- z_h \rVert _X 
-            + \frac{\lVert \delta_h(x) \rVert _{Y'}}{\gamma_h}  
+            + \frac{\lVert \delta_h(x) \rVert _{Y'}}{\gamma_h}.  
     \end{align*}
-    and plugging this in (\ref{eq:a_priori:triangular}) and taking the infimum 
-    over $z_h \in X_h$ we get 
+    Plugging this into (\ref{eq:a_priori:triangular}) and taking the infimum 
+    over $z_h \in X_h$, we get 
     \begin{align*}
         \lVert x - x_h \rVert 
         \leq \left( 1 + \frac{\lVert a_h \rVert}{\gamma_h} \right) \inf _{z_h \in V_h}\lVert x - z_h \rVert _X 
@@ -1563,16 +1608,16 @@ We now have to apply this lemma to the magnetostatic formulation.
 \end{proof}
 
 One more thing to investigate is the substituted curve integral constraint in the 
-discrete setting. For all the analysis above we fixed $\psi$ before which 
+discrete setting. For all the analysis above, we fixed $\psi$ before which 
 raises the question if the choice of $\psi$ matters. We know that 
 in the continuous case it does not (cf. Prop.\,\ref{prop:different_psi_same_curve_integral} 
 and the explanation before). 
 It turns out that the analogous result holds with the same argument if we replace $\mathbf{B}$ with 
 a solution of the first two equations of the discrete formulation $\mathbf{B}_h$ and 
 choose the discrete space $V_h^0$ instead of $H^1_0$ 
-(recall that we assume $\psi \in V_h^0$) and then we use the discrete formulation of the problem, i.e.
-the first two equations of Problem\,\ref{prob:magnetostatic_problem_discrete_variational}. Then
-we obtain
+{\color{red}(recall that we assume $\psi \in V_h^0$)}. We use the discrete formulation of the problem, i.e.
+the first two equations of Problem\,\ref{prob:magnetostatic_problem_discrete_variational},
+and obtain
 \begin{align}
     \int_{\Omega_\Gamma} \psi \, J \, dx -  \int_\Omega \veccurl \psi \cdot \mathbf{B}_h \, dx
     = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx -  \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B}_h \, dx
@@ -1582,7 +1627,8 @@ and thus an equivalent system by choosing
     C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
     \tilde{C}_1 \vcentcolon= \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx - C_0.
 \end{align*}
-Here we always assumed that we can compute all the inner products exactly.
+Here we always assumed that we can compute all the inner products exactly. 
+In summary, the choice of $\psi$ does not matter for the discrete system either.
 
 Another important property of our new curve integral constraint was the 
 invariance if $J=0$, i.e. if we have two different curves 
@@ -1600,7 +1646,7 @@ instead and $V_h^0$ instead of $H^1_0$.
 
 \section{Implementation on a single patch domain}\label{sec:implementation}
 
-We start with very short introduction on Splines and their tensor product space which 
+We start with a very short introduction on Splines and their tensor product space which 
 will be our choice of basis on the reference domain. Then we 
 choose our degrees of freedom and basis dual to them. We will work at first 
 on a reference domain and then transfer it to the physical domain 
@@ -1627,7 +1673,7 @@ and
 \begin{align*}
     B^0_i(x) \vcentcolon= \begin{cases*}
         1, & \text{ if $x \in [\xi_i,\xi_{i+1})$},
-        \\0, & \text{ else}
+        \\0, & \text{ else.}
     \end{cases*}
 \end{align*}
 
@@ -1638,7 +1684,7 @@ We will stick to the equidistant case i.e. $h$ will be our grid size
 $x_{i+1} - x_i$.
 For the non-periodic case, we choose an \textit{open} knot sequence by 
 $\xi_0 = ... = \xi_p = x_0$, $\xi_{p+k} = x_k$ for $k = 0,1,...,N$ and 
-$\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$ i.e. 
+$\xi_{n} = \xi_{n+1} = ... = \xi_{n+p} = x_N$, i.e. 
 \begin{align*}
     \bm{\xi} = (\underbrace{x_0, x_0,...,x_0}_{\text{$p+1$ times}}, x_1, x_2, ..., x_{N-1}, 
         \underbrace{x_N, x_N, ..., x_N}_{\text{$p+1$ times}})   
@@ -1647,8 +1693,9 @@ and for the periodic case
 $\xi_0 = x_0-ph, \xi_1 = x_0-(p-1)h, ..., \xi_p = x_0$, 
 $\xi_{p+k} = x_k$ for $k=0,..., n$ and $\xi_{n+k} = x_N + kh$ for $k = 0, ..., p$, 
 \begin{align*}
-    \bm{\xi} = (x_0-ph,x_0-(p-1)h,...,x_0-h, x_0,  x_1, x_2, ..., x_{N-1}, 
-        x_N, x_N + h, x_N + 2h, ..., x_N + ph ).
+    \bm{\xi} = (&x_0-ph,x_0-(p-1)h,...,x_0-h, x_0,  x_1, x_2, ..., x_{N-1}, 
+        x_N, 
+    \\ &x_N + h, x_N + 2h, ..., x_N + ph ).
 \end{align*}
 In the periodic case, the splines at the beginning and end of the interval are extended periodically.
 In both cases, we have $n + p +1 = N+2p+1$ knots in our knot sequence $\bm{\xi}$ and
@@ -1663,7 +1710,7 @@ space has maximal regularity which implies that it is equal to the piecewise pol
         \text{ for } j\in [N-1]\}.
 \end{align*}
 where $\mathbb{P}_p([x_j,x_{j+1}))$ are the polynomials of degree $p$ on $[x_j,x_{j+1})$ 
-and we use the standard notation $[K] = \{ 0, 1, ..., K\}$ for $k\in \naturalnum$.
+and we use the standard notation $[K] = \{ 0, 1, ..., K\}$ for $K\in \naturalnum$.
 
 This construction can now be generalized to 2D by using a tensor product approach.
 Denote $a_1 = x_0 < x_1 < x_2 < ... < x_N = b_1$ the grid in $x$-direction and 
@@ -1721,10 +1768,10 @@ such that this approach works.
 We now fix $p$ and get $n = N+p$. Here it is crucial to remember that we assumed to 
 have the same number of grid points in both dimensions.
 We will use geometric degrees of 
-freedom i.e. each degree of freedom can be associated with some geometrical element of our 
-grid. We define Greville points by 
+freedom, i.e. each degree of freedom can be associated with some geometrical element of our 
+grid. We define \textit{Greville points} by 
 \begin{align*}
-    \zeta_i^x \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p}
+    \zeta_i^x \vcentcolon= \frac{\xi_{i+1} + ... + \xi_{i+p}}{p},
 \end{align*}
 i.e. the knot averages for $i=0,...,n-1$ and analogous $\zeta_j^y$ in $y$-direction 
 using the knot sequence $\bm{\eta}$. 
@@ -1755,8 +1802,8 @@ The set of multiindices are defined as
 
 Now that we have defined the geometric elements we define the corresponding 
 degrees of freedom. 
-We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$ i.e. the rotation by $\pi /2$ in counter clockwise 
-direction which leads to $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$. 
+We define $\mathbf{e}_d^\perp$ as $\mathbf{R}_{\pi/2}\mathbf{e}_d$, i.e. the rotation by $\pi /2$ in counter clockwise 
+direction, which leads to $\mathbf{e}^\perp_1= \mathbf{e}_2$ and $\mathbf{e}^\perp_2= -\mathbf{e}_1$. 
 The degrees of freedom are then
 \begin{align*}
     \hat{\sigma}_\mathbf{i}^0(v)  &\vcentcolon= v(\hat{\mathtt{n}}_\mathbf{i}), \quad \mathbf{i} \in \mathcal{M}^0
@@ -1775,10 +1822,9 @@ define
 \begin{align*}
     \hat{\bm{\sigma}}^\ell \vcentcolon= (\hat{\sigma}^\ell_0, \hat{\sigma}^\ell_1, ..., 
         \hat{\sigma}^\ell_{N_\ell})^\top
-    : \hat{V}^\ell_h \rightarrow \real^{N_\ell}
+    : \hat{V}^\ell_h \rightarrow \real^{N_\ell},
 \end{align*}
-which is bijective.
-And we can thus define our basis functions 
+which is bijective, and we can thus define our basis functions 
 $\hat{\Lambda}^\ell_\mu$, $\mu \in \mathcal{M}^\ell$, (denoted in bold if vector valued) 
 as the basis which is dual to the 
 degrees of freedom in the sense 
@@ -1800,7 +1846,7 @@ degrees of freedom in the sense
 The question is now  on what function spaces these degrees of freedom are defined. We note first that 
 the standard choice with $\hat{V}^0 = H^1(\hat{\Omega})$, 
 $\hat{V}^1 = H(\diver,\hat{\Omega})$ and $\hat{V}^2 = L^2(\hat{\Omega})$ can not work 
-because e.g. the evaluation at point values is generally not well-defined for $H^1$-functions in 2D. Thus, 
+because, e.g., the evaluation at point values is generally not well-defined for $H^1$-functions in 2D. Thus, 
 we need to choose function spaces with higher regularity or integrability.
 
 Let us define the spaces
@@ -1840,12 +1886,12 @@ to transfer them to the physical domain.
 
 This is usually referred as the \textit{single patch case} since we only use 
 one mapping from the reference domain. We see that this assumption is made so that 
-the notions on the physical domain are well-represented on the reference 
+notions from the physical domain are well-represented on the reference 
 domain. Notice that under this assumption the preimage of $\Omega_\Gamma$ corresponds to 
 a subgrid on the reference domain. 
 
 We already introduced the pullback in Prop.\,\ref{prop:pullback_and_commutativity_3D} in the 3D case. 
-Then we define the pullbacks in 2D
+Now, we define the pullbacks in 2D
 \begin{align*}
     &\mathcal{P}_\mathbf{F}^0: v \mapsto \hat{v} \vcentcolon= v \circ \mathbf{F}
     \\ &\mathcal{P}_\mathbf{F}^1: \mathbf{v} \mapsto \hat{\mathbf{v}} 
@@ -1893,7 +1939,7 @@ degrees of freedom on the physical domain as
 \begin{align*}
     \sigma^\ell_\mu \vcentcolon= \hat{\sigma}_\mu^\ell \circ \mathcal{P}_F^\ell
 \end{align*}
-Then we have by construction that 
+Then we have by construction 
 $\sigma^\ell_\mu(\Lambda^\ell_{\nu}) = \delta_{\mu,\nu}$ for all $\mu, \nu \in \mathcal{M}^\ell$.
 
 % We can thus define the projection operators 
@@ -1955,19 +2001,19 @@ $\Omega$. This motivates the
 \end{align*}
 
 Let us define the sets of boundary indices $\mathcal{B}^\ell$ which correspond 
-to the multiindices of the geometric elements on the boundary i.e. 
+to the multiindices of the geometric elements on the boundary, i.e. 
 \begin{align*}
     \mathcal{B}^0 &\vcentcolon= \{ \mathbf{i} \in \mathcal{M}^0 
-        \mid \hat{\mathtt{n}}_\mathbf{i} \in \partial \hat{\Omega} \}
+        \mid \hat{\mathtt{n}}_\mathbf{i} \in \partial \hat{\Omega} \},
     \\ \mathcal{B}^1 &\vcentcolon= \{ (d,\mathbf{i}) \in \mathcal{M}^1 
-        \mid \hat{\mathtt{e}}_{d,\mathbf{i}} \subseteq \partial \hat{\Omega} \}
+        \mid \hat{\mathtt{e}}_{d,\mathbf{i}} \subseteq \partial \hat{\Omega} \}.
 \end{align*}
 Since $V_h^2 \subseteq L^2$ we do not require any boundary conditions there.
-Then we define the spaces 
+For $\ell = 1,2$, we define the spaces 
 \begin{align*}
     V_h^\ell \vcentcolon= \{ v_h \in \bar{V}_h^\ell \mid \sigma^\ell_\mu (v_h) = 0 
         \quad \forall \mu \in \mathcal{B}^\ell \}
-    = \spanvec \{ \Lambda^\ell_\mu \mid \mu \in \mathcal{M}^\ell \setminus \mathcal{B}^\ell \}
+    = \spanvec \{ \Lambda^\ell_\mu \mid \mu \in \mathcal{M}^\ell \setminus \mathcal{B}^\ell \}.
 \end{align*}
 For these spaces it holds then
 \begin{align*}
@@ -1978,7 +2024,7 @@ and so we see that the homogeneous boundary conditions simply correspond to the
 boundary degrees of freedom being zero. This means for $V_h^0$ we require the 
 nodal values on the boundary to vanish and for $V_h^1$ zero flux through the boundary edges.
 
-Then we define the 
+This motivates us to define the 
 projections $P_h^\ell: \bar{V}_h^\ell \rightarrow \bar{V}_h^\ell$ which set 
 the boundary degrees of freedom to zero and are thus 
 a projection onto $V_h^\ell$. The
@@ -2020,11 +2066,11 @@ We will from now on often use implicitly some flattening of the multiindices in 
 Define $\mathbb{M}^\ell$ as the mass matrix 
 of $\bar{V}_h^\ell$ i.e. $\mathbb{M}_{ij}^\ell = \langle \Lambda^\ell_i , \Lambda^\ell_j \rangle$.
 We define the matrix $\mathbb{D}$ as the matrix representation of the 
-divergence applied to $\bar{V}^1_h$ i.e. $\diver|_{\bar{V}^1_h}: \bar{V}^1_h \rightarrow \bar{V}^2_h$.
+divergence restricted to $\bar{V}^1_h$, i.e. $\diver|_{\bar{V}^1_h}: \bar{V}^1_h \rightarrow \bar{V}^2_h$.
 Analogously $\mathbb{C}$ is the matrix representation of $\veccurl$. Then 
 we have, as mentioned before, the matrix representation of the boundary projections 
 $\mathbb{P}^\ell$ and $\mathbb{I}^\ell \in \real^{N_\ell \times N_\ell}$ is the identity matrix.
-We denote the vector of coefficients of a function with an underline e.g. 
+We denote the vector of coefficients of a function with an underline, e.g. 
 $\underline{\sigma} \in \real^{N_0}$ is the vector of coefficients of $\sigma$ in 
 the basis $\Lambda^0_\mu$, $\mu \in \mathcal{M}^0$.
 $\underline{\mathbf{B}}, \underline{\mathbf{p}} \in \real^{N_1}$ are the coefficients 
@@ -2046,7 +2092,7 @@ in matrix-vector form gives us
         \mathbb{D} \mathbb{P}^1 \underline{\mathbf{B}} + \underline{\mathbf{v}}^\top \mathbb{P}^1 \mathbb{M}^1
         \underline{\mathbf{p}} &= 0 
         \quad \forall \underline{\mathbf{v}} \in \real^{N_1}
-    \\ \underline{\psi}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1 \underline{\mathbf{B}} = C_1
+    \\ \underline{\psi}^\top \mathbb{C}^\top \mathbb{M}^1 \mathbb{P}^1 \underline{\mathbf{B}} &= C_1
 \end{align*}
 where $\underline{\tilde{J}} = (\langle J, \Lambda^0_i \rangle)_{i=1}^{N_0}$
 which gives us the final system to be solved 
@@ -2066,7 +2112,7 @@ which gives us the final system to be solved
 \end{align*}
 
 Now we will explain how the discrete harmonic form is computed.
-In order to do that we will characterize harmonic forms in a different way.
+In order to do that, we will characterize harmonic forms in a different way.
 \begin{proposition}
     Define the penalized discrete Hodge Laplacian operator $\bar{L}^1_h: \bar{V}^1_h \rightarrow \bar{V}^1_h$ as
     \begin{align*}
@@ -2145,27 +2191,26 @@ and a "distorted annulus" and the manufactured solution will be approximated
 on a standard annulus with two different curve integrals given.
 
 \subsection{Magnetic field induced current through wire}
-As a first simple numerical example, we consider a standard example from 
+As a first simple numerical test, we consider a standard example from 
 magnetostatics which is the magnetic field induced by a current through an infinitely long, 
 straight wire with radius zero. The \textit{Biot-Savart law} can be used to compute it. 
 Let the wire be equal to the $z$-axis and $I$ be the electrical current 
-flowing through it. $\bm{\ell}(s) = s \mathbf{e}_3$, $x = x_1 \mathbf{e}_1 +  x_2 \mathbf{e}_2$
+flowing through it. With $\bm{\ell}(s) = s \mathbf{e}_3$, $x = x_1 \mathbf{e}_1 +  x_2 \mathbf{e}_2$,
 
 \begin{align*}
     \mathbf{B}(x) = \frac{\mu_0 I}{4\pi} \int_{-\infty}^\infty  
         \frac{\ell' \times (x - \ell(s))}{|x - \ell(s)|^3} \, ds
-    = \frac{\mu_0 I}{4\pi |x|^2}  \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}
+    = \frac{\mu_0 I}{4\pi |x|^2}  \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}.
 \end{align*}
-for convenience we pick now $I = \frac{2 \pi}{\mu_0}$ to get 
+For convenience, we pick now $I = \frac{2 \pi}{\mu_0}$ to get 
 \begin{align*}
     \mathbf{B}(x) = \frac{2}{|x|^2} \begin{pmatrix}-x_2 \\ x_1 \\ 0 \end{pmatrix}.
 \end{align*}
-
 We will only focus on the first two components since our approximation is in 2D.
 We choose as our domain of computation $\Omega$ the annulus with 
 inner radius $1$ and outer radius $2$. 
-We choose as our curve $\Gamma$ the parametrization of the circle with radius 
-$1.5$ in anticlockwise direction which gives us the curve integral 
+The curve $\Gamma$ will be the parametrization of the circle with radius 
+$1.5$ in anticlockwise direction, which gives us the curve integral 
 \begin{align*}
     C_0 = \int_\Gamma \mathbf{B}\cdot d\ell = 4\pi
 \end{align*}
@@ -2188,7 +2233,7 @@ The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping
 \end{figure}
 
 Then we choose $\psi$ as a simple interpolation from the inner boundary to 
-the curve $\Gamma$ i.e. in logical coordinates 
+the curve $\Gamma$, i.e. in logical coordinates 
 \begin{align}
     \psi(\hat{x}_1,\hat{x}_2) = \begin{cases}
         2 \hat{x}_1 & \text{ for $\hat{x}_1 \leq 0.5$} 
@@ -2197,7 +2242,7 @@ the curve $\Gamma$ i.e. in logical coordinates
 \end{align}This fulfills all the criteria we had for $\psi$ for this given $\Gamma$ 
 (see Fig.\,\ref{fig:psi_annulus}). 
 
-For the implementation we are using the PSYDAC library (\url{https://github.com/pyccel/psydac}) 
+For the implementation, we are using the PSYDAC library (\url{https://github.com/pyccel/psydac}) 
 which is an open source 
 Python 3 library 
 for isogeometric analysis (see \cite{psydac_paper} for more details).
@@ -2277,18 +2322,17 @@ Now we will change the domain where the problem is posed, but we will
 stick to the Biot-Savart setting. This means we still assume the wire 
 goes through the origin in $z$-direction, which results in the same solution, 
 but we will approximate it
-on a "distorted annulus" using the same reference domain, but the different mapping 
+on a "distorted annulus" (see \ref{}) using the same reference domain, but the different mapping 
 \begin{align*}
     \mathbf{F}(\hat{x}) = \begin{pmatrix}
         (\cos^2(\hat{x}_2 ) + 1 )(\hat{x}_1 + 1)\cos(\hat{x}_2 ) 
         \\ (\cos^2(\hat{x}_2 ) + 1 ) (\hat{x}_1 + 1)\sin(\hat{x}_2 ) 
     \end{pmatrix}.
 \end{align*}
-which results in a kind of "distorted annulus"(see \ref{}). 
 
-Note that now for this domain, we do not have 
+Note that we do not have 
 the homogeneous boundary condition
-$\mathbf{B}\cdot \mathbf{n} = 0$ anymore. Thus we have to deal with the boundary conditions 
+$\mathbf{B}\cdot \mathbf{n} = 0$ for this domain anymore. Thus we have to deal with the boundary conditions 
 by using a standard lifting approach which means we take an interpolation of the boundary conditions 
 $\mathbf{B}_{h,g}$ which we compute before and then split
 $\mathbf{B}_{h} = \mathbf{B}_{h,0} + \mathbf{B}_{h,g}$ with $\mathbf{B}_{h,0}\in V_h^1$.
@@ -2300,7 +2344,7 @@ This leads to the same left hand side, but as right hand side we get
 $-\langle J, \tau_h \rangle + \langle \mathbf{B}_{h,g}, \veccurl \tau_h \rangle$ in 
 the first equation, $-\langle\diver  \mathbf{B}_{h,g} ,\diver \mathbf{v}_{h} \rangle$
 in the second and $C_1 - \langle\veccurl \psi,\mathbf{B}_{h,g} \rangle$ 
-in the third. In practice, since we know the exact solution $\mathbf{B}$ we simply take 
+in the third. In practice, since we know the exact solution $\mathbf{B}$, we simply take 
 $\mathbf{B}_{h,g} \vcentcolon= (I-P^1_h)\mathbf{B}$. The remaining steps of assembling 
 the system are completely analogous to Sec.\,\ref{sec:assembling_the_discrete_system}. 
 We solve this system to obtain $B_{h,0}$ and then add the boundary 
