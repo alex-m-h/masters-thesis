@@ -2188,7 +2188,8 @@ We will consider two numerical examples, the simulation of the induced magnetic
 field induced by the current through a wire, where the exact solution is given by the Biot-Savart law, and 
 a manufactured solution. The Biot-Savart solution will be approximated on a standard annulus 
 and a "distorted annulus" and the manufactured solution will be approximated 
-on a standard annulus with two different curve integrals given.
+on the standard annulus. In both cases, we will pose the problem with two different curves 
+and investigate the convergence of the error.
 
 \subsection{Magnetic field induced current through wire}
 As a first simple numerical test, we consider a standard example from 
@@ -2209,12 +2210,15 @@ For convenience, we pick now $I = \frac{2 \pi}{\mu_0}$ to get
 We will only focus on the first two components since our approximation is in 2D.
 We choose as our domain of computation $\Omega$ the annulus with 
 inner radius $1$ and outer radius $2$. 
-The curve $\Gamma$ will be the parametrization of the circle with radius 
+We will investigate two different curves. 
+The curve $\Gamma_1$ will be the parametrization of the circle with radius 
 $1.5$ in anticlockwise direction, which gives us the curve integral 
 \begin{align*}
-    C_0 = \int_\Gamma \mathbf{B}\cdot d\ell = 4\pi
+    C_0 = \int_{\Gamma_1} \mathbf{B}\cdot d\ell = 4\pi.
 \end{align*}
-$J= 0$ on our domain and hence $C_1 = C_0$. 
+$\Gamma_2$ will be the exterior boundary of the annulus, i.e. the circle 
+with radius $2$. Because 
+$J= 0$ on our domain the curve integral along $\Gamma_2$ is the same and hence $C_1 = C_0$. 
 The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping 
 \begin{align*}
     \mathbf{F}(\hat{x}) = \begin{pmatrix}
@@ -2225,22 +2229,35 @@ The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping
 
 \begin{figure}
     \centering
-    \includegraphics[width=10cm]{plot_files/manufactured_inner_curve/psi_h.png}
+    \includegraphics[width=8cm]{plot_files/biot_savart_annulus/psi_h_inner_curve.png}
     \caption{A possible choice of $\psi$ on an annulus. $\Gamma$ is here in the 
-    middle of the annulus. $\psi = 0$ at the inner boundary and $\psi=1$ 
+    middle of the annulus (marked in green). $\psi = 0$ at the inner boundary and $\psi=1$ 
     at $\Gamma$ and between $\Gamma$ and the outer boundary}
     \label{fig:psi_annulus}
 \end{figure}
 
-Then we choose $\psi$ as a simple interpolation from the inner boundary to 
+\begin{figure}
+    \centering 
+    \includegraphics[width=8cm]{plot_files/biot_savart_annulus/psi_h_poisson.png}
+    \caption{$\psi$ as the solution of a Poisson problem with $\psi=0$ 
+    on the interior and $\psi = 1$ on the exterior boundary. $\Gamma$ 
+    is here equal to $\partial \Omega_{out}$.}
+    \label{fig:psi_poisson}
+\end{figure}
+
+Then we choose $\psi_1$ as a simple interpolation from the inner boundary to 
 the curve $\Gamma$, i.e. in logical coordinates 
 \begin{align}
     \psi(\hat{x}_1,\hat{x}_2) = \begin{cases}
         2 \hat{x}_1 & \text{ for $\hat{x}_1 \leq 0.5$} 
         \\ 1 & \text{ else}.
     \end{cases}\label{eq:linear_interpolation_psi}
-\end{align}This fulfills all the criteria we had for $\psi$ for this given $\Gamma$ 
+\end{align}This fulfills all the criteria we had for $\psi_1$ (cf. (\ref{eq:conditions_psi})) for $\Gamma_1$ 
 (see Fig.\,\ref{fig:psi_annulus}). 
+
+For $\Gamma_2$, we choose $\psi_2$ as the solution of the Laplace problem with boundary conditions 
+$\psi_2 = 0$ on $\partial \Omega_{in}$ and $\psi_2 = 1$ on $\partial \Omega_{out}$ 
+(see Fig.\,\ref{fig:psi_poisson})
 
 For the implementation, we are using the PSYDAC library (\url{https://github.com/pyccel/psydac}) 
 which is an open source 
@@ -2257,18 +2274,19 @@ of $h^{p+1}$ \cite[Ch.4, (4.48)]{splines_and_pdes} if the solution is at least
 $H^{p+1}$-regular.
 Thus the expected rate of 
 convergence is two in our case which can be observed 
-(see Fig.\,\ref{fig:convergence_analysis_biot_savart}).
+(see Fig.\,\ref{fig:convergence_analysis_biot_savart}). As predicted by the theory
+(cf. Prop.\,\ref{prop:different_curve_same_curve_integral_substitute}),
+the errors for $\Gamma_1$ and $\Gamma_2$ are equal up to rounding errors.
 
 \begin{figure}
     \centering
-    \includegraphics[width=10cm] {plot_files/biot_savart_annulus/B_h.png}
+    \includegraphics[width=10cm] {plot_files/biot_savart_annulus/B_h_with_cross.png}
     \caption{Solution of magnetostatic problem induced by current $I$ through a wire on an annulus for 
     $64$ grid cells on the reference domain in both dimensions and spline degree $p=2$. The wire goes 
-    through the origin in $z$-direction towards the point of view
+    through the origin in $z$-direction towards the point of view.
     }
     \label{fig:biot_savart_annulus_plot}
 \end{figure}
-{\color{red} Maybe Different curves for Biot Savart ?}
 \pgfplotstableset{
     create on use/n_cells/.style={create col/copy column from table={l2_error_data/biot_savart_annulus/n_cells.csv}{0}}
 }
@@ -2341,8 +2359,8 @@ Then we substitute $P_h^1 \mathbf{B}_h$ in
 with $\mathbf{B}_{h,0} + \mathbf{B}_{h,g}$ and put the terms with  
 $\mathbf{B}_{h,g}$ on the right hand side. 
 This leads to the same left hand side, but as right hand side we get
-$-\langle J, \tau_h \rangle + \langle \mathbf{B}_{h,g}, \veccurl \tau_h \rangle$ in 
-the first equation, $-\langle\diver  \mathbf{B}_{h,g} ,\diver \mathbf{v}_{h} \rangle$
+$-\langle J, \tau_h \rangle + \langle \mathbf{B}_{h,g}, \veccurl P_h^0 \tau_h \rangle$ in 
+the first equation, $-\langle\diver  \mathbf{B}_{h,g} ,\diver P_h^1\mathbf{v}_{h} \rangle$
 in the second and $C_1 - \langle\veccurl \psi,\mathbf{B}_{h,g} \rangle$ 
 in the third. In practice, since we know the exact solution $\mathbf{B}$, we simply take 
 $\mathbf{B}_{h,g} \vcentcolon= (I-P^1_h)\mathbf{B}$. The remaining steps of assembling 
@@ -2352,22 +2370,22 @@ interpolation to obtain the solution.
 
 For $\psi$, we use the exact same definition as in (\ref{eq:linear_interpolation_psi}) 
 which results in a different 
-curve due to the different domain parametrization (see Fig.\,\ref{fig:psi_distorted_annulus}). $J$ is of course
+curve due to the new domain parametrization (see Fig.\,\ref{fig:psi_distorted_annulus}). $J$ is of course
 still zero and the curve integral does not change either. We obtain again 
 second order convergence for $p=2$ (see Fig.\,\ref{fig:convergence_analysis_biot_savart}), 
 but the error is several orders of magnitude larger compared to the normal annulus. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=10cm]{plot_files/biot_savart_distorted/psi_h.png}
-    \caption{$\psi$ on the distorted annulus domain. $\Gamma$ is again 
+    \includegraphics[width=12cm]{plot_files/biot_savart_distorted/psi_h.png}
+    \caption{$\psi$ on the distorted annulus domain. $\Gamma$ (green) is again 
         in the middle between the interior and exterior boundary.
     }
     \label{fig:psi_distorted_annulus}
 \end{figure}
 \begin{figure}
     \centering
-    \includegraphics[width=10cm]{plot_files/biot_savart_distorted/B_h.png}
+    \includegraphics[width=10cm]{plot_files/biot_savart_distorted/B_h_with_cross.png}
     \caption{Solution of the Biot-Savart law on the distorted annulus 
     with $64$ cells in both dimensions and $p=2$. The wire 
     is in the centre pointing towards the point of view.
@@ -2385,32 +2403,24 @@ This results in
 \begin{align*}
     J(x) = 4 |x|^2 - 12 |x| + 8.
 \end{align*}
-We will pose this problem on the annulus domain from before, but we will use two 
-different choices for $\Gamma$. 
-$\Gamma_1$ will be the same $\Gamma$ as before, but $\Gamma_2$ will 
-be the outer boundary of $\Omega$ i.e. 
-it is equal to $\partial\Omega_{out}$. 
+We will pose this problem on the standard annulus domain from before with the same 
+curves $\Gamma_1$ and $\Gamma_2$. 
 Since $J$ is not zero this leads to different curve integrals
 \begin{align*}
     \int_{\Gamma_1} \mathbf{B}\cdot d\ell = \frac{9\pi}{8} \quad \text{  and  } \quad
     \int_{\Gamma_2} \mathbf{B}\cdot d\ell = 0.
 \end{align*}
-For $\Gamma_1$ we will choose $\psi$ as before and for $\Gamma_2$ we take
-$\psi$ as the solution of the Laplace problem with boundary condition 
-$\psi=0$ on $\partial\Omega_{in}$ and $\psi=1$ on $\partial\Omega_{out}$
-(see Fig.\,\ref{fig:psi_poisson}). We observe the same convergence rate 
+We choose $\psi_1$ and $\psi_2$ as for the Biot-Savart problem. We observe the same convergence rate 
 (Fig.\,\ref{fig:convergence_analysis_manufactured}), but we recognize that 
 the errors are slightly different and so the choice of curve integral and 
-$\psi$ matters.
-
-\begin{figure}
-    \centering 
-    \includegraphics[width=10cm]{plot_files/manufactured_poisson_psi/psi_h.png}
-    \caption{$\psi$ as the solution of a Poisson problem with $\psi=0$ 
-    on the interior and $\psi = 1$ on the exterior boundary. $\Gamma$ 
-    is here equal to $\partial \Omega_{out}$.}
-    \label{fig:psi_poisson}
-\end{figure}
+$\psi$ matters. 
+% One reason for that could be that we have to approximate the 
+% integral
+% \begin{align*}
+%     \int_{\Omega_{\Gamma_j}} \psi_j \, J \, dx
+% \end{align*}
+% for $j=1,2$ which has to be computed numerically and thus introduce another source of 
+% error.
 
 \begin{figure}
     \centering
@@ -2434,8 +2444,7 @@ $\psi$ matters.
         \end{loglogaxis}
     \end{tikzpicture}
     \caption{Convergence analysis for the manufactured solution $\mathbf{B}(x) = (|x|^2 -2) (-x_2,x_1)^\top$
-        with different choices of $\psi$ corresponding to different curves $\Gamma_1$ (as before) and
-        $\Gamma_2$ (equal to the exterior boundary).
+        with different choices of $\psi$ corresponding to different curves $\Gamma_1$ as before.
     }
     \label{fig:convergence_analysis_manufactured}
 \end{figure}    
