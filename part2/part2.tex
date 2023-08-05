@@ -2364,13 +2364,32 @@ Now we will change the domain where the problem is posed, but we will
 stick to the Biot-Savart setting. This means we still assume the wire 
 goes through the origin in $z$-direction, which results in the same solution, 
 but we will approximate it
-on a "distorted annulus" (see \ref{}) using the same reference domain, but the different mapping 
+on a "distorted annulus" (see \ref{fig:distorted_annulus_domain}) using the same reference domain, but the different mapping 
 \begin{align*}
     \mathbf{F}(\hat{x}) = \begin{pmatrix}
-        (\cos^2(\hat{x}_2 ) + 1 )(\hat{x}_1 + 1)\cos(\hat{x}_2 ) 
+        3(\cos^2(\hat{x}_2 ) + 1 )(\hat{x}_1 + 1)\cos(\hat{x}_2 ) 
         \\ (\cos^2(\hat{x}_2 ) + 1 ) (\hat{x}_1 + 1)\sin(\hat{x}_2 ) 
     \end{pmatrix}.
 \end{align*}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        % \draw (0,0) -- (1,1) plot coordinates {(2,0)  (4,0)};
+        \filldraw[domain=0:6.28, smooth, samples=500, fill=gray, draw=black]  
+            plot ({3*(cos(\x r)^2 + 1)*2*cos(\x r)},{(cos(\x r)^2 + 1)*2*sin(\x r)}) --cycle;
+        \draw[domain=0:6.28, smooth, samples=500, dashed, thick, fill=green!80, draw=blue]  
+            plot ({3*(cos(\x r)^2 + 1)*1.5*cos(\x r)},{(cos(\x r)^2 + 1)*1.5*sin(\x r)}) --cycle;
+        \filldraw[domain=0:6.28, smooth, samples=500, fill=white, draw=black]  
+            plot ({3*(cos(\x r)^2 + 1)*cos(\x r)},{(cos(\x r)^2 + 1)*sin(\x r)}) --cycle;
+        \node at (6,1.125) {\color{blue}$\Gamma$};
+        \node at (-6,0.875) {\color{green!40!black!100}$\Omega_\Gamma$};
+        \node at (0,2.5) {\Large$\Omega$};
+    \end{tikzpicture}
+    \caption{The distorted annulus domain}
+    \label{fig:distorted_annulus_domain}
+\end{figure}
+
 
 Note that we do not have 
 the homogeneous boundary condition
