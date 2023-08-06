@@ -194,26 +194,28 @@ $\partial \Omega_{in}$. We do not assume anything like that for the exterior bou
 i.e. $\Gamma$ can touch or be identical to $\partial \Omega_{out}$. 
 We then denote the area that is enclosed by $\Gamma$ and
 $\partial\Omega_{in}$ as $\Omega_\Gamma$ (cf. Fig.\,\ref{fig:annulus_domain}). 
-
 \begin{figure}
     \centering
     \resizebox{8cm}{8cm}{
     \begin{tikzpicture}
-    \draw[fill=lightgray] (0,0) circle [radius=5];
-    \draw[fill=white] (0,0) circle [radius=2];
-    \draw[dashed, -{Latex[length=3mm,width=3mm]}] (4,0) 
-         arc [start angle=0, end angle=180, radius=4] node[midway, below]{\large$\Gamma$} ;
-    \draw[dashed, -{Latex[length=3mm,width=3mm]}] (-4,0) arc [start angle=180, end angle=360, radius=4] ;
-    \node[above] at (0,5) {\large$\partial \Omega_{out}$};
-    \node[below] at (0,2) {\large$\partial \Omega_{in}$};
-    \node at (135:3) {\huge$\Omega_\Gamma$};
-\end{tikzpicture}
-}
-\caption{A simple example for a domain $\Omega$ as described in the text. The boundary 
-is given by two 
-disjoint curves $\partial \Omega_{in}$ and $\partial \Omega_{out}$. The curve 
-$\Gamma$ is parametrized in anticlockwise direction and $\Omega_\Gamma$ is the 
-area enclosed by $\Gamma$ and $\partial \Omega_{in}$.} \label{fig:annulus_domain}
+        \draw[fill=lightgray] (0,0) circle [radius=5];
+        \fill[fill=green] (0,0) circle [radius=4];
+        \draw[dashed, -{Stealth[length=3mm,width=3mm]}, blue] (4,0) 
+            arc [start angle=0, end angle=180, radius=4];
+        \draw[dashed, -{Stealth[length=3mm,width=3mm]}, blue] (-4,0) arc [start angle=180, end angle=360, radius=4] ;
+        \draw[fill=white] (0,0) circle [radius=2];
+        \node[above] at (45:5.25) {\large$\partial \Omega_{out}$};
+        \node[below] at (45:1.75) {\large$\partial \Omega_{in}$};
+        \node at (45:3.7) {\color{blue} \Large$\Gamma$};
+        \node at (135:3) {\color{green!30!black!100}\Large$\Omega_\Gamma$};
+        \node at (90:5.5) {\Huge$\Omega$};
+    \end{tikzpicture}
+    }
+    \caption{A simple example for a domain $\Omega$ as described in the text. The boundary 
+    is given by two 
+    disjoint curves $\partial \Omega_{in}$ and $\partial \Omega_{out}$. The curve 
+    $\Gamma$ is parametrized in anticlockwise direction and $\Omega_\Gamma$ is the 
+    area enclosed by $\Gamma$ and $\partial \Omega_{in}$.} \label{fig:annulus_domain}
 \end{figure}
 
 From now on, our domain $\Omega$ is always assumed to be of that kind. We will 
@@ -334,7 +336,8 @@ and
     = (B_1 n_2 - B_2 n_1) = \mathbf{B} \cdot \begin{pmatrix}n_2 \\ -n_1 \end{pmatrix}
     = -\mathbf{B} \cdot \mathbf{R}_{\pi/2}\mathbf{n}.
 \end{align*}
-$\mathbf{R}_{\pi/2} \mathbf{n}$ is either $\bm{\gamma}'$ or $-\bm{\gamma}'$. Assume w.l.o.g.
+Now we assume again that $|\bm{\gamma}'| = 1$ and that $\Gamma$ does not intersect itself.
+Then $\mathbf{R}_{\pi/2} \mathbf{n}$ is either $\bm{\gamma}'$ or $-\bm{\gamma}'$. Assume w.l.o.g.
 that $\mathbf{R}_{\pi/2} \mathbf{n} = \bm{\gamma}'$ and thus 
 \begin{align*}
     \mathbf{B} \times \mathbf{n} = -\mathbf{B} \cdot \bm{\gamma}'
@@ -355,7 +358,7 @@ Then we observe
 \begin{align*}
     &\int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx = 
     \int_{\Omega_\Gamma} \veccurl \psi \cdot \mathbf{B} \, dx 
-    \\ &= \int_{\Omega_\Gamma} \psi \, J \, dx + \int_{\partial\Omega} \mathbf{B} \times \mathbf{n}\, d\ell
+    \\ &= \int_{\Omega_\Gamma} \psi \, J \, dx + \int_{\partial\Omega_\Gamma} \psi\,\mathbf{B} \times \mathbf{n}\, d\ell
     = \int_{\Omega_\Gamma} \psi \, J \, dx - \int_\Gamma \mathbf{B}\cdot d\ell
 \end{align*}
 and we can rewrite the curve integral as 
@@ -406,7 +409,7 @@ which immediately implies that, if we define
 then we know 
 \begin{align}
     \langle \veccurl \psi, \mathbf{B} \rangle = C_1 
-    \Leftrightarrow \langle \veccurl \tilde{\psi}, \mathbf{B} \rangle = C_1
+    \Leftrightarrow \langle \veccurl \tilde{\psi}, \mathbf{B} \rangle = \tilde{C}_1
     \label{eq:equivalence_for_different_psis}
 \end{align}
 so the choice of $\psi$ does not matter in this case as long as the right hand 
@@ -454,10 +457,12 @@ even if $\mathbf{B}$ is not continuously
 differentiable.
 
 There is an important invariance property of the curve integral that we would like 
-to have for its replacement as well. If $J = 0$ and 
-we take two closed curves $\Gamma_1$ and $\Gamma_2$ going around the 
-hole in the middle of the domain in the same direction then
-we have 
+to have for its replacement as well. Take two closed curves $\Gamma_1$ and $\Gamma_2$ 
+with the same assumption as before, i.e. parametrized counterclockwise and not intersecting 
+themselves. We obtain $\Omega_{\Gamma_1}$ and $\Omega_{\Gamma_2}$ defined as before.
+If $J = 0$ in $\Omega_{\Gamma_1}$ and $\Omega_{\Gamma_2}$, 
+i.e. it is zero between $\partial \Omega_{in}$ and both curves,
+then we have 
 \begin{align}
     \int_{\Gamma_1} \mathbf{B} \cdot d\ell = \int_{\Gamma_2} \mathbf{B} \cdot d\ell.
 \end{align}
@@ -469,7 +474,7 @@ which is indeed the case.
     and $\psi_2$ accordingly. Let $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$ 
     and $\lambda \in \real$ be a solution of 
     (\ref{eq:first_eq_mixed_formulation}) and (\ref{eq:second_eq_mixed_formulation})
-    with $J=0$.
+    with $J=0$ in $\Omega_{\Gamma_1}$ and $\Omega_{\Gamma_2}$.
     Then $C_1 = -C_0$ and
     % i.e. the right hand side is 
     % independent of $J$ and
@@ -478,7 +483,8 @@ which is indeed the case.
     \end{align*}
 \end{proposition}
 \begin{proof}
-    $C_1 = -C_0$ is obvious due to $J=0$. Notice that even if we have different curves 
+    $C_1 = -C_0$ is obvious due to $J=0$ in in $\Omega_{\Gamma_1}$ and $\Omega_{\Gamma_2}$. 
+    Notice that even if we have different curves 
     $\Gamma_1$ and $\Gamma_2$ the fact that $\psi_1$ and $\psi_2$ are constant one 
     between the curve and $\partial \Omega_{out}$ implies that 
     $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the assumptions (\ref{eq:conditions_psi}), 
@@ -599,8 +605,9 @@ bilinear form $a:X\times X \rightarrow \real$
 \begin{align}
     a(\sigma,\mathbf{B}, \lambda;\tau,\mathbf{v},\mu) 
     &=   \langle \sigma, \tau \rangle - \langle \mathbf{B}, \veccurl\tau \rangle
-        + \langle \veccurl\sigma, \mathbf{v} \rangle + \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle \notag
-        \\ &\quad+ \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \veccurl \psi, \mathbf{B} \rangle.
+        + \langle \veccurl\sigma, \mathbf{v} \rangle \notag
+        \\ &\quad+ \langle \diver \mathbf{B}, \diver \mathbf{v} \rangle 
+            + \langle \lambda \mathbf{p}, \mathbf{v} \rangle - \mu \langle \veccurl \psi, \mathbf{B} \rangle.
         \label{eq:definition_bilinear_form}
 \end{align}
 and 
@@ -677,7 +684,7 @@ solution. This implies that we would like $\veccurl \psi$ to have
 non-vanishing harmonic part. This is indeed true.
 \begin{proposition}
     Let $P_{\mathfrak{H}^1}: L^2 \rightarrow \mathfrak{H}^1$ be the orthogonal
-    projection onto the harmonic forms. Then with $\psi$ defined as above 
+    projection onto the harmonic forms. Then with $\psi$ satisfying (\ref{eq:conditions_psi})
     we have $P_\mathfrak{H}^1\veccurl \psi \neq 0$.
 \end{proposition}
 \begin{proof}
