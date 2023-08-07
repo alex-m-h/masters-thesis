@@ -2271,8 +2271,8 @@ which is an open source
 Python 3 library 
 for isogeometric analysis (see \cite{psydac_paper} for more details).
 See Fig.\,\ref{fig:biot_savart_annulus_plot} for the solution where 
-we chose $64$ cells for our grid on the reference domain in both dimensions and $p=2$. Note 
-that $p=2$ refers to the choice of our spaces from
+we chose $64$ cells for our grid on the reference domain in both dimensions and $p=2$ and $p=3$. 
+Note that $p=2$ refers to the choice of our spaces from
 (\ref{eq:discrete_spline_reference_spaces}) and hence the spline space for approximating 
 the magnetic field will be $\mathbb{S}_{2,1} \times \mathbb{S}_{1,2}$ 
 so the lower spline degree will be one. 
@@ -2280,7 +2280,7 @@ The pushforward spline space achieves then an approximation error
 of $h^{p+1}$ \cite[Ch.4, (4.48)]{splines_and_pdes} if the solution is at least 
 $H^{p+1}$-regular.
 Thus the expected rate of 
-convergence is two in our case which can be observed 
+convergence is equal to $p$ in our case which can be observed 
 (see Fig.\,\ref{fig:convergence_analysis_biot_savart}). As predicted by the theory
 (cf. Prop.\,\ref{prop:different_curve_same_curve_integral_substitute}),
 the errors for $\Gamma_1$ and $\Gamma_2$ are equal up to rounding errors.
@@ -2424,6 +2424,8 @@ curve due to the new domain parametrization (see Fig.\,\ref{fig:psi_distorted_an
 still zero and the curve integral does not change either. We obtain again 
 second order convergence for $p=2$ (see Fig.\,\ref{fig:convergence_analysis_biot_savart}), 
 but the error is several orders of magnitude larger compared to the normal annulus. 
+For $p=3$ the convergence rate is at least $2$, but the plot does not confirm 
+convergence of order $3$ in this case.
 
 \begin{figure}
     \centering
@@ -2461,16 +2463,20 @@ Since $J$ is not zero this leads to different curve integrals
     \int_{\Gamma_2} \mathbf{B}\cdot d\ell = 0.
 \end{align*}
 We choose $\psi_1$ and $\psi_2$ as for the Biot-Savart problem. We observe the same convergence rate 
-(Fig.\,\ref{fig:convergence_analysis_manufactured}), but we recognize that 
+(Fig.\,\ref{fig:convergence_analysis_manufactured}) for $p=2$, but we recognize that 
 the errors are slightly different and so the choice of curve integral and 
 $\psi$ matters. 
-% One reason for that could be that we have to approximate the 
-% integral
-% \begin{align*}
-%     \int_{\Omega_{\Gamma_j}} \psi_j \, J \, dx
-% \end{align*}
-% for $j=1,2$ which has to be computed numerically and thus introduce another source of 
-% error.
+
+For $p=3$, we observe again second order convergence when $\Gamma_1$ is chosen, 
+but third order convergence for $\Gamma_2$. This is likely because $\psi_1$ is 
+not $H^2$. Because $J \neq 0$, we have to compute 
+\begin{align*}
+    \int_{\Omega_\Gamma} \psi_1 \, J \, dx
+\end{align*}
+numerically. In order to do that, we interpolate $\psi$. Because $\psi$ is not 
+$H^2$-regular the interpolation error dominates and so we do not obtain 
+third order convergence. This proves the necessity to choose a $\psi$ 
+smooth enough s.t. it can be approximated sufficiently well.
 
 \begin{figure}
     \centering
@@ -2478,24 +2484,40 @@ $\psi$ matters.
         \begin{loglogaxis}[
             xlabel=$N$,
             ylabel=$L^2$ error,
-            legend entries={$\Gamma=\Gamma_1$, $\Gamma=\Gamma_2$, $0.1\times 1/N^2$},
+            legend entries={$p=2,\Gamma = \Gamma_1$\\
+                            $p=2,\Gamma = \Gamma_2$\\
+                            $p=3,\Gamma = \Gamma_1$\\
+                            $p=3,\Gamma = \Gamma_2$\\
+                            $0.1\times 1/N^2$\\
+                            $0.05\times 1/N^3$\\
+                            },
+            legend pos=outer north east,
             xtick={8,16,32,64},
             xticklabels={$2^3$,$2^4$,$2^5$,$2^6$}
         ]
     
         \addplot table [x=n_cells, y index=0] {l2_error_data/manufactured_inner_curve/l2_error.csv};
         \addplot table [x=n_cells, y index=0] {l2_error_data/manufactured_poisson_psi/l2_error.csv};
+        \addplot table [x=n_cells, y=l2_error] {l2_error_data/manufactured_inner_curve/degree3/l2_error_data.csv};
+        \addplot[green, mark=square*] table [x=n_cells, y=l2_error] {l2_error_data/manufactured_poisson_psi/degree3/l2_error_data.csv};
         \addplot [
             domain=8:100,
             samples=50,
-            dashed
+            dashed,
+            blue
         ]
             {0.1 * 1/x^2};
+        \addplot [
+            domain=8:100,
+            samples=50,
+            dashed,
+            red
+        ]
+            {0.05 * 1/x^3};    
         \end{loglogaxis}
     \end{tikzpicture}
     \caption{Convergence analysis for the manufactured solution $\mathbf{B}(x) = (|x|^2 -2) (-x_2,x_1)^\top$
-        with different choices of $\psi$ corresponding to different curves $\Gamma_1$ as before.
-    }
+        with different choices of $\psi_i$ corresponding to different curves $\Gamma_i$ as before.    }
     \label{fig:convergence_analysis_manufactured}
 \end{figure}    
 \end{document}
