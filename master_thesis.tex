@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper,times]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -77,7 +77,82 @@
 \usepackage{subfiles}
 
 \begin{document}
+\pagenumbering{roman}
+\begin{titlepage}
+    \begin{center}
+    \includegraphics[width=0.18\textwidth]{img/tum.png}\par
+    \vspace{0.5cm}
+    {\scshape\LARGE Technical University Munich \par}
+    \vspace{0.5cm}
+    {\scshape \Large Department of Mathematics\par}
+    \vspace{1cm}
+	\includegraphics[width=0.25\textwidth]{img/ma_tum.png}\par
+    \vspace{0.5cm}
+    {\scshape \LARGE Master's Thesis \par}
+    \vspace{0.6cm}
+   {\Huge \scshape The Magnetostatic Problem on Exterior Domains \par}
+   \vspace{0.7cm}
+   
+   {\scshape \Large Alexander Hoffmann\par}
+   
+
+	\end{center}
+	\vfill
+    Supervisor: PD Dr. Martin Campos Pinto
+    \medskip
+    
+    \noindent Advisor: PD Dr. Martin Campos Pinto
+    \medskip
+    
+    \noindent Submission Date: 15.08.2023
+    \vspace{1cm}
+\end{titlepage}
+%FOR THE PRINT!
+\
+\thispagestyle{empty}
+\newpage
+
+%empty page
+%BEGIN_FOLD
+\ {}
+\vfill
+\thispagestyle{empty}
+\noindent I assure the single handed composition of this master's thesis is only supported by declared resources.
+\bigskip
+
+\noindent München, August 13, 2023 \par
+\vspace{2,5cm}
+ 
+\noindent\hspace{1cm} Alexander Hoffmann
+    \vspace{1cm}
+\newpage
+\thispagestyle{empty}
+%zusammenfassung in deutscher Sprache
+% \belowpdfbookmark{Abstract}{abstract}
+\section*{Zusammenfassung}
+In dieser Arbeit wollen wir die theoretischen Grundlagen der Finite Element Exterior Calculus (FEEC) Methode wiederholen und auf eine B-Spline Diskretisierung von einem Tensorprodukt Gebiet anwenden. Als Erweiterung beschäftigen wir uns mit der conforming/non-conforming (Conga) Methode, die an die vorangegangene Methode anknüpft. Durchweg begleiten uns die Maxwell Gleichungen und eine kalte Plasma Gleichung als Beispiele, auf die wir unsere Resultate anwenden und auch am Ende deren Lösungen numerisch berechnen wollen. Zu diesem Zweck wird ein Softwarepaket in der Programmiersprache Julia entwickelt. 
+\vspace{1cm}
+\section*{Summary}
+\subfile{abstract/abstract.tex}
+\newpage
+
+\thispagestyle{empty}
+%zusammenfassung in deutscher Sprache
+% \belowpdfbookmark{Abstract}{abstract}
+\section*{Acknowledgements}
+I would like to thank Martin Campos Pinto for investing a lot of his time 
+to provide suggestions, guidance and ideas without which this thesis would not have 
+been possible. I also want to thank Omar Maj and Florian Hindenlang for answering questions regarding the physics 
+and Yaman Güçlü for helping with the implementation. Additionally, I would like to take 
+this opportunity to express my gratitude to my parents without whose support I would have 
+been unable to dedicate as much time to this thesis as I did.
+\newpage
+
 \tableofcontents
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
 \chapter{Introduction}\label{chap:introduction}
 \subfile{introduction/introduction.tex}
 \chapter{Existence and uniqueness}\label{chap:existence_and_uniqueness}
