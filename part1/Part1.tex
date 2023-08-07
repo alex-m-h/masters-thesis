@@ -5,7 +5,7 @@ Our goal is to study the homogeneous magnetostatic problem on the exterior
 of a toroidal Lipschitz domain. That means 
 for the unbounded domain $\Omega \subseteq \real^3$ we have that
 $\real^3 \setminus \Omega$ is the closure of a toroidal set. 
-At the moment, toroidal is a very heuristic term, but we will later specify 
+For now, toroidal is a very heuristic term, but we will later specify 
 the exact topological assumption for the proof in Sec.\,\ref{sec:existence_and_uniqueness}.
 We also need a 
 piecewise smooth closed curve $\Gamma$ around the torus (see Fig.\,\ref{fig:exterior_domain_with_curve_integral})
@@ -40,12 +40,12 @@ In Section \ref{sec:hilbert_complexes}, the focus lies on
 unbounded operators and the concept of a Hilbert complex which will be a
 fundamental tool in our proofs of existence and uniqueness. At last, we will 
 use the developed theory in Section \ref{sec:existence_and_uniqueness} 
-to formulate the problem rigorously and proof existence and uniqueness under 
+to formulate the problem rigorously and prove existence and uniqueness under 
 reasonable assumptions. 
 
 Throughout the first sections, we will provide 
 definitions, basic results and show the proofs of many of them if they are not too 
-long or trivial. Since all the presented topics are vast these sections should be 
+long or trivial. Since all the presented topics are vast, these sections should be 
 seen as a very basic introduction, but references to the literature will be given.
 
 \section{Differential forms}\label{sec:differential_forms}
@@ -61,7 +61,7 @@ at the end.
 
 \subsection{Alternating forms} \label{sec:alternating_maps}
 
-Understanding alternating forms is essential in understanding differential forms 
+Understanding alternating forms is essential for understanding differential forms 
 since these provide us with an alternating form at any point of a manifold. 
 That is the reason why we will properly introduce the concept first.
 For the introduction of alternating forms, we follow
@@ -125,7 +125,7 @@ $\omega \in \alternating{k}{V}$
         &(\omega \wedge \mu) (v_1,...,v_k,v_{k+1},...,v_{k+l}) 
         \\ &= \sum\limits_\pi
         \text{sgn}(\pi)\, \omega(v_{\pi(1)},...,v_{\pi(k)}) \,
-        \nu(v_{\pi(k+1)},...,v_{\pi(k+l)})
+        \mu(v_{\pi(k+1)},...,v_{\pi(k+l)})
     \end{align*}
     where we sum over all permutations 
     $\pi \in \mathcal{S}_{k+l}$ 
@@ -155,14 +155,14 @@ For $\omega_1,...,\omega_k \in \alternating{1}{V} = V'$
     = \det \big( \langle \omega_s, v_t \rangle \big)_{1\leq s,t \leq n}. 
     \label{eq:wedge_product_of_one_forms}
 \end{align}
-This formula can be easily proven by induction using the definition of the 
-wedge product and the determinant.
-
-We will use the dual inner product notation, i.e. for $\ell \in V'$ we denote 
+where we used the dual inner product notation, i.e. for $\ell \in V'$ we denote 
 \begin{align*}
     \langle \ell, v \rangle_{V' \times V} \vcentcolon= \ell (v)
 \end{align*}
 and we will usually not write the subscript if it is clear that the dual product is used.
+This formula can be easily proven by induction using the definition of the 
+wedge product and the determinant.
+
 Let $\{ b_i\}_{i=1}^n$ be any basis of $V$ and $\{ b^i\}_{i=1}^n$ the 
 correspoding dual basis, i.e. 
 $b^i \in V'$, $\langle b^i, b_j \rangle = \delta_{ij}$ for $i,j = 1,2,..., n$. Then 
@@ -197,7 +197,7 @@ Now we can define an inner product on $\alternating{k}{V}$ by defining
 which is then extended to all of $\alternating{k}{V}$ by linearity. 
 We denote with $\lvert \, \cdot\, \rvert _\alternating{k}{V}$ the induced norm.
 For an orthonormal basis 
-$u_1,...,u_n$ the corresponding basis 
+$u_1,...,u_n$ of $V$, the corresponding basis 
 $u^{i_1} \wedge u^{i_2} \wedge ... \wedge u^{i_k}$, 
 $1\leq i_1 < ... < i_k \leq n$ is an orthonormal basis of $\alternating{k}{V}$.
 Next, we want to introduce the \textit{pullback} as a natural linear
@@ -226,7 +226,7 @@ the pullback it is obvious that
 
 \begin{proposition}
     Let $A \in \real^{m\times n}$ be the matrix representation of $L$ in the 
-    above bases i.e.
+    above bases, i.e.
     $L\,b_i = \sum_{j=1}^m A_{ji} c_j$. Then the basis representation 
     of the pullback is
     \begin{align}
@@ -269,9 +269,9 @@ the pullback it is obvious that
             (b_{l_1},...,b_{l_k})
         \\ &= c^{j_1} \wedge c^{j_2} \wedge ... \wedge c^{j_k} 
             (L\,b_{l_1},...,L\,b_{l_k})
-        \\ &= \det \Big( \big \langle c^{j_s}, \sum_{r_t = 1}^m A_{r_t,l_t}c_{r_t} \big \rangle 
+        \\ &= \det \Big( \big \langle c^{j_s}, \sum_{r = 1}^m A_{r,l_t}c_{r} \big \rangle 
             \Big)_{1 \leq s,t \leq k}
-        \\ &= \det \Big( \sum_{r_t = 1}^m A_{r_t,l_t} \delta_{j_s,r_t}
+        \\ &= \det \Big( \sum_{r = 1}^m A_{r,l_t} \delta_{j_s,r}
             \Big)_{1 \leq s,t \leq k}
         \\ &= \det \big( A_{j_s,l_t} \big)_{1 \leq s,t \leq k}
         \\ &= \det A_{(j_1,...,j_k),(l_1,...,l_k)}.
@@ -283,7 +283,7 @@ We want to emphasize the special case of the pullback of an alternating $n$-line
 with $m = n$. So take $\omega \in \alternating{n}{W}$. Then we know that 
 dim$\,\alternating{n}{W} = {n\choose n} = 1$ and so
 $\omega = \lambda\, c^1 \wedge ... \wedge c^n$ for some $\lambda \in \real$. 
-There only remains one summand in (\ref{eq:basis_representation_pullback}) 
+There remains only one summand in (\ref{eq:basis_representation_pullback}) 
 and we obtain for this special case
 \begin{align}
     L^* \omega = \lambda \, \det A \, b^1 \wedge ... \wedge b^n
@@ -292,8 +292,8 @@ and we obtain for this special case
 
 We want to examine $\alternating{n}{V}$ a bit closer. 
 $\alternating{n}{V}$ is one-dimensional and so we can choose a basis by fixing 
-any non-zero element. We want to choose one specific element 
-called the \textit{volume form} which will play a crucial role 
+any non-zero element. We will choose one specific element, 
+called the \textit{volume form}, which will play a crucial role 
 when we define integration on a manifold in Sec.\,\ref{sec:integration_of_differential_forms}. 
 We also need it to 
 define the Hodge star operator below.
@@ -345,7 +345,7 @@ We have the following defining property of the volume form.
         = (-1)^s.
     \end{align*}
 \end{proof}
-This property also defines the volume form uniquely so it is independent of the 
+This property also defines the volume form uniquely, making it independent of the 
 chosen basis. It only depends on the orientation.
 It also shows that $\vol$ is non-zero and thus 
 \begin{align*}
@@ -398,8 +398,12 @@ proposition.
 
     It is also clear from the uniqueness of the Riesz representative that 
     $\star\omega$ is uniquely determined by the above condition and 
-    thus $\star$ is injective. Since $\dim \alternating{k}{V} = 
-    \binom{n}{k} = \binom{n}{n-k} = \dim \alternating{n-k}{V}$ the injectivity 
+    thus $\star$ is injective. Since 
+    \begin{align*}
+        \dim \alternating{k}{V} = 
+        \binom{n}{k} = \binom{n}{n-k} = \dim \alternating{n-k}{V}
+    \end{align*}    
+    the injectivity 
     implies surjectivity and $\star$ is an isomorphism.
 \end{proof}
 
@@ -433,7 +437,7 @@ Let us collect some important properties of the Hodge star operator.
         \\ &= \sgn(i_1,i_2,...,i_n) \det \big( \langle u^{i_s}, u^{j_t} \rangle \big)_{k+1 \leq s,t \leq n}
         \\ &= \sgn(i_1,i_2,...,i_n) \det \big( \delta_{i_s,j_t} \big)_{k+1 \leq s,t \leq n}.
     \end{align*}
-    In the last step we used the fact that $u^i$ are orthonormal since the $u_i$ 
+    In the last step, we used the fact that the $u^i$ are orthonormal since the $u_i$ 
     are. Now observe due to the ordering that 
     $\det \big( \delta_{i_s,j_t} \big)_{k+1 \leq s,t \leq n} = 1$ i.i.f.
     $i_s = j_s$ for $s = k+1,...,n$ and is zero otherwise.
@@ -532,13 +536,13 @@ case. $\alternating{0}{V}$ are already scalars by definition. Now we can use
 the Hodge star operator which is an isometry 
 $\star: \alternating{0}{V} \rightarrow \alternating{n}{V}$ with
 $\star c = c \vol$. 
-For $\omega = \lambda \vol \in \alternating{n}{V}$ we call then
+For $\omega = \lambda \vol \in \alternating{n}{V}$ we call
 $\star^{-1} \omega = \lambda \in \real$ the \textit{scalar proxy} of $\omega$.
 
 Next, we will move on to $\alternating{1}{V}$ and $\alternating{n-1}{V}$. 
 Let $\Phi: V \rightarrow V'$ denote the Riesz isomorphism which is an isometry.
 Because $V' = \alternating{1}{V}$, this gives us the correspondence of 
-vectors and linear forms. Now we can once again use the Hodge star and obtain 
+vectors and linear forms. Now we can use the Hodge star once again and obtain 
 the isometry $\star \Phi: V \rightarrow \alternating{n-1}{V}$ to find the connection 
 between vectors and $(n-1)$-forms. 
 For $\omega \in \alternating{1}{V} = V'$ we then call 
@@ -561,8 +565,8 @@ In the case of $V= \real^3$ with the standard basis
 vectors $e_1$, $e_2$ and $e_3$ denote the resulting elements 
 of the dual basis with $e^1$, $e^2$ and $e^3$ respectively. 
 Take $v = v_1 e_1 + v_2 e_2 + v_3 e_3 \in \real^3$ 
-and recall that for a orthonormal basis the Riesz isomorphism maps basis 
-elements to their dual basis elements i.e. $\Phi e_i = e^i$. Hence, 
+and recall that for an orthonormal basis the Riesz isomorphism maps basis 
+elements to their dual basis elements, i.e. $\Phi e_i = e^i$. Hence, 
 we get $\Phi v = v_1 e^1 + v_2 e^2 + v_3 e^3$. Take another $w \in \real^3$.
 Then using the $e^i \wedge e^j = - e^j \wedge e^i$ we get 
 \begin{align}
@@ -594,7 +598,7 @@ As derived above, the Hodge star is not as trivial to compute either.
 
 Similarly, we want to explore the pullback in terms of vector proxies as well. 
 These will be important in the next section when we talk about the pullback 
-of differential forms and apply these to the tranformation of integrals.
+of differential forms and apply these to the transformation of integrals.
 In order to avoid complicated computations we will stick to orthonormal bases.
 Let $\{ b_i \}_{i=1}^n$ be an orthonormal basis of $V$ and 
 $\{ c_j \}_{j=1}^m$ be an orthonormal basis of $W$. Let $L : V \rightarrow W$ 
@@ -741,15 +745,15 @@ $n$-dimensional $C^\infty$ manifold.
 \end{proof}
 Due to this proposition we will from now on assume that all the chosen atlases
 are countable.
-Note that here the second countability is essential. Some authors do not 
-require this in the defintion of a manifold and then this proposition might not hold 
-(cf. \cite[1.A.2]{gallot_hulin_lafontaine}).
+% Note that here second countability is essential. Some authors do not 
+% require this in the defintion of a manifold and then this proposition might not hold 
+% (cf. \cite[1.A.2]{gallot_hulin_lafontaine}).
 Another important property is the existence of a partition of unity on $M$ 
 assuming $M$ is smooth which we will not prove.
 
 \begin{theorem}[Partition of unity]
     Let $M$ be a smooth (i.e. $C^\infty$) manifold with atlas 
-    $\{U_i, \boldsymbol{\phi}_i)\}_{i=0}^N$, $N \leq \infty$. Then there exists a smooth
+    $\{(U_i, \boldsymbol{\phi}_i)\}_{i=0}^N$, $N \leq \infty$. Then there exists a smooth
     partition of unity subordinate to the open cover $\{U_i\}_{i=0}^N$.
     That means there exists a family of non-negative smooth functions $\{ \chi_i \}_{i=0}^N$
     s.t. $\supp \chi_i \subseteq U_i$ and $\sum_{i=0}^N \chi_i(p) = 1$ 
@@ -838,7 +842,7 @@ We define its Jacobian $DF(p) \vcentcolon= D(\boldsymbol{\psi} \circ F \circ
 and we denote 
 \begin{align}
     \frac{\partial F_j}{\partial x_i}(p) 
-    = \frac{\partial (y_j \circ F \circ \boldsymbol{\phi}^{-1})}{\partial x_i} (\boldsymbol{\phi}(p))
+    = \frac{\partial (\psi_j \circ F \circ \boldsymbol{\phi}^{-1})}{\partial x_i} (\boldsymbol{\phi}(p))
     \label{eq:derivative_on_manifold} 
 \end{align}
 It is important to notice, that the values of the Jacobian 
@@ -948,7 +952,7 @@ mapping between them.
     tangent spaces at $T_p M$ and $T_{F(p)} N$ respectively. Then 
     the resulting matrix representation of the differential 
     $F_{*,p}:T_p M \rightarrow 
-    T_{F(p)}N$ is the Jacobian as defined at (\ref{eq:derivative_on_manifold}) i.e.
+    T_{F(p)}N$ is the Jacobian as defined at (\ref{eq:derivative_on_manifold}), i.e.
     \begin{align*}
         F_{*,p} \bigg( \frac{\partial}{\partial x_i}\Big|_p \bigg)
         = \sum_{j=1}^m \frac{\partial F_j}{\partial x_i}(p)\,
@@ -956,7 +960,7 @@ mapping between them.
     \end{align*}
 \end{proposition}
 \begin{proof}
-    We will omitt the reference to the points of the partial derivatives.
+    We will omit the reference to the points of the partial derivatives.
     We choose $\gamma = \boldsymbol{\phi}^{-1}(\boldsymbol{\phi}(p) + e_i t)$. Then 
     $D_\gamma = \frac{\partial}{\partial x_i}$ and by applying the chain 
     rule and the above definitions, we compute
@@ -1017,7 +1021,7 @@ change of basis of the tangent space we know that
         \circ \boldsymbol{\phi})_j}{\partial x_i}\big(\boldsymbol{\phi}(p)\big)
         \frac{\partial}{\partial y_j}
 \end{align*}
-and we see the coefficients w.r.t. to the new basis are 
+and we see that the coefficients w.r.t. to the new basis are 
 \begin{align*}
     \tilde{X}_j = \sum_{i=1}^n X_i(p) \frac{\partial (\tilde{\boldsymbol{\phi}} 
     \circ \boldsymbol{\phi})_j}{\partial x_i}\big(\boldsymbol{\phi}(p)\big)        
@@ -1081,7 +1085,7 @@ We denote the
 space of smooth differential $k$-forms as $C^\infty \Lambda^k M$ and analogous for other regularity.
 $\smoothcompforms{k}{M}$ are the smooth differential forms
 with compact support where the closure is w.r.t. 
-the topology on $M$. Note that here the topology is crucial because for a manifold with boundary 
+the topology on $M$. Note that here the topology is crucial because for a manifold with boundary, 
 $\omega \in \smoothcompforms{k}{M}$ are not necessarily zero on the boundary.
 
 In order to define the Hodge star and an inner product on differential forms
@@ -1177,7 +1181,7 @@ $\mu \in \Lambda^{n-k} M$
 \begin{align*}
     \omega_p \wedge \mu_p &= \langle \star \omega_p, \mu_p \rangle _{\alternating{n-k}{T_p M}} \vol_p
     \\ \star \star \omega &= (-1)^{k(n-k)} \omega
-    \\ \omega_p \wedge \star \nu_p &= \langle \omega_p, \nu_p \rangle _{\alternating{k}{T_p M}} \vol.
+    \\ \omega_p \wedge \star \nu_p &= \langle \omega_p, \nu_p \rangle _{\alternating{k}{T_p M}} \vol_p.
 \end{align*}
 In order for 
 the Hodge star to be well-defined the assumption of an orientation on our 
@@ -1203,19 +1207,19 @@ are fittingly called \textit{musical isomorphisms}.
 With these musical isomorphisms we can identify $X$ with the $1$-form 
 $X^\flat$ or the $(n-1)$-form $\star X^\flat$. Vice versa, we find 
 for $\omega \in \Lambda^1 M$ the \textit{vector proxy} $\omega ^\sharp$ and for 
-an $(n-1)$-form $\nu \in \Lambda^{n-1} M$ $(\star^{-1}, \nu)^\sharp$.
+an $(n-1)$-form $\nu \in \Lambda^{n-1} M$ $(\star^{-1} \nu)^\sharp$.
 
 Recall that the matrix representation of the Riesz isomorphism is the 
 Gramian matrix $G = (g_{ij})_{1\leq i,j \leq n} $. So if we have a vector field 
 $X = \sum_i X_i \frac{\partial}{\partial x_i}$ and define 
-$\mathbf{X} = (X_1, X_2, ..., X_n)^\top$. Then we can compute the 
+$\mathbf{X} = (X_1, X_2, ..., X_n)^\top$, then we can compute the 
 associated $1$-form 
 \begin{align*}
     X^\flat = \sum_{j=1}^n (G \mathbf{X})_j dx^j 
     = \sum_{i,j=1}^n g_{ij} X_i dx^j.
 \end{align*}
 
-If the basis of the tangent space $\frac{\partial}{\partial x_i}$ are 
+If the basis of the tangent space $\frac{\partial}{\partial x_i}$ is 
 orthonormal then we have $(\frac{\partial}{\partial x_i})^\flat = dx^i$ 
 because the Riesz isomorphism maps basis elements to their dual basis elements
 in this case.
@@ -1228,7 +1232,7 @@ $L^*: \alternating{k}{W} \rightarrow \alternating{k}{V}$ via
 \begin{align*}
     L^*\omega (v_1, ..., v_k) = \omega (Lv_1, ..., L v_k).
 \end{align*} 
-We wish to use the analogous idea with differential forms. 
+This construction can be carried over to differential forms.
 
 \begin{definition}
     Let $M$ and $N$ be sufficiently smooth, oriented Riemannian manifolds.
@@ -1357,8 +1361,8 @@ concerned with introducing a derivative for differential forms.
         \frac{\partial a_{i_1,...,i_k}}{\partial x_i}(p) \,
         dx^i \wedge dx^{i_1} \wedge dx^{i_2} \wedge ... \wedge dx^{i_k}
     \end{align*}
-    We remind that the derivative of $a_{i_1,...,i_k}$ is meant w.r.t. 
-    to local coordinates as defined at (\ref{eq:derivative_on_manifold}).
+    We remind that the derivative of $a_{i_1,...,i_k}$ is meant w.r.t.~to
+    local coordinates as defined at (\ref{eq:derivative_on_manifold}).
 \end{definition}
 It can be shown that $d\omega$ is independent of the chosen coordinates. 
 We call a differential form $\omega \in \Lambda^k M$ 
@@ -1422,7 +1426,7 @@ The hat symbol used for
 $\widehat{dx^i}$ means that this term is left out. So in the case of a $(n-1)$-form,
 the exterior derivative corresponds to the divergence.
 
-In the case $n=3$, if we identify $\mathbf{X}$ with a $1$-form, then 
+For $n=3$, if we identify $\mathbf{X}$ with a $1$-form, 
 we obtain by using similar computations 
 that $(\star d X^\flat)^\sharp$ corresponds to  $\mathbf{\curl} \,\mathbf{X}$.
 So in $3$D we can identify all the exterior derivatives with known differential
@@ -1563,7 +1567,7 @@ Differential $k$-forms can be integrated over $k$-dimensional manifolds and
 the properties of this operation, in particular Stokes' theorem, are one main motivation for working with differential 
 forms in the first place. In many books, integration is only defined for 
 smooth and compactly supported forms (see e.g. \cite[Sec.\,V.3]{topology_and_geometry}). This approach is easier, 
-but slightly unsatisfying since then we can not put the integration of forms 
+but slightly unsatisfying since we can then not put the integration of forms 
 into the framework of standard Lebesgue integration theory and it is not possible 
 to define $L^p$ and Sobolev spaces of differential forms properly. Thus, even though we will
 actually only integrate smooth differential forms over compact manifolds in the proofs
@@ -1592,7 +1596,7 @@ by all open sets. This idea can be applied to any topological space $X$ by
 defining the Borel $\sigma$-algebra $\mathcal{B}(X)$ as the $\sigma$-algebra 
 generated by all open sets as well. So we can simply use the topology on $M$ to define 
 our $\sigma$-algebra $\mathcal{B}(M)$. Because we know that all our 
-charts $\boldsymbol{\phi}_i: U_i \rightarrow \real^n$ are homeomorphisms it is 
+charts $\boldsymbol{\phi}_i: U_i \rightarrow \real^n$ are homeomorphisms, it is 
 straightforward to show that a set $E \in \mathcal{B}(M)$ i.i.f.
 $\boldsymbol{\phi}_i(E \cap U_i) \subseteq \real^n$ is Borel-measurable for all $i$. 
 
@@ -1610,8 +1614,9 @@ in the parallelepiped spanned by the tangent vectors $\frac{\partial}{\partial x
 in the tangent space $T_p M$ with $p \in M$
 which would then have volume $ \sqrt{\det \big( g_p(\frac{\partial}{\partial x_i}, 
 \frac{\partial}{\partial x_j}) \big)_{1\leq i,j \leq n} } = 
-\sqrt{ \det G_p }$. Then we define for a Borel-measurable $E \subseteq U$ where $U$ is 
-the domain of a chart $\boldsymbol{\phi}: U \rightarrow \real^n$ the measure 
+\sqrt{ \det G_p }$. This motivates to define a measure for Borel-measurable sets 
+$E \subseteq U$, where $U$ is 
+the domain of a chart $\boldsymbol{\phi}: U \rightarrow \real^n$, the measure 
 \begin{align*}
     V(E) \vcentcolon= \int_{\boldsymbol{\phi}(E)} \sqrt{ \det G_{\boldsymbol{\phi}^{-1}(x)}} \,dx 
 \end{align*} 
@@ -1621,8 +1626,8 @@ to our open cover.
 Let $\{ \chi_i \}_{i=1}^N$, $N \leq \infty$, be the partition of unity 
 subordinate to the open cover $\{U_i\}_{i = 0}^N$ given by the atlas. 
 Let $\mathbf{x}^{(i)} = (x_1^{(i)}, x_2^{(i)}, ..., x_n^{(i)})^\top$ be the local 
-coordinates of the chart $(U_i,\bm{\phi}_i)$ and then the 
-$G_p^{(i)}$ be the resulting Gramian matrix of the resulting basis of the tangent space
+coordinates of the chart $(U_i,\bm{\phi}_i)$ and 
+$G_p^{(i)}$ the resulting Gramian matrix of the resulting basis of the tangent space
 $T_p M$.
 Then we define the 
 \textit{Riemannian measure} for any $E \in \mathcal{B}(M)$
@@ -1636,8 +1641,8 @@ using the transformation behaviour of $G^{(i)}$. But the orientation is
 crucial for it to be well-defined. 
 
 \begin{proposition}
-    The Riemannian measure is independent of the chosen partition of unity and atlas if it is 
-    oriented the same.
+    The Riemannian measure is independent of the chosen partition of unity and atlas if  
+    it has the same orientation.
 \end{proposition}
 \begin{proof}
     Assume w.l.o.g. that $N=\infty$ i.e. we have a countably infinite atlas.
@@ -1848,11 +1853,11 @@ $k$-form $\omega$ as
     Let $\bm{\gamma}: (0,1) \rightarrow \Omega$ be a smooth curve in the domain $\Omega 
     \subseteq \real^n$. Denote $\Gamma = \bm{\gamma}\big((0,1)\big)$ and assume that 
     $\bm{\gamma}' \neq 0$ and $\bm{\gamma}: (0,1) \rightarrow \Gamma$ is bijective.
-    That means especially that $\Gamma$ does not intersect itself.
+    That means in particular that $\Gamma$ does not intersect itself.
     Then $\Gamma$ is a manifold and the chart is $\bm{\gamma}^{-1}$.
     Let us calculate the Jacobian of the inclusion $\iota$ using the 
     definition from (\ref{eq:derivative_on_manifold}). 
-    Since it is the most convenient, we take the 
+    Since it is convenient, we take the 
     identity as chart on $\Omega$. Take $\bm{\gamma}(t) \in \Gamma$. Then
     \begin{align*}
         \frac{\partial\iota_i}{\partial t} \big(\bm{\gamma}(t)\big) 
@@ -2162,7 +2167,7 @@ where $\text{conv}$ is the usual convex combination.
 \end{figure}
 See Fig.\,\ref{fig:1simplex} and Fig.\,\ref{fig:2simplex} for the 
 standard 1- and 2-simplex and a possible singular simplex in the plane respectively.
-As the term 'singular' implies, these simplices can be degenerated. For example, $\sigma_k$ could 
+As the term 'singular' suggests, these simplices can be degenerated. For example, $\sigma_k$ could 
 just be constant, so the object in the topological space corresponding to the 
 $k$-simplex is just a point.
 
@@ -2192,7 +2197,7 @@ the \textit{$i$-th face map} which we denote by $F^k_i$ and sometimes we will no
 The $\hat{ }$ means this vertex is left out. Here we tacitly used the 
 natural inclusion $\real^{k+1} \subseteq \real^\infty$ so we have 
 $\Delta_k \subseteq \real^{k+1}$. But this is just a way of representation.
-With the face map we can now define the boundary homomorphim.
+With the face map we can now define the boundary homomorphism.
 \begin{definition}[Boundary]
     For a singular $k$-simplex $\sigma: \Delta_k \rightarrow X$ we define its $i$-th face 
     $\sigma^{(i)} \vcentcolon= \sigma \circ F_i^k$ which is a $(k-1)$-simplex. 
@@ -2276,7 +2281,7 @@ $k$-cycle $c$ as $[c] \in H_k(X)$.
     \caption{The $1$-chain around the circle on the left is exact since it is the boundary of the 
         $2$-chain formed by the sum of the four segments in the middle. The red circular arrows show the orientation. 
         The gray circle on the right 
-        represents a whole in the domain and then the same $1$-chain around it is still closed, 
+        represents a hole in the domain and then the same $1$-chain around is still closed, 
         but not exact anymore.}
 \end{figure}
     
@@ -2307,7 +2312,7 @@ we will denote by $C_*$.
 \end{example}
 
 Completely analogous to above, we can define the homology groups 
-of a abstract chain complex
+of an abstract chain complex
 \begin{align*}
     H_k(C_*) \vcentcolon= \faktor{\ker \partial_k}{\Ima \partial_{k+1}}.
 \end{align*}
@@ -2315,7 +2320,7 @@ of a abstract chain complex
 \begin{definition}[Chain map]
     Let $A_*$ and $B_*$ be chain complexes. With a slight abuse of notation
     let us denote the differentials of 
-    both chain complexes just by $\partial$.
+    both chain complexes by $\partial$.
     Then a \textit{chain map} $f: A^* \rightarrow B^*$ is a collection 
     of homomorphisms $f_i: A_i \rightarrow B_i$ s.t. 
     $\partial \circ f_{i-1} = f_i \circ \partial$ i.e. the following diagram is commutative
@@ -2379,7 +2384,7 @@ which transforms this into a cochain complex.
     the context is clear.
 \end{definition}
 Notice that this naming is analogous to the naming for closed and exact forms. 
-This is no coincidence as we will see in the Sec.\,\ref{sec:de_rhams_theorem}.
+This is no coincidence as we will see in Sec.\,\ref{sec:de_rhams_theorem}.
 
 From the definition it is obvious that $\partial^{k+1} \circ \partial^{k} = 0$ 
 and thus we have indeed a cochain complex which we call \textit{singular cochain 
@@ -2425,7 +2430,7 @@ $G = \real$ and in this case
 $\text{Ext}(H_{k-1}(X),\real) = 0$. This follows from the fact that 
 $\real$ is a divisible and hence injective abelian group. The definition of
 these terms and their connections used can also be found in 
-\cite[Sec.\,V.6]{topology_and_geometry}. However, we will not dwelve into the 
+\cite[Sec.\,V.6]{topology_and_geometry}. However, we will not delve into the 
 algebraic background further. In the case of $G = \real$, 
 we can conclude from the exactness of the 
 above short sequence that $\text{ker}\,\beta = 0$ and 
@@ -2463,7 +2468,7 @@ We then define the \textit{de Rham cohomology group}
 It turns out that the de Rham complex is closely related with the 
 singular cochain complex which is the topic of this section.
 
-Let us recall Stokes' theorem first which said 
+Let us recall Stokes' theorem first which stated 
 that for a $k$-form $\omega \in C_c^\infty \Lambda^k M$ 
 on a smooth $k$-dimensional oriented manifold $M$ we have 
 \begin{align*}
@@ -2472,13 +2477,13 @@ on a smooth $k$-dimensional oriented manifold $M$ we have
 
 The following details are taken from Section V.5 and V.9 of 
 \cite{topology_and_geometry}. We will only focus on the main ideas and avoid 
-dwelving into the technical details. The interested reader can find more 
+delving into the technical details. The interested reader can find more 
 arguments in the given reference.
 
 Let $\sigma$ be a smooth $k$-simplex i.e. $\sigma: \Delta_k \rightarrow 
 M$ is smooth. We will solely focus on smooth simplices from now on. Let 
 $C_k^{\text{smooth}}(M)$ be the abelian group generated by smooth $k$-simplices and 
-then $H^k_{\text{smooth}}(M;\real)$ be the cochain groups constructed analogous to the 
+then $H^k_{\text{smooth}}(M;\real)$ be the cochain groups constructed analogously to the 
 standard case. Then, in fact, 
 $H^k_{\text{smooth}}(M;\real)$ and $H^k(M;\real)$ are isomorphic. This 
 is the reason why it is sufficient for this section to deal with smooth simplices 
@@ -2549,7 +2554,7 @@ induces a homomorphism on cohomology
 
 Using the notation and the definition of this map we can now formulate 
 de Rham's theorem which will become very important later when proving
-existence and uniqueness in Sec.\,\ref{sec:existence_and_uniqueness}.
+existence and uniqueness of the magnetostatic problem in Sec.\,\ref{sec:existence_and_uniqueness}.
 \begin{theorem}[De Rham's theorem]\label{thm:de_rhams_theorem}
     Let $M$ be a smooth orientable manifold. Then $[I]: H^k_{dR}(M) \rightarrow H^k(M;\real)$ is an isomorphism.
 \end{theorem}
@@ -2583,14 +2588,14 @@ exclusively.
 
 \subsection{Unbounded operators}\label{sec:unbounded_operators}
 
-We will provide the basic definitions about unbounded operators and propositions 
+We will provide the basic definitions related to unbounded operators and propositions 
 about those. After defining unbounded operators we will talk about closed and 
 densely defined operators mainly and the adjoint. 
-Most of the proofs are very short and we will be able to do them in detail. 
+Most of the proofs are very short and we will give them in detail. 
 
 \begin{definition}[Unbounded operators]
     Let $X$ and $Y$ be Hilbert spaces. Then we call a linear mapping 
-    $T: D(T) \rightarrow Y$ with a subspace $D(T) \subseteq Y$ an 
+    $T: D(T) \rightarrow Y$ with a subspace $D(T) \subseteq X$ an 
     \textit{unbounded 
     operator} from $X$ to $Y$. We call $D(T)$ the \textit{domain} of $T$.
 \end{definition}
@@ -2615,7 +2620,7 @@ $Y=L^2(\Omega;\real^n)$.
 In short, $\grad$ is an unbounded operator from $L^2(\Omega)$ to 
 $L^2(\Omega;\real^n)$ with domain $C_0^1(\Omega)$.
 We could then denote it as $(\grad, C_0^1(\Omega))$. This also shows that 
-the choice of domain is not unique. We could have instead chosen e.g. the 
+the choice of domain is not unique. For example, we could have chosen instead the 
 different unbounded operator $(\grad, C_0^\infty (\Omega))$. 
 Another example is the weak gradient with domain $H^1(\Omega)$ i.e.
 $(\grad, H^1(\Omega))$. All of these unbounded operators mentioned are densely defined.
@@ -2779,7 +2784,7 @@ It is easy to check that this is a linear subspace of $Y$.
     $T^*(y_1 + \lambda y_2) = T^*y_1 + \lambda T^*y_2$.
 \end{proof}
 
-We would like to proof whether $T^*$ is itself densely defined or closed. 
+We would like to prove whether $T^*$ is itself densely defined or closed. 
 This can be done in an elegant way by investigating the graphs of $T$ and 
 $T^*$. But $\Gamma(T)$ is a subspace of $X\times Y$ and 
 $\Gamma(T^*)$ of $Y\times X$. To compare the two, we introduce a rotation operator. 
@@ -2810,7 +2815,7 @@ By using this rotation operator, we can formulate the following lemma.
         \langle -x, v \rangle _X = \langle y, Tv \rangle _Y,
             \quad \forall v \in D(T).
     \end{align*}
-    This is just equivalent to saying that $-x = T^*y$ i.e.
+    This is equivalent to saying that $-x = T^*y$ i.e.
     \begin{align*}
         (x,y) = (-T^*y,y) \in R_{Y,X}\Gamma(T^*)
     \end{align*}
