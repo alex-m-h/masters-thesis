@@ -751,14 +751,23 @@ are countable.
 Another important property is the existence of a partition of unity on $M$ 
 assuming $M$ is smooth which we will not prove.
 
-\begin{theorem}[Partition of unity]
+\begin{theorem}[Partition of unity]\label{thm:partition_of_unity}
     Let $M$ be a smooth (i.e. $C^\infty$) manifold with atlas 
     $\{(U_i, \boldsymbol{\phi}_i)\}_{i=0}^N$, $N \leq \infty$. Then there exists a smooth
     partition of unity subordinate to the open cover $\{U_i\}_{i=0}^N$.
-    That means there exists a family of non-negative smooth functions $\{ \chi_i \}_{i=0}^N$
-    s.t. $\supp \chi_i \subseteq U_i$ and $\sum_{i=0}^N \chi_i(p) = 1$ 
-    for every $p \in M$.
+    That means there exists an open cover $\{ V_\alpha \}_{\alpha \in \mathcal{A}}$ of $M$ and
+    non-negative smooth functions $\{ \chi_\alpha \}_{\alpha \in \mathcal{A}}$
+    s.t. 
+    \begin{itemize}
+        \item for every $\alpha \in \mathcal{A}$, $V_\alpha \subseteq U_i$ for some $i$,
+        \item for every $p \in M$ exists an open neighborhood $K_p$ s.t. 
+                $K_p \cap V_\alpha \neq \varnothing$ for only finitely many $\alpha$,
+        \item $\supp \chi_\alpha \subseteq V_\alpha$ and
+        \item $\sum_{\alpha \in \mathcal{A}} \chi_\alpha(p) = 1$.
+    \end{itemize}
 \end{theorem}
+The second property together with the second countability of $M$ implies that 
+$\mathcal{A}$ must be countable.
 These partitions of unity are typically used to extend a construction that 
 is done locally to the entire manifold as we will see later.
 
@@ -4134,8 +4143,46 @@ It should be noted that this does not guarantee us any regularity on the
 boundary. 
 
 Before we can apply this result, we have to check whether a solution of our 
-problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$. 
+problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$. A different 
+equivalent classification of $H^k_{loc}$ will be helpful.
 
+\begin{lemma}\label{lem:Hkloc_iif_Sobolev_in_neighborhood}
+    $u \in H^k_{loc}(\Omega)$ i.i.f.~ for every $x \in \Omega$ there exists 
+    an open neighborhood $N_x$ s.t.~$u|_{N_x} \in H^k_{loc}(N_x)$.
+\end{lemma}
+\begin{proof}
+    Since the argument is not too complicated and we will only sketch it.
+
+
+    \noindent"$\Rightarrow$": Take $x \in \Omega$ arbitrary. For $\epsilon > 0$ define 
+    the ball $K_\epsilon(x)$ as the open ball around $x$ with radius $\epsilon$.
+    Choose $\epsilon >0 $
+    small enough s.t.~$\overline{ K_\epsilon(x)} \subseteq \Omega$, i.e.
+    $K_\epsilon(x) \subset\subset \Omega$. Then $u|_{K_\epsilon(x)} \in H^k_{loc}(K_\epsilon(x))$.
+
+    \noindent"$\Leftarrow$": 
+    Recall that $\Omega$ is a smooth manifold and so,
+    due to the second countability of $\Omega$ and the assumption, it is possible to find a countable open cover 
+    $\{ U_i \}_{i=1}^{\infty}$ s.t.~$u|_{U_i}\in H^k_{loc}(U_i)$ for every $i$.
+    We now find a partition of unity according to Thm.\,\ref{thm:partition_of_unity}
+    so we find an open cover $\{ V_\alpha \}_{\alpha\in \mathcal{A}}$ and a corresponding
+    partition of unity $\{ \chi_\alpha \}_{\alpha \in \mathcal{A}}$
+    s.t. $\supp \chi_\alpha \subseteq V_\alpha$ and with the other properties listed in 
+    Thm.\,\ref{thm:partition_of_unity}. 
+    Take now $Q \subset\subset \Omega$ arbitrary.
+    It follows then from the properties of 
+    the partition of unity that the set 
+    \begin{align*}
+        \{ \alpha \in \mathcal{A} \mid \overline{Q} \cap V_\alpha \neq \varnothing \}
+    \end{align*}
+    is finite due to the compactness of $\overline{Q}$. 
+    Let us denote these sets as $V_1, V_2, ..., V_K$ and the functions of the partition of 
+    unity as $\chi_1, \chi_2, ..., \chi_K$. Then $\sum_{j=1}^K \chi_j \equiv 1$ on $Q$ 
+    and $u\chi_j \in H^k(\Omega)$. So finally 
+    \begin{align*}
+        u|_Q = \sum_{j=1}^K (u \chi_j)|_Q \in H^k(Q).
+    \end{align*}
+\end{proof}
 \begin{theorem}\label{thm:solution_in_H1loc}
     Assume $\mathbf{B} \in H(\diver;\Omega) \cap H(\curl;\Omega)$. Then 
     $\mathbf{B} \in H^1_{loc}(\Omega;\real^3)$.
@@ -4145,28 +4192,39 @@ problem $\mathbf{B}$ is actually in $H^1_{loc}(\Omega;\real^3)$.
     We know that for a function $\mathbf{u} \in H_0(\curl;U) \,\cap \,H(\diver;U)$ 
     for some smooth domain $U$ we have $\mathbf{u} \in H^1(U;\real^3)$ 
     (cf. \cite[Remark 3.48]{monk}). Our domain $\Omega$ is just assumed to be Lipschitz 
-    so we can not apply this result directly.
-
-    Take $Q \subset\subset \Omega$ open and pre-compact. 
-    Then we can find an open 
-    cover of $\overline{Q}$ with a finite set of open balls $\{K_i\}_{i=1}^N$
-    s.t. $K_i \subseteq \Omega$ and 
-    \begin{align*}
-        \overline{Q} \subseteq \bigcup\limits_{i=1}^N K_i.
-    \end{align*}
-    As an open cover of a compact set, we can find a smooth partition of unity 
-    $\{\chi_i\}_{i=1}^N$ subordinate to $\{K_i\}_{i=1}^N$. 
-    $(\mathbf{B} \chi_i)|_{K_i} \in H_0(\curl;K_i) \cap H(\diver;K_i)$ and thus 
-    $(\mathbf{B} \chi_i)|_{K_i} \in H^1(K_i;\real^3)$ by the above mentioned result. 
-    Also because $\mathbf{B} \chi_i$ has compact support in $K_i$ we can extend it by 
-    zero to obtain
-    $\mathbf{B} \chi_i \in H^1(\real^3;\real^3)$ where we abused the notation by denoting 
-    the extension the same. Whence,
-    \begin{align*}
-        \mathbf{B}|_Q = \Big( \sum\limits_{i=1}^N \chi_i |_Q \Big) \mathbf{B}|_Q = 
-        \sum\limits_{i=1}^N (\chi_i \mathbf{B})|_Q \in H^1(Q;\real^3)
-    \end{align*}
-    i.e. $\mathbf{B} \in H^1_{loc}(\Omega;\real^3)$.
+    so we can not apply this result directly. For any $x \in \Omega$,
+    take the open ball $K_\epsilon(x)$ around it with radius $\epsilon > 0$ small enough
+    s.t. $K_\epsilon(x) \subseteq \Omega$. 
+    $K_\epsilon(x)$ is a smooth domain. Now we take a smooth non-negative cut-off function 
+    $\rho\in C^\infty({K_\epsilon(x)})$ with $\supp \rho \in K_{\epsilon}(x)$ 
+    and $\rho \equiv 1$ in $K_{\epsilon/2}(x)$. So
+    $\rho \mathbf{B}|_{K_\epsilon(x)}\in H_0(\curl;K_\epsilon(x)) \,\cap \,H(\diver;K_\epsilon(x))$
+    and thus $\rho \mathbf{B}|_{K_\epsilon(x)} \in H^1(K_\epsilon(x);\real^3)$. 
+    Because $\rho$ is constant one in ${K_{\epsilon/2}(x)}$,
+    $\rho\mathbf{B}|_{K_{\epsilon/2}(x)} = \mathbf{B}_{K_{\epsilon/2}(x)} 
+    \in H^1(K_{\epsilon/2}(x);\real^3)$.
+    Now the claim follows from 
+    Lemma \ref{lem:Hkloc_iif_Sobolev_in_neighborhood}.
+    % Take $Q \subset\subset \Omega$ open and pre-compact. 
+    % Then we can find an open 
+    % cover of $\overline{Q}$ with a finite set of open balls $\{K_i\}_{i=1}^N$
+    % s.t. $K_i \subseteq \Omega$ and 
+    % \begin{align*}
+    %     \overline{Q} \subseteq \bigcup\limits_{i=1}^N K_i.
+    % \end{align*}
+    % As an open cover of a compact set, we can find a smooth partition of unity 
+    % $\{\chi_i\}_{i=1}^N$ subordinate to $\{K_i\}_{i=1}^N$. 
+    % $(\mathbf{B} \chi_i)|_{K_i} \in H_0(\curl;K_i) \cap H(\diver;K_i)$ and thus 
+    % $(\mathbf{B} \chi_i)|_{K_i} \in H^1(K_i;\real^3)$ by the above mentioned result. 
+    % Also because $\mathbf{B} \chi_i$ has compact support in $K_i$ we can extend it by 
+    % zero to obtain
+    % $\mathbf{B} \chi_i \in H^1(\real^3;\real^3)$ where we abused the notation by denoting 
+    % the extension the same. Whence,
+    % \begin{align*}
+    %     \mathbf{B}|_Q = \Big( \sum\limits_{i=1}^N \chi_i |_Q \Big) \mathbf{B}|_Q = 
+    %     \sum\limits_{i=1}^N (\chi_i \mathbf{B})|_Q \in H^1(Q;\real^3)
+    % \end{align*}
+    % i.e. $\mathbf{B} \in H^1_{loc}(\Omega;\real^3)$.
 \end{proof}
 
 The following lemma is a reformulation of the differential operator 
