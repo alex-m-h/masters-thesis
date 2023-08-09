@@ -36,7 +36,7 @@ and fundamentals of finite element theory. We will also depend on the
 notions introduced in Sec.\,\ref{sec:hilbert_complexes_subsection}, in particular the Hodge decomposition in the general 
 case.
 
-\subsection{The $\bm{\curl}$-$\diver$ Hilbert complex}\label{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}
+\subsection{The \texorpdfstring{$\bm{\curl}$-$\diver$}{curl-div} Hilbert complex}\label{sec:variational_formulation_of_the_magnetostatic_problem_in_2D}
 
 
 We start with the introduction of the relevant differential operators and 
@@ -2471,12 +2471,12 @@ For $p=3$, we observe again second order convergence when $\Gamma_1$ is chosen,
 but third order convergence for $\Gamma_2$. This is likely because $\psi_1$ is 
 not $H^2$. Because $J \neq 0$, we have to compute 
 \begin{align*}
-    \int_{\Omega_\Gamma} \psi_1 \, J \, dx
+    \int_{\Omega_{\Gamma_1}} \psi_1 \, J \, dx
 \end{align*}
 numerically. In order to do that, we interpolate $\psi$. Because $\psi$ is not 
-$H^2$-regular the interpolation error dominates and so we do not obtain 
-third order convergence. This proves the necessity to choose a $\psi$ 
-smooth enough s.t. it can be approximated sufficiently well.
+$H^2$-regular, the interpolation error dominates and so we do not obtain 
+third order convergence. This suggests the necessity to choose a $\psi$ 
+smooth enough s.t.~it can be approximated sufficiently well.
 
 \begin{figure}
     \centering

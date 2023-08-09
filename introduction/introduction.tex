@@ -25,21 +25,26 @@ depends on fundamental topological quantities of the domain. If it is simply
 connected, then there exists a unique solution, but otherwise additional constraints 
 might be necessary.
 
-Our main motivation behind studying this problem arises as part of the search for plasma equilibria where we have to 
-compute the magnetic field outside of the plasma.
-In this situation we know that the magnetic field lines are orthogonal to the plasma surface
+Our main motivation behind studying this problem arises as part of the search for plasma equilibria where 
+the magnetic field outside of the plasma has to be computed (see \cite{merkel1986}).
+In this situation, we know that the magnetic field lines are orthogonal to the plasma surface
 which translates to imposing Neumann boundary conditions 
 $\mathbf{B} \cdot \mathbf{n} = 0$. The complement of a toroidal domain is obviously not simply connected and so 
 we require an additional constraint. This is given by prescribing the total 
-current flowing through the cross section of the torus. After using Stokes theorem 
+current  $I_{tot}$ flowing through the cross section of the torus.
+Let $\Gamma$ be the curve that goes around the torus 
+in poloidal direction (see Fig.\,\ref{fig:exterior_domain_with_curve_integral}). 
+We assume that $\Gamma$ has positive distance from the torus and 
+$\mathbf{J}$ is zero between $\Gamma$ and the torus.
+Denote the surface enclosed by $\Gamma$ as $\Sigma$.
+We assume that $\mathbf{J}$ is zero between $\Gamma$ and the surface of the toroidal domain.
+After using Stokes theorem 
 for surfaces, this gives us 
 \begin{align*}
-    \int_\Gamma \mathbf{B}\cdot d\ell = \frac{4 \pi \mu_0}{c} =\vcentcolon C_0
+    \int_\Gamma \mathbf{B}\cdot d\ell= \int_\Sigma \curl \mathbf{B} \cdot d\mathbf{S} 
+    = \mu_0 I_{tot} =\vcentcolon C_0
 \end{align*}
-with $\Gamma$ being the curve that goes around the torus 
-in poloidal direction (see Fig.\,\ref{fig:exterior_domain_with_curve_integral}). 
-We assume here that $\Gamma$ has positive distance from the torus and 
-$\mathbf{J}$ is zero between $\Gamma$ and the torus.
+which is added as an additional constraint to the system.
 
 \begin{figure}
     \centering
@@ -76,7 +81,7 @@ $\mathbf{J}$ is zero between $\Gamma$ and the torus.
 \end{figure}
 
 The resulting partial differential equation is fascinating for the reason that it combines the differential 
-equations with this curve integral constraint which gives this problem 
+equations with this curve integral constraint which gives the problem 
 a strong topological flavour. For a student familiar with standard PDEs, it 
 begs the question how these notions can be combined to investigate this problem.
 
@@ -103,7 +108,7 @@ gives a very simple and yet deep relationship between the singular homology --
 a popular tool in algebraic topology to study topological quanities -- 
 and the integration of differential forms. We recall it in Sec.\,\ref{sec:de_rhams_theorem}.
 
-For a mathematician interested in analysis and motivated by the beauty of abstraction 
+For a mathematician interested in analysis and motivated by the beauty of abstraction, 
 these reasons should already be sufficient to start learning and investigating 
 differential forms and -- as a necessary fundament -- differential geometry. We will 
 give a short exposition of these topics in the first sections of this thesis 
@@ -115,15 +120,15 @@ Existence and uniqueness have been proven before on bounded domains
 yet an exterior domain is always unbounded. 
 Traditionally, the theory of PDEs on unbounded domains 
 is sparse in comparison to bounded ones. But unbounded domains can change the 
-situation drastically. Even one of the simplest most basic problems in the topic 
+situation drastically. Even one of the most basic problems in the topic 
 of PDEs, the Laplace equation with homogeneous Dirichlet boundary conditions, does not 
 have a unique classical solution (i.e. a solution using strong derivatives) 
 anymore when posed on unbounded domains. As a counterexample,
 pose the problem on the domain of positive real numbers. Then, any linear function 
 is a solution.
 
-Combining the tools from singular homology, differential geometry and 
-functional analysis we will prove the existence and uniqueness of the magnetostatic problem 
+By combining the tools from singular homology, differential geometry and 
+functional analysis, we will prove the existence and uniqueness of the magnetostatic problem 
 under suitable assumptions.
 
 The second part of this thesis will then be concerned with the numerical approximation. 
@@ -160,7 +165,7 @@ magnetostatic problem in Sec.\,\ref{sec:variational_formulation_of_the_magnetost
 which are fundamental to FEEC theory before applying it to our new variational formulation 
 to obtain the well-posedness and a-priori estimate in Sec.~\ref{sec:discretized_magnetostatic_problem}. 
 In the end, we will explain how this 
-problem is actually implemented (Sec.\,\ref{sec:implementation}) 
+problem is actually implemented in Sec.\,\ref{sec:implementation} 
 and provide some numerical examples in Sec\,\ref{sec:numerical_examples}.
 
 \end{document}
