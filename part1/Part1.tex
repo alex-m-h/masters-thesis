@@ -2855,7 +2855,7 @@ By using this rotation operator, we can formulate the following lemma.
     Recall another basic fact from Hilbert space theory that the 
     orthogonal complement of a space is always closed. 
     So we know from the first equality that $R_{Y,X}\Gamma(T^*)$ is closed.
-    Since $R_{Y,X}$ is an isometry we conclude that $\Gamma(T^*)$ is closed and 
+    Since $R_{Y,X}$ is an isometry, we conclude that $\Gamma(T^*)$ is closed and 
     thus $T^*$ a closed unbounded operator.
 \end{proof}
 
@@ -3000,7 +3000,7 @@ Now if we take $\mathbf{u} = (u_1,0,0)^\top$ then
 From this, we recognize that $-(\diver ^* v)_1$ is the weak derivative w.r.t. the 
 first coordinate, i.e. $-\partial_1 v$ and analogous for the other coordinates 
 so we recognize $\diver^* = -\grad$. We further see that the
-domain s.t. (\ref{eq:adjoint_gradient_c0inf_components}) is fulfilled is $H^1(\Omega)$ 
+domain, s.t. (\ref{eq:adjoint_gradient_c0inf_components}) is fulfilled, is $H^1(\Omega)$ 
 by definition. That means we showed 
 \begin{align}
     (\diver, C_0^\infty)^* = (-\grad, H^1). \label{eq:adjoint_gradient_c0inf} 
@@ -3020,9 +3020,9 @@ the complement of a compact set with Lipschitz boundary, this condition is trivi
 
 Let us denote with $C^k_b(\overline{\Omega})$ the space of $k$ times continuously
 differentiable functions with bounded support in $\overline{\Omega}$. 
-In contrast to $C^k_0(\Omega)$ these functions are not necessarily zero on the 
+In contrast to $C^k_0(\overline{\Omega})$, these functions are not necessarily zero on the 
 boundary.
-For $u \in C_b^1(\Omega)$, $\mathbf{v} \in C_b^1(\Omega;\real^3)$ we 
+For $u \in C_b^1(\overline{\Omega})$, $\mathbf{v} \in C_b^1(\overline{\Omega};\real^3)$ we 
 have the integration-by-parts formula
 \begin{align}
     \int_\Omega u \, \diver \mathbf{v} \, dx
@@ -3116,7 +3116,7 @@ We are trying to find something analogous for $H(\diver)$.
     The $H^1$ trace operator is usually defined only for bounded Lipschitz domains 
     (see \cite[Thm.\,3.9]{monk}), but only values near the boundary are relevant for the 
     values of the trace which is intuitively clear. 
-    To make this precise take an open ball $B_R$ centered at the origin with radius $R$ 
+    To make this precise, take an open ball $B_R$ centered at the origin with radius $R$ 
     s.t. $\partial \Omega \subseteq B_R$ and define $\Omega_R \vcentcolon= \Omega \cap B_R$.
     We then know that the trace on $\Omega_R$ is the 
     unique continuous extension of the operator $u \mapsto \tr u = u|_{\partial \Omega_R}$ 
@@ -3295,7 +3295,7 @@ We can now define a trace operator for $H(\diver)$.
         \langle \ell_\mathbf{v}, u \rangle \vcentcolon= \int_\Omega u \, \diver \mathbf{v} \, dx 
          + \int_\Omega \grad u \cdot \mathbf{v} \, dx.
     \end{align*}
-    Using Cauchy-Schwarz, we get
+    Using the Cauchy-Schwarz inequality, we get
     \begin{align*}
         \langle \ell_\mathbf{v}, u \rangle 
         \leq 2 \, \lVert \mathbf{v} \rVert _{H(\diver)} \lVert u \rVert _{H^1} 
@@ -3852,8 +3852,8 @@ in the case where $\mathfrak{B}^k$ is closed.
     where $\perp_V$ denotes the orthogonal complement w.r.t. the $V$-inner product.
 \end{theorem}
 \begin{proof}
-    This follows directly form the Banach inverse theorem. Because $\mathfrak{B}^{k+1}$ is closed
-    it is itself a Hilbert space. If we restrict $d^k$ to $\mathfrak{Z}^{k,\perp_V}$ it 
+    This follows directly from the Banach inverse theorem. Because $\mathfrak{B}^{k+1}$ is closed
+    it is itself a Hilbert space. If we restrict $d^k$ to $\mathfrak{Z}^{k,\perp_V}$, it 
     is injective and so $d^k|_{\mathfrak{Z}^{k,\perp_V}}:\mathfrak{Z}^{k,\perp_V} 
     \rightarrow \mathfrak{B}^{k+1}$ is a bounded isomorphism between 
     Hilbert spaces and we can apply the Banach inverse theorem to obtain the inverse, 
@@ -4024,7 +4024,7 @@ with $\mathbf{B} \in H_0(\diver)$, i.e. $\gamma_n\mathbf{B} = 0$, where
 $\gamma_n$ is the generalized normal trace. We assume additionally that 
 $\mathbf{B} \in H(\curl)$. 
 
-Recall as another condition we had equation (\ref{eq:first_curve_integral_condition}) 
+Recall we had equation (\ref{eq:first_curve_integral_condition}) as another condition
 which was the curve integral along the piecewise smooth curve around the torus.
 Recalling Section\,\ref{sec:singular_homology}, we replace the curve $\Gamma$
 with a smooth $1$-chain, which will play the same role, so we will 
@@ -4131,7 +4131,7 @@ the notion of weak solution.
             \sum\limits_{\alpha,i} F_i^\alpha \, \partial_\alpha \varphi_i 
             \right\} dx.
     \end{align*}
-    Since $\bm{\varphi} \in C_0^1(\Omega;\real^3)$ was arbitrary the first 
+    Since $\bm{\varphi} \in C_0^1(\Omega;\real^3)$ was arbitrary, the first 
     direction of the equivalence is proved. The other direction is trivial.
 \end{proof}
 So we see that in the case of constant coefficients we can consider 
@@ -4508,7 +4508,7 @@ that demonstrates the connection of differential forms and cochains.
         \stackrel{\text{$\Gamma$ closed}}{=} C_0. 
     \end{align*}
     \textbf{Proof of (ii)}
-    We have $I(\eta)$ is a $1$-cochain with $I(\eta)(\Gamma) = C_0$.
+    $I(\eta)$ is a $1$-cochain with $I(\eta)(\Gamma) = C_0$.
     Thus, we can apply Prop.\,\ref{prop:uniqueness_cochain} to get
     \begin{align*}
         [I]([\eta])=[I(\eta)] = [I(\theta)]=[I]([\theta]).
@@ -4591,7 +4591,7 @@ that demonstrates the connection of differential forms and cochains.
     Then there exists a solution 
     to Problem \ref{prob:magnetostatic_problem}.
 \end{theorem}
-Let us say a view words about the topological assumption 
+Let us say a few words about the topological assumption 
 regarding $\Omega_\epsilon$. This just means that we can slightly increase 
 the domain without changing the first homology group. As an example, 
 think again of a torus in $\real^3$. Assuming the torus has non-empty interior 
@@ -4619,7 +4619,7 @@ we can slightly reduce the poloidal radius without changing the topology of its
     since $\Gamma$ is closed. 
     
     We now refer to Sec.\,\ref{sec:differential_forms_subsection} 
-    and change back to vector proxies. Let 
+    and switch back to vector proxies. Let 
     $\tilde{\bm{\phi}}$ be the vector proxy of $\hat{\theta}$, 
     i.e. by recalling the musical isomorphism from Sec.\,\ref{sec:differential_forms_subsection},
     $\hat{\theta}^\sharp = \tilde{\bm{\phi}} \in C^\infty(\Omega_\epsilon;\real^3)$.
@@ -4680,7 +4680,7 @@ In the proof of uniqueness we will use the following lemma.
 
     We want to show $\phi_R \in H^1(\Omega_R)$. We already know that $\grad \phi_R \in L^2(\Omega; \real^3)$.
     Since $L^2(\Omega_R; \real^3) \subseteq H^{-1}(\Omega_R;\real^3)$, we can conclude that 
-    $\phi_R \in L^2$ because $\Omega_R$ is bounded and Lipschitz (\cite[Lemma 3.11]{monk}) 
+    $\phi_R \in L^2$, because $\Omega_R$ is bounded and Lipschitz (\cite[Lemma 3.11]{monk}), 
     and thus $\phi_R \in H^1(\Omega_R)$. This essentially means that 
     if $\phi \notin L^2(\Omega)$ it is due to its behaviour at infinity.
 
