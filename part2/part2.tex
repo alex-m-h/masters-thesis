@@ -1911,6 +1911,55 @@ to transfer them to the physical domain.
     that goes along the edges of the grid such that $\Gamma = \mathbf{F}(\hat{\Gamma})$.
 \end{assumption}
 
+\begin{figure}
+    \centering
+    \begin{minipage}[c]{.3\textwidth}
+    \begin{tikzpicture}
+        \draw[-latex] (0,0) -- (0,5.5);
+        \draw[-latex] (0,0) -- (3.5,0);
+        \draw[very thick] (0,0) -- (0,5);
+        \draw[very thick] (3,0) -- (3,5);
+        \draw[gray] (1,0) -- (1,5);
+        \draw[gray] (2,0) -- (2,5);
+        \draw[gray] (0,0) -- (3,0);
+        \draw[gray] (0,1.6666) -- (3,1.6666);
+        \draw[gray] (0,3.3333) -- (3,3.3333);
+        \draw[gray] (0,5) -- (3,5);
+        \node at (1.5,5.8) {\Huge$\hat{\Omega}$};
+        \node at (-0.5,2) {\small$\partial \hat{\Omega}_{in}$};
+        \node at (3.6,2) {\small$\partial \hat{\Omega}_{out}$};
+        \node at (3.4,-0.3) {\footnotesize$\hat{x}_1$};
+        \node at (-0.3,5.4) {\footnotesize$\hat{x}_2$};
+    \end{tikzpicture}
+    \end{minipage}
+    \begin{minipage}[c]{.15\textwidth}
+        \scalebox{1.5}{
+        ${\huge\xrightarrow{\mathbf{F}}}$
+        }
+    \end{minipage}
+    \begin{minipage}[c]{.4\textwidth}
+        \begin{tikzpicture}
+            \draw[gray] (0,0) circle [radius=2];
+            \draw[gray] (0,0) circle [radius=2.5];
+            \draw[gray] (0:1.5) -- (0:3);
+            \draw[gray] (120:1.5) -- (120:3);
+            \draw[gray] (240:1.5) -- (240:3);
+            \draw[very thick] (0,0) circle [radius=3];
+            \draw[very thick] (0,0) circle [radius=1.5];
+            \node at (0,3.5) {\Huge$\Omega$};
+            \node at (315:1.05) {\small$\partial \Omega_{in}$};
+            \node at (315:3.5) {\small$\partial \Omega_{out}$};
+        \end{tikzpicture}
+    \end{minipage}
+    \caption{
+        Reference domain $\hat{\Omega}$ and physical domain $\Omega$ with grid.
+        We have three grid cells in both dimensions, i.e. $N=3$.
+        Here $\hat{\Omega}$ has no boundary at the "northern" and the "southern" edge.
+    } \label{fig:reference_domain_physical_domain}
+\end{figure}
+
+See Fig.\,\ref{fig:reference_domain_physical_domain} for an example where $\Omega$ 
+is an annulus and $N=3$.
 This is usually referred as the \textit{single patch case} since we only use 
 one mapping from the reference domain. We see that this assumption is made so that 
 notions from the physical domain are well-represented on the reference 
