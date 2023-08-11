@@ -1256,17 +1256,17 @@ we will need a small lemma.
     which gives us the estimate.
 \end{proof}
 
-If we have the standard situation that 
-we have for $v \in V^j$
-\begin{align}
-    \lVert v - \Pi^j_h v \rVert _V \leq C \lVert v  \rVert _V h^s \label{eq:standard_estimate_projection_error}
-\end{align}
-for some generic constant $C>0$ independent of $v$ and $h$, the mesh size $h$ and some 
-$s>0$, then we can improve the estimate to
-\begin{align*}
-    \lVert p_h - p \rVert \leq C h^s
-\end{align*}
-by applying it in the last estimate of the proof.
+% If we have the standard situation that 
+% we have for $v \in V^j$
+% \begin{align}
+%     \lVert v - \Pi^j_h v \rVert _V \leq C \lVert v  \rVert _V h^s \label{eq:standard_estimate_projection_error}
+% \end{align}
+% for some generic constant $C>0$ independent of $v$ and $h$, the mesh size $h$ and some 
+% $s>0$, then we can improve the estimate to
+% \begin{align*}
+%     \lVert p_h - p \rVert \leq C h^s
+% \end{align*}
+% by applying it in the last estimate of the proof.
 
 Also if we assume $\lVert \Pi_h \rVert \leq c_\Pi$ for $h$ small enough and 
 $c_\Pi > 0 $ independent of $h$, then Assumption\,\ref{ass:convergence_discrete_spaces} implies
@@ -1287,39 +1287,39 @@ $c_\Pi > 0 $ independent of $h$, then Assumption\,\ref{ass:convergence_discrete_
 \begin{proof}
     See \cite[Thm\,5.1]{arnold} and the explanation after the proof.
 \end{proof}
-If we assume a standard error estimate for the projection as (\ref{eq:standard_estimate_projection_error}),
-then (\ref{eq:assumption_same_dimension}) is fulfilled if $C h^s < 1$ which will be true 
-for $h$ small enough.
+% If we assume a standard error estimate for the projection as (\ref{eq:standard_estimate_projection_error}),
+% then (\ref{eq:assumption_same_dimension}) is fulfilled if $C h^s < 1$ which will be true 
+% for $h$ small enough.
 
-\begin{proposition}\label{prop:gap_image_spaces}
-    Assuming again a finite-dimensional subcomplex with a $V$-bounded cochain projection,
-    we can bound the gap between the image spaces
-    \begin{align*}
-        \gap (\mathfrak{B}^j_h, \mathfrak{B}^j) 
-        \leq \lVert I - \Pi_h^j \rVert _V  \sup_{\substack{z \in \mathfrak{B}^j \\ \lVert z \rVert = 1} } 
-        \inf_{v_h \in V^j_h} \lVert z - v_h \rVert _V.
-    \end{align*}
-\end{proposition}
-\begin{proof}
-    At first note, that for any $z \in \mathfrak{B}^j$, $\lVert z \rVert _V = \lVert z \rVert$.
-    Since $\mathfrak{B}^j_h \subseteq \mathfrak{B}^j$, $d(z_h, \mathfrak{B}^j) = 0$ for any 
-    $z_h \in \mathfrak{B}^j_h$. 
+% \begin{proposition}\label{prop:gap_image_spaces}
+%     Assuming again a finite-dimensional subcomplex with a $V$-bounded cochain projection,
+%     we can bound the gap between the image spaces
+%     \begin{align*}
+%         \gap (\mathfrak{B}^j_h, \mathfrak{B}^j) 
+%         \leq \lVert I - \Pi_h^j \rVert _V  \sup_{\substack{z \in \mathfrak{B}^j \\ \lVert z \rVert = 1} } 
+%         \inf_{v_h \in V^j_h} \lVert z - v_h \rVert _V.
+%     \end{align*}
+% \end{proposition}
+% \begin{proof}
+%     At first note, that for any $z \in \mathfrak{B}^j$, $\lVert z \rVert _V = \lVert z \rVert$.
+%     Since $\mathfrak{B}^j_h \subseteq \mathfrak{B}^j$, $d(z_h, \mathfrak{B}^j) = 0$ for any 
+%     $z_h \in \mathfrak{B}^j_h$. 
     
-    Take $z \in \mathfrak{B}^j$ arbitrary, i.e. there exists $w \in V^{j-1}$ s.t. 
-    $dw = z$.
-    Since $\Pi_h$  is a cochain projection, we thus have 
-    \begin{align*}
-        \Pi_h z = \Pi_h dw = d \Pi_h w \in \mathfrak{B}_h^j
-    \end{align*}
-    so $\Pi_h$ maps $\mathfrak{B}^j$ into $\mathfrak{B}^j_h$. Putting all that together,
-    \begin{align*}
-        d(z,\mathfrak{B}^j_h) &= \inf_{z_h \in \mathfrak{B}_h} \lVert z - z_h \rVert 
-        \leq \lVert z - \Pi_h z \rVert 
-        = \lVert z - \Pi_h z \rVert _V
-        \\ &\stackrel{(\ref{eq:bound_projection})}{\leq} \lVert I - \Pi_h \rVert _V \inf_{v_h \in V_h} \lVert z - v_h \rVert _V
-    \end{align*}
-    and then the claim follows from the definition of the gap.
-\end{proof}
+%     Take $z \in \mathfrak{B}^j$ arbitrary, i.e. there exists $w \in V^{j-1}$ s.t. 
+%     $dw = z$.
+%     Since $\Pi_h$  is a cochain projection, we thus have 
+%     \begin{align*}
+%         \Pi_h z = \Pi_h dw = d \Pi_h w \in \mathfrak{B}_h^j
+%     \end{align*}
+%     so $\Pi_h$ maps $\mathfrak{B}^j$ into $\mathfrak{B}^j_h$. Putting all that together,
+%     \begin{align*}
+%         d(z,\mathfrak{B}^j_h) &= \inf_{z_h \in \mathfrak{B}_h} \lVert z - z_h \rVert 
+%         \leq \lVert z - \Pi_h z \rVert 
+%         = \lVert z - \Pi_h z \rVert _V
+%         \\ &\stackrel{(\ref{eq:bound_projection})}{\leq} \lVert I - \Pi_h \rVert _V \inf_{v_h \in V_h} \lVert z - v_h \rVert _V
+%     \end{align*}
+%     and then the claim follows from the definition of the gap.
+% \end{proof}
 
 \begin{proposition}[Discrete Poincare inequality]
     Assume that we have a $V$-bounded cochain projection $\Pi_h$ for 
@@ -1359,9 +1359,9 @@ for $h$ small enough.
     \end{align*}
 \end{proof}
 
-Notice that if we assume that $\lim_{h \rightarrow 0} \lVert \Pi_h \rVert _V = 1$ 
-(which is true if e.g. the standard estimate (\ref{eq:standard_estimate_projection_error}) is fulfilled)
-then $c_{P,h} \rightarrow c_P$ for $h \rightarrow 0$.
+% Notice that if we assume that $\lim_{h \rightarrow 0} \lVert \Pi_h \rVert _V = 1$ 
+% (which is true if e.g. the standard estimate (\ref{eq:standard_estimate_projection_error}) is fulfilled)
+% then $c_{P,h} \rightarrow c_P$ for $h \rightarrow 0$.
 
 In conclusion, we obtain a discrete version of the Hilbert complex where the harmonic forms are 
 accurately represented if $h$ is small enough.
@@ -1477,6 +1477,7 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
     $\psi_{0,h} \in V_h^0$ and $c_{\psi,h}>0$ 
     s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$
     where $c_{\psi,h}$ does not depend on the choice of $\psi$.
+    Choose $c_{1,h} > 0$ s.t. $\lVert \veccurl \psi_{0,h} \rVert \leq c_{1,h}$.
     We also assume that (\ref{eq:assumption_same_dimension}) holds and thus 
     $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$ and we choose 
     $\mathbf{p}_h$ according to Prop.\,\ref{prop:choice_of_discrete_harmonic_form}.
@@ -1489,8 +1490,7 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
         \leq \frac{\lVert J \rVert + |C_1|}{\gamma_h}.
     \end{align*}
     where $\gamma_h$ has the same expression as $\gamma$ except  
-    $c_{P,h}$ instead of $c_P$ and $c_{\psi,h}$ instead of $c_{\psi}$.
-    Furthermore if $c_{P,h} \rightarrow c_P$ then $\gamma_h \rightarrow \gamma$ for $h \rightarrow 0$.
+    $c_{P,h}$ instead of $c_P$, $c_{\psi,h}$ instead of $c_{\psi}$ and $c_{1,h}$ instead of $c_1$.
 \end{theorem}
 \begin{proof}
     By following the exact same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}, 
@@ -1520,26 +1520,6 @@ we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetost
     we obtain $c_{\psi,h} \rightarrow c_\psi$ for $h \rightarrow 0$ and 
     we can assume $c_{\psi,h} > 0$ for $h$ small enough.
 
-    The next question is why we can choose $c_1$ for the discrete case just as 
-    in the continuous one. Remember that $c_1>0$ was chosen 
-    s.t. $\lVert \veccurl \psi_0 \rVert \leq c_1$. Choose now w.l.o.g. 
-    $c_1 =  \lVert \veccurl \psi_0 \rVert + 1$. Then it would be clear, 
-    that we can choose the same $c_1$ if $\lVert \veccurl \psi_{0,h} \rVert \rightarrow 
-    \lVert \veccurl \psi_0 \rVert$. This is indeed true: 
-    \begin{align*}
-        &\big| \lVert \veccurl \psi_{0,h} \rVert - \lVert \veccurl \psi_0 \rVert \big|
-        \leq \lVert \veccurl \psi_{0,h} -  \veccurl \psi_0 \rVert
-        = \lVert P_{\mathfrak{B}^1_h}\veccurl \psi -  P_{\mathfrak{B}^1} \veccurl \psi \rVert
-        \\ &\leq \lVert P_{\mathfrak{B}^1_h} -  P_{\mathfrak{B}^1} \rVert
-            \lVert \veccurl \psi \rVert
-        = \gap (\mathfrak{B}^1_h, \mathfrak{B}^1) \lVert \veccurl \psi \rVert
-        \rightarrow 0
-    \end{align*}
-    where we use Prop.\,\ref{prop:gap_image_spaces} combined with the uniform boundedness 
-    of $\Pi_h$ to obtain convergence.
-
-    If $c_{P,h} \rightarrow c_P$ then $\gamma_h \rightarrow \gamma$ is clear because 
-    $\gamma$ depends continuously on $c_{\psi}$ and $c_P$.
 \end{proof}
 
 Finally, we want to use the inf-sup condition to derive an a-priori error estimate. 
@@ -2311,7 +2291,7 @@ The reference domain $\hat{\Omega} = [0,1] \times [0, 2\pi]$ and the mapping
     at $\Gamma$ and between $\Gamma$ and the outer boundary}
     \label{fig:psi_annulus}
 \end{figure}
-
+\vspace{4cm}
 \begin{figure}
     \centering 
     \includegraphics[width=8cm]{plot_files/biot_savart_annulus/psi_h_poisson.png}
@@ -2447,25 +2427,6 @@ on a "distorted annulus" (see \ref{fig:distorted_annulus_domain}) using the same
     \end{pmatrix}.
 \end{align*}
 
-\begin{figure}
-    \centering
-    \begin{tikzpicture}[scale=0.5]
-        % \draw (0,0) -- (1,1) plot coordinates {(2,0)  (4,0)};
-        \filldraw[domain=0:6.28, smooth, samples=500, fill=gray, draw=black]  
-            plot ({3*(cos(\x r)^2 + 1)*2*cos(\x r)},{(cos(\x r)^2 + 1)*2*sin(\x r)}) --cycle;
-        \draw[domain=0:6.28, smooth, samples=500, dashed, thick, fill=green!80, draw=blue]  
-            plot ({3*(cos(\x r)^2 + 1)*1.5*cos(\x r)},{(cos(\x r)^2 + 1)*1.5*sin(\x r)}) --cycle;
-        \filldraw[domain=0:6.28, smooth, samples=500, fill=white, draw=black]  
-            plot ({3*(cos(\x r)^2 + 1)*cos(\x r)},{(cos(\x r)^2 + 1)*sin(\x r)}) --cycle;
-        \node at (6,1.125) {\color{blue}$\Gamma$};
-        \node at (-6,0.875) {\color{green!40!black!100}$\Omega_\Gamma$};
-        \node at (0,2.5) {\Large$\Omega$};
-    \end{tikzpicture}
-    \caption{The distorted annulus domain}
-    \label{fig:distorted_annulus_domain}
-\end{figure}
-
-
 Note that we do not have 
 the homogeneous boundary condition
 $\mathbf{B}\cdot \mathbf{n} = 0$ for this domain anymore. Thus, we have to deal with the boundary conditions 
@@ -2494,7 +2455,23 @@ second order convergence for $p=2$ (see Fig.\,\ref{fig:convergence_analysis_biot
 but the error is several orders of magnitude larger compared to the normal annulus. 
 For $p=3$ the convergence rate is at least $2$, but the plot does not confirm 
 convergence of order $3$ in this case.
-
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale=0.5]
+        % \draw (0,0) -- (1,1) plot coordinates {(2,0)  (4,0)};
+        \filldraw[domain=0:6.28, smooth, samples=500, fill=gray, draw=black]  
+            plot ({3*(cos(\x r)^2 + 1)*2*cos(\x r)},{(cos(\x r)^2 + 1)*2*sin(\x r)}) --cycle;
+        \draw[domain=0:6.28, smooth, samples=500, dashed, thick, fill=green!80, draw=blue]  
+            plot ({3*(cos(\x r)^2 + 1)*1.5*cos(\x r)},{(cos(\x r)^2 + 1)*1.5*sin(\x r)}) --cycle;
+        \filldraw[domain=0:6.28, smooth, samples=500, fill=white, draw=black]  
+            plot ({3*(cos(\x r)^2 + 1)*cos(\x r)},{(cos(\x r)^2 + 1)*sin(\x r)}) --cycle;
+        \node at (6,1.125) {\color{blue}$\Gamma$};
+        \node at (-6,0.875) {\color{green!40!black!100}$\Omega_\Gamma$};
+        \node at (0,2.5) {\Large$\Omega$};
+    \end{tikzpicture}
+    \caption{The distorted annulus domain}
+    \label{fig:distorted_annulus_domain}
+\end{figure}
 \begin{figure}
     \centering
     \includegraphics[width=12cm]{plot_files/biot_savart_distorted/psi_h.png}
