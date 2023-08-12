@@ -273,7 +273,7 @@ investigate the formulation without curve integral.
 
 \begin{proposition}\label{prop:equivalence_first_two_equations}
     For any $J \in L^2$, (\ref{eq:first_eq_mixed_formulation}) and 
-    (\ref{eq:second_eq_mixed_formulation}) hold i.i.f. 
+    (\ref{eq:second_eq_mixed_formulation}) hold iif 
     $\sigma = 0$, $\lambda=0$, $\curl \mathbf{B} = J$ and 
     $\diver \mathbf{B} = 0$,
     i.e. $\mathbf{B}$ solves the 2D magnetostatic problem (Problem\,\ref{prob:2d_magnetostatic_problem})  
@@ -541,7 +541,7 @@ The following formulation is from \cite[Sec.\,25.3]{ern_guermond_2} in the real 
 \begin{theorem}[BNB]\label{thm:BNB}
     Let $X$ be a Banach space and $Y$ be a reflexive Banach space. Let $a:X\times Y \rightarrow \real$ be a 
     bounded bilinear form and $\ell \in Y'$. Then a problem of the form 
-    (\ref{eq:general_variational_problem}) is well-posed i.i.f. the following two criteria are fulfilled
+    (\ref{eq:general_variational_problem}) is well-posed iif the following two criteria are fulfilled
     \begin{align}
         &\text{\normalfont(1)}\quad\inf_{x \in X} \sup_{y\in Y} \frac{|a(x,y)|}{\lVert x \rVert _X \lVert y \rVert _Y} 
             =\vcentcolon \gamma > 0\label{eq:BNB1} 
@@ -1754,8 +1754,8 @@ and we denote
 \end{align}
 
 It is well-known that for a piecewise smooth function $\mathbf{v}$,  
-$\mathbf{v} \in H(\diver)$ i.i.f. the normal trace across element interfaces
-agrees. Analogously, a piecewise smooth $\tau \in H^1$ i.i.f. the values agree 
+$\mathbf{v} \in H(\diver)$ iif the normal trace across element interfaces
+agrees. Analogously, a piecewise smooth $\tau \in H^1$ iif the values agree 
 on the interfaces. We will always assume $p \geq 2$ and thus know that 
 all our tensor splines are at least continuous globally and so
 $\hat{V}_h^0 \subseteq H^1(\hat{\Omega})$ and $\hat{V}_h^1 \subseteq H(\diver,\hat{\Omega})$ as desired. 
@@ -2085,7 +2085,7 @@ projections $P_h^\ell: \bar{V}_h^\ell \rightarrow \bar{V}_h^\ell$ which set
 the boundary degrees of freedom to zero and are thus 
 a projection onto $V_h^\ell$. The
 matrix representation $\mathbb{P}^\ell$ is then simply
-$(\mathbb{P}^\ell)_{\mu, \nu} = 1 $ i.i.f. $\mu = \nu$ and $\mu$ does not 
+$(\mathbb{P}^\ell)_{\mu, \nu} = 1 $ iif $\mu = \nu$ and $\mu$ does not 
 correspond to a geometric element on the boundary. 
 They are easily constructed 
 by taking the identity matrix and setting the diagonal entries to zero that 
@@ -2113,7 +2113,7 @@ Since we apply the projection everywhere it is then easy to show that
 $\sigma_h \in \bar{V}_h^0$, 
 $\mathbf{B}_h \in \bar{V}^1_h$ and $\lambda \in \real$ solve 
 (\ref{eq:system_with_penalties:eq1})-(\ref{eq:system_with_penalties:eq3})
-i.i.f. $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V^1_h$ 
+iif $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V^1_h$ 
 and $(\sigma_h,\mathbf{B}_h,\lambda)$ solves the system with homogeneous discrete spaces 
 (Prob.\,\ref{prob:magnetostatic_problem_discrete_variational}). 
 So the two formulations are equivalent.
@@ -2246,7 +2246,7 @@ a manufactured solution. The Biot-Savart solution will be approximated on a stan
 and a "distorted annulus". In both cases, we will pose the problem with two different curves 
 and investigate the convergence error.
 
-\subsection{Magnetic field induced current through wire}
+\subsection{Magnetic field induced by current through a wire}
 As a first simple numerical test, we consider a standard example from 
 magnetostatics which is the magnetic field induced by a current through an infinitely long, 
 straight wire with radius zero. The \textit{Biot-Savart law} can be used to compute it. 
