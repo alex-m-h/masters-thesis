@@ -330,8 +330,8 @@ equation as an immediate consequence of the integration by parts formula
 final variational formulation of the 2D magnetostatic problem which we 
 will investigate in the coming sections.
 
-Because $\mathbf{n}$ is the unit outward normal 
-of $\Omega_\Gamma$ and $\bm{\gamma}$ the parametrization of $\Gamma$, we know that $\mathbf{n} \perp \bm{\gamma}'$
+Let $\mathbf{n}$ be the unit outward normal 
+of $\Omega_\Gamma$ and $\bm{\gamma}$ the parametrization of $\Gamma$. Then we know that $\mathbf{n} \perp \bm{\gamma}'$
 and
 \begin{align*}
     \mathbf{B}\times \mathbf{n} 
@@ -356,6 +356,7 @@ Choose $\psi \in H^1$ s.t.
     \text{$\psi = 0$ on $\partial \Omega_{in}$, $\psi = 1$ on 
     $\Gamma$ and $\psi \equiv 1$ in $\Omega \setminus \Omega_\Gamma$}.\label{eq:conditions_psi}
 \end{align}
+We call such a $\psi$ \textit{admissible for $\Gamma$}.
 Then we observe 
 \begin{align*}
     &\int_\Omega \veccurl \psi \cdot \mathbf{B} \, dx = 
@@ -392,9 +393,8 @@ This is the motivation to add the right equation to our system instead
 of the curve integral since it is much easier 
 to enforce numerically.
 
-However, $\psi$ is of course not uniquely determined by the conditions above 
-so we have to check what happens when we use a different $\psi$ respecting the 
-conditions (\ref{eq:conditions_psi}).
+However, $\psi$ is of course not uniquely determined by (\ref{eq:conditions_psi}) 
+so we have to check what happens when we use a different admissible $\psi$ respecting these conditions.
 Assume first that $\mathbf{B} \in C^1(\overline{\Omega};\real^2)$. Then we know from 
 (\ref{eq:rewrite_curve_integral_differentiable}) that 
 \begin{align*}
@@ -422,7 +422,8 @@ But assume, that we are still given $C_0 \in \real$. Then the question arises
 if the choice of $\psi$ matters. This is not the case as the following proposition shows.
 
 \begin{proposition}\label{prop:different_psi_same_curve_integral}
-    Let $\psi$ and $\tilde{\psi}$ both fulfill the assumptions given by (\ref{eq:conditions_psi})
+    Let $\psi$ and $\tilde{\psi}$ both fulfill the assumptions given by (\ref{eq:conditions_psi}), 
+    i.e. they are both admissible for $\Gamma$,
     and $(\sigma, \mathbf{B}, \lambda)$ be a solution of (\ref{eq:first_eq_mixed_formulation}) and 
     (\ref{eq:second_eq_mixed_formulation}).
     Then 
@@ -472,8 +473,8 @@ We would like this to be preserved for our replacement of the curve integral
 which is indeed the case.
 
 \begin{proposition}\label{prop:different_curve_same_curve_integral_substitute}
-    Let $\Gamma_1$ and $\Gamma_2$ be chosen as just described and $\psi_1$ 
-    and $\psi_2$ accordingly. Let $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$ 
+    Let $\Gamma_1$ and $\Gamma_2$ be chosen as just described and admissible $\psi_1$ 
+    and $\psi_2$ respectively. Let $\sigma \in H^1_0$, $\mathbf{B} \in H_0(\diver)$ 
     and $\lambda \in \real$ be a solution of 
     (\ref{eq:first_eq_mixed_formulation}) and (\ref{eq:second_eq_mixed_formulation})
     with $J=0$ in $\Omega_{\Gamma_1}$ and $\Omega_{\Gamma_2}$.
@@ -489,7 +490,7 @@ which is indeed the case.
     Notice that even if we have different curves 
     $\Gamma_1$ and $\Gamma_2$ the fact that $\psi_1$ and $\psi_2$ are constant one 
     between the curve and $\partial \Omega_{out}$ implies that 
-    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the assumptions (\ref{eq:conditions_psi}), 
+    $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{out}$. From the admissibility (\ref{eq:conditions_psi}), 
     we also get 
     $\psi_1 - \psi_2 = 0$ on $\partial\Omega_{in}$ so in total 
     $\psi_1 - \psi_2 \in H^1_0$. Recall that if $(\sigma,\mathbf{B},\lambda)$ is a solution
@@ -556,7 +557,7 @@ Note that (\ref{eq:BNB1}) is equivalent to the fact that for any $x \in X \setmi
 there exists $y \in Y\setminus\{0\}$ s.t. $a(x,y) \geq \gamma \lVert x \rVert _X \lVert y \rVert _Y$.  
 
 Since we are dealing with Hilbert spaces only we can utilize the following proposition to prove it 
-(see \cite[Rem.\,25.14]{ern_guermond}).
+(see \cite[Rem.\,25.14]{ern_guermond_2}).
 \begin{proposition}[$T$-coercivity]\label{prop:T_coercivity}
     Let $X$ and $Y$ be Hilbert spaces. Then {\normalfont (\ref{eq:BNB1})} and {\normalfont (\ref{eq:BNB2})} hold, if
     there exists a bounded bijective operator $T:X \rightarrow Y$ and $\eta >0$ s.t.
@@ -631,7 +632,7 @@ X$ s.t.
 Note that the bilinear form $a$ is not symmetric. 
 
 The next step is to show important properties of $\veccurl \psi$ 
-assuming $\psi$ has been chosen as described above.
+assuming $\psi$ is admissible for $\Gamma$ i.e. (\ref{eq:conditions_psi}) holds.
 \begin{proposition}\label{prop:psi_zero_normal_trace}
     Under the given assumptions on $\psi$, $\veccurl\psi \in H_0(\diver)$.
 \end{proposition}
@@ -690,7 +691,8 @@ solution. This implies that we would like $\veccurl \psi$ to have
 non-vanishing harmonic part. This is indeed true.
 \begin{proposition}
     Let $P_{\mathfrak{H}^1}: L^2 \rightarrow \mathfrak{H}^1$ be the orthogonal
-    projection onto the harmonic forms. Then with $\psi$ satisfying (\ref{eq:conditions_psi})
+    projection onto the harmonic forms. Then with $\psi$ being admissible for $\Gamma$, 
+    i.e. fulfilling conditions (\ref{eq:conditions_psi}),
     we have $P_\mathfrak{H}^1\veccurl \psi \neq 0$.
 \end{proposition}
 \begin{proof}
@@ -723,7 +725,7 @@ we will do so from now on. Also we can prove that the harmonic part is
 independent of the chosen $\psi$.
 
 \begin{proposition}\label{prop:harmonic_part_curlpsi_independent_of_choice}
-    Choose $\psi$ and $\tilde{\psi}$ according to (\ref{eq:conditions_psi}). Then
+    Choose $\psi$ and $\tilde{\psi}$ admissible for $\Gamma$ according to (\ref{eq:conditions_psi}). Then
     \begin{align*}
         P_{\mathfrak{H}^1}\veccurl \psi = P_{\mathfrak{H}^1}\veccurl \tilde{\psi}.
     \end{align*}
@@ -857,7 +859,8 @@ Now we can use the T-coercivity (Prop.\,\ref{prop:T_coercivity}) to prove the in
 well-posedness of our formulation.
 
 \begin{theorem}
-    Let $\veccurl \psi_0 + c_\psi \mathbf{p} = \veccurl \psi$ and assume we have chosen the sign of 
+    Let $\psi$ be admissible for $\Gamma$ and 
+    $\veccurl \psi_0 + c_\psi \mathbf{p} = \veccurl \psi$ and assume we have chosen the sign of 
     $\mathbf{p}$ s.t. $c_\psi > 0$. Then take $c_1 >0 $ s.t. 
     $\lVert \veccurl \psi_0 \rVert \leq c_1$ (e.g. $c_1 = \lVert \veccurl \psi_0 \rVert + 1$ would be a valid choice). Define 
     $\beta = \frac{3 c_1^2 c_P^2}{c_\psi^2}$ and $\alpha = -\frac{c_\psi}{4 c_1^2 c_P^2}$. 
@@ -1410,6 +1413,7 @@ This gives us the following discrete formulation. Choose $\mathbf{p}_h \in \math
 s.t. $\lVert \mathbf{p}_h \rVert = 1$. 
 
 \begin{problem}\label{prob:magnetostatic_problem_discrete_variational}
+    Let $J \in L^2$, $C_1 \in \real$.
     Find 
     $\sigma_h \in V_h^0$, $\mathbf{B}_h \in V_h^1$ and $\lambda \in \real$ s.t.
     \begin{align*}
@@ -1425,19 +1429,29 @@ In practice, $\mathbf{p}_h$
 is computed numerically before assembling the system. 
 Now we make some assumptions on $\psi$. Assume there exists a discrete space $\bar{V}_h^0 \supseteq V_h^0$ 
 s.t. $\bar{V}_h^0 \cap H^1_0 = V_h^0$. $\bar{V}_h^0$ will correspond to the discrete space without 
-homogeneous boundary conditions. Then we assume $\psi \in \bar{V}_h^0$. 
-This has the consequence that for $\psi, \tilde{\psi} \in \bar{V}_h^0$ fulfilling the 
-previous conditions at (\ref{eq:conditions_psi}) for two possibly different curves 
-$\Gamma$ and $\tilde{\Gamma}$, then 
+boundary conditions. 
+\begin{definition}\label{def:discreteley_admissible}
+    We call $\psi$ \textit{discretely admissible} for $\Gamma$ if it is 
+    admissible for $\Gamma$, i.e. fulfilling (\ref{eq:conditions_psi}), and 
+    additionally
+    \begin{align}
+        \psi \in \bar{V}_h^0 \text{ and } \veccurl \psi \in V_h^1.
+    \end{align}    
+\end{definition}
+
+This has the consequence that for $\psi, \tilde{\psi} \in \bar{V}_h^0$ being discretely admissible for $\Gamma$ 
+and $\tilde{\Gamma}$ respectively, 
+then 
 $\psi - \tilde{\psi} \in H^1_0$ and thus 
 \begin{align}
     \psi - \tilde{\psi} \in \bar{V}^0_h \cap H^1_0 = V_h^0. \label{eq:psi_minus_psi_tilde_in_Vh0}
 \end{align}
-We will explain this later in more detail.
-We assume additionally $\veccurl \psi \in V_h^1$. Since 
-we can choose $\psi$ and we assume to be on a discretizable domain, these 
-assumptions are not unreasonable. 
 
+Also, we can apply the discrete Hodge decomposition, since $\veccurl \psi \in V^1_h$, 
+to get $\psi_{0,h} \in V_h^0$, $c_{\psi,h} \in \real$ s.t.
+\begin{align}
+    \veccurl \psi = \veccurl \psi_{0,h} + c_{\psi,h} \mathbf{p}_h. \label{eq:split_psi_h}
+\end{align}
 
 We define $X_h \vcentcolon= V_h^0 \times V_h^1 \times \real$. 
 Note that this trial and test space is indeed conforming, i.e. $X_h \subseteq X$, 
@@ -1468,15 +1482,18 @@ Because we have transfered the continuous structures to the discrete case
 we can apply the same arguments as in Sec.\,\ref{sec:well-posedness_of_magnetostatic_system}.
 
 
-\begin{theorem}[Well-posedness of the discrete problem]
+\begin{theorem}[Well-posedness of the discrete problem]\label{thm:wellposedness}
     For the following assumptions we always tacitly require that 
     $h>0$ is small enough. We assume that the Hilbert complex admits uniformly $V$-bounded 
     cochain projections $\Pi_h$, i.e. 
     there exists $c_\Pi > 0$ independent of $h$ s.t. $\lVert \Pi_h \rVert _{\mathcal{L}(V,V)} \leq c_\Pi$.
-    We assume that $\veccurl \psi \in V_h^1$. Then we find 
-    $\psi_{0,h} \in V_h^0$ and $c_{\psi,h}>0$ 
-    s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$
-    where $c_{\psi,h}$ does not depend on the choice of $\psi$.
+    Assume $\psi$ to be discretely admissible for $\Gamma$ (cf. Def.\,\ref{def:discreteley_admissible}). 
+    % Then we find 
+    % $\psi_{0,h} \in V_h^0$ and $c_{\psi,h}>0$ 
+    % s.t. $\veccurl \psi  = \veccurl \psi_{0,h} + c_{\psi,h}\mathbf{p}_h$
+    % where $c_{\psi,h}$ does not depend on the choice of $\psi$.
+    Split $\psi$ according to (\ref{eq:split_psi_h}). Then $c_{\psi,h}>0$ 
+    does not depend on the choice of $\psi$.
     Choose $c_{1,h} > 0$ s.t. $\lVert \veccurl \psi_{0,h} \rVert \leq c_{1,h}$.
     We also assume that (\ref{eq:assumption_same_dimension}) holds and thus 
     $\dim \mathfrak{H}^1_h = \dim \mathfrak{H}^1 = 1$ and we choose 
@@ -1587,7 +1604,8 @@ are different in the discrete and continuous case. So we will use the following 
 We now have to apply this lemma to the magnetostatic formulation.
 
 \begin{theorem}[Quasi optimal a-priori estimate]
-    Let $(\sigma,\mathbf{B},\lambda) \in X$ be 
+    Let the same assumptions hold as for Thm.\,\ref{thm:wellposedness}
+    and let $(\sigma,\mathbf{B},\lambda) \in X$ be 
     the exact solution of Problem \ref{prob:magnetostatic_problem_variational} 
     and 
     $(\sigma_h,\mathbf{B}_h,\lambda_h) \in X_h$ the solution of the discrete 
@@ -1626,8 +1644,9 @@ the first two equations of Problem\,\ref{prob:magnetostatic_problem_discrete_var
 and obtain
 \begin{align}
     \int_{\Omega_\Gamma} \psi \, J \, dx -  \int_\Omega \veccurl \psi \cdot \mathbf{B}_h \, dx
-    = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx -  \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B}_h \, dx
+    = \int_{\Omega_\Gamma} \tilde{\psi} \, J \, dx -  \int_\Omega \veccurl \tilde{\psi} \cdot \mathbf{B}_h \, dx,
 \end{align}
+assuming $\psi$ is discretely admissible for $\Gamma$,
 and thus an equivalent system by choosing 
 \begin{align*}
     C_1 \vcentcolon= \int_{\Omega_\Gamma} \psi \, J \, dx - C_0 \text{ and }
@@ -1638,7 +1657,7 @@ In summary, the choice of $\psi$ does not matter for the discrete system either.
 
 Another important property of our new curve integral constraint was the 
 invariance if $J=0$ between the curves and the inner boundary, i.e. if we have two different curves 
-$\Gamma_1$ and $\Gamma_2$ with $\psi_1$ and $\psi_2$ accordingly and 
+$\Gamma_1$ and $\Gamma_2$ with $\psi_1$ and $\psi_2$ discretely admissible for them and 
 $J=0$ in $\Omega_{\Gamma_1} \cup \Omega_{\Gamma_1}$, then we would like
 \begin{align*}
     \langle \veccurl \psi_1, \mathbf{B}_h \rangle = \langle \veccurl \psi_2, \mathbf{B}_h \rangle
@@ -1673,8 +1692,8 @@ We choose a knot sequence $\bm{\xi} = (\xi_i )_{i=0}^{n+p}$ with
 $\xi_0 \leq \xi_1 \leq ... \leq \xi_{n+p}$. 
 B-Splines $B^p_i$ of degree $p\geq 0$ for $i = 0,...,n-1$ are defined recursively as 
 \begin{align*}
-    B^p_{i+1}(x) \vcentcolon= \frac{x - \xi_i}{\xi_{i+p}- \xi_i} B_i^{p-1}(x) 
-        + \frac{\xi_{i+p+1} - x}{\xi_{i+p+1}- \xi_{i+1}} B_{i}^{p-1}(x) 
+    B^p_{i}(x) \vcentcolon= \frac{x - \xi_i}{\xi_{i+p}- \xi_i} B_i^{p-1}(x) 
+        + \frac{\xi_{i+p+1} - x}{\xi_{i+p+1}- \xi_{i+1}} B_{i+1}^{p-1}(x) 
 \end{align*}
 and 
 \begin{align*}
@@ -1725,8 +1744,8 @@ $a_2 = y_0 < y_1 < y_2 < ... < y_N = b_2$ in $y$-direction and assume that we ha
 same number of grid points in both dimensions for simplicity. 
 Using the same definition of knot sequence as above gives us the knot sequence 
 $\bm{\xi}$ in $x$-direction and $\bm{\eta}$ in $y$-direction. The resulting splines 
-are denoted as $B_{i,\xi}^{q_1}$, $i=0,...,n_1 = N + q_1$, and $B_{j,\eta}^{q_2}$, 
-$j = 0,...,N + q_2$, and the spaces
+are denoted as $B_{i,\xi}^{q_1}$, $i=0,...,n_1 - 1 = N + q_1 - 1 $, and $B_{j,\eta}^{q_2}$, 
+$j = 0,...,N + q_2 - 1$, and the spaces
 $\mathbb{S}^{q_1}(\bm{\xi})$ and $\mathbb{S}^{q_2}(\bm{\eta})$ respectively.
 
 We use the notation 
@@ -2308,7 +2327,7 @@ the curve $\Gamma_1$, i.e. in logical coordinates
         2 \hat{x}_1 & \text{ for $\hat{x}_1 \leq 0.5$} 
         \\ 1 & \text{ else}.
     \end{cases}\label{eq:linear_interpolation_psi}
-\end{align}This fulfills all the criteria we had for $\psi_1$ (cf. (\ref{eq:conditions_psi})) for $\Gamma_1$ 
+\end{align}Then $\psi_1$ is admissible for $\Gamma_1$ (cf. (\ref{eq:conditions_psi}))
 (see Fig.\,\ref{fig:psi_annulus}). 
 
 For $\Gamma_2$, we choose $\psi_2$ as the solution of the Laplace problem with boundary conditions 
@@ -2518,7 +2537,7 @@ not $H^2$. Since $J \neq 0$, we have to compute
 \begin{align*}
     \int_{\Omega_{\Gamma_1}} \psi_1 \, J \, dx
 \end{align*}
-numerically. In order to do that, we interpolate $\psi$. Because $\psi$ is not 
+numerically. In order to do that, we interpolate $\psi_1$. Because $\psi_1$ is not 
 $H^2$-regular, the interpolation error dominates and so we do not obtain 
 third order convergence. This suggests the necessity to choose a $\psi$ 
 smooth enough s.t.~it can be approximated sufficiently well.

@@ -1635,7 +1635,7 @@ the domain of a chart $\boldsymbol{\phi}: U \rightarrow \real^n$
 which we will now extend globally to the whole manifold. We do this 
 by "gluing" the local measures together using a partition of unity subordinate 
 to our open cover. 
-Let $\{ \chi_i \}_{i=1}^N$, $N \leq \infty$, be the partition of unity 
+Let $\{ \chi_i \}_{i=1}^N$, $N \leq \infty$, be a partition of unity 
 subordinate to the open cover $\{U_i\}_{i = 0}^N$ given by the atlas. 
 Let $\mathbf{x}^{(i)} = (x_1^{(i)}, x_2^{(i)}, ..., x_n^{(i)})^\top$ be the local 
 coordinates of the chart $(U_i,\bm{\phi}_i)$ and 
@@ -1659,7 +1659,7 @@ using the transformation behaviour of $G^{(i)}$.
 \begin{proof}
     Assume w.l.o.g. that $N=\infty$, i.e.~we have a countably infinite atlas.
     Let $\{(V_j, \boldsymbol{\psi}_j)\}_{j=0}^\infty$ 
-    be a different atlas with the same orientation and 
+    be a different atlas and 
     $\{\rho_j\}_{j=0}^\infty$ be a partition of unity s.t.~$\supp \rho_j \subseteq V_j$. If we now 
     define the Riemannian measure (\ref{eq:riemannian_measure}) using this atlas, then
     \begin{align}
@@ -1669,7 +1669,7 @@ using the transformation behaviour of $G^{(i)}$.
             \rho_j\big(\boldsymbol{\psi}_j^{-1}(y)\big)
             \sqrt{\det G^{(j)}_{\boldsymbol{\psi}_j^{-1}(y)}} \, dy \nonumber
         \\ &= \sum_{i,j=0}^\infty \int_{\boldsymbol{\phi}_i(E\cap V_j \cap U_i)} \chi_i\big(\boldsymbol{\phi}_i^{-1}(x)\big) 
-            \rho_j\big(\boldsymbol{\phi}_i^{-1}(x)\big)
+            \rho_j\big(\boldsymbol{\phi}_i^{-1}(x)\big) \nonumber
         \\ &\qquad\sqrt{\det G^{(j)}_{\boldsymbol{\phi}_i^{-1}(x)}} \, \Big| \det D(\boldsymbol{\psi}_j 
             \circ \boldsymbol{\phi}^{-1}_i) \big(\boldsymbol{\phi}_i(x)\big) \Big|\, dx \label{eq:double_sum_riemannian_measure}
     \end{align}
@@ -1748,7 +1748,7 @@ differential form expressed in local coordinates
 are measurable. This notion is once again independent of the chosen 
 coordinates which is easily shown using the fact that the change of basis 
 matrix from $dx^i$ to $dy^j$ is 
-$D(\bm{\psi} \circ \bm{\phi}^{-1})^\top$ which is smooth, if we choose different local coordinates 
+$D(\bm{\phi} \circ \bm{\psi}^{-1})^\top$ which is smooth, if we choose different local coordinates 
 $x_i$ and $y_j$ with charts $(\bm{\phi}, U)$ and $(\bm{\psi}, V)$.
 
 \begin{remark}
@@ -1845,7 +1845,7 @@ and we see
     \int_M f dV = \int_M f \vol
 \end{align*}
 with the two different notions of integration. Note however that we have to choose the 
-same orientation for of integration of forms as for the volume form. 
+same orientation for integration of forms as for the volume form. 
 Otherwise, it will be off by a sign.
 So we recognize that 
 the integral of differential $n$-forms is independent of the chosen 
